@@ -1,0 +1,10 @@
+{
+  "name": "elessons-homepage",
+  "private": true,
+  "version": "23.0.0",
+  "description": "G-TEC eLessons.net marketing homepage (v23)",
+  "scripts": {
+    "build": "node scripts/prepare-vercel.mjs",
+    "dev": "npx --yes serve public -l 3000"
+  }
+}
