@@ -195,16 +195,54 @@
 
     <div class="demo-grid">
       <figure>
-        <div class="demo-slot" role="img" aria-label="Sample lesson placeholder — 90 seconds">
-          <span class="demo-slot__play" aria-hidden="true"></span>
-          <span class="label" style="color: rgba(255,255,255,.85)">Sample lesson — 90 seconds</span>
+        <div class="demo-media">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="images/demo/sample-lesson-640w.webp 640w, images/demo/sample-lesson-1280w.webp 1280w"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            >
+            <img
+              src="images/demo/sample-lesson-640w.jpg"
+              srcset="images/demo/sample-lesson-640w.jpg 640w, images/demo/sample-lesson-1280w.jpg 1280w"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              alt="Sample CBSE science chalk-board lesson"
+              width="1280"
+              height="852"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <a class="demo-media__overlay" href="#contact" aria-label="Request the 90-second sample lesson">
+            <span class="demo-slot__play" aria-hidden="true"></span>
+            <span class="label" style="color: #fff">Sample lesson — request access</span>
+          </a>
         </div>
         <figcaption>One chapter, taught end to end. Exactly what every lesson in the package looks like.</figcaption>
       </figure>
 
       <figure>
-        <div class="demo-slot demo-slot--light" role="img" aria-label="Sample notes page placeholder">
-          <span class="label">Sample notes page</span>
+        <div class="demo-media demo-media--notes">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="images/demo/sample-notes-640w.webp 640w, images/demo/sample-notes-1280w.webp 1280w"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            >
+            <img
+              src="images/demo/sample-notes-640w.jpg"
+              srcset="images/demo/sample-notes-640w.jpg 640w, images/demo/sample-notes-1280w.jpg 1280w"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              alt="Sample chapter notes preview for mathematics"
+              width="1280"
+              height="852"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <a class="demo-media__overlay" href="#contact" aria-label="Request a sample notes page">
+            <span class="label" style="color: #fff">Sample notes page</span>
+          </a>
         </div>
         <figcaption>Written notes for every topic, mapped chapter by chapter to the NCERT textbook.</figcaption>
       </figure>
@@ -221,8 +259,9 @@
       <p class="section-lead">Every package runs the full academic year and includes all subjects for that stream.</p>
     </div>
     <div class="course-filters" style="margin-top: var(--space-xl)" role="group" aria-label="Filter courses"><button type="button" class="course-filters__btn" data-filter="All" aria-pressed="true">All</button><button type="button" class="course-filters__btn" data-filter="Grade 8" aria-pressed="false">Grade 8</button><button type="button" class="course-filters__btn" data-filter="Grade 9" aria-pressed="false">Grade 9</button><button type="button" class="course-filters__btn" data-filter="Grade 10" aria-pressed="false">Grade 10</button><button type="button" class="course-filters__btn" data-filter="Grade 11" aria-pressed="false">Grade 11</button><button type="button" class="course-filters__btn" data-filter="Grade 12" aria-pressed="false">Grade 12</button><button type="button" class="course-filters__btn" data-filter="Science" aria-pressed="false">Science</button><button type="button" class="course-filters__btn" data-filter="Commerce" aria-pressed="false">Commerce</button></div>
+    <p id="filter-status" class="filter-status" aria-live="polite">9 packages shown</p>
     <div class="course-grid" id="course-grid" style="margin-top: var(--space-xl)">
-      <article class="course-card" data-tags="Grade 8|Science|Commerce" style="--banner: var(--navy-600)">
+      <article class="course-card" data-tags="Grade 8|Science|Commerce" data-grade="8" data-stream="All subjects" style="--banner: var(--navy-600)">
   <span class="course-card__ghost" aria-hidden="true">8</span>
   <div class="course-card__head">
     <span class="course-card__grade">8</span>
@@ -232,9 +271,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%208%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 8 All subjects package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 9|Science|Commerce" style="--banner: var(--navy-600)">
+</article><article class="course-card" data-tags="Grade 9|Science|Commerce" data-grade="9" data-stream="All subjects" style="--banner: var(--navy-600)">
   <span class="course-card__ghost" aria-hidden="true">9</span>
   <div class="course-card__head">
     <span class="course-card__grade">9</span>
@@ -244,9 +283,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%209%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 9 All subjects package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 10|Science|Commerce" style="--banner: var(--navy-600)">
+</article><article class="course-card" data-tags="Grade 10|Science|Commerce" data-grade="10" data-stream="All subjects" style="--banner: var(--navy-600)">
   <span class="course-card__ghost" aria-hidden="true">10</span>
   <div class="course-card__head">
     <span class="course-card__grade">10</span>
@@ -256,9 +295,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2010%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 10 All subjects package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 11|Science" style="--banner: var(--sci)">
+</article><article class="course-card" data-tags="Grade 11|Science" data-grade="11" data-stream="PCMB" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">11</span>
   <div class="course-card__head">
     <span class="course-card__grade">11</span>
@@ -268,9 +307,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20PCMB%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 PCMB package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 12|Science" style="--banner: var(--sci)">
+</article><article class="course-card" data-tags="Grade 12|Science" data-grade="12" data-stream="PCMB" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">12</span>
   <div class="course-card__head">
     <span class="course-card__grade">12</span>
@@ -280,9 +319,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20PCMB%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 PCMB package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 11|Science" style="--banner: var(--sci)">
+</article><article class="course-card" data-tags="Grade 11|Science" data-grade="11" data-stream="PCMC" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">11</span>
   <div class="course-card__head">
     <span class="course-card__grade">11</span>
@@ -292,9 +331,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20PCMC%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 PCMC package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 12|Science" style="--banner: var(--sci)">
+</article><article class="course-card" data-tags="Grade 12|Science" data-grade="12" data-stream="PCMBC" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">12</span>
   <div class="course-card__head">
     <span class="course-card__grade">12</span>
@@ -304,9 +343,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20PCMBC%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 PCMBC package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 11|Commerce" style="--banner: var(--com)">
+</article><article class="course-card" data-tags="Grade 11|Commerce" data-grade="11" data-stream="Commerce" style="--banner: var(--com)">
   <span class="course-card__ghost" aria-hidden="true">11</span>
   <div class="course-card__head">
     <span class="course-card__grade">11</span>
@@ -316,9 +355,9 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20Commerce%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 Commerce package on WhatsApp">Buy now</a>
   </div>
-</article><article class="course-card" data-tags="Grade 12|Commerce" style="--banner: var(--com)">
+</article><article class="course-card" data-tags="Grade 12|Commerce" data-grade="12" data-stream="Commerce" style="--banner: var(--com)">
   <span class="course-card__ghost" aria-hidden="true">12</span>
   <div class="course-card__head">
     <span class="course-card__grade">12</span>
@@ -328,7 +367,7 @@
   <div class="course-card__foot">
     <p class="course-card__price">AED 1,200</p>
     <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20Commerce%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 Commerce package on WhatsApp">Buy now</a>
   </div>
 </article>
     </div>
@@ -604,7 +643,13 @@
     </div>
     <div class="cta-band__actions">
       <a href="#courses" class="btn btn--primary">Buy the annual package</a>
-      <a href="https://wa.me/971568056001" class="btn btn--ghost" rel="noopener noreferrer" target="_blank">
+      <a
+        href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)."
+        class="btn btn--ghost"
+        rel="noopener noreferrer"
+        target="_blank"
+        aria-label="Chat on WhatsApp to enrol"
+      >
         WhatsApp us
       </a>
     </div>
@@ -666,6 +711,11 @@
     </nav>
   </div>
 </footer>
+<div class="mobile-enroll" role="region" aria-label="Quick enrol">
+  <a href="#courses" class="btn btn--navy btn--sm">View packages</a>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)." class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer" aria-label="Enrol on WhatsApp">Enrol on WhatsApp</a>
+</div>
+<script src="js/config.js" defer></script>
 <script src="js/nav.js" defer></script>
 <script src="js/interactive.js" defer></script>
 </body>

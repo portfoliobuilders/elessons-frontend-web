@@ -32,6 +32,19 @@
 
   @include('components.footer')
 
+  {{-- Phase 6: sticky mobile enroll (hidden on desktop via CSS) --}}
+  <div class="mobile-enroll" role="region" aria-label="Quick enrol">
+    <a href="#courses" class="btn btn--navy btn--sm">View packages</a>
+    <a
+      href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)."
+      class="btn btn--primary btn--sm"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Enrol on WhatsApp"
+    >Enrol on WhatsApp</a>
+  </div>
+
+  <script src="/js/config.js" defer></script>
   <script src="/js/nav.js" defer></script>
   <script src="/js/interactive.js" defer></script>
 </body>

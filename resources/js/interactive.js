@@ -1,13 +1,22 @@
 /**
- * Course filters + testimonial tabs (deferred, progressive enhancement)
+ * Course filters + testimonial tabs (Phase 5–7)
  */
 (function () {
   /* ── Course filters ─────────────────────────────────────────────── */
   var filterRoot = document.querySelector(".course-filters");
   var grid = document.getElementById("course-grid");
+  var status = document.getElementById("filter-status");
   if (filterRoot && grid) {
     var buttons = filterRoot.querySelectorAll("[data-filter]");
     var cards = grid.querySelectorAll(".course-card");
+
+    function announce(filter, count) {
+      if (!status) return;
+      status.textContent =
+        filter === "All"
+          ? count + " packages shown"
+          : count + " packages for " + filter;
+    }
 
     filterRoot.addEventListener("click", function (e) {
       var btn = e.target.closest("[data-filter]");
@@ -16,11 +25,14 @@
       buttons.forEach(function (b) {
         b.setAttribute("aria-pressed", b === btn ? "true" : "false");
       });
+      var visible = 0;
       cards.forEach(function (card) {
         var tags = card.getAttribute("data-tags") || "";
         var show = filter === "All" || tags.indexOf(filter) !== -1;
         card.hidden = !show;
+        if (show) visible += 1;
       });
+      announce(filter, visible);
     });
   }
 
