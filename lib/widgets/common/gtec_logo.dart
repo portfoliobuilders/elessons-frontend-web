@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/colors.dart';
 
-/// Official G-TEC eLessons.net Brand Logo & Lockup Widget (Prominent, High Visibility).
+/// Official G-TEC eLessons.net brand logo from the brand PDF.
 ///
-/// Matches the exact official brand identity:
-///   G-TEC
-/// eLessons.net
-/// Your Virtual Classroom
+/// Uses the color mark on light surfaces and the white mark on dark surfaces.
 class GtecELessonsLogo extends StatelessWidget {
   const GtecELessonsLogo({
     super.key,
@@ -16,98 +13,32 @@ class GtecELessonsLogo extends StatelessWidget {
   });
 
   final double height;
+  /// When true, use the color logo (for light backgrounds).
+  /// When false, use the white logo (for dark backgrounds).
   final bool lightMode;
+  /// Kept for API compatibility; the official mark already includes brand lockup.
   final bool showTagline;
+
+  static const String _colorAsset =
+      'assets/images/brand/elessons-logo-color-128h.png';
+  static const String _whiteAsset =
+      'assets/images/brand/elessons-logo-white-128h.png';
 
   @override
   Widget build(BuildContext context) {
-    final double baseFontSize = height * 0.52;
-    final Color gtecColor = lightMode ? const Color(0xFF163E75) : const Color(0xFF60A5FA);
-    final Color cyanColor = const Color(0xFF0096C7);
-    final Color mainTextColor = lightMode ? const Color(0xFF111111) : Colors.white;
-    final Color taglineColor = lightMode ? const Color(0xFF555555) : const Color(0xFFCBD5E1);
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            // Cyan 'e'
-            Text(
-              'e',
-              style: TextStyle(
-                fontSize: baseFontSize * 1.35,
-                fontWeight: FontWeight.bold,
-                color: cyanColor,
-                fontFamily: 'serif',
-                height: 1.0,
-              ),
-            ),
-            const SizedBox(width: 1),
-
-            // Top G-TEC and main Lessons.net stack
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'G-TEC',
-                  style: TextStyle(
-                    fontSize: baseFontSize * 0.42,
-                    fontWeight: FontWeight.w900,
-                    color: gtecColor,
-                    letterSpacing: 0.8,
-                    height: 1.0,
-                  ),
-                ),
-                Text.rich(
-                  TextSpan(
-                    text: 'Lessons',
-                    style: TextStyle(
-                      fontSize: baseFontSize * 1.1,
-                      fontWeight: FontWeight.bold,
-                      color: mainTextColor,
-                      letterSpacing: -0.4,
-                      fontFamily: 'serif',
-                      height: 1.0,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: '.net',
-                        style: TextStyle(
-                          fontSize: baseFontSize * 1.05,
-                          fontWeight: FontWeight.bold,
-                          color: cyanColor,
-                          fontFamily: 'serif',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        if (showTagline) ...[
-          const SizedBox(height: 3),
-          Padding(
-            padding: EdgeInsets.only(left: baseFontSize * 0.3),
-            child: Text(
-              'Your Virtual Classroom',
-              style: TextStyle(
-                fontSize: baseFontSize * 0.38,
-                fontWeight: FontWeight.w600,
-                color: taglineColor,
-                letterSpacing: 0.15,
-              ),
-            ),
-          ),
-        ],
-      ],
+    // Official wordmark aspect ≈ 3.92:1 (501×128).
+    final double width = height * 3.92;
+    return Semantics(
+      label: 'G-TEC eLessons.net',
+      image: true,
+      child: Image.asset(
+        lightMode ? _colorAsset : _whiteAsset,
+        height: height,
+        width: width,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.high,
+        gaplessPlayback: true,
+      ),
     );
   }
 }
