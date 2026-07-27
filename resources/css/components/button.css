@@ -1,0 +1,91 @@
+/**
+ * Button variants (Phase 5)
+ * Prefer <x-button> / .btn modifiers over one-off styles.
+ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 54px;
+  padding-inline: 1.75rem;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn--sm {
+  min-height: 44px;
+  padding-inline: 1.15rem;
+  font-size: 0.85rem;
+}
+
+.btn--lg {
+  min-height: 56px;
+  padding-inline: 2rem;
+  font-size: 1.05rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--primary {
+  background: var(--cta-accent);
+  color: var(--text-inverse);
+  box-shadow: 0 8px 22px -8px rgba(220, 38, 38, 0.65);
+}
+
+.btn--secondary {
+  background: var(--slate-50);
+  color: var(--navy-900);
+  border-color: var(--border);
+}
+
+.btn--navy {
+  background: var(--navy-700);
+  color: var(--text-inverse);
+}
+
+.btn--ghost {
+  border-color: rgba(255, 255, 255, 0.42);
+  color: var(--text-inverse);
+}
+
+.btn--ghost-dark {
+  border-color: var(--border);
+  color: var(--navy-700);
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition:
+      transform var(--duration-fast) var(--easing-out),
+      box-shadow var(--duration-base) var(--easing-out),
+      background-color var(--duration-base) var(--easing-out),
+      border-color var(--duration-base) var(--easing-out);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn--primary:hover {
+    box-shadow: 0 14px 30px -10px rgba(220, 38, 38, 0.75);
+  }
+
+  .btn--ghost:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .btn--ghost-dark:hover {
+    background: var(--slate-50);
+  }
+}

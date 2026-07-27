@@ -1,12 +1,16 @@
 /**
  * G-TEC eLessons — Design system entry
- * Import order: tokens → typography → base → layouts → (components later)
+ * tokens → fonts → typography → base → components → layouts
  */
 
 @import "./tokens.css";
+@import "./base/fonts.css";
 @import "./typography.css";
 @import "./base/reset.css";
 @import "./base/a11y.css";
+@import "./components/button.css";
+@import "./components/course-card.css";
 @import "./layouts/responsive.css";
 @import "./layouts/header.css";
 @import "./layouts/hero.css";
+@import "./layouts/sections.css";

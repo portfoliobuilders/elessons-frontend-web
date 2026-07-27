@@ -1,5 +1,6 @@
 /**
- * Base reset + shared interactive primitives used by Phase 2 shell
+ * Base reset (Phase 2+)
+ * Focus/skip-link → base/a11y.css · Buttons → components/button.css
  */
 
 *,
@@ -43,56 +44,4 @@ h3,
 h4,
 p {
   margin: 0;
-}
-
-/* Focus + skip-link live in base/a11y.css (Phase 3) */
-
-/* Buttons (minimal set for hero CTAs — expanded in Phase 5) */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  min-height: 54px;
-  padding-inline: 1.75rem;
-  border-radius: 12px;
-  border: 1.5px solid transparent;
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
-
-.btn--primary {
-  background: var(--cta-accent);
-  color: var(--text-inverse);
-  box-shadow: 0 8px 22px -8px rgba(220, 38, 38, 0.65);
-}
-
-.btn--ghost {
-  border-color: rgba(255, 255, 255, 0.42);
-  color: var(--text-inverse);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .btn {
-    transition:
-      transform var(--duration-fast) var(--easing-out),
-      box-shadow var(--duration-base) var(--easing-out),
-      background-color var(--duration-base) var(--easing-out),
-      border-color var(--duration-base) var(--easing-out);
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-  }
-
-  .btn--primary:hover {
-    box-shadow: 0 14px 30px -10px rgba(220, 38, 38, 0.75);
-  }
-
-  .btn--ghost:hover {
-    border-color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-  }
 }

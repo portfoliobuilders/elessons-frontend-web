@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>G-TEC eLessons.net — Traditional chalk-board class from the comfort of your home</title>
 <meta name="description" content="CBSE / NCERT video lessons and notes for grades 8 to 12. A real teacher at a real board. AED 1200 for the full academic year.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/plus-jakarta-sans-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="images/hero/model-suit-640w.webp" as="image" type="image/webp" imagesrcset="images/hero/model-suit-320w.webp 320w, images/hero/model-suit-640w.webp 640w, images/hero/model-suit-960w.webp 960w" imagesizes="(min-width: 1000px) 470px, 90vw">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -142,83 +142,516 @@
     </div>
   </div>
 </section>
-<section id="how" class="sec wrap" aria-labelledby="how-heading" hidden>
-  <h2 id="how-heading" class="h2">How it works</h2>
-</section>
-<section id="demo" class="sec wrap" aria-labelledby="demo-heading" hidden>
-  <h2 id="demo-heading" class="h2">Watch a free class</h2>
-</section>
-<section id="courses" class="sec wrap" aria-labelledby="courses-heading" hidden>
-  <h2 id="courses-heading" class="h2">Courses</h2>
-</section>
-<section id="faq" class="sec" aria-labelledby="faq-heading">
+<section id="how" class="sec" aria-labelledby="how-heading">
   <div class="wrap">
-    <p class="label text-accent">Before you buy</p>
-    <h2 id="faq-heading" class="h2" style="margin-top: var(--space-md)">Common questions</h2>
-    <p class="body text-secondary" style="margin-top: var(--space-md); max-width: 55ch">
-      Straight answers about access, curriculum, and payment.
-    </p>
+    <div class="section-head">
+      <div>
+        <p class="section-eyebrow">How it works</p>
+        <h2 id="how-heading" class="h2" style="margin-top: var(--space-sm)">Three steps, then the whole year is yours.</h2>
+      </div>
+      <a href="#demo" class="btn btn--ghost-dark btn--sm">See a sample lesson</a>
+    </div>
 
-    <div class="mt" style="margin-top: var(--space-2xl); max-width: 720px">
-      <details class="faq-item">
-        <summary>What exactly do I get for AED 1,200?</summary>
-        <div class="faq-item__body body">
-          Full-year video lessons for every subject in the package, chapter notes,
-          and access on the devices your child already uses.
+    <div class="steps-grid">
+      <article class="step">
+        <div class="step__top">
+          <span class="icon-badge" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
+          </span>
+          <span class="step__num">01</span>
         </div>
-      </details>
+        <h3 class="h3">Pick your grade package</h3>
+        <p>Nine packages across grades 8 to 12, science and commerce streams. One flat price each.</p>
+      </article>
 
-      <details class="faq-item">
-        <summary>How long do I have access?</summary>
-        <div class="faq-item__body body">
-          Access runs for the full academic year from the day you unlock the package.
+      <article class="step">
+        <div class="step__top">
+          <span class="icon-badge" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="15" rx="2.5"/><path d="M10 9.5l5 2.5-5 2.5z"/></svg>
+          </span>
+          <span class="step__num">02</span>
         </div>
-      </details>
+        <h3 class="h3">Everything unlocks at once</h3>
+        <p>No drip schedule. Every chapter and every notes file is there the moment you pay.</p>
+      </article>
 
-      <details class="faq-item">
-        <summary>Do you follow NCERT?</summary>
-        <div class="faq-item__body body">
-          Yes. Lessons follow CBSE / NCERT sequencing so they map to school chapters.
+      <article class="step">
+        <div class="step__top">
+          <span class="icon-badge" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M7 16V8m5 8V5m5 11v-6"/></svg>
+          </span>
+          <span class="step__num">03</span>
         </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>Is there a free demo?</summary>
-        <div class="faq-item__body body">
-          Yes. Watch a sample class before you pay — use
-          <a href="#demo">Watch a free class</a> above, or message us from Contact.
-        </div>
-      </details>
+        <h3 class="h3">Learn at your child’s pace</h3>
+        <p>Rewatch any lesson, download notes, and revise before exams without another fee.</p>
+      </article>
     </div>
   </div>
 </section>
+<section id="demo" class="sec demo" aria-labelledby="demo-heading">
+  <div class="wrap">
+    <p class="section-eyebrow">Proof, not promises</p>
+    <h2 id="demo-heading" class="h2" style="margin-top: var(--space-sm); max-width: 18ch">See a class before you pay a rupee.</h2>
 
+    <div class="demo-grid">
+      <figure>
+        <div class="demo-slot" role="img" aria-label="Sample lesson placeholder — 90 seconds">
+          <span class="demo-slot__play" aria-hidden="true"></span>
+          <span class="label" style="color: rgba(255,255,255,.85)">Sample lesson — 90 seconds</span>
+        </div>
+        <figcaption>One chapter, taught end to end. Exactly what every lesson in the package looks like.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="demo-slot demo-slot--light" role="img" aria-label="Sample notes page placeholder">
+          <span class="label">Sample notes page</span>
+        </div>
+        <figcaption>Written notes for every topic, mapped chapter by chapter to the NCERT textbook.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<section id="courses" class="sec" aria-labelledby="courses-heading">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="section-eyebrow">Annual packages</p>
+        <h2 id="courses-heading" class="h2" style="margin-top: var(--space-sm)">Nine packages. One price.</h2>
+      </div>
+      <p class="section-lead">Every package runs the full academic year and includes all subjects for that stream.</p>
+    </div>
+    <div class="course-filters" style="margin-top: var(--space-xl)" role="group" aria-label="Filter courses"><button type="button" class="course-filters__btn" data-filter="All" aria-pressed="true">All</button><button type="button" class="course-filters__btn" data-filter="Grade 8" aria-pressed="false">Grade 8</button><button type="button" class="course-filters__btn" data-filter="Grade 9" aria-pressed="false">Grade 9</button><button type="button" class="course-filters__btn" data-filter="Grade 10" aria-pressed="false">Grade 10</button><button type="button" class="course-filters__btn" data-filter="Grade 11" aria-pressed="false">Grade 11</button><button type="button" class="course-filters__btn" data-filter="Grade 12" aria-pressed="false">Grade 12</button><button type="button" class="course-filters__btn" data-filter="Science" aria-pressed="false">Science</button><button type="button" class="course-filters__btn" data-filter="Commerce" aria-pressed="false">Commerce</button></div>
+    <div class="course-grid" id="course-grid" style="margin-top: var(--space-xl)">
+      <article class="course-card" data-tags="Grade 8|Science|Commerce" style="--banner: var(--navy-600)">
+  <span class="course-card__ghost" aria-hidden="true">8</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">8</span>
+    <span class="course-card__stream">All subjects</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">English</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 9|Science|Commerce" style="--banner: var(--navy-600)">
+  <span class="course-card__ghost" aria-hidden="true">9</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">9</span>
+    <span class="course-card__stream">All subjects</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">English</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 10|Science|Commerce" style="--banner: var(--navy-600)">
+  <span class="course-card__ghost" aria-hidden="true">10</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">10</span>
+    <span class="course-card__stream">All subjects</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">English</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 11|Science" style="--banner: var(--sci)">
+  <span class="course-card__ghost" aria-hidden="true">11</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">11</span>
+    <span class="course-card__stream">PCMB</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 12|Science" style="--banner: var(--sci)">
+  <span class="course-card__ghost" aria-hidden="true">12</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">12</span>
+    <span class="course-card__stream">PCMB</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 11|Science" style="--banner: var(--sci)">
+  <span class="course-card__ghost" aria-hidden="true">11</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">11</span>
+    <span class="course-card__stream">PCMC</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Computer Science</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 12|Science" style="--banner: var(--sci)">
+  <span class="course-card__ghost" aria-hidden="true">12</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">12</span>
+    <span class="course-card__stream">PCMBC</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">Computer Science</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 11|Commerce" style="--banner: var(--com)">
+  <span class="course-card__ghost" aria-hidden="true">11</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">11</span>
+    <span class="course-card__stream">Commerce</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Accountancy</span><span class="course-card__chip">Maths</span><span class="course-card__chip">English</span><span class="course-card__chip">Grammar</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article><article class="course-card" data-tags="Grade 12|Commerce" style="--banner: var(--com)">
+  <span class="course-card__ghost" aria-hidden="true">12</span>
+  <div class="course-card__head">
+    <span class="course-card__grade">12</span>
+    <span class="course-card__stream">Commerce</span>
+  </div>
+  <div class="course-card__subjects"><span class="course-card__chip">Accountancy</span><span class="course-card__chip">Maths</span><span class="course-card__chip">English</span><span class="course-card__chip">Grammar</span></div>
+  <div class="course-card__foot">
+    <p class="course-card__price">AED 1,200</p>
+    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+    <a href="#contact" class="btn btn--primary btn--sm btn--block">Buy now</a>
+  </div>
+</article>
+    </div>
+  </div>
+</section>
+<section class="board" aria-labelledby="board-heading">
+  <div class="wrap board__grid">
+    <div>
+      <p class="section-eyebrow section-eyebrow--gold">The difference</p>
+      <h2 id="board-heading" class="h2 board__title" style="margin-top: var(--space-sm)">
+        No animation.<br>No graphics.<br>
+        <span class="hero__title-accent">Just the board.</span>
+      </h2>
+      <p class="board__lead">
+        Most online classes replace the teacher with motion graphics. We film the teacher,
+        the chalk, and the board — because that is what your child already knows how to learn from.
+      </p>
+      <div class="board__actions">
+        <a href="#courses" class="btn btn--primary">Enrol now</a>
+        <a href="#demo" class="btn btn--ghost">Watch first</a>
+      </div>
+    </div>
+
+    <div class="board__model">
+      <div class="board__halo" aria-hidden="true"></div>
+      <picture>
+        <source
+          type="image/webp"
+          srcset="images/hero/model-board-320w.webp 320w, images/hero/model-board-640w.webp 640w"
+          sizes="(min-width: 1000px) 330px, 70vw"
+        >
+        <img
+          class="board__img"
+          src="images/hero/model-board-640w.jpg"
+          srcset="images/hero/model-board-320w.jpg 320w, images/hero/model-board-640w.jpg 640w"
+          sizes="(min-width: 1000px) 330px, 70vw"
+          alt="G-TEC instructor pointing at a chalk board"
+          width="619"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        >
+      </picture>
+    </div>
+  </div>
+</section>
+<section id="why" class="sec" aria-labelledby="why-heading">
+  <div class="wrap">
+    <p class="section-eyebrow">Why parents choose us</p>
+    <h2 id="why-heading" class="h2" style="margin-top: var(--space-sm); max-width: 16ch">Six reasons, in plain language.</h2>
+
+    <div class="why-grid">
+      <article class="why-item">
+        <span class="icon-badge" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3 2 8l10 5 10-5z"/><path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/></svg></span>
+        <h3 class="h3">Built for CBSE / NCERT</h3>
+        <p>Grades 8 to 12, mapped to the textbook chapter by chapter.</p>
+      </article>
+      <article class="why-item">
+        <span class="icon-badge" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+        <h3 class="h3">Chalk-board class on mobile</h3>
+        <p>Filmed clearly and delivered to the phone your child already carries.</p>
+      </article>
+      <article class="why-item">
+        <span class="icon-badge" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h5M9.5 14.5h5"/></svg></span>
+        <h3 class="h3">One flat yearly price</h3>
+        <p>AED 1,200 covers every subject for the whole year. No monthly drip fees.</p>
+      </article>
+      <article class="why-item">
+        <span class="icon-badge" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        <h3 class="h3">Notes with every chapter</h3>
+        <p>Downloadable notes sit beside the video so revision stays organised.</p>
+      </article>
+      <article class="why-item">
+        <span class="icon-badge" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <h3 class="h3">Experienced teachers</h3>
+        <p>CBSE classroom veterans — not influencers reading a script.</p>
+      </article>
+      <article class="why-item">
+        <span class="icon-badge" aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+        <h3 class="h3">Unlocks on day one</h3>
+        <p>The full year is available immediately — revise ahead or catch up freely.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<section id="teachers" class="sec bg-mist" aria-labelledby="teachers-heading">
+  <div class="wrap">
+    <p class="section-eyebrow">Faculty</p>
+    <h2 id="teachers-heading" class="h2" style="margin-top: var(--space-sm)">The people at the board.</h2>
+
+    <div class="teachers-grid">
+      <article class="teacher">
+        <div class="teacher__photo">Photo</div>
+        <h3 class="h3">Teacher name</h3>
+        <p class="teacher__role">Physics · 11–12</p>
+        <p>18 years teaching CBSE</p>
+      </article>
+      <article class="teacher">
+        <div class="teacher__photo">Photo</div>
+        <h3 class="h3">Teacher name</h3>
+        <p class="teacher__role">Mathematics · 8–10</p>
+        <p>22 years teaching CBSE</p>
+      </article>
+      <article class="teacher">
+        <div class="teacher__photo">Photo</div>
+        <h3 class="h3">Teacher name</h3>
+        <p class="teacher__role">Chemistry · 11–12</p>
+        <p>15 years teaching CBSE</p>
+      </article>
+      <article class="teacher">
+        <div class="teacher__photo">Photo</div>
+        <h3 class="h3">Teacher name</h3>
+        <p class="teacher__role">Biology · 9–12</p>
+        <p>19 years teaching CBSE</p>
+      </article>
+    </div>
+  </div>
+</section>
+<section id="testimonials" class="sec" aria-labelledby="testimonials-heading">
+  <div class="wrap">
+    <p class="section-eyebrow">In their words</p>
+    <h2 id="testimonials-heading" class="h2" style="margin-top: var(--space-sm)">Students, parents, and teachers.</h2>
+
+    <div class="tabs" role="tablist" aria-label="Testimonial type">
+      <button type="button" class="tabs__btn" role="tab" id="tab-stu" aria-selected="true" aria-controls="panel-stu" tabindex="0">Students</button>
+      <button type="button" class="tabs__btn" role="tab" id="tab-par" aria-selected="false" aria-controls="panel-par" tabindex="-1">Parents</button>
+      <button type="button" class="tabs__btn" role="tab" id="tab-edu" aria-selected="false" aria-controls="panel-edu" tabindex="-1">Educators</button>
+    </div>
+
+    <div id="panel-stu" role="tabpanel" aria-labelledby="tab-stu" class="tabs__panel">
+      <div class="quote-grid">
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">The teachers are experienced and the video is crystal clear. It is just like our own classroom, and the notes follow the NCERT books closely.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">MI</span>
+            <span><span class="quote__name">Mohammed Iftiqar</span><span class="quote__meta">Grade 12 · UAE</span></span>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">Private tuition options are limited for us in the Gulf. A proper chalk-board class available online until the end of the year solved that.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">SM</span>
+            <span><span class="quote__name">Sara M.</span><span class="quote__meta">Grade 10 · Bahrain</span></span>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">I can pause, rewind, and rewatch before exams. The board teaching is easier to follow than animated slides.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">AK</span>
+            <span><span class="quote__name">Ananya K.</span><span class="quote__meta">Grade 11 · India</span></span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <div id="panel-par" role="tabpanel" aria-labelledby="tab-par" class="tabs__panel" hidden>
+      <div class="quote-grid">
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">One payment for the year and every subject is there. No chasing monthly renewals or chapter packs.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">RP</span>
+            <span><span class="quote__name">Ravi P.</span><span class="quote__meta">Parent · Dubai</span></span>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">My daughter watches on her phone after school. The teaching style matches what she sees in class.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">NL</span>
+            <span><span class="quote__name">Nisha L.</span><span class="quote__meta">Parent · Sharjah</span></span>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">We tried the free sample first. That honesty — see it before you pay — made the decision easy.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">JT</span>
+            <span><span class="quote__name">James T.</span><span class="quote__meta">Parent · Abu Dhabi</span></span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <div id="panel-edu" role="tabpanel" aria-labelledby="tab-edu" class="tabs__panel" hidden>
+      <div class="quote-grid">
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">As an academician I recommend this model. NCERT-aligned board teaching, without the distraction of graphics, is exactly what serious CBSE students need.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">DR</span>
+            <span><span class="quote__name">Dr. Ramesh</span><span class="quote__meta">Educator · Bangalore</span></span>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">Clear pacing, proper board work, and notes that track the textbook. It respects how schools teach.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">MS</span>
+            <span><span class="quote__name">Meera S.</span><span class="quote__meta">Teacher · Kerala</span></span>
+          </footer>
+        </blockquote>
+        <blockquote class="quote">
+          <span class="quote__mark" aria-hidden="true">“</span>
+          <p class="quote__text">Students who revise with these videos arrive better prepared for chapter tests.</p>
+          <footer class="quote__who">
+            <span class="quote__avatar" aria-hidden="true">VK</span>
+            <span><span class="quote__name">Vikram K.</span><span class="quote__meta">Coordinator · Chennai</span></span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="faq" class="sec" aria-labelledby="faq-heading">
+  <div class="wrap" style="max-width: 900px">
+    <p class="section-eyebrow">Questions</p>
+    <h2 id="faq-heading" class="h2" style="margin-top: var(--space-sm); margin-bottom: var(--space-xl)">Before you buy.</h2>
+
+    <details class="faq-item">
+      <summary>What exactly do I get for AED 1,200?</summary>
+      <div class="faq-item__body body">
+        Every video lesson and every notes file for one grade package, for the full academic year.
+        There is nothing else to buy and no chapter is held back.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How long do I have access?</summary>
+      <div class="faq-item__body body">
+        Until the end of the academic year you enrolled for. The whole year unlocks the day you pay,
+        so you can revise or run ahead at any point.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do you follow NCERT?</summary>
+      <div class="faq-item__body body">
+        Yes. Lessons and notes are mapped chapter by chapter to the NCERT textbooks for the CBSE curriculum, grades 8 to 12.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I pay in Indian rupees?</summary>
+      <div class="faq-item__body body">
+        Yes. Prices are listed in AED, and Indian cards, UPI and net banking are charged the equivalent in rupees at checkout.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is there a free demo?</summary>
+      <div class="faq-item__body body">
+        Yes. A sample lesson and a sample notes page are available above. No sign-up needed to watch.
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What if my child falls behind?</summary>
+      <div class="faq-item__body body">
+        Nothing expires mid-year. Any lesson can be rewatched as often as needed, and the notes for that chapter stay downloadable throughout.
+      </div>
+    </details>
+  </div>
+</section>
+<section class="cta-band" aria-labelledby="cta-heading">
+  <div class="wrap cta-band__inner">
+    <div>
+      <h2 id="cta-heading" class="cta-band__title">Ready to start the year properly?</h2>
+      <p class="cta-band__lead">AED 1,200 — all subjects, full academic year, unlocked today.</p>
+    </div>
+    <div class="cta-band__actions">
+      <a href="#courses" class="btn btn--primary">Buy the annual package</a>
+      <a href="https://wa.me/971568056001" class="btn btn--ghost" rel="noopener noreferrer" target="_blank">
+        WhatsApp us
+      </a>
+    </div>
+  </div>
+</section>
 <section id="contact" class="sec" aria-labelledby="contact-heading">
-  <div class="wrap" style="max-width: 560px">
-    <h2 id="contact-heading" class="h2">Get in touch</h2>
-    <p class="body text-secondary" style="margin-top: var(--space-md)">
-      Tell us your child’s grade and we will point you to the right package.
-    </p>
-    <form style="margin-top: var(--space-xl); display: grid; gap: var(--space-lg)" action="#" method="post">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="section-eyebrow">Contact</p>
+      <h2 id="contact-heading" class="h2" style="margin-top: var(--space-sm)">Get in touch.</h2>
+
+      <div class="contact-card">
+        <p class="contact-card__label">Corporate office</p>
+        <p>eLessons.Net, #104, Level 5, Infantry Techno Park,<br>Infantry Road, Bangalore 560001, Karnataka, India</p>
+        <a href="mailto:contact@elessons.net">contact@elessons.net</a>
+      </div>
+
+      <div class="contact-card">
+        <p class="contact-card__label">Middle East office</p>
+        <p>Staffin Consultancy FZE, Sharjah Research Technology<br>&amp; Innovation Park, Sharjah, UAE</p>
+        <a href="https://wa.me/971568056001" rel="noopener noreferrer" target="_blank">+971 568056001</a>
+      </div>
+    </div>
+
+    <form class="contact-form" action="#" method="post">
       <div class="field">
-        <label class="field__required" for="f-n">Parent or student name</label>
+        <label class="field__required" for="f-n">Name</label>
         <input id="f-n" name="name" type="text" autocomplete="name" required aria-required="true">
       </div>
       <div class="field">
-        <label class="field__required" for="f-e">Email address</label>
+        <label class="field__required" for="f-e">Email</label>
         <input id="f-e" name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="email-hint">
         <span id="email-hint" class="field__hint">We’ll never share your email.</span>
       </div>
       <div class="field">
+        <label for="f-m">Mobile number</label>
+        <input id="f-m" name="mobile" type="tel" autocomplete="tel">
+      </div>
+      <div class="field field--full">
         <label for="f-msg">Message</label>
         <textarea id="f-msg" name="message" rows="4" aria-describedby="msg-hint"></textarea>
         <span id="msg-hint" class="field__hint">Optional — grade, board, or questions.</span>
       </div>
-      <button type="submit" class="btn btn--primary" style="justify-self: start">Send message</button>
+      <button type="submit" class="btn btn--navy" style="justify-self: start">Send message</button>
     </form>
   </div>
 </section>
-
 </main>
 <footer class="site-footer" role="contentinfo">
   <div class="site-footer__inner">
@@ -234,5 +667,6 @@
   </div>
 </footer>
 <script src="js/nav.js" defer></script>
+<script src="js/interactive.js" defer></script>
 </body>
 </html>
