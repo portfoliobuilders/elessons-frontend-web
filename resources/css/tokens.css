@@ -129,7 +129,7 @@
 :root[data-color-scheme="light"] {
   --text-primary: var(--navy-900);
   --text-secondary: var(--slate-500);
-  --text-tertiary: var(--slate-400);
+  --text-tertiary: var(--slate-500);
   --bg-primary: #ffffff;
   --bg-secondary: var(--slate-50);
 }
