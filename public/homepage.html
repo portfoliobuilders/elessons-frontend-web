@@ -1,6 +1,6 @@
 <!--
-  G-TEC eLessons.net — Homepage v23 (final UI)
-  Assets: images/v23/* · Deploy: public/ as Vercel root
+  G-TEC eLessons.net — Homepage v25 (final UI)
+  Assets: images/v25/* · Deployed from public/ on Vercel
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +13,33 @@
 <meta name="theme-color" content="#001A4E">
 <title>G-TEC eLessons.net — Traditional chalk-board class from the comfort of your home</title>
 <meta name="description" content="CBSE / NCERT video lessons and notes for grades 8 to 12. A real teacher at a real board. From &#8377;12,000 for the full academic year.">
+<meta name="theme-color" content="#00133C">
+<!-- ASSUMPTION: production origin is https://elessons.net — change if it differs -->
+<link rel="canonical" href="https://elessons.net/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="G-TEC eLessons.net">
+<meta property="og:url" content="https://elessons.net/">
+<meta property="og:title" content="Traditional chalk-board class, from the comfort of your home">
+<meta property="og:description" content="CBSE / NCERT live and recorded lessons with written notes for grades 8 to 12. From &#8377;12,000 for the full academic year.">
+<!-- TODO: upload a 1200x630 cover to this path -->
+<meta property="og:image" content="https://elessons.net/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Traditional chalk-board class, from the comfort of your home">
+<meta name="twitter:description" content="CBSE / NCERT live and recorded lessons with written notes for grades 8 to 12.">
+<meta name="twitter:image" content="https://elessons.net/og-cover.jpg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationalOrganization",
+ "name":"G-TEC eLessons.net","url":"https://elessons.net/",
+ "description":"CBSE / NCERT live and recorded lessons with written notes for grades 8 to 12.",
+ "telephone":"+91-97455-53944","email":"contact@elessons.net",
+ "address":[
+  {"@type":"PostalAddress","streetAddress":"#104, Level 5, Infantry Techno Park, Infantry Road","addressLocality":"Bangalore","postalCode":"560001","addressRegion":"Karnataka","addressCountry":"IN"},
+  {"@type":"PostalAddress","streetAddress":"Staffin Consultancy FZE, Sharjah Research Technology & Innovation Park","addressLocality":"Sharjah","addressCountry":"AE"}],
+ "contactPoint":[{"@type":"ContactPoint","telephone":"+91-97455-53944","contactType":"admissions","areaServed":["IN","AE","BH","SA"],"availableLanguage":["en"]}],
+ "areaServed":["IN","AE","BH","SA"]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -30,14 +57,15 @@
   --paper:#FFFFFF;     --mist:var(--slate-50);  --navy:var(--navy-700);
   --grad:linear-gradient(103deg,var(--navy-700) 0%,var(--navy-600) 100%);
   --hero-grad:linear-gradient(100deg,#001544 0%,#001B50 26%,#002561 46%,#003175 66%,#00397F 100%);
-  --gutter:clamp(1rem,2.4vw,2.5rem); --maxw:1720px;
+  --gutter:clamp(1rem,2.4vw,2.5rem); --maxw:1720px; --nav-h:68px;
+  /* card outline in the brand blue — dial the alpha to taste */
+  --card-line:rgba(21,82,160,.62); --card-shadow:rgba(10,49,112,.22);
   --asym:72px 14px 72px 14px;
 }
 *,*::before,*::after{box-sizing:border-box}
 /* the header is sticky, so a raw anchor jump would drop the target underneath it */
-:target,section[id],div[id]{scroll-margin-top:92px}
+:target,section[id],div[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 #top{scroll-margin-top:0}
-@media (max-width:640px){section[id],div[id]{scroll-margin-top:74px}}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);
   font-family:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
@@ -63,17 +91,7 @@ h1,h2,h3,h4,p{margin:0}
 .grid{display:grid}
 .flex{display:flex}
 
-/* ══════════════ BRAND MOTIFS (from the brochure) ══════════════ */
-/* 1 · diamond lattice */
-.lattice{position:relative}
-.lattice::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background-image:
-    repeating-linear-gradient(45deg,rgba(255,255,255,.055) 0 1px,transparent 1px 74px),
-    repeating-linear-gradient(-45deg,rgba(255,255,255,.055) 0 1px,transparent 1px 74px);}
-.lattice-dark::before{
-  background-image:
-    repeating-linear-gradient(45deg,rgba(19,74,130,.07) 0 1px,transparent 1px 74px),
-    repeating-linear-gradient(-45deg,rgba(15,23,42,.07) 0 1px,transparent 1px 74px);}
+/* ══════════════ BRAND MOTIFS ══════════════ */
 /* 2 · asymmetric frame */
 .asym{border-radius:var(--asym);overflow:hidden}
 
@@ -128,7 +146,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .brand{flex:none;display:block}
 .brand .el-logo{width:clamp(126px,17vw,164px)}
 .el-logo{display:block;aspect-ratio:760/191;background-size:contain;background-repeat:no-repeat;
-  background-position:center;background-image:url("images/v23/nav-logo.webp")}
+  background-position:center;background-image:url("images/v25/nav-logo.webp")}
 .brand-footer{width:clamp(160px,22vw,208px);height:auto;margin-bottom:.9rem}
 .navlink{font-size:.92rem;font-weight:600;color:var(--ink);padding:.3rem 0;position:relative}
 .navlink[aria-current="true"]{color:var(--navy-700)}
@@ -136,34 +154,97 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .navlink::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--grad);border-radius:2px}
 @media (prefers-reduced-motion:no-preference){.navlink::after{transition:right .25s ease}.navlink:hover::after{right:0}}
 
-/* ══════════════ HERO — composed to match herobanner.png ══════════════ */
-.hero{position:relative;overflow:hidden;color:#fff;background:var(--hero-grad);
-  min-height:clamp(430px,44vw,720px);display:flex;align-items:center}
-.hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:radial-gradient(115% 85% at 16% 45%,rgba(0,17,54,.62),transparent 60%)}
-.hero-photo{position:absolute;right:0;bottom:0;height:100%;z-index:0;
-  /* --wash-extra deepens the blue further; the base wash is baked into the file */
-  --wash-extra:0}
-.hero-photo img{display:block;height:100%;width:auto;max-width:none}
-.hero-photo::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(27,90,172,0) 0%,rgba(27,90,172,1) 32%,rgba(27,90,172,1) 100%);
-  opacity:var(--wash-extra)}
-.hero-grid{position:relative;z-index:2;width:100%;padding-block:clamp(2.25rem,4.5vw,3.5rem)}
-.hero-copy{max-width:min(100%,52vw,700px)}
-.hero-trust{color:rgba(255,255,255,.8);font-size:.84rem}
-.hero-trust strong{color:#fff}
-.hero-logo{width:clamp(96px,8.2vw,132px);height:auto}
-.hero-title{font-weight:800;letter-spacing:-.03em;line-height:1.04;
-  font-size:clamp(2.05rem,4.9vw,3.95rem);margin-top:clamp(.85rem,1.7vw,1.35rem)}
-.hero-title .t-light{display:block;font-weight:400}
-.gold-rule{display:block;width:clamp(98px,11vw,168px);height:5px;border-radius:3px;
-  background:var(--gold);margin:clamp(.7rem,1.35vw,1rem) 0 clamp(.7rem,1.4vw,1.05rem)}
-.hero-sub{font-size:clamp(1.05rem,2.35vw,1.85rem);font-weight:500;line-height:1.2;letter-spacing:-.02em}
-.hero-sub strong{font-weight:800;color:var(--gold)}
-@media (max-width:1180px){.hero-photo{opacity:.55;right:-6%}.hero-copy{max-width:100%}}
-@media (max-width:640px){.hero-photo{opacity:.45;right:-18%}}
+/* ══════════════ HERO — one baked banner: gradient, room and model in a single image ══════════════ */
+/* The banner is 1957×802 (aspect 2.4401). min-height tracks that aspect
+   (100 / 2.4401 = 40.98vw) so object-fit:cover has almost nothing to crop and
+   the model's silhouette lands at a fixed 58% of the hero width at every size.
+   Because the deep-blue field is baked into the same file, there is no
+   CSS-gradient-to-photo join to keep in sync — the seam simply does not exist. */
+.hero{position:relative;overflow:hidden;color:#fff;background:#001446;
+  min-height:clamp(500px,41vw,780px);display:flex;align-items:center}
+.hero-photo{position:absolute;inset:0;z-index:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 0}
 
-.hero-copy .pill{margin-top:clamp(.9rem,1.8vw,1.3rem)}
+/* copy-side scrim — deepens the left third, never touches her */
+.hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(0,9,40,.74) 0%,rgba(0,11,44,.46) 27%,rgba(0,13,48,.07) 52%,transparent 62%),
+    radial-gradient(118% 104% at 6% 52%,rgba(0,7,34,.46),transparent 64%)}
+
+/* cinematic top/bottom falloff */
+.hero::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,7,32,.44) 0%,transparent 19%,transparent 62%,rgba(0,6,28,.64) 100%)}
+
+.hero-grid{position:relative;z-index:3;width:100%;padding-block:clamp(2rem,3.2vw,3.5rem)}
+.hero-copy{max-width:min(100%,clamp(320px,50vw,940px))}
+
+.hero-logo{width:clamp(104px,9vw,150px);height:auto;
+  filter:drop-shadow(0 8px 26px rgba(0,0,0,.45))}
+
+/* eyebrow — mono, tracked out, glass */
+.hero .pill{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.09);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:600;
+  text-transform:uppercase;letter-spacing:.1em;font-size:.68rem;
+  padding:.55rem 1.05rem;color:rgba(255,255,255,.9)}
+.hero .pill .dot{background:var(--gold);box-shadow:0 0 0 3px rgba(251,198,63,.2)}
+.hero-copy .pill{margin-top:clamp(.9rem,1.8vw,1.35rem)}
+
+/* display type — editorial serif against the heavy sans */
+.hero-title{margin-top:clamp(.8rem,1.5vw,1.3rem)}
+.hero-title .t-light{display:block;font-family:"Instrument Serif",Georgia,serif;
+  font-style:italic;font-weight:400;line-height:1.06;letter-spacing:-.005em;
+  font-size:clamp(1.6rem,3.9vw,4.1rem);color:rgba(233,240,255,.94)}
+.hero-title .t-strong{display:block;font-weight:800;line-height:1.02;letter-spacing:-.035em;
+  font-size:clamp(1.9rem,5.1vw,5.4rem);text-shadow:0 2px 34px rgba(0,10,40,.45)}
+
+/* signature: gold rule carrying the brochure's diamond */
+.gold-rule{position:relative;display:block;height:4px;border-radius:2px;
+  width:clamp(96px,10vw,152px);
+  background:linear-gradient(90deg,transparent 0 15px,var(--gold) 15px 44%,rgba(251,198,63,.14) 100%);
+  margin:clamp(1rem,1.7vw,1.5rem) 0 clamp(.85rem,1.5vw,1.15rem)}
+.gold-rule::after{content:"";position:absolute;left:0;top:50%;width:10px;height:10px;
+  transform:translateY(-50%) rotate(45deg);background:var(--gold);border-radius:1px}
+
+.hero-sub{font-size:clamp(1.02rem,1.85vw,1.45rem);font-weight:500;line-height:1.35;
+  letter-spacing:-.01em;color:rgba(226,236,255,.82);max-width:34ch}
+.hero-sub strong{font-weight:700;color:var(--gold)}
+
+/* CTAs — a little more presence, glass on the secondary */
+.hero .btn{height:58px;padding-inline:clamp(1.5rem,3.4vw,2.15rem);font-size:1.02rem}
+.hero .btn-red{background:linear-gradient(180deg,#F35C5C 0%,#DC2626 100%);
+  box-shadow:0 10px 30px -10px rgba(220,38,38,.78),inset 0 1px 0 rgba(255,255,255,.28)}
+.hero .btn-red:hover{background:linear-gradient(180deg,#EF4444 0%,#C81E1E 100%);
+  box-shadow:0 18px 40px -12px rgba(220,38,38,.9),inset 0 1px 0 rgba(255,255,255,.34)}
+.hero .btn-ghost-light{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.09);
+  -webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%)}
+
+.hero-actions{margin-top:clamp(1.5rem,2.5vw,2.5rem)}
+.hero-trust{margin-top:clamp(1.4rem,2.2vw,2.3rem);max-width:min(100%,660px);font-size:.86rem;color:rgba(255,255,255,.74);
+  padding-top:clamp(1rem,1.6vw,1.4rem);border-top:1px solid rgba(255,255,255,.14)}
+.hero-trust .sep{color:rgba(251,198,63,.55)}
+.hero-trust .price{color:var(--gold);font-weight:800}
+
+/* ── tablet: she slides right, the scrim carries the copy ── */
+@media (max-width:1180px){
+  .hero{min-height:clamp(520px,58vw,660px)}
+  .hero-photo img{object-position:74% 0}
+  .hero-scrim{background:
+    linear-gradient(90deg,rgba(0,9,40,.9) 0%,rgba(0,11,44,.7) 44%,rgba(0,13,48,.16) 100%),
+    linear-gradient(180deg,transparent 42%,rgba(0,9,38,.5) 100%)}
+  .hero-copy{max-width:min(100%,64vw)}
+  .hero-sub{max-width:30ch}
+}
+/* ── phone: portrait crop, copy sits on the dark floor ── */
+@media (max-width:760px){
+  .hero{min-height:clamp(560px,116vw,700px);align-items:flex-end}
+  .hero-photo img{object-position:76% 0}
+  .hero-scrim{background:linear-gradient(180deg,rgba(0,12,46,.16) 0%,rgba(0,12,46,.5) 38%,
+    rgba(0,13,48,.9) 70%,#00113F 100%)}
+  .hero-copy{max-width:100%}
+  .hero-sub{max-width:100%}
+  .hero-trust{font-size:.8rem}
+}
 .pill{display:inline-flex;align-items:center;gap:.55rem;border:1px solid rgba(255,255,255,.26);
   background:rgba(255,255,255,.07);border-radius:999px;padding:.45rem 1rem;font-size:.74rem}
 
@@ -177,12 +258,15 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .dot{width:5px;height:5px;border-radius:50%;background:var(--red);flex:none}
 
 /* ══════════════ CARDS ══════════════ */
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.75rem 1.6rem}
+.card{background:#fff;border:1px solid var(--card-line);border-radius:20px;padding:1.75rem 1.6rem;
+  box-shadow:0 1px 2px rgba(10,49,112,.05),0 10px 26px -18px var(--card-shadow)}
 @media (prefers-reduced-motion:no-preference){
   .card-hover{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
-  .card-hover:hover{transform:translateY(-6px);box-shadow:0 24px 48px -22px rgba(11,37,71,.34);border-color:transparent}
+  .card-hover:hover{transform:translateY(-6px);
+    box-shadow:0 26px 52px -24px rgba(10,49,112,.42);border-color:var(--navy-600)}
 }
-.icon-badge{width:46px;height:46px;border-radius:14px;background:var(--mist);color:var(--navy-700);
+.icon-badge{width:46px;height:46px;border-radius:14px;color:var(--navy-700);
+  background:rgba(21,82,160,.09);box-shadow:inset 0 0 0 1px rgba(21,82,160,.18);
   display:flex;align-items:center;justify-content:center;flex:none}
 
 /* course card */
@@ -227,23 +311,17 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 @media (max-width:480px){.board-card{position:static;margin-top:1.1rem;max-width:none}}
 
 /* ══════════════ MEDIA SLOTS ══════════════ */
-.slot{aspect-ratio:16/9;width:100%;background:linear-gradient(150deg,var(--navy-700),var(--navy-600));
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;color:rgba(255,255,255,.72);font-size:.7rem}
 .play{width:66px;height:66px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;
   box-shadow:0 0 0 12px rgba(239,68,68,.22)}
 .play::after{content:"";width:0;height:0;border-top:11px solid transparent;border-bottom:11px solid transparent;
   border-left:17px solid #fff;margin-left:5px}
-.slot-lg{position:relative;gap:clamp(1rem,1.8vw,1.6rem)}
-.slot-lg::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(48% 62% at 50% 44%,rgba(255,255,255,.11),transparent 70%)}
-.slot-lg .mono{position:relative;font-size:clamp(.62rem,.85vw,.78rem);letter-spacing:.12em}
 .play-lg{position:relative;padding:0;width:clamp(64px,7.4vw,96px);height:clamp(64px,7.4vw,96px);cursor:pointer;
   box-shadow:0 0 0 clamp(10px,1.5vw,18px) rgba(239,68,68,.2);transition:transform .22s ease,box-shadow .22s ease}
 .play-lg:hover{transform:scale(1.06);box-shadow:0 0 0 clamp(14px,2vw,24px) rgba(239,68,68,.26)}
 .play-lg:focus-visible{border-radius:50%;outline-offset:6px}
 .play-lg::after{border-top-width:clamp(11px,1.25vw,15px);border-bottom-width:clamp(11px,1.25vw,15px);
   border-left-width:clamp(17px,1.95vw,24px);margin-left:clamp(5px,.55vw,7px)}
-@media (max-width:640px){.demo-card{border-radius:34px 8px 34px 8px}}
+@media (max-width:640px){.player{border-radius:34px 8px 34px 8px}}
 
 /* ══════════════ TABS / QUOTES ══════════════ */
 .tab{padding:.6rem .1rem;font-size:.92rem;font-weight:700;color:var(--slate);border-bottom:2.5px solid transparent;cursor:pointer}
@@ -265,10 +343,10 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 /* each banner is embedded once here and reused by every card that needs it */
 .sub-banner{display:block;margin:-1.6rem -1.5rem 0;aspect-ratio:3/2;
   background-size:cover;background-position:center;background-repeat:no-repeat}
-.sb-maths{background-image:url("images/v23/banner-maths.webp")}
-.sb-science{background-image:url("images/v23/banner-science.webp")}
-.sb-english{background-image:url("images/v23/banner-english.webp")}
-.sb-bundle{background-image:url("images/v23/banner-bundle.webp")}
+.sb-maths{background-image:url("images/v25/banner-maths.webp")}
+.sb-science{background-image:url("images/v25/banner-science.webp")}
+.sb-english{background-image:url("images/v25/banner-english.webp")}
+.sb-bundle{background-image:url("images/v25/banner-bundle.webp")}
 .course-bundle .sub-banner{border-bottom:1px solid rgba(255,255,255,.14)}
 .card-kicker{font-size:.55rem}
 .subj-tagline{font-size:.58rem;margin-top:.3rem}
@@ -361,6 +439,113 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 @media(min-width:1000px){.cols3{grid-template-columns:repeat(3,1fr)}.cols4{grid-template-columns:repeat(4,1fr)}}
 .hide-md{display:none}@media(min-width:1000px){.hide-md{display:flex}}
 .hide-sm{display:none}@media(min-width:640px){.hide-sm{display:block}}
+/* ══════════════ HEADER TOOLS · CALL · MOBILE MENU ══════════════ */
+.navtools{display:flex;align-items:center;gap:clamp(.55rem,1.2vw,1.4rem);margin-left:auto}
+.navcall{display:none;align-items:center;gap:.45rem;flex:none;
+  font-size:.9rem;font-weight:700;color:var(--navy-700);white-space:nowrap}
+.navcall svg{flex:none}
+.navcall:hover{color:var(--navy-600)}
+@media(min-width:1000px){.navcall{display:inline-flex}}
+
+.burger{display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.burger:hover{border-color:var(--navy-700)}
+.burger span{position:relative;display:block;width:18px;height:2px;border-radius:2px;background:var(--ink)}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;
+  width:18px;height:2px;border-radius:2px;background:var(--ink)}
+.burger span::before{top:-6px}
+.burger span::after{top:6px}
+.burger[aria-expanded="true"] span{background:transparent}
+.burger[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg)}
+@media (prefers-reduced-motion:no-preference){
+  .burger span,.burger span::before,.burger span::after{transition:transform .22s ease,background-color .18s ease}
+}
+@media(min-width:1000px){.burger{display:none}}
+
+.mnav{position:fixed;top:var(--mnav-top,64px);left:0;right:0;bottom:0;z-index:55;
+  background:rgba(2,10,32,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;visibility:hidden}
+.mnav[data-open="true"]{opacity:1;visibility:visible}
+.mnav-panel{background:var(--paper);border-bottom:1px solid var(--line);
+  padding:.5rem var(--gutter) 1.6rem;transform:translateY(-14px)}
+.mnav[data-open="true"] .mnav-panel{transform:none}
+@media (prefers-reduced-motion:no-preference){
+  .mnav{transition:opacity .22s ease,visibility .22s}
+  .mnav-panel{transition:transform .26s cubic-bezier(.2,.7,.3,1)}
+}
+.mnav-panel nav a{display:block;padding:.95rem .2rem;font-size:1.05rem;font-weight:700;
+  border-bottom:1px solid var(--line)}
+.mnav-panel nav a[aria-current="true"]{color:var(--navy-700)}
+.mnav-panel .navlink::after{display:none}
+@media(min-width:1000px){.mnav{display:none}}
+
+/* ══════════════ LESSON PLAYER — served in place, no third-party chrome ══════════════ */
+.player{position:relative;border-radius:var(--asym);overflow:hidden;background:var(--navy-950);
+  box-shadow:0 34px 74px -34px rgba(0,19,60,.5)}
+.player-stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  background:radial-gradient(122% 104% at 28% 18%,#0A3170,#00133C 72%)}
+.player-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+/* sits over the frame so pointer events never reach it */
+.player-shield{position:absolute;inset:0;z-index:3;cursor:pointer}
+.player-cover{cursor:pointer}
+
+.player-cover{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:.9rem;
+  padding:clamp(1.25rem,3vw,2.5rem);color:#fff;
+  background:linear-gradient(152deg,#02245A 0%,#00133C 78%)}
+.player-cover::before{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;
+  background:linear-gradient(180deg,transparent,rgba(0,8,32,.6));pointer-events:none}
+.player-cover > *{position:relative}
+.player-cover .eyebrow{color:var(--gold)}
+.player-title{font-weight:800;letter-spacing:-.025em;line-height:1.15;
+  font-size:clamp(1.15rem,2.3vw,1.9rem)}
+.player-note{font-size:.86rem;color:rgba(255,255,255,.66);max-width:44ch}
+.player[data-state="playing"] .player-cover,
+.player[data-state="paused"] .player-cover{display:none}
+
+.player-end{position:absolute;inset:0;z-index:5;display:none;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:.9rem;
+  padding:clamp(1.25rem,3vw,2.5rem);color:#fff;
+  background:linear-gradient(152deg,rgba(2,36,90,.96),rgba(0,19,60,.98))}
+.player[data-state="ended"] .player-end{display:flex}
+.player[data-state="ended"] .player-bar{visibility:hidden}
+
+.player-bar[hidden]{display:none}
+.player-bar{display:flex;align-items:center;gap:clamp(.6rem,1.4vw,1rem);
+  padding:.7rem clamp(.75rem,1.6vw,1.15rem);background:var(--navy-950);color:#fff}
+.pbtn{width:38px;height:38px;flex:none;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+.pbtn:hover{background:rgba(255,255,255,.22)}
+.pscrub{position:relative;flex:1;height:16px;display:flex;align-items:center;cursor:pointer}
+.pscrub::before{content:"";position:absolute;left:0;right:0;height:5px;border-radius:3px;
+  background:rgba(255,255,255,.18)}
+.pfill{position:relative;height:5px;width:0;border-radius:3px;background:var(--gold);
+  max-width:100%;pointer-events:none}
+.pfill::after{content:"";position:absolute;right:-5px;top:50%;width:11px;height:11px;
+  border-radius:50%;background:var(--gold);transform:translateY(-50%)}
+.ptime{font-size:.72rem;color:rgba(255,255,255,.72);white-space:nowrap;flex:none}
+.pcap{font-size:.6rem;color:rgba(255,255,255,.42);white-space:nowrap;flex:none}
+@media(max-width:560px){.pcap{display:none}}
+/* ══════════════ [hidden] MUST WIN ══════════════ */
+/* .grid/.flex set display, which silently overrides the UA [hidden] rule and
+   leaves "hidden" tab panels fully visible. This closes that whole bug class. */
+[hidden]{display:none!important}
+
+/* ══════════════ TESTIMONIAL GRID ══════════════ */
+/* a partial last row keeps the 3-column card width and centres instead of
+   hanging off the left edge; data-count is stamped on by JS so it self-corrects
+   when reviews are added or removed */
+@media(min-width:1000px){
+  #panels > .grid[data-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr));
+    max-width:calc((200% - 1rem) / 3);margin-inline:auto}
+  #panels > .grid[data-count="1"]{grid-template-columns:minmax(0,1fr);
+    max-width:calc((100% - 2rem) / 3);margin-inline:auto}
+}
+#panels .card{gap:.85rem}
+.qmark{margin-bottom:-.4rem}
+.tab{border-radius:6px 6px 0 0}
+.tab:focus-visible{outline-offset:-2px}
 </style>
 </head>
 <body>
@@ -377,69 +562,81 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 </div>
 
 <!-- ══ 02 NAV ══ -->
-<header class="nav">
+<header class="nav" id="sitenav">
   <div class="wrap flex center g4" style="padding-block:.85rem">
-    <a href="#" class="brand" aria-label="G-TEC eLessons.net Hybrid School, home">
-      <span class="el-logo" role="img" aria-label="G-TEC eLessons.net — Hybrid School"></span>
+    <a href="#top" class="brand" aria-label="G-TEC eLessons.net Hybrid School, home">
+      <span class="el-logo" role="img" aria-label="G-TEC eLessons.net &mdash; Hybrid School"></span>
     </a>
 
     <nav class="hide-md center g4" style="margin-inline:auto" aria-label="Primary">
       <a class="navlink" href="#top">Home</a>
       <a class="navlink" href="#courses">Classes</a>
       <a class="navlink" href="#demo">Demo</a>
-      <a class="navlink" href="#courses">Syllabus</a>
+      <a class="navlink" href="#course-grid">Syllabus</a>
       <a class="navlink" href="#faq">FAQ</a>
     </nav>
 
-    <div class="flex center g3" style="margin-left:auto">
+    <div class="navtools">
+      <a class="navcall" href="tel:+919745553944"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>+91 97455 53944</a>
       <select class="cur-select cur-nav" aria-label="Currency">
-        <option value="inr|IN" selected>₹ INR</option>
+        <option value="inr|IN" selected>&#8377; INR</option>
         <option value="aed|AE">AED</option>
       </select>
       <a href="#" class="navlink hide-sm">Sign in</a>
-      <a href="#" aria-label="Cart, 0 items" style="position:relative;flex:none">
-        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.4 12.1a1.6 1.6 0 0 0 1.6 1.3h8.8a1.6 1.6 0 0 0 1.6-1.3L21 7H5.2"/></svg>
-        <span class="mono" style="position:absolute;top:-6px;right:-8px;background:var(--gold);color:#00133C;font-size:.55rem;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;letter-spacing:0">0</span>
-      </a>
       <a href="#courses" class="btn btn-navy btn-sm">Buy now</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false"
+              aria-controls="mnav" aria-label="Open menu"><span></span></button>
     </div>
   </div>
 </header>
 
+<div class="mnav" id="mnav" data-open="false">
+  <div class="mnav-panel">
+    <nav aria-label="Mobile">
+      <a class="navlink" href="#top">Home</a>
+      <a class="navlink" href="#courses">Classes</a>
+      <a class="navlink" href="#demo">Demo</a>
+      <a class="navlink" href="#course-grid">Syllabus</a>
+      <a class="navlink" href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-red btn-block mt3" href="tel:+919745553944"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>Call +91 97455 53944</a>
+    <a class="btn btn-ghost-dark btn-block mt2" href="#courses">See the classes</a>
+  </div>
+</div>
+
 <!-- ══ 03 HERO ══ -->
 <section class="hero" id="top">
   <span class="hero-photo" aria-hidden="true">
-    <img src="images/v23/hero-photo.webp" alt="" width="980" height="949" fetchpriority="high">
+    <img src="images/v25/hero-photo.webp" alt="" width="1957" height="802" fetchpriority="high" decoding="async">
   </span>
+  <span class="hero-scrim" aria-hidden="true"></span>
 
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <img class="hero-logo rv" src="images/v23/gtec-logo.webp" alt="G-TEC Education" width="420" height="245">
+      <img class="hero-logo rv" src="images/v25/gtec-logo.webp" alt="G-TEC Education" width="420" height="245">
 
       <span class="pill rv"><span class="dot"></span> CBSE / NCERT &middot; Grades 8&ndash;12 &middot; Live + recorded</span>
 
       <h1 class="hero-title rv">
         <span class="t-light">Traditional</span>
-        Chalk-Board Class
+        <span class="t-strong">Chalk-Board Class</span>
       </h1>
 
       <span class="gold-rule rv" aria-hidden="true"></span>
 
-      <p class="hero-sub rv">from <strong>The comfort of your home !</strong></p>
+      <p class="hero-sub rv">from <strong>The comfort of your home!</strong></p>
 
-
-      <div class="flex g2 wrapf mt4 rv">
-        <a href="#courses" class="btn btn-red">Enrol for the year
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
+      <div class="hero-actions flex g2 wrapf rv">
+        <a href="#courses" class="btn btn-red">Enrol for the year <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a href="#demo" class="btn btn-ghost-light">Watch a free class</a>
       </div>
 
-      <div class="hero-trust flex center g3 wrapf mt3 rv">
-        <span><strong class="price" data-inr="From &#8377;12,000" data-aed="From AED 800" style="color:#fff">From &#8377;12,000</strong> / full year</span>
-        <span aria-hidden="true">&middot;</span>
+      <div class="hero-trust flex center g3 wrapf rv">
+        <span><strong class="price" data-inr="From &#8377;12,000" data-aed="From AED 800">From &#8377;12,000</strong> / full year</span>
+        <span class="sep" aria-hidden="true">&middot;</span>
         <span>CBSE / NCERT &middot; Grades 8&ndash;12</span>
-        <span aria-hidden="true">&middot;</span>
+        <span class="sep" aria-hidden="true">&middot;</span>
         <span>UAE &middot; India &middot; Bahrain &middot; KSA</span>
       </div>
     </div>
@@ -511,16 +708,48 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 </section>
 
 <!-- ══ 06 DEMO / PROOF ══ -->
-<section id="demo" class="sec lattice lattice-dark" style="background:var(--mist)">
+<section id="demo" class="sec" style="background:var(--mist)">
   <div class="wrap">
     <p class="eyebrow" style="color:var(--red)">Proof, not promises</p>
     <h2 class="dsp h2 mt2 maxw-sm">See a class before you pay a rupee.</h2>
 
     <div class="rv mt5">
-      <div class="asym demo-card" style="border:1px solid var(--line)">
-        <div class="slot slot-lg">
-          <button type="button" class="play play-lg" aria-label="Play the sample lesson"></button>
-          <span class="mono">Sample lesson &mdash; 90 seconds</span>
+      <div class="player" id="lesson-player" data-vid="OY1JSCKysz0" data-cap="90" data-state="idle">
+        <div class="player-stage">
+          <div id="lesson-frame"></div>
+          <div class="player-shield"></div>
+
+          <div class="player-cover">
+            <p class="eyebrow">Sample lesson</p>
+            <p class="player-title">Watch the first 90 seconds</p>
+            <button class="play play-lg" type="button" aria-label="Play the sample lesson, 90 second preview"></button>
+            <p class="player-note">A real teacher at a real board &mdash; the same way every chapter is taught.</p>
+          </div>
+
+          <div class="player-end">
+            <p class="eyebrow" style="color:var(--gold)">Preview complete</p>
+            <p class="player-title">Continue learning inside the course</p>
+            <p class="player-note">The full chapter, every subject, and the written notes are included for the whole academic year.</p>
+            <div class="flex g2 wrapf" style="justify-content:center;margin-top:.4rem">
+              <a href="#courses" class="btn btn-red">See the classes</a>
+              <button type="button" id="p-replay" class="btn btn-ghost-light">Replay preview</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="player-bar" hidden>
+          <button class="pbtn" type="button" id="p-toggle" aria-label="Play">
+            <svg id="i-play" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="i-pause" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="pscrub" role="slider" tabindex="0" aria-label="Seek within the preview"
+               aria-valuemin="0" aria-valuemax="90" aria-valuenow="0"><span class="pfill"></span></div>
+          <span class="ptime mono">0:00 / 1:30</span>
+          <button class="pbtn" type="button" id="p-mute" aria-label="Mute">
+            <svg id="i-sound" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zm12.5 3a4 4 0 0 0-2.5-3.7v7.4a4 4 0 0 0 2.5-3.7z"/></svg>
+            <svg id="i-muted" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M4 9v6h4l5 4V5L8 9zm15.1-.5-1.4-1.4-2.2 2.2-2.2-2.2-1.4 1.4L14.1 11l-2.2 2.2 1.4 1.4 2.2-2.2 2.2 2.2 1.4-1.4L16.9 11z"/></svg>
+          </button>
+          <span class="pcap mono">90-second preview</span>
         </div>
       </div>
       <p class="mt3" style="color:var(--slate);font-size:1rem;max-width:66ch">One chapter, taught end to end &mdash; exactly what every lesson in the course looks like, with the written notes for that chapter included.</p>
@@ -554,7 +783,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
     </div>
 
     <div class="classbanner rv mt4">
-      <img src="images/v23/brand-lockup.webp" alt="" aria-hidden="true" width="1400" height="350" loading="lazy">
+      <img src="images/v25/brand-lockup.webp" alt="" aria-hidden="true" width="1400" height="350" loading="lazy">
       <div class="classbanner-body">
         <p class="eyebrow" style="color:var(--gold)">Grades 8 to 12</p>
         <h3 class="dsp mt2" style="font-size:clamp(1.35rem,2.4vw,2rem);color:#fff">Every subject. Live and recorded.</h3>
@@ -911,7 +1140,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 
     <div class="board-stage rv">
       <figure class="board-portrait">
-        <img src="images/v23/board-model.webp" alt="" aria-hidden="true" width="560" height="700" loading="lazy">
+        <img src="images/v25/board-model.webp" alt="" aria-hidden="true" width="560" height="700" loading="lazy">
       </figure>
       <div class="board-card">
         <span class="board-card-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none"/></svg></span>
@@ -963,7 +1192,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 </section>
 
 <!-- ══ 12 TESTIMONIALS ══ -->
-<section class="sec lattice lattice-dark" id="reviews" style="background:var(--mist)">
+<section class="sec" id="reviews" style="background:var(--mist)">
   <div class="wrap">
     <p class="eyebrow" style="color:var(--red)">In their words</p>
     <h2 class="dsp h2 mt2">Students, parents, and teachers.</h2>
@@ -1102,32 +1331,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         <span class="mono" style="font-size:.58rem;color:var(--red)">Parent · India</span></span>
       </div>
     </div>
-    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
-      <span class="qmark" aria-hidden="true">&ldquo;</span>
-      <p style="font-size:.95rem;color:var(--slate-500)">The lessons are detailed and no step is skipped. Compared to regular tutoring it gives us freedom of time, unlimited revision, and no travel.</p>
-      <div class="flex center g2" style="margin-top:auto">
-        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="bgt6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D5E6FA"/><stop offset="1" stop-color="#AFCCF0"/></linearGradient>
-<clipPath id="cpt6"><rect width="200" height="200" rx="100"/></clipPath></defs>
-<g clip-path="url(#cpt6)">
-<rect width="200" height="200" fill="url(#bgt6)"/>
-<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
-<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#1B6A47"/>
-<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#12513F"/>
-<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#DCA87F"/>
-<ellipse cx="100" cy="80" rx="33" ry="37" fill="#F0C09A"/>
-<circle cx="66.5" cy="83" r="6.6" fill="#DCA87F"/><circle cx="133.5" cy="83" r="6.6" fill="#DCA87F"/>
-<path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#3A2A1E"/>
-<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
-<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#3A2A1E" stroke-width="2.7" fill="none" stroke-linecap="round"/>
-
-<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
-</g></svg></span>
-        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Parent name</span>
-        <span class="mono" style="font-size:.58rem;color:var(--red)">Parent · India</span></span>
-      </div>
     </div>
-  </div>
   <div class="grid cols3 g2" id="p-edu" role="tabpanel" hidden>
     <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
       <span class="qmark" aria-hidden="true">&ldquo;</span>
@@ -1179,32 +1383,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         <span class="mono" style="font-size:.58rem;color:var(--red)">Educationist · India</span></span>
       </div>
     </div>
-    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
-      <span class="qmark" aria-hidden="true">&ldquo;</span>
-      <p style="font-size:.95rem;color:var(--slate-500)">Coverage matches the NCERT syllabus topic for topic, the audio and video quality hold up, and students see every class upfront rather than waiting for a release schedule.</p>
-      <div class="flex center g2" style="margin-top:auto">
-        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="bgt9" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D3EAE0"/><stop offset="1" stop-color="#A6D5C1"/></linearGradient>
-<clipPath id="cpt9"><rect width="200" height="200" rx="100"/></clipPath></defs>
-<g clip-path="url(#cpt9)">
-<rect width="200" height="200" fill="url(#bgt9)"/>
-<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
-<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#0A3170"/>
-<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#062350"/>
-<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#C68F62"/>
-<ellipse cx="100" cy="80" rx="33" ry="37" fill="#DFA97C"/>
-<circle cx="66.5" cy="83" r="6.6" fill="#C68F62"/><circle cx="133.5" cy="83" r="6.6" fill="#C68F62"/>
-<path d="M67 77C67 52 82 40 100 40s33 12 33 37c-3-12-8-17-15-19-6 5-12 7-18 7s-12-2-18-7c-7 2-12 7-15 19Z" fill="#9AA0A6"/>
-<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
-<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#9AA0A6" stroke-width="2.7" fill="none" stroke-linecap="round"/>
-<g fill="none" stroke="#33404F" stroke-width="2.6" stroke-linecap="round"><rect x="77" y="71" width="21" height="17" rx="7.5"/><rect x="102" y="71" width="21" height="17" rx="7.5"/><path d="M98 78.5h4M77 76l-10 2M123 76l10 2"/></g><path d="M90 90.5q10-5 20 0" stroke="#9AA0A6" stroke-width="4.2" fill="none" stroke-linecap="round"/>
-<path d="M91 97q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
-</g></svg></span>
-        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Educator name</span>
-        <span class="mono" style="font-size:.58rem;color:var(--red)">Mentor · India</span></span>
-      </div>
     </div>
-  </div>
 </div>
   </div>
 </section>
@@ -1259,6 +1438,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.6 2 2.18 6.42 2.18 11.86c0 1.94.53 3.76 1.45 5.32L2 22l4.96-1.58a9.8 9.8 0 0 0 5.08 1.4c5.43 0 9.85-4.42 9.85-9.86S17.47 2 12.04 2Zm5.77 14c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.13.07-1.82-.11a15.6 15.6 0 0 1-1.65-.62c-2.9-1.26-4.8-4.2-4.94-4.4-.15-.2-1.19-1.58-1.19-3.02 0-1.44.75-2.14 1.02-2.44.27-.29.59-.36.78-.36h.56c.18 0 .42-.07.66.5.24.59.83 2.03.9 2.18.07.15.12.32.02.51-.1.2-.15.32-.3.49-.14.17-.3.38-.44.51-.14.15-.29.3-.13.6.17.29.75 1.23 1.6 2 1.11.98 2.04 1.29 2.33 1.44.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.7.8 2 .95.29.15.48.22.55.34.07.13.07.73-.17 1.42Z"/></svg>
         WhatsApp us
       </a>
+      <a href="tel:+919745553944" class="btn btn-ghost-light"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>Call +91 97455 53944</a>
     </div>
   </div>
 </section>
@@ -1273,7 +1453,8 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
       <div class="card mt4" style="border-radius:18px">
         <p class="mono" style="font-size:.6rem;color:var(--red)">Corporate office</p>
         <p class="mt1" style="font-size:.94rem;color:var(--slate)">eLessons.Net, #104, Level 5, Infantry Techno Park,<br>Infantry Road, Bangalore 560001, Karnataka, India</p>
-        <a href="mailto:contact@elessons.net" class="mt2" style="display:inline-block;font-weight:700;color:var(--navy);font-size:.92rem">contact@elessons.net</a>
+        <a href="tel:+919745553944" class="mt2" style="display:inline-block;font-weight:700;color:var(--navy);font-size:.92rem">+91 97455 53944</a>
+        <a href="mailto:contact@elessons.net" style="display:inline-block;font-weight:700;color:var(--navy);font-size:.92rem;margin-top:.35rem">contact@elessons.net</a>
       </div>
 
       <div class="card mt2" style="border-radius:18px">
@@ -1300,12 +1481,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
   <div class="wrap" style="padding-block:clamp(2.75rem,5vw,4rem)">
     <div class="grid cols3 g4">
       <div>
-        <img class="brand-footer" src="images/v23/footer-logo.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191">
+        <img class="brand-footer" src="images/v25/footer-logo.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191">
         <p class="mt2" style="font-size:.9rem;max-width:32ch">CBSE / NCERT video lessons and notes for grades 8 to 12.</p>
         <p class="mono mt2" style="font-size:.58rem;color:var(--gold)">iOS &amp; Android apps &mdash; coming soon</p>
       </div>
       <nav class="grid g1" style="align-content:start;font-size:.9rem">
-        <a href="#courses">Syllabus</a><a href="#">About us</a><a href="#">Terms</a>
+        <a href="#course-grid">Syllabus</a><a href="#">About us</a><a href="#">Terms</a>
       </nav>
       <nav class="grid g1" style="align-content:start;font-size:.9rem">
         <a href="#">Privacy</a><a href="#faq">FAQ</a><a href="#contact">Contact us</a>
@@ -1314,7 +1495,9 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
     <div class="board-rule" style="margin-block:2.25rem"></div>
     <div class="flex between center wrapf g2" style="font-size:.8rem">
       <p>&copy; 2026 G-TEC eLessons.net. All rights reserved.</p>
-      <a href="https://wa.me/971568056001">+971 568056001</a>
+      <span class="flex center g2 wrapf"><a href="tel:+919745553944">+91 97455 53944</a>
+        <span aria-hidden="true" style="opacity:.4">&middot;</span>
+        <a href="https://wa.me/971568056001">+971 568056001</a></span>
     </div>
   </div>
 </footer>
@@ -1325,7 +1508,11 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
     <p class="mono" style="font-size:.9rem;color:#FCD34D;line-height:1.2"><span class="price" data-inr="From &#8377;12,000" data-aed="From AED 800">From &#8377;12,000</span></p>
     <p style="font-size:.68rem;opacity:.7">per year &middot; all subjects</p>
   </div>
-  <a href="#courses" class="btn btn-red btn-sm">Buy now</a>
+  <div class="flex center g1">
+    <a href="tel:+919745553944" class="btn btn-ghost-light btn-sm" aria-label="Call +91 97455 53944"
+       style="padding-inline:.9rem"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+    <a href="#courses" class="btn btn-red btn-sm">Buy now</a>
+  </div>
 </div>
 
 <script>
@@ -1345,14 +1532,43 @@ document.querySelectorAll('.filter').forEach(function(f){
   };
 });
 
-var tabs=document.querySelectorAll('.tab');
-tabs.forEach(function(t){
-  t.onclick=function(){
-    tabs.forEach(function(o){o.setAttribute('aria-selected','false');document.getElementById(o.dataset.panel).hidden=true});
-    t.setAttribute('aria-selected','true');
-    document.getElementById(t.dataset.panel).hidden=false;
-  };
-});
+(function(){
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  if (!tabs.length) return;
+
+  // stamp each panel with its card count so partial rows can centre themselves
+  document.querySelectorAll('#panels > .grid').forEach(function(p){
+    p.dataset.count = p.children.length;
+  });
+
+  function select(i, focus){
+    tabs.forEach(function(o, k){
+      var on = k === i, panel = document.getElementById(o.dataset.panel);
+      o.setAttribute('aria-selected', on ? 'true' : 'false');
+      o.tabIndex = on ? 0 : -1;
+      if (panel) panel.hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+  }
+
+  tabs.forEach(function(t, i){
+    var pid = t.dataset.panel, panel = document.getElementById(pid);
+    t.id = 'tab-' + pid;
+    t.setAttribute('aria-controls', pid);
+    t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1;
+    if (panel) panel.setAttribute('aria-labelledby', t.id);
+
+    t.addEventListener('click', function(){ select(i); });
+    t.addEventListener('keydown', function(e){
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (e.key === 'Home')      { e.preventDefault(); return select(0, true); }
+      if (e.key === 'End')       { e.preventDefault(); return select(tabs.length - 1, true); }
+      if (!d) return;
+      e.preventDefault();
+      select((i + d + tabs.length) % tabs.length, true);
+    });
+  });
+})();
 
 if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches){
   var io=new IntersectionObserver(function(es){
@@ -1440,8 +1656,275 @@ if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches){
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ visible[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0; });
     paint();
-  }, { rootMargin: '-96px 0px -55% 0px', threshold: [0, 0.15, 0.4, 0.75, 1] });
+  }, { rootMargin: '-' + (parseInt(getComputedStyle(document.documentElement)
+       .getPropertyValue('--nav-h'), 10) || 68) + 'px 0px -55% 0px',
+     threshold: [0, 0.15, 0.4, 0.75, 1] });
   targets.forEach(function(t){ io.observe(t); });
+})();
+</script>
+
+<script>
+/* ── in-page navigation: measured sticky offset, smooth scroll, mobile drawer ── */
+(function () {
+  var header = document.getElementById('sitenav');
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('mnav');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function navH() { return header ? Math.round(header.getBoundingClientRect().height) : 68; }
+
+  function syncVars() {
+    document.documentElement.style.setProperty('--nav-h', navH() + 'px');
+    if (drawer && drawer.dataset.open === 'true') {
+      drawer.style.setProperty('--mnav-top',
+        Math.round(header.getBoundingClientRect().bottom) + 'px');
+    }
+  }
+  syncVars();
+  window.addEventListener('resize', function () {
+    syncVars();
+    if (window.innerWidth >= 1000) closeMenu();   // never strand a locked body
+  });
+  window.addEventListener('load', syncVars);
+  if (window.ResizeObserver && header) new ResizeObserver(syncVars).observe(header);
+
+  function closeMenu() {
+    if (!drawer || drawer.dataset.open !== 'true') return;
+    drawer.dataset.open = 'false';
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Open menu');
+    document.body.style.overflow = '';
+  }
+  function openMenu() {
+    if (!drawer) return;
+    drawer.style.setProperty('--mnav-top',
+      Math.round(header.getBoundingClientRect().bottom) + 'px');
+    drawer.dataset.open = 'true';
+    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Close menu');
+    document.body.style.overflow = 'hidden';
+  }
+  if (burger) {
+    burger.addEventListener('click', function () {
+      drawer.dataset.open === 'true' ? closeMenu() : openMenu();
+    });
+  }
+  if (drawer) {
+    drawer.addEventListener('click', function (e) {
+      if (e.target === drawer) closeMenu();          // backdrop
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeMenu(); if (burger) burger.focus(); }
+  });
+
+  function scrollToEl(el) {
+    var y = el.id === 'top'
+      ? 0
+      : el.getBoundingClientRect().top + window.pageYOffset - navH() - 14;
+    window.scrollTo({ top: Math.max(0, y), behavior: reduce.matches ? 'auto' : 'smooth' });
+  }
+
+  /* every in-page link — nav, drawer, Buy now, footer, hero CTAs — routes through here,
+     so nothing navigates away and nothing lands under the sticky header */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a || a.hasAttribute('download') || a.target === '_blank') return;
+    var href = a.getAttribute('href');
+    if (!href || href.length < 2) return;
+    var el = document.getElementById(decodeURIComponent(href.slice(1)));
+    if (!el) return;
+    e.preventDefault();
+    closeMenu();
+    scrollToEl(el);
+    history.replaceState(null, '', href);
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
+  });
+
+  /* deep link on load lands below the header too */
+  window.addEventListener('load', function () {
+    if (!location.hash || location.hash.length < 2) return;
+    var el = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (el) setTimeout(function () { scrollToEl(el); }, 60);
+  });
+})();
+</script>
+
+<script>
+/* ── lesson preview: plays inside the page, capped, no third-party chrome ──
+   The frame is covered by .player-shield so the pointer never reaches it and
+   the provider's own overlays never surface. Playback is hard-stopped twice:
+   the player's own end bound and a polling guard. */
+(function () {
+  var root = document.getElementById('lesson-player');
+  if (!root) return;
+
+  var VID = root.dataset.vid;
+  var CAP = parseFloat(root.dataset.cap) || 90;
+  var q = function (s) { return root.querySelector(s); };
+  var mount = q('#lesson-frame'), cover = q('.player-cover'), bar = q('.player-bar'),
+      fill = q('.pfill'), tlabel = q('.ptime'), scrub = q('.pscrub'),
+      shield = q('.player-shield'), bPlay = q('#p-toggle'), bMute = q('#p-mute'),
+      iPlay = q('#i-play'), iPause = q('#i-pause'), iSound = q('#i-sound'), iMuted = q('#i-muted');
+
+  var yt = null, timer = null, started = false, failed = false;
+
+  function fmt(s) {
+    s = Math.max(0, Math.floor(s || 0));
+    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+  function paint(t) {
+    var p = Math.max(0, Math.min(1, t / CAP));
+    fill.style.width = (p * 100) + '%';
+    tlabel.textContent = fmt(t) + ' / ' + fmt(CAP);
+    scrub.setAttribute('aria-valuenow', Math.round(t));
+    scrub.setAttribute('aria-valuetext', fmt(t) + ' of ' + fmt(CAP));
+  }
+  function icons(playing) {
+    iPlay.style.display = playing ? 'none' : '';
+    iPause.style.display = playing ? '' : 'none';
+    bPlay.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+  }
+  paint(0);
+
+  function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+  function endNow() {
+    stopTimer();
+    try { yt && yt.pauseVideo(); } catch (e) {}
+    paint(CAP);
+    root.dataset.state = 'ended';
+  }
+  function watch() {
+    stopTimer();
+    timer = setInterval(function () {
+      if (!yt || !yt.getCurrentTime) return;
+      var t = yt.getCurrentTime();
+      if (t >= CAP - 0.12) { endNow(); return; }
+      paint(t);
+    }, 200);
+  }
+
+  function fallback(msg) {
+    if (failed || root.dataset.state === 'playing') return;
+    failed = true;
+    root.dataset.state = 'idle';
+    var n = q('.player-note');
+    if (n) n.textContent = msg;
+  }
+
+  function loadAPI(done) {
+    if (window.YT && window.YT.Player) return done();
+    var prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () { if (prev) prev(); done(); };
+    if (!document.getElementById('vp-api')) {
+      var s = document.createElement('script');
+      s.id = 'vp-api';
+      s.src = 'https://www.youtube.com/iframe_api';
+      s.onerror = function () { fallback('Preview could not load here. Browse the classes below.'); };
+      document.head.appendChild(s);
+    }
+    setTimeout(function () {
+      if (!(window.YT && window.YT.Player)) {
+        fallback('Preview could not load here. Browse the classes below.');
+      }
+    }, 7000);
+  }
+
+  function build() {
+    yt = new YT.Player(mount, {
+      videoId: VID,
+      host: 'https://www.youtube-nocookie.com',
+      playerVars: {
+        autoplay: 1, controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3,
+        disablekb: 1, fs: 0, playsinline: 1, cc_load_policy: 0,
+        end: Math.round(CAP), origin: window.location.origin
+      },
+      events: {
+        onReady: function (e) {
+          root.dataset.state = 'playing';
+          bar.hidden = false;
+          icons(true);
+          e.target.playVideo();
+          watch();
+        },
+        onStateChange: function (e) {
+          if (e.data === YT.PlayerState.PLAYING) { root.dataset.state = 'playing'; icons(true); watch(); }
+          else if (e.data === YT.PlayerState.PAUSED) { root.dataset.state = 'paused'; icons(false); stopTimer(); }
+          else if (e.data === YT.PlayerState.ENDED) { endNow(); }
+        },
+        onError: function () {
+          stopTimer();
+          fallback('This preview is unavailable right now. Browse the classes below.');
+        }
+      }
+    });
+  }
+
+  function start() {
+    if (started) return;
+    started = true;
+    root.dataset.state = 'loading';
+    loadAPI(build);
+  }
+
+  function toggle() {
+    if (!started) return start();
+    if (!yt) return;
+    if (root.dataset.state === 'playing') yt.pauseVideo(); else yt.playVideo();
+  }
+
+  cover.addEventListener('click', start);
+  shield.addEventListener('click', toggle);
+  bPlay.addEventListener('click', toggle);
+
+  bMute.addEventListener('click', function () {
+    if (!yt) return;
+    var m = yt.isMuted();
+    m ? yt.unMute() : yt.mute();
+    iSound.style.display = m ? '' : 'none';
+    iMuted.style.display = m ? 'none' : '';
+    bMute.setAttribute('aria-label', m ? 'Mute' : 'Unmute');
+  });
+
+  function seekFromX(clientX) {
+    if (!yt || !yt.seekTo) return;
+    var r = scrub.getBoundingClientRect();
+    var p = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    yt.seekTo(p * CAP, true);
+    paint(p * CAP);
+    if (root.dataset.state === 'ended') { root.dataset.state = 'playing'; yt.playVideo(); }
+  }
+  scrub.addEventListener('click', function (e) { seekFromX(e.clientX); });
+  scrub.addEventListener('keydown', function (e) {
+    if (!yt || !yt.getCurrentTime) return;
+    var t = yt.getCurrentTime(), step = e.shiftKey ? 10 : 5, n = null;
+    if (e.key === 'ArrowRight') n = Math.min(CAP, t + step);
+    if (e.key === 'ArrowLeft') n = Math.max(0, t - step);
+    if (e.key === 'Home') n = 0;
+    if (e.key === 'End') n = CAP - 1;
+    if (n === null) return;
+    e.preventDefault();
+    yt.seekTo(n, true); paint(n);
+  });
+
+  var replay = q('#p-replay');
+  if (replay) replay.addEventListener('click', function () {
+    if (!yt) return start();
+    root.dataset.state = 'playing';
+    yt.seekTo(0, true); yt.playVideo(); watch();
+  });
+
+  /* stop the clock if the section scrolls away */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (!en.isIntersecting && yt && root.dataset.state === 'playing') {
+          try { yt.pauseVideo(); } catch (e) {}
+        }
+      });
+    }, { threshold: 0.15 }).observe(root);
+  }
 })();
 </script>
 
