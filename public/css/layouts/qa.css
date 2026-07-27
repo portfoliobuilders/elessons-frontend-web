@@ -121,10 +121,16 @@ body {
 .demo-media {
   position: relative;
   aspect-ratio: 16 / 10;
-  border-radius: 18px;
+  border-radius: 72px 14px 72px 14px;
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--navy-900);
+}
+
+@media (max-width: 640px) {
+  .demo-media {
+    border-radius: 34px 8px 34px 8px;
+  }
 }
 
 .demo-media img {

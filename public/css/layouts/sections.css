@@ -229,6 +229,10 @@
   margin-top: var(--space-xl);
 }
 
+.board__actions--ledge {
+  margin-top: 0;
+}
+
 .board__model {
   position: relative;
   display: flex;

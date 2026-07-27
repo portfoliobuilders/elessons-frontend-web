@@ -48,6 +48,15 @@
   /* ── GRADIENTS ───────────────────────────────────────────────────────── */
   --grad-primary: linear-gradient(103deg, var(--navy-700) 0%, var(--navy-600) 100%);
   --grad-hero: linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 52%, var(--navy-850) 100%);
+  /* Brochure hero (v11) — horizontal wash matching herobanner.png */
+  --grad-hero-brochure: linear-gradient(
+    100deg,
+    #001544 0%,
+    #001b50 26%,
+    #002561 46%,
+    #003175 66%,
+    #00397f 100%
+  );
 
   /* ── TYPOGRAPHY ──────────────────────────────────────────────────────── */
   --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -104,9 +113,9 @@
   --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
   /* ── RESPONSIVE FONT SCALING ─────────────────────────────────────────── */
-  --text-hero-h1: clamp(2rem, 6vw, 4.4rem);
-  --text-hero-sub: clamp(1rem, 1.3vw, 1.13rem);
-  --text-h2: clamp(1.5rem, 3.4vw, 2.9rem);
+  --text-hero-h1: clamp(2.15rem, 5vw, 3.85rem);
+  --text-hero-sub: clamp(1.15rem, 2.6vw, 2.05rem);
+  --text-h2: clamp(1.95rem, 3.6vw, 3.1rem);
 
   /* Focus ring (WCAG 2.4.7) */
   --focus-ring: 3px solid var(--cta-accent);
