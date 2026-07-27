@@ -4,7 +4,7 @@
       <p class="section-eyebrow section-eyebrow--gold">The difference</p>
       <h2 id="board-heading" class="h2 board__title" style="margin-top: var(--space-sm)">
         No animation.<br>No graphics.<br>
-        <span class="hero__title-accent">Just the board.</span>
+        <span class="serif-accent">Just the board.</span>
       </h2>
       <p class="board__lead">
         Most online classes replace the teacher with motion graphics. We film the teacher,

@@ -17,25 +17,68 @@
       </div>
     </div>
 
-    <form class="contact-form" action="#" method="post">
+    <form class="contact-form" action="#" method="post" novalidate>
       <div class="field">
-        <label class="field__required" for="f-n">Name</label>
-        <input id="f-n" name="name" type="text" autocomplete="name" required aria-required="true">
+        <label for="f-n">
+          Name <span class="required" aria-hidden="true">*</span>
+          <span class="sr-only">(required)</span>
+        </label>
+        <input
+          id="f-n"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+          aria-required="true"
+          aria-describedby="name-hint"
+          placeholder="Your full name"
+        >
+        <span id="name-hint" class="field__hint">As you’d like us to address you</span>
       </div>
+
       <div class="field">
-        <label class="field__required" for="f-e">Email</label>
-        <input id="f-e" name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="email-hint">
-        <span id="email-hint" class="field__hint">We’ll never share your email.</span>
+        <label for="f-e">
+          Email <span class="required" aria-hidden="true">*</span>
+          <span class="sr-only">(required)</span>
+        </label>
+        <input
+          id="f-e"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+          aria-required="true"
+          aria-describedby="email-hint"
+          placeholder="parent@example.com"
+        >
+        <span id="email-hint" class="field__hint">We’ll never share your email</span>
       </div>
+
       <div class="field">
         <label for="f-m">Mobile number</label>
-        <input id="f-m" name="mobile" type="tel" autocomplete="tel">
+        <input
+          id="f-m"
+          name="mobile"
+          type="tel"
+          autocomplete="tel"
+          placeholder="+971 …"
+          aria-describedby="mobile-hint"
+        >
+        <span id="mobile-hint" class="field__hint">Optional — WhatsApp preferred</span>
       </div>
+
       <div class="field field--full">
         <label for="f-msg">Message</label>
-        <textarea id="f-msg" name="message" rows="4" aria-describedby="msg-hint"></textarea>
-        <span id="msg-hint" class="field__hint">Optional — grade, board, or questions.</span>
+        <textarea
+          id="f-msg"
+          name="message"
+          rows="4"
+          aria-describedby="msg-hint"
+          placeholder="Grade, board, or questions"
+        ></textarea>
+        <span id="msg-hint" class="field__hint">Optional — grade, board, or questions</span>
       </div>
+
       <button type="submit" class="btn btn--navy" style="justify-self: start">Send message</button>
       <p id="form-status" class="form-status field--full" role="status" aria-live="polite"></p>
     </form>

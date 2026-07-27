@@ -1,10 +1,21 @@
-{{-- Primary site header — keyboard + screen-reader friendly --}}
+{{-- Primary site header — uses official eLessons brand mark --}}
 <a href="#main" class="skip-link">Skip to main content</a>
 
 <header class="site-header">
   <div class="site-header__inner">
     <a href="/" class="site-header__logo" aria-label="G-TEC eLessons home">
-      G-TEC <span>eLessons</span>
+      <picture>
+        <source srcset="/images/brand/elessons-logo-color-48h.webp 1x, /images/brand/elessons-logo-color-96h.webp 2x" type="image/webp">
+        <img
+          class="site-header__logo-img"
+          src="/images/brand/elessons-logo-color-48h.png"
+          srcset="/images/brand/elessons-logo-color-48h.png 1x, /images/brand/elessons-logo-color-96h.png 2x"
+          width="185"
+          height="48"
+          alt="G-TEC eLessons.net Hybrid School"
+          decoding="async"
+        >
+      </picture>
     </a>
 
     <nav class="site-nav" aria-label="Primary navigation">

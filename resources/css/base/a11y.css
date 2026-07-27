@@ -175,35 +175,43 @@ html {
 }
 
 .field label {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.95rem;
   color: var(--text-primary);
+}
+
+.field .required {
+  color: var(--cta-accent);
+  font-weight: 800;
+  margin-left: 0.15rem;
 }
 
 .field input,
 .field textarea {
   min-height: 48px;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   border: 1.5px solid var(--border);
   border-radius: 10px;
   font: inherit;
+  font-size: 1rem;
   color: var(--text-primary);
   background: var(--bg-primary);
+  transition: border-color var(--duration-base) var(--easing-out), box-shadow var(--duration-base) var(--easing-out);
 }
 
 .field input:focus-visible,
 .field textarea:focus-visible {
   border-color: var(--cta-accent);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
 }
 
 .field__hint {
-  font-size: var(--text-sm);
+  font-size: 0.75rem;
   color: var(--text-secondary);
+  font-style: italic;
 }
 
-/* Do not rely on colour alone for required fields */
+/* Keep legacy class working if used elsewhere */
 .field__required::after {
-  content: " (required)";
-  font-weight: 500;
-  color: var(--text-secondary);
-  font-size: var(--text-sm);
+  content: none;
 }
