@@ -6,12 +6,21 @@
     'meta' => 'full academic year · all subjects',
     'banner' => 'var(--navy-600)',
     'tags' => '',
-    'href' => '#contact',
+    'href' => null,
 ])
+
+@php
+    $wa = '971568056001';
+    $msg = rawurlencode("Hi G-TEC eLessons, I want to buy the Grade {$grade} {$stream} annual package (AED 1200).");
+    $buyHref = $href ?: "https://wa.me/{$wa}?text={$msg}";
+    $label = "Buy Grade {$grade} {$stream} package on WhatsApp";
+@endphp
 
 <article
     class="course-card"
     data-tags="{{ $tags }}"
+    data-grade="{{ $grade }}"
+    data-stream="{{ $stream }}"
     style="--banner: {{ $banner }}"
     {{ $attributes }}
 >
@@ -28,6 +37,12 @@
     <div class="course-card__foot">
         <p class="course-card__price">{{ $price }}</p>
         <p class="course-card__meta">{{ $meta }}</p>
-        <a href="{{ $href }}" class="btn btn--primary btn--sm btn--block">Buy now</a>
+        <a
+            href="{{ $buyHref }}"
+            class="btn btn--primary btn--sm btn--block"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="{{ $label }}"
+        >Buy now</a>
     </div>
 </article>

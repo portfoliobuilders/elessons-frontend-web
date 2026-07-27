@@ -32,6 +32,7 @@ $packages = [
         >{{ $filter }}</button>
       @endforeach
     </div>
+    <p id="filter-status" class="filter-status" aria-live="polite">9 packages shown</p>
 
     <div class="course-grid" id="course-grid" style="margin-top: var(--space-xl)">
       @foreach($packages as $pkg)
@@ -43,7 +44,6 @@ $packages = [
           :banner="$pkg['banner']"
           price="AED 1,200"
           meta="≈ ₹27,500 · full academic year"
-          href="#contact"
         />
       @endforeach
     </div>
