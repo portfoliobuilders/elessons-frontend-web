@@ -1,0 +1,91 @@
+/**
+ * G-TEC eLessons — Mobile-first responsive architecture (Phase 2)
+ *
+ * Breakpoints:
+ *   XS  320–639   1 col
+ *   SM  640–767   2 cols
+ *   MD  768–999   3 cols
+ *   LG  1000–1279 4 cols
+ *   XL  1280+     4 cols, max-width centered
+ */
+
+html {
+  scrollbar-gutter: stable;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.sec {
+  padding-block: clamp(3.75rem, 7.5vw, 7rem);
+}
+
+/* ── Responsive grids ──────────────────────────────────────────────── */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 640px) {
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-responsive {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .grid-responsive {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid-responsive {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Utility: hide decorative pieces on small screens */
+@media (max-width: 639px) {
+  .hide-sm {
+    display: none !important;
+  }
+}
+
+/* Fluid media — always reserve space via width/height attrs in HTML */
+img,
+picture {
+  max-width: 100%;
+  height: auto;
+}
+
+picture img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Touch targets — mobile floor */
+a[href],
+button,
+[role="button"],
+summary {
+  min-height: 44px;
+}
+
+@media (max-width: 640px) {
+  a.btn,
+  button.btn {
+    min-height: 48px;
+  }
+}
