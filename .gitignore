@@ -16,3 +16,9 @@ ios/Pods/
 ios/.symlinks/
 android/.gradle/
 *.lock
+
+# Vercel
+.vercel/
+.vercel-out/
+.env*.local
+node_modules/

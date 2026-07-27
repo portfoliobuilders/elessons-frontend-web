@@ -1,1119 +1,1450 @@
+<!-- Mirror of public/index.html (v23). Prefer public/ for Vercel. -->
+<!--
+  G-TEC eLessons.net — Homepage v23 (final UI)
+  Assets: images/v23/* · Deploy: public/ as Vercel root
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>G-TEC eLessons — Traditional chalk-board class. On your screen.</title>
-  <meta name="description" content="Full-year CBSE/NCERT video lessons for grades 8–12. No animation, no graphics — just a traditional chalk-board class, filmed. AED 1200 for the academic year." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --board: #16302A;
-      --board-soft: #24443B;
-      --chalk: #F2F0E6;
-      --chalk-dim: #A8B3AC;
-      --paper: #FAF8F2;
-      --ink: #1A1A18;
-      --chalk-amber: #E8C547;
-      --brand-cyan: #00AEEF;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="public/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="public/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+<meta name="theme-color" content="#001A4E">
+<title>G-TEC eLessons.net — Traditional chalk-board class from the comfort of your home</title>
+<meta name="description" content="CBSE / NCERT video lessons and notes for grades 8 to 12. A real teacher at a real board. From &#8377;12,000 for the full academic year.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════ TOKENS — sampled from E_LESSONS brochure ══════════════ */
+:root{
+  /* sampled from landingscreen.dart — 26 unique Color(0x..) literals */
+  --navy-950:#00133C;  --navy-900:#001A4E;  --navy-850:#02245A; --navy-800:#022157;
+  --navy-700:#0A3170;  --navy-600:#1552A0;
+  --slate-800:#1E293B; --slate-700:#334155; --slate-500:#64748B;
+  --slate-400:#94A3B8; --slate-300:#CBD5E1; --slate-200:#E2E8F0; --slate-50:#F8FAFC;
+  --red:#EF4444;       --gold:#FBC63F;
+  --sci:#1B6A47;       --com:#5B3E96;       /* _SubjectCard bannerColor */
+  --ink:var(--navy-900); --slate:var(--slate-500); --line:var(--slate-200);
+  --paper:#FFFFFF;     --mist:var(--slate-50);  --navy:var(--navy-700);
+  --grad:linear-gradient(103deg,var(--navy-700) 0%,var(--navy-600) 100%);
+  --hero-grad:linear-gradient(100deg,#001544 0%,#001B50 26%,#002561 46%,#003175 66%,#00397F 100%);
+  --gutter:clamp(1rem,2.4vw,2.5rem); --maxw:1720px;
+  --asym:72px 14px 72px 14px;
+}
+*,*::before,*::after{box-sizing:border-box}
+/* the header is sticky, so a raw anchor jump would drop the target underneath it */
+:target,section[id],div[id]{scroll-margin-top:92px}
+#top{scroll-margin-top:0}
+@media (max-width:640px){section[id],div[id]{scroll-margin-top:74px}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);
+  font-family:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none}
+h1,h2,h3,h4,p{margin:0}
 
-    *, *::before, *::after { box-sizing: border-box; }
+/* ══════════════ TYPE ══════════════ */
+.dsp{font-weight:800;letter-spacing:-0.035em;line-height:1.03}
+.h1{font-size:clamp(1.75rem,5vw,4.4rem);line-height:1.02}
+.h2{font-size:clamp(1.85rem,3.4vw,2.9rem)}
+.h3{font-size:1.08rem;font-weight:700;letter-spacing:-0.015em;line-height:1.35}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:600;text-transform:uppercase;letter-spacing:.09em}
+.eyebrow{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:600;text-transform:uppercase;letter-spacing:.11em;font-size:.7rem}
+.serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400;letter-spacing:-0.01em}
+.lead{font-size:clamp(1rem,1.3vw,1.13rem);color:var(--slate)}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-    html { scroll-behavior: smooth; }
+/* ══════════════ LAYOUT ══════════════ */
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.sec{padding-block:clamp(3.75rem,7.5vw,7rem)}
+.grid{display:grid}
+.flex{display:flex}
 
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: "Instrument Sans", system-ui, sans-serif;
-      font-weight: 400;
-      -webkit-font-smoothing: antialiased;
-    }
+/* ══════════════ BRAND MOTIFS (from the brochure) ══════════════ */
+/* 1 · diamond lattice */
+.lattice{position:relative}
+.lattice::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(45deg,rgba(255,255,255,.055) 0 1px,transparent 1px 74px),
+    repeating-linear-gradient(-45deg,rgba(255,255,255,.055) 0 1px,transparent 1px 74px);}
+.lattice-dark::before{
+  background-image:
+    repeating-linear-gradient(45deg,rgba(19,74,130,.07) 0 1px,transparent 1px 74px),
+    repeating-linear-gradient(-45deg,rgba(15,23,42,.07) 0 1px,transparent 1px 74px);}
+/* 2 · asymmetric frame */
+.asym{border-radius:var(--asym);overflow:hidden}
 
-    .font-display {
-      font-family: "Bricolage Grotesque", system-ui, sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
+/* ══════════════ BUTTONS (v4: enhanced mobile, contrast, hover) ══════════════ */
+/* ENHANCED BUTTON STYLING (v4 fixes) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  height:54px;padding-inline:2rem;border-radius:999px;border:1.5px solid transparent;
+  font-weight:700;font-size:1rem;letter-spacing:-.01em;cursor:pointer;white-space:nowrap;
+  transition:all .25s cubic-bezier(.4,0,.2,1)}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 8px 22px -8px rgba(239,68,68,.7)}
+.btn-red:hover{background:#DC2626;transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(239,68,68,.85)}
+.btn-red:active{transform:translateY(0)}
+.btn-red:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:6px}
+.btn-outline{border:1.5px solid rgba(255,255,255,.3);color:#fff;background:transparent}
+.btn-outline:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.08)}
+.btn-navy{background:var(--navy-700);color:#fff;box-shadow:0 8px 22px -10px rgba(10,49,112,.75)}
+.btn-navy:hover{background:var(--navy-600)}
+.btn-ghost-light{border:1.5px solid rgba(255,255,255,.34);color:#fff;background:rgba(255,255,255,.07)}
+.btn-ghost-light:hover{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.14)}
+.btn-ghost-dark{border:1.5px solid var(--line);color:var(--ink);background:#fff}
+.btn-ghost-dark:hover{border-color:var(--navy-700);color:var(--navy-700)}
+.btn-sm{height:42px;padding-inline:1.25rem;font-size:.9rem}
+.btn-block{width:100%}
+@media (max-width:640px){
+  .btn{min-height:48px;height:auto;padding-block:.75rem}
+}
+@media (prefers-reduced-motion:no-preference){
+  .btn{transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease,border-color .18s ease}
+  .btn:hover{transform:translateY(-2px)}
+}
+:where(a,button,input,textarea,summary):focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:6px}
 
-    .font-body {
-      font-family: "Instrument Sans", system-ui, sans-serif;
-    }
 
-    .font-mono-util {
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+/* ══════════════ FORMS (v4: WCAG compliant) ══════════════ */
+.form-group{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
+.form-label{font-weight:700;font-size:.95rem;color:var(--ink)}
+.required{color:var(--red);font-weight:800;margin-left:.25rem}
+.form-hint{font-size:.75rem;color:var(--slate);font-style:italic}
+input[type="text"],input[type="email"],input[type="tel"],textarea{
+  padding:.875rem 1rem;border:1.5px solid var(--line);border-radius:10px;
+  font-size:1rem;font-family:inherit;transition:border-color .25s,box-shadow .25s;
+  background:var(--paper);color:var(--ink)
+}
+input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,textarea:focus{
+  outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(239,68,68,.1)
+}
+/* ══════════════ ANNOUNCE + NAV ══════════════ */
+.announce{background:var(--grad);color:#fff}
+.nav{position:sticky;top:0;z-index:60;background:rgba(253,253,253,.9);
+  -webkit-backdrop-filter:saturate(170%) blur(14px);backdrop-filter:saturate(170%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.brand{flex:none;display:block}
+.brand .el-logo{width:clamp(126px,17vw,164px)}
+.el-logo{display:block;aspect-ratio:760/191;background-size:contain;background-repeat:no-repeat;
+  background-position:center;background-image:url("public/images/v23/nav-logo.webp")}
+.brand-footer{width:clamp(160px,22vw,208px);height:auto;margin-bottom:.9rem}
+.navlink{font-size:.92rem;font-weight:600;color:var(--ink);padding:.3rem 0;position:relative}
+.navlink[aria-current="true"]{color:var(--navy-700)}
+.navlink[aria-current="true"]::after{right:0}
+.navlink::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--grad);border-radius:2px}
+@media (prefers-reduced-motion:no-preference){.navlink::after{transition:right .25s ease}.navlink:hover::after{right:0}}
 
-    .bg-board { background-color: var(--board); }
-    .bg-board-soft { background-color: var(--board-soft); }
-    .bg-paper { background-color: var(--paper); }
-    .bg-ink { background-color: var(--ink); }
-    .bg-chalk { background-color: var(--chalk); }
-    .bg-chalk-amber { background-color: var(--chalk-amber); }
+/* ══════════════ HERO — composed to match herobanner.png ══════════════ */
+.hero{position:relative;overflow:hidden;color:#fff;background:var(--hero-grad);
+  min-height:clamp(430px,44vw,720px);display:flex;align-items:center}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(115% 85% at 16% 45%,rgba(0,17,54,.62),transparent 60%)}
+.hero-photo{position:absolute;right:0;bottom:0;height:100%;z-index:0;
+  /* --wash-extra deepens the blue further; the base wash is baked into the file */
+  --wash-extra:0}
+.hero-photo img{display:block;height:100%;width:auto;max-width:none}
+.hero-photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(27,90,172,0) 0%,rgba(27,90,172,1) 32%,rgba(27,90,172,1) 100%);
+  opacity:var(--wash-extra)}
+.hero-grid{position:relative;z-index:2;width:100%;padding-block:clamp(2.25rem,4.5vw,3.5rem)}
+.hero-copy{max-width:min(100%,52vw,700px)}
+.hero-trust{color:rgba(255,255,255,.8);font-size:.84rem}
+.hero-trust strong{color:#fff}
+.hero-logo{width:clamp(96px,8.2vw,132px);height:auto}
+.hero-title{font-weight:800;letter-spacing:-.03em;line-height:1.04;
+  font-size:clamp(2.05rem,4.9vw,3.95rem);margin-top:clamp(.85rem,1.7vw,1.35rem)}
+.hero-title .t-light{display:block;font-weight:400}
+.gold-rule{display:block;width:clamp(98px,11vw,168px);height:5px;border-radius:3px;
+  background:var(--gold);margin:clamp(.7rem,1.35vw,1rem) 0 clamp(.7rem,1.4vw,1.05rem)}
+.hero-sub{font-size:clamp(1.05rem,2.35vw,1.85rem);font-weight:500;line-height:1.2;letter-spacing:-.02em}
+.hero-sub strong{font-weight:800;color:var(--gold)}
+@media (max-width:1180px){.hero-photo{opacity:.55;right:-6%}.hero-copy{max-width:100%}}
+@media (max-width:640px){.hero-photo{opacity:.45;right:-18%}}
 
-    .text-chalk { color: var(--chalk); }
-    .text-chalk-dim { color: var(--chalk-dim); }
-    .text-chalk-amber { color: var(--chalk-amber); }
-    .text-ink { color: var(--ink); }
-    .text-paper { color: var(--paper); }
-    .text-board { color: var(--board); }
+.hero-copy .pill{margin-top:clamp(.9rem,1.8vw,1.3rem)}
+.pill{display:inline-flex;align-items:center;gap:.55rem;border:1px solid rgba(255,255,255,.26);
+  background:rgba(255,255,255,.07);border-radius:999px;padding:.45rem 1rem;font-size:.74rem}
 
-    .border-board-soft { border-color: var(--board-soft); }
-    .border-chalk-dim { border-color: var(--chalk-dim); }
-    .border-ink-10 { border-color: color-mix(in srgb, var(--ink) 10%, transparent); }
 
-    a { color: inherit; text-decoration: none; }
-    a:hover { color: var(--brand-cyan); }
+/* ══════════════ MARQUEE ══════════════ */
+.marquee{overflow:hidden;border-block:1px solid var(--line);background:var(--mist)}
+.marquee-track{display:flex;gap:3rem;width:max-content;padding-block:.95rem}
+@media (prefers-reduced-motion:no-preference){.marquee-track{animation:slide 34s linear infinite}
+  @keyframes slide{to{transform:translateX(-50%)}}}
+.marquee-item{display:flex;align-items:center;gap:3rem;font-size:.82rem;font-weight:700;color:var(--navy-700);white-space:nowrap}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--red);flex:none}
 
-    a.link-amber:hover { color: var(--brand-cyan); }
+/* ══════════════ CARDS ══════════════ */
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.75rem 1.6rem}
+@media (prefers-reduced-motion:no-preference){
+  .card-hover{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+  .card-hover:hover{transform:translateY(-6px);box-shadow:0 24px 48px -22px rgba(11,37,71,.34);border-color:transparent}
+}
+.icon-badge{width:46px;height:46px;border-radius:14px;background:var(--mist);color:var(--navy-700);
+  display:flex;align-items:center;justify-content:center;flex:none}
 
-    button, a, summary, input, textarea, select {
-      outline: none;
-    }
+/* course card */
+#course-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))}
+.course{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;
+  padding:1.6rem 1.5rem;display:flex;flex-direction:column;gap:1.1rem;overflow:hidden}
+.course::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--banner,var(--navy-600))}
+.course-num{font-weight:800;font-size:3.1rem;line-height:.85;letter-spacing:-.05em;color:var(--navy-900)}
+.course-ghost{position:absolute;right:-6px;bottom:-30px;font-weight:800;font-size:8rem;line-height:1;
+  color:var(--navy-900);opacity:.05;pointer-events:none;letter-spacing:-.06em}
+.chip{display:inline-block;background:var(--mist);color:var(--slate-700);border-radius:999px;
+  padding:.26rem .66rem;font-size:.71rem;font-weight:600}
+.filter{display:inline-flex;align-items:center;height:38px;padding-inline:1rem;border:1.5px solid var(--line);
+  border-radius:999px;font-size:.83rem;font-weight:600;color:var(--slate);cursor:pointer}
+.filter[aria-pressed="true"]{background:var(--navy-700);border-color:var(--navy-700);color:#fff}
 
-    :focus-visible {
-      outline: 2px solid var(--chalk-amber);
-      outline-offset: 3px;
-    }
+/* ══════════════ BOARD BAND ══════════════ */
+.board{background:var(--navy-800);color:#E2E8F0;position:relative;overflow:hidden}
+.board-rule{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
+.ledge{height:11px;border-radius:0 0 5px 5px;background:linear-gradient(180deg,#334155,#1E293B 46%,#0F172A);
+  box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 10px 22px rgba(0,0,0,.4)}
 
-    .btn-amber:focus-visible,
-    .btn-outline-chalk:focus-visible {
-      outline-color: var(--chalk-amber);
-      outline-offset: 3px;
-    }
+.board-grid{display:grid;gap:2.25rem;align-items:center;padding-block:clamp(2.5rem,5vw,4.25rem)}
+@media (min-width:900px){.board-grid{grid-template-columns:1.02fr .98fr;gap:3.25rem}}
+.board-stage{position:relative;display:flex;justify-content:center;align-items:center;padding-left:1.25rem}
+.board-portrait{position:relative;margin:0;width:min(100%,406px);aspect-ratio:4/5;overflow:hidden;
+  border-radius:var(--asym);background:linear-gradient(158deg,#2F72CB 0%,#17458F 58%,#0C2C67 100%);
+  box-shadow:0 34px 64px -26px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.12) inset}
+.board-portrait::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 34% at 50% 26%,rgba(255,255,255,.22),transparent 70%)}
+.board-portrait img{position:relative;width:100%;height:100%;object-fit:cover;object-position:center top;
+  filter:drop-shadow(0 16px 26px rgba(0,0,0,.32))}
+.board-card{position:absolute;left:0;bottom:8%;display:flex;align-items:center;gap:.85rem;max-width:17.5rem;
+  background:#fff;color:var(--navy-900);border-radius:18px;padding:.8rem 1.1rem;
+  box-shadow:0 24px 46px -18px rgba(0,0,0,.62)}
+.board-card-ico{width:38px;height:38px;border-radius:11px;flex:none;background:var(--red);color:#fff;
+  display:flex;align-items:center;justify-content:center}
+.board-card-k{display:block;font-size:.52rem;color:var(--slate-500)}
+.board-card-h{display:block;font-weight:800;font-size:1.02rem;line-height:1.2;margin-top:.12rem}
+.board-card-s{display:block;font-size:.72rem;color:var(--slate);margin-top:.1rem}
+@media (max-width:900px){.board-stage{padding-left:0}.board-card{left:auto;right:0;bottom:4%}}
+@media (max-width:480px){.board-card{position:static;margin-top:1.1rem;max-width:none}}
 
-    /* Hero chalk-smudge texture */
-    .hero-board {
-      background-color: var(--board);
-      background-image:
-        radial-gradient(ellipse 80% 50% at 18% 22%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
-        radial-gradient(ellipse 60% 40% at 78% 68%, rgba(255, 255, 255, 0.035) 0%, transparent 50%),
-        radial-gradient(ellipse 45% 35% at 52% 40%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-        radial-gradient(ellipse 30% 25% at 88% 18%, rgba(255, 255, 255, 0.025) 0%, transparent 45%),
-        radial-gradient(ellipse 50% 30% at 30% 85%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-    }
+/* ══════════════ MEDIA SLOTS ══════════════ */
+.slot{aspect-ratio:16/9;width:100%;background:linear-gradient(150deg,var(--navy-700),var(--navy-600));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;color:rgba(255,255,255,.72);font-size:.7rem}
+.play{width:66px;height:66px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 12px rgba(239,68,68,.22)}
+.play::after{content:"";width:0;height:0;border-top:11px solid transparent;border-bottom:11px solid transparent;
+  border-left:17px solid #fff;margin-left:5px}
+.slot-lg{position:relative;gap:clamp(1rem,1.8vw,1.6rem)}
+.slot-lg::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(48% 62% at 50% 44%,rgba(255,255,255,.11),transparent 70%)}
+.slot-lg .mono{position:relative;font-size:clamp(.62rem,.85vw,.78rem);letter-spacing:.12em}
+.play-lg{position:relative;padding:0;width:clamp(64px,7.4vw,96px);height:clamp(64px,7.4vw,96px);cursor:pointer;
+  box-shadow:0 0 0 clamp(10px,1.5vw,18px) rgba(239,68,68,.2);transition:transform .22s ease,box-shadow .22s ease}
+.play-lg:hover{transform:scale(1.06);box-shadow:0 0 0 clamp(14px,2vw,24px) rgba(239,68,68,.26)}
+.play-lg:focus-visible{border-radius:50%;outline-offset:6px}
+.play-lg::after{border-top-width:clamp(11px,1.25vw,15px);border-bottom-width:clamp(11px,1.25vw,15px);
+  border-left-width:clamp(17px,1.95vw,24px);margin-left:clamp(5px,.55vw,7px)}
+@media (max-width:640px){.demo-card{border-radius:34px 8px 34px 8px}}
 
-    /* Chalk ledge — warm brown gradient, 10px tall */
-    .chalk-ledge {
-      position: relative;
-      height: 10px;
-      width: 100%;
-      max-width: 36rem;
-      border-radius: 2px;
-      background: linear-gradient(
-        180deg,
-        #C4A574 0%,
-        #A07848 18%,
-        #8B6439 50%,
-        #6E4E2C 82%,
-        #5A3F24 100%
-      );
-      box-shadow: inset 0 1px 0 rgba(255, 230, 190, 0.45);
-    }
+/* ══════════════ TABS / QUOTES ══════════════ */
+.tab{padding:.6rem .1rem;font-size:.92rem;font-weight:700;color:var(--slate);border-bottom:2.5px solid transparent;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--navy-700);border-bottom-color:var(--red)}
+.qmark{font-family:"Instrument Serif",Georgia,serif;font-size:4rem;line-height:.55;color:var(--gold)}
+.avatar-img{padding:0;background:none;border:none;overflow:hidden}
+.avatar-img svg{display:block;width:100%;height:100%}
+.avatar{width:48px;height:48px;border-radius:50%;flex:none;background:var(--mist);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--navy-700);font-size:.9rem}
 
-    .ledge-wrap {
-      position: relative;
-      padding-bottom: 0;
-    }
+/* ══════════════ CLASS BANNER ══════════════ */
+.classbanner{position:relative;border-radius:26px;overflow:hidden;background:var(--navy-900);isolation:isolate}
+.classbanner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}
+.classbanner-body{padding:clamp(1.5rem,3vw,2.7rem);max-width:64ch}
+.classbanner .mode{border-color:rgba(255,255,255,.34);color:rgba(255,255,255,.88)}
+.classbanner .mode-live{border-color:rgba(255,255,255,.5);color:#fff}
 
-    .ledge-ctas {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      gap: 0.75rem;
-      margin-bottom: -5px;
-    }
+/* ══════════════ SUBJECT CARDS ══════════════ */
+/* each banner is embedded once here and reused by every card that needs it */
+.sub-banner{display:block;margin:-1.6rem -1.5rem 0;aspect-ratio:3/2;
+  background-size:cover;background-position:center;background-repeat:no-repeat}
+.sb-maths{background-image:url("public/images/v23/banner-maths.webp")}
+.sb-science{background-image:url("public/images/v23/banner-science.webp")}
+.sb-english{background-image:url("public/images/v23/banner-english.webp")}
+.sb-bundle{background-image:url("public/images/v23/banner-bundle.webp")}
+.course-bundle .sub-banner{border-bottom:1px solid rgba(255,255,255,.14)}
+.card-kicker{font-size:.55rem}
+.subj-tagline{font-size:.58rem;margin-top:.3rem}
+.card-blurb{color:var(--slate);font-size:.86rem}
+.course-bundle{background:linear-gradient(165deg,var(--navy-900),var(--navy-800));border-color:transparent;color:#fff}
+.course-bundle .course-num{color:#fff}
+.course-bundle .course-ghost{color:#fff;opacity:.07;z-index:1}
+.course-bundle .card-blurb{color:rgba(255,255,255,.78)}
+.course-bundle .mode{border-color:rgba(255,255,255,.32);color:rgba(255,255,255,.85)}
+.course-bundle .mode-live{border-color:rgba(255,255,255,.5);color:#fff}
+.bundle-flag{position:absolute;z-index:2;top:1rem;right:1rem;font-size:.5rem;color:var(--navy-900);
+  background:var(--gold);border-radius:999px;padding:.2rem .55rem}
+.bundle-was{font-size:.72rem;color:rgba(255,255,255,.6)}
+.bundle-price{font-weight:800;font-size:1.6rem;letter-spacing:-.03em;color:#fff;line-height:1.1;margin-top:.1rem}
+.bundle-save{font-size:.72rem;color:var(--gold);margin-top:.25rem}
 
-    .chalk-stick {
-      width: 28px;
-      height: 8px;
-      border-radius: 3px;
-      flex-shrink: 0;
-      margin-bottom: 1px;
-    }
+/* ══════════════ DELIVERY MODES + SUBJECT ROWS ══════════════ */
+.modes{display:flex;gap:.4rem;flex-wrap:wrap}
+.mode{display:inline-flex;align-items:center;gap:.4rem;font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.55rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--line);border-radius:999px;padding:.24rem .6rem;color:var(--slate-700)}
+.mode-live{border-color:rgba(239,68,68,.4);color:var(--red)}
+.dot-live{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+@media (prefers-reduced-motion:no-preference){
+  .dot-live{animation:livepulse 2.2s ease-in-out infinite}
+  @keyframes livepulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.72)}}}
+/* ══════════════ CURRENCY PICKER ══════════════ */
+.cur-select{font:inherit;font-size:.82rem;font-weight:600;color:var(--ink);background:#fff;
+  border:1.5px solid var(--line);border-radius:999px;padding:.4rem 1.9rem .4rem .85rem;cursor:pointer;
+  max-width:186px;appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' fill='none' stroke='%230A3170' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .8rem center}
+.cur-select:hover{border-color:var(--navy-700)}
+.cur-nav{flex:none;min-height:38px;max-width:104px}
+@media (max-width:640px){.cur-nav{display:none}}  /* header has no room; the pricing picker covers it */
+.cur-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.cur-label{font-size:.6rem;color:var(--slate)}
+.price-note{font-size:.78rem;color:var(--slate)}
 
-    .btn-amber {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--chalk-amber);
-      color: var(--ink);
-      font-family: "Instrument Sans", system-ui, sans-serif;
-      font-weight: 500;
-      font-size: 0.9375rem;
-      padding: 0.75rem 1.25rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      text-decoration: none;
-    }
+/* ══════════════ APP BAND ══════════════ */
+.appband{background:var(--grad);color:#fff}
+.store{display:inline-flex;align-items:center;gap:.7rem;border:1.5px solid rgba(255,255,255,.34);
+  border-radius:14px;padding:.62rem 1.1rem;background:rgba(255,255,255,.08)}
+.store small{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.55rem;
+  letter-spacing:.09em;text-transform:uppercase;opacity:.78}
+.store strong{display:block;font-size:1rem;font-weight:700;line-height:1.2;margin-top:.1rem}
 
-    .btn-amber:hover {
-      color: var(--ink);
-      filter: brightness(1.05);
-    }
+/* ══════════════ STATS ══════════════ */
+.statband{background:var(--grad);color:#fff}
+.stat-num{font-weight:800;font-size:clamp(2.6rem,5.2vw,4rem);line-height:.92;letter-spacing:-.04em}
 
-    .btn-outline-chalk {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      color: var(--chalk);
-      font-family: "Instrument Sans", system-ui, sans-serif;
-      font-weight: 500;
-      font-size: 0.9375rem;
-      padding: 0.75rem 1.25rem;
-      border: 1px solid var(--chalk);
-      border-radius: 4px;
-      cursor: pointer;
-      text-decoration: none;
-    }
+/* ══════════════ FAQ ══════════════ */
+.faq-grid{display:grid;gap:0 1rem;align-items:start}
+@media (min-width:900px){.faq-grid{grid-template-columns:1fr 1fr}}
+.faq{border:1px solid var(--line);border-radius:16px;background:#fff;margin-bottom:.7rem;overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;padding:1.2rem 3rem 1.2rem 1.4rem;position:relative;font-weight:700;font-size:1rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:1.35rem;top:50%;transform:translateY(-50%);
+  font-family:"JetBrains Mono",monospace;color:var(--red);font-size:1.3rem}
+.faq[open]{border-color:var(--navy-700)}
+.faq[open] summary::after{content:"−"}
+.faq .body{padding:0 1.4rem 1.3rem;color:var(--slate);font-size:.95rem;max-width:66ch}
 
-    .btn-outline-chalk:hover {
-      color: var(--brand-cyan);
-      border-color: var(--brand-cyan);
-    }
+/* ══════════════ FORM ══════════════ */
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field label{font-size:.78rem;font-weight:700}
+.field input,.field textarea{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:12px;
+  padding:.8rem .9rem;font:inherit;font-size:.93rem;color:var(--ink)}
+.field textarea{min-height:118px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--navy-700)}
 
-    .nav-link {
-      color: var(--ink);
-      font-size: 0.9375rem;
-      font-weight: 500;
-    }
+/* ══════════════ STICKY BAR ══════════════ */
+.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--navy-950);color:#fff;
+  border-top:1px solid rgba(255,255,255,.14);padding:.65rem var(--gutter);display:none;align-items:center;justify-content:space-between;gap:1rem}
+@media (max-width:767px){.stickybar{display:flex}body{padding-bottom:76px}}
 
-    .nav-link:hover { color: var(--brand-cyan); }
+/* ══════════════ REVEAL ══════════════ */
+@media (prefers-reduced-motion:no-preference){
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+  .rv.in{opacity:1;transform:none}
+}
 
-    .offer-pill {
-      display: inline-flex;
-      align-items: center;
-      background: var(--chalk-amber);
-      color: var(--ink);
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-weight: 500;
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-    }
-
-    .filter-chip {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.4rem 0.85rem;
-      border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-      border-radius: 999px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--ink);
-      background: transparent;
-      cursor: default;
-    }
-
-    .filter-chip.is-active {
-      background: var(--ink);
-      color: var(--chalk);
-      border-color: var(--ink);
-    }
-
-    .course-card {
-      background: var(--board);
-      color: var(--chalk);
-      border: 1px solid var(--board-soft);
-      border-radius: 12px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .subject-pill {
-      display: inline-block;
-      background: var(--board-soft);
-      color: var(--chalk-dim);
-      font-size: 0.6875rem;
-      font-weight: 500;
-      padding: 0.25rem 0.5rem;
-      border-radius: 999px;
-    }
-
-    .why-card {
-      border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
-      border-radius: 0;
-      padding: 1.5rem;
-    }
-
-    .teacher-avatar,
-    .quote-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      border: 1px dashed var(--chalk-dim);
-      background: var(--board-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 0.5625rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--chalk-dim);
-      text-align: center;
-      line-height: 1.3;
-      flex-shrink: 0;
-    }
-
-    .quote-avatar {
-      width: 40px;
-      height: 40px;
-      border-color: color-mix(in srgb, var(--ink) 20%, transparent);
-      background: color-mix(in srgb, var(--ink) 6%, transparent);
-      color: color-mix(in srgb, var(--ink) 45%, transparent);
-      font-size: 0.5rem;
-    }
-
-    .tab-btn {
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-weight: 500;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.5rem 0;
-      margin-right: 1.5rem;
-      border: none;
-      background: transparent;
-      color: color-mix(in srgb, var(--ink) 40%, transparent);
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-    }
-
-    .tab-btn.is-active {
-      color: var(--ink);
-      border-bottom-color: var(--chalk-amber);
-    }
-
-    .faq-item {
-      border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-    }
-
-    .faq-item summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 1.15rem 0;
-      font-weight: 500;
-      font-size: 1.0625rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .faq-item summary::-webkit-details-marker { display: none; }
-
-    .faq-item summary::after {
-      content: "+";
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 1.25rem;
-      color: var(--chalk-amber);
-      flex-shrink: 0;
-    }
-
-    .faq-item[open] summary::after { content: "−"; }
-
-    .faq-item p {
-      margin: 0 0 1.15rem;
-      color: color-mix(in srgb, var(--ink) 72%, transparent);
-      max-width: 62ch;
-      line-height: 1.6;
-    }
-
-    .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-field label {
-      font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: color-mix(in srgb, var(--ink) 55%, transparent);
-    }
-
-    .form-field input,
-    .form-field textarea {
-      background: transparent;
-      border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-      border-radius: 4px;
-      padding: 0.7rem 0.85rem;
-      font-family: "Instrument Sans", system-ui, sans-serif;
-      font-size: 0.9375rem;
-      color: var(--ink);
-    }
-
-    .form-field input:focus-visible,
-    .form-field textarea:focus-visible {
-      border-color: var(--chalk-amber);
-    }
-
-    .sticky-mobile-bar {
-      display: none;
-    }
-
-    @media (max-width: 767px) {
-      .sticky-mobile-bar {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 50;
-        background: var(--board);
-        padding: 0.75rem 1rem;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        border-top: 1px solid var(--board-soft);
-      }
-
-      body { padding-bottom: 4.5rem; }
-    }
-
-    /* Motion: ONE effect only — hero fade-up, staggered 120ms */
-    @media (prefers-reduced-motion: no-preference) {
-      .hero-anim {
-        opacity: 0;
-        transform: translateY(12px);
-        animation: heroFadeUp 0.6s ease forwards;
-      }
-
-      .hero-anim-1 { animation-delay: 0ms; }
-      .hero-anim-2 { animation-delay: 120ms; }
-      .hero-anim-3 { animation-delay: 240ms; }
-      .hero-anim-4 { animation-delay: 360ms; }
-      .hero-anim-5 { animation-delay: 480ms; }
-      .hero-anim-6 { animation-delay: 600ms; }
-
-      @keyframes heroFadeUp {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero-anim {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    .section-pad {
-      padding: 4.5rem 1.25rem;
-    }
-
-    @media (min-width: 768px) {
-      .section-pad { padding: 5.5rem 2rem; }
-    }
-
-    @media (min-width: 1024px) {
-      .section-pad { padding: 6rem 2rem; }
-    }
-
-    .container-x {
-      max-width: 72rem;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .play-triangle {
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 14px 0 14px 24px;
-      border-color: transparent transparent transparent var(--chalk);
-      margin-left: 4px;
-    }
-
-    .underline-amber {
-      text-decoration: underline;
-      text-decoration-color: var(--chalk-amber);
-      text-underline-offset: 4px;
-    }
-  </style>
+/* ══════════════ UTIL ══════════════ */
+.g1{gap:.5rem}.g2{gap:1rem}.g3{gap:1.5rem}.g4{gap:2rem}
+.center{align-items:center}.between{justify-content:space-between}.wrapf{flex-wrap:wrap}
+.mt1{margin-top:.6rem}.mt2{margin-top:1.1rem}.mt3{margin-top:1.8rem}.mt4{margin-top:2.6rem}.mt5{margin-top:3.4rem}
+.maxw-sm{max-width:48ch}.maxw-xs{max-width:36ch}
+.cols2{grid-template-columns:1fr}.cols3{grid-template-columns:1fr}.cols4{grid-template-columns:1fr}
+@media(min-width:640px){.cols2{grid-template-columns:1fr 1fr}.cols3{grid-template-columns:1fr 1fr}.cols4{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.cols3{grid-template-columns:repeat(3,1fr)}.cols4{grid-template-columns:repeat(4,1fr)}}
+.hide-md{display:none}@media(min-width:1000px){.hide-md{display:flex}}
+.hide-sm{display:none}@media(min-width:640px){.hide-sm{display:block}}
+</style>
 </head>
 <body>
 
-  <!-- 01 ANNOUNCE BAR -->
-  <div id="announce" class="bg-ink text-chalk" style="font-size: 0.8125rem;">
-    <div class="container-x flex items-center justify-center gap-3 px-4 py-2 relative">
-      <span class="font-body">New academic year 2025-26 is open</span>
-      <span class="offer-pill">50% OFF with code</span>
-      <button
-        type="button"
-        aria-label="Dismiss announcement"
-        onclick="document.getElementById('announce').style.display='none'"
-        class="absolute right-3 top-1/2 -translate-y-1/2 text-chalk hover:opacity-70 leading-none text-lg px-1"
-        style="background:none;border:none;cursor:pointer;color:var(--chalk);"
-      >×</button>
-    </div>
+<!-- ══ 01 ANNOUNCE ══ -->
+<div class="announce" id="announce">
+  <div class="wrap flex center between g2 wrapf" style="padding-block:.6rem;font-size:.82rem">
+    <p style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+      <span class="mono" style="background:var(--red);color:#fff;font-size:.62rem;padding:.18rem .55rem;border-radius:999px">New</span>
+      Academic year 2025&ndash;26 enrolment is open &mdash; 50% off with coupon at checkout.
+    </p>
+    <button id="announce-x" aria-label="Dismiss" style="cursor:pointer;opacity:.8;font-size:1.1rem;line-height:1">&times;</button>
   </div>
+</div>
 
-  <!-- 02 NAV -->
-  <header class="bg-paper sticky top-0 z-40" style="backdrop-filter: blur(10px); background-color: color-mix(in srgb, var(--paper) 88%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);">
-    <nav class="container-x flex items-center justify-between gap-4 px-4 py-3 md:px-8">
-      <a href="#" class="shrink-0" style="color: var(--ink);">
-        <span class="font-display text-xl leading-tight block" style="letter-spacing: -0.02em;">eLessons.net</span>
-        <span class="font-mono-util block" style="font-size: 0.5625rem; color: color-mix(in srgb, var(--ink) 50%, transparent); margin-top: 2px;">Your virtual classroom</span>
-      </a>
+<!-- ══ 02 NAV ══ -->
+<header class="nav">
+  <div class="wrap flex center g4" style="padding-block:.85rem">
+    <a href="#" class="brand" aria-label="G-TEC eLessons.net Hybrid School, home">
+      <span class="el-logo" role="img" aria-label="G-TEC eLessons.net — Hybrid School"></span>
+    </a>
 
-      <ul class="hidden lg:flex items-center gap-6 list-none m-0 p-0">
-        <li><a href="#" class="nav-link">Home</a></li>
-        <li><a href="#courses" class="nav-link">Courses</a></li>
-        <li><a href="#proof" class="nav-link">Demo</a></li>
-        <li><a href="#syllabus" class="nav-link">Syllabus</a></li>
-        <li><a href="#courses" class="nav-link">Course Content</a></li>
-      </ul>
-
-      <div class="flex items-center gap-3 md:gap-4 shrink-0">
-        <a href="#contact" class="nav-link hidden sm:inline">Sign in</a>
-
-        <a href="#courses" aria-label="Cart, 1 item" class="relative inline-flex items-center justify-center w-9 h-9" style="color: var(--ink);">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-            <path d="M6 6h15l-1.5 9h-12z" />
-            <path d="M6 6l-1-3H2" />
-            <circle cx="9" cy="20" r="1.25" fill="currentColor" stroke="none" />
-            <circle cx="17" cy="20" r="1.25" fill="currentColor" stroke="none" />
-          </svg>
-          <span class="absolute -top-0.5 -right-0.5 flex items-center justify-center font-mono-util" style="width: 16px; height: 16px; border-radius: 999px; background: var(--chalk-amber); color: var(--ink); font-size: 0.5625rem;">1</span>
-        </a>
-
-        <a href="https://wa.me/971568056001" class="hidden md:inline-flex items-center gap-1.5 text-sm font-medium" style="color: var(--ink);" aria-label="WhatsApp +971 568056001">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.988-1.307A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.082-1.117l-.291-.173-3.05.8.815-2.973-.19-.305A7.96 7.96 0 014 12a8 8 0 1116 0 8 8 0 01-8 8z"/>
-          </svg>
-          <span>+971 568056001</span>
-        </a>
-
-        <a href="#courses" class="btn-amber text-sm py-2 px-3 md:px-4">Buy now</a>
-      </div>
+    <nav class="hide-md center g4" style="margin-inline:auto" aria-label="Primary">
+      <a class="navlink" href="#top">Home</a>
+      <a class="navlink" href="#courses">Classes</a>
+      <a class="navlink" href="#demo">Demo</a>
+      <a class="navlink" href="#courses">Syllabus</a>
+      <a class="navlink" href="#faq">FAQ</a>
     </nav>
-  </header>
 
-  <!-- 03 HERO -->
-  <section class="hero-board text-chalk min-h-[88vh] section-pad flex items-center">
-    <div class="container-x w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-      <div class="lg:col-span-7">
-        <p class="font-mono-util hero-anim hero-anim-1 text-chalk-dim mb-4" style="font-size: 0.75rem;">CBSE / NCERT · Grades 8-12</p>
-
-        <h1 class="font-display hero-anim hero-anim-2 leading-[1.05] mb-5" style="font-size: clamp(2.75rem, 6vw, 5rem);">
-          <span class="text-chalk">Traditional chalk-board class.</span><br />
-          <span class="text-chalk-amber">On your screen.</span>
-        </h1>
-
-        <p class="font-body hero-anim hero-anim-3 text-chalk-dim mb-8" style="font-size: 1.125rem; line-height: 1.55; max-width: 46ch;">
-          Full-year video lessons and notes for grades 8 to 12, taught the way a real classroom teaches. AED 1200 for the whole year.
-        </p>
-
-        <div class="ledge-wrap hero-anim hero-anim-4 mb-6">
-          <div class="ledge-ctas">
-            <a href="#courses" class="btn-amber">Buy the annual package</a>
-            <a href="#proof" class="btn-outline-chalk">Watch a free class</a>
-            <span class="chalk-stick" style="background: var(--chalk);" aria-hidden="true"></span>
-            <span class="chalk-stick" style="background: var(--chalk-amber);" aria-hidden="true"></span>
-          </div>
-          <div class="chalk-ledge" aria-hidden="true"></div>
-        </div>
-
-        <p class="font-body hero-anim hero-anim-5 text-chalk-dim" style="font-size: 0.8125rem;">
-          Grades 8-12 · CBSE / NCERT · Students in UAE, India, Bahrain &amp; Saudi Arabia
-        </p>
-      </div>
-
-      <div class="lg:col-span-5 hero-anim hero-anim-6">
-        <div
-          class="w-full max-w-sm mx-auto lg:ml-auto lg:mr-0 flex items-center justify-center"
-          style="aspect-ratio: 3/4; border: 1px dashed var(--chalk-dim); border-radius: 4px;"
-        >
-          <span class="font-mono-util text-center px-4" style="font-size: 0.6875rem; color: var(--chalk-dim); line-height: 1.5;">
-            Brand model PNG — Transparent cutout
-          </span>
-        </div>
-      </div>
+    <div class="flex center g3" style="margin-left:auto">
+      <select class="cur-select cur-nav" aria-label="Currency">
+        <option value="inr|IN" selected>₹ INR</option>
+        <option value="aed|AE">AED</option>
+      </select>
+      <a href="#" class="navlink hide-sm">Sign in</a>
+      <a href="#" aria-label="Cart, 0 items" style="position:relative;flex:none">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.4 12.1a1.6 1.6 0 0 0 1.6 1.3h8.8a1.6 1.6 0 0 0 1.6-1.3L21 7H5.2"/></svg>
+        <span class="mono" style="position:absolute;top:-6px;right:-8px;background:var(--gold);color:#00133C;font-size:.55rem;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;letter-spacing:0">0</span>
+      </a>
+      <a href="#courses" class="btn btn-navy btn-sm">Buy now</a>
     </div>
-  </section>
-
-  <!-- 04 PROOF -->
-  <section id="proof" class="bg-board-soft section-pad">
-    <div class="container-x">
-      <h2 class="font-display text-chalk mb-10" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
-        See a class before you pay.
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
-        <div>
-          <div class="relative flex items-center justify-center" style="aspect-ratio: 16/9; background: var(--board); border: 1px solid var(--board); border-radius: 4px;">
-            <div class="flex flex-col items-center gap-3">
-              <div class="flex items-center justify-center rounded-full" style="width: 56px; height: 56px; border: 1px solid var(--chalk);">
-                <div class="play-triangle" aria-hidden="true"></div>
-              </div>
-              <span class="font-mono-util text-chalk" style="font-size: 0.6875rem;">Sample lesson — 90 seconds</span>
-            </div>
-          </div>
-          <p class="font-body text-chalk-dim mt-3" style="font-size: 0.875rem;">
-            A short clip from a Grade 11 Physics board session — chalk, voice, and nothing else.
-          </p>
-        </div>
-
-        <div>
-          <div class="relative flex items-center justify-center" style="aspect-ratio: 16/9; background: var(--board); border: 1px solid var(--board); border-radius: 4px;">
-            <span class="font-mono-util text-chalk" style="font-size: 0.6875rem;">Sample notes page</span>
-          </div>
-          <p class="font-body text-chalk-dim mt-3" style="font-size: 0.875rem;">
-            Companion notes that match the board work, ready to print or study on screen.
-          </p>
-        </div>
-      </div>
-
-      <a href="#proof" class="font-body underline-amber text-chalk" style="font-size: 0.9375rem;">Try the full demo →</a>
-    </div>
-  </section>
-
-  <!-- 05 THESIS STRIP -->
-  <section class="bg-paper section-pad" style="padding-top: 3.5rem; padding-bottom: 3.5rem;">
-    <div class="container-x grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-      <div>
-        <p class="font-mono-util mb-2" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">No animation</p>
-        <p class="font-display text-ink" style="font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.3;">Just a teacher, a board, and chalk.</p>
-      </div>
-      <div>
-        <p class="font-mono-util mb-2" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">No subscription</p>
-        <p class="font-display text-ink" style="font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.3;">One price, the full academic year.</p>
-      </div>
-      <div>
-        <p class="font-mono-util mb-2" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">No travel</p>
-        <p class="font-display text-ink" style="font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.3;">Every class, on the device you already own.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 06 COURSES -->
-  <section id="courses" class="bg-paper section-pad" style="padding-top: 2rem;">
-    <div class="container-x">
-      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Packages</p>
-      <h2 class="font-display text-ink mb-8" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
-        Nine annual packages.
-      </h2>
-
-      <div class="flex flex-wrap gap-2 mb-10" role="group" aria-label="Course filters">
-        <span class="filter-chip is-active">All</span>
-        <span class="filter-chip">Grade 8</span>
-        <span class="filter-chip">9</span>
-        <span class="filter-chip">10</span>
-        <span class="filter-chip">11</span>
-        <span class="filter-chip">12</span>
-        <span class="filter-chip">Science</span>
-        <span class="filter-chip">Commerce</span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
-
-        <!-- Grade 8 ALL SUBJECTS -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">8</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">All subjects</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Physics</span>
-            <span class="subject-pill">Chemistry</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">Biology</span>
-            <span class="subject-pill">English</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 9 ALL SUBJECTS -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">9</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">All subjects</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Physics</span>
-            <span class="subject-pill">Chemistry</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">Biology</span>
-            <span class="subject-pill">English</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 10 ALL SUBJECTS -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">10</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">All subjects</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Physics</span>
-            <span class="subject-pill">Chemistry</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">Biology</span>
-            <span class="subject-pill">English</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 11 PCMB -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">11</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMB</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Physics</span>
-            <span class="subject-pill">Chemistry</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">Biology</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 12 PCMB -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">12</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMB</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Physics</span>
-            <span class="subject-pill">Chemistry</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">Biology</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 11 PCMC -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">11</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMC</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Physics</span>
-            <span class="subject-pill">Chemistry</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">Computer Science</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 12 PCMBC -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">12</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMBC</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Physics</span>
-            <span class="subject-pill">Chemistry</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">Biology</span>
-            <span class="subject-pill">Computer Science</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 11 COMMERCE -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">11</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">Commerce</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Accountancy</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">English</span>
-            <span class="subject-pill">Grammar</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-        <!-- Grade 12 COMMERCE -->
-        <article class="course-card">
-          <div class="flex items-start gap-3">
-            <span class="font-display leading-none" style="font-size: 3.5rem;">12</span>
-            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">Commerce</span>
-          </div>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="subject-pill">Accountancy</span>
-            <span class="subject-pill">Maths</span>
-            <span class="subject-pill">English</span>
-            <span class="subject-pill">Grammar</span>
-          </div>
-          <div class="mt-auto">
-            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
-            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
-            <a href="#contact" class="btn-amber w-full">Buy now</a>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- 07 WHY -->
-  <section class="bg-paper section-pad" style="padding-top: 2rem;">
-    <div class="container-x">
-      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Reasons</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
-        <div class="why-card">
-          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Why G-TEC eLessons?</h3>
-          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-            Because the best tuition still looks like a classroom. We film real board teaching — no cartoons, no shortcuts — so students learn the way they learn at school.
-          </p>
-        </div>
-        <div class="why-card">
-          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Chalk-board class on your mobile</h3>
-          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-            Every lesson is recorded for phone, tablet, or laptop. Pause, rewind, and rewatch the board work until the concept settles.
-          </p>
-        </div>
-        <div class="why-card">
-          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Costs less than a movie ticket</h3>
-          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-            AED 1200 covers the full academic year — hundreds of sessions and notes. Spread across the year, that is less than a cinema outing a week.
-          </p>
-        </div>
-        <div class="why-card">
-          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Experienced teachers</h3>
-          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-            Faculty who have taught CBSE for years stand at the board. Clear explanations, exam-aware pacing, and subject depth you can trust.
-          </p>
-        </div>
-        <div class="why-card">
-          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Learn at your own pace</h3>
-          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-            Catch up after a busy week or push ahead before exams. The full library stays open for the year — you set the schedule.
-          </p>
-        </div>
-        <div class="why-card">
-          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">From home</h3>
-          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-            No traffic, no tuition centre commute. Students in the UAE, India, Bahrain, and Saudi Arabia join the same chalkboard classroom.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 08 TEACHERS -->
-  <section class="bg-board section-pad">
-    <div class="container-x">
-      <p class="font-mono-util text-chalk-dim mb-3" style="font-size: 0.6875rem;">Faculty</p>
-      <h2 class="font-display text-chalk mb-10" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
-        The people at the board.
-      </h2>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
-          <div class="teacher-avatar">Photo</div>
-          <div>
-            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Priya Nair</h3>
-            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Physics</p>
-            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
-          </div>
-        </article>
-        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
-          <div class="teacher-avatar">Photo</div>
-          <div>
-            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Rahul Menon</h3>
-            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Chemistry</p>
-            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
-          </div>
-        </article>
-        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
-          <div class="teacher-avatar">Photo</div>
-          <div>
-            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Anita Krishnan</h3>
-            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Mathematics</p>
-            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
-          </div>
-        </article>
-        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
-          <div class="teacher-avatar">Photo</div>
-          <div>
-            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Farah Al-Hashimi</h3>
-            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Biology</p>
-            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- 09 TESTIMONIALS -->
-  <section class="bg-paper section-pad">
-    <div class="container-x">
-      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Voices</p>
-      <h2 class="font-display text-ink mb-8" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
-        What families say.
-      </h2>
-
-      <div class="flex flex-wrap mb-8" role="tablist" aria-label="Testimonial audience">
-        <button type="button" class="tab-btn is-active" role="tab" aria-selected="true">Students</button>
-        <button type="button" class="tab-btn" role="tab" aria-selected="false">Parents</button>
-        <button type="button" class="tab-btn" role="tab" aria-selected="false">Educators</button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <blockquote style="border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top: 1.5rem;">
-          <span class="font-display text-chalk-amber block leading-none mb-3" style="font-size: 3rem;" aria-hidden="true">“</span>
-          <p class="font-body text-ink mb-6" style="font-size: 1rem; line-height: 1.6;">
-            The classes feel like sitting in a real tuition centre. The teacher writes on the board and explains until it clicks — I finally understood electrostatics for my board exams.
-          </p>
-          <footer class="flex items-center gap-3">
-            <div class="quote-avatar">MI</div>
-            <div>
-              <cite class="font-display not-italic text-ink block" style="font-size: 0.9375rem;">Mohammed Iftiqar</cite>
-              <span class="font-mono-util block mt-0.5" style="font-size: 0.625rem; color: color-mix(in srgb, var(--ink) 50%, transparent);">Grade 12 · UAE</span>
-            </div>
-          </footer>
-        </blockquote>
-
-        <blockquote style="border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top: 1.5rem;">
-          <span class="font-display text-chalk-amber block leading-none mb-3" style="font-size: 3rem;" aria-hidden="true">“</span>
-          <p class="font-body text-ink mb-6" style="font-size: 1rem; line-height: 1.6;">
-            We tried animated apps first. My daughter switched to eLessons and her marks improved because the teaching matches how school actually works — board, chalk, and clear notes.
-          </p>
-          <footer class="flex items-center gap-3">
-            <div class="quote-avatar">HS</div>
-            <div>
-              <cite class="font-display not-italic text-ink block" style="font-size: 0.9375rem;">Ms Haseela Shafiq</cite>
-              <span class="font-mono-util block mt-0.5" style="font-size: 0.625rem; color: color-mix(in srgb, var(--ink) 50%, transparent);">Parent · UAE</span>
-            </div>
-          </footer>
-        </blockquote>
-
-        <blockquote style="border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top: 1.5rem;">
-          <span class="font-display text-chalk-amber block leading-none mb-3" style="font-size: 3rem;" aria-hidden="true">“</span>
-          <p class="font-body text-ink mb-6" style="font-size: 1rem; line-height: 1.6;">
-            As an academician I recommend this model. NCERT-aligned board teaching, without the distraction of graphics, is exactly what serious CBSE students need.
-          </p>
-          <footer class="flex items-center gap-3">
-            <div class="quote-avatar">LS</div>
-            <div>
-              <cite class="font-display not-italic text-ink block" style="font-size: 0.9375rem;">Ms Lalana Shenoy</cite>
-              <span class="font-mono-util block mt-0.5" style="font-size: 0.625rem; color: color-mix(in srgb, var(--ink) 50%, transparent);">Academician · India</span>
-            </div>
-          </footer>
-        </blockquote>
-      </div>
-    </div>
-  </section>
-
-  <!-- 10 NUMBERS -->
-  <section class="bg-board section-pad">
-    <div class="container-x grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 text-center md:text-left">
-      <div>
-        <p class="font-display text-chalk-amber leading-none mb-3" style="font-size: clamp(2.75rem, 6vw, 4.5rem); letter-spacing: -0.02em;">4,000+</p>
-        <p class="font-mono-util text-chalk-dim" style="font-size: 0.75rem;">4,000+ Sessions</p>
-      </div>
-      <div>
-        <p class="font-display text-chalk-amber leading-none mb-3" style="font-size: clamp(2.75rem, 6vw, 4.5rem); letter-spacing: -0.02em;">80,000+</p>
-        <p class="font-mono-util text-chalk-dim" style="font-size: 0.75rem;">80,000+ Video minutes</p>
-      </div>
-      <div>
-        <p class="font-display text-chalk-amber leading-none mb-3" style="font-size: clamp(2.75rem, 6vw, 4.5rem); letter-spacing: -0.02em;">1,000+</p>
-        <p class="font-mono-util text-chalk-dim" style="font-size: 0.75rem;">1,000+ Notes</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11 FAQ -->
-  <section id="syllabus" class="bg-paper section-pad">
-    <div class="container-x" style="max-width: 42rem;">
-      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">FAQ</p>
-      <h2 class="font-display text-ink mb-8" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
-        Questions, answered.
-      </h2>
-
-      <div>
-        <details class="faq-item">
-          <summary>What exactly do I get for AED 1200?</summary>
-          <p>Full-year access to video lessons and companion notes for your chosen grade and stream. One price covers the academic package — no monthly subscription, no hidden add-ons.</p>
-        </details>
-        <details class="faq-item">
-          <summary>How long do I have access?</summary>
-          <p>Access runs for the full academic year of your package. Watch at your own pace, revisit topics before exams, and keep the notes available throughout.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Do you follow NCERT?</summary>
-          <p>Yes. Lessons follow the CBSE curriculum and NCERT textbooks, taught chapter by chapter at the board so school and home study stay aligned.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I pay in Indian rupees?</summary>
-          <p>Yes. Packages are priced at AED 1200 (approximately ₹27,500). Families in India can pay in INR — contact us and we will share the current rupee option.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Is there a free demo?</summary>
-          <p>Yes. Watch a sample lesson and browse sample notes before you buy. Use the demo section above, or message us on WhatsApp for a guided walkthrough.</p>
-        </details>
-        <details class="faq-item">
-          <summary>What if my child falls behind?</summary>
-          <p>Every lesson stays available for the year. Students can rewind board work, rewatch difficult chapters, and catch up without waiting for a live class timetable.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- 12 CONTACT -->
-  <section id="contact" class="bg-paper section-pad" style="padding-top: 2rem;">
-    <div class="container-x">
-      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Contact</p>
-      <h2 class="font-display text-ink mb-10" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
-        Talk to us.
-      </h2>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-        <div class="flex flex-col gap-8">
-          <div>
-            <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Bangalore — Corporate</h3>
-            <p class="font-body" style="font-size: 0.9375rem; line-height: 1.6; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-              G-TEC Education<br />
-              Bangalore, Karnataka<br />
-              India
-            </p>
-          </div>
-          <div>
-            <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Sharjah — Middle East</h3>
-            <p class="font-body" style="font-size: 0.9375rem; line-height: 1.6; color: color-mix(in srgb, var(--ink) 70%, transparent);">
-              G-TEC eLessons<br />
-              Sharjah<br />
-              United Arab Emirates
-            </p>
-          </div>
-          <p class="font-body">
-            <a href="mailto:contact@elessons.net" class="underline-amber" style="color: var(--ink);">contact@elessons.net</a>
-          </p>
-          <p class="font-body">
-            <a href="https://wa.me/971568056001" style="color: var(--ink);">WhatsApp +971 568056001</a>
-          </p>
-        </div>
-
-        <form action="#" method="post" onsubmit="return false;">
-          <div class="form-field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required />
-          </div>
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <div class="form-field">
-            <label for="mobile">Mobile</label>
-            <input id="mobile" name="mobile" type="tel" autocomplete="tel" required />
-          </div>
-          <div class="form-field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
-          </div>
-          <button type="submit" class="btn-amber">Send message</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- 13 FOOTER -->
-  <footer class="bg-board section-pad" style="padding-top: 3.5rem; padding-bottom: 3.5rem;">
-    <div class="container-x">
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
-        <div class="md:col-span-5">
-          <a href="#" class="inline-block" style="color: var(--chalk);">
-            <span class="font-display text-2xl block" style="letter-spacing: -0.02em;">eLessons.net</span>
-            <span class="font-mono-util text-chalk-dim block mt-1" style="font-size: 0.625rem;">Your virtual classroom</span>
-          </a>
-          <p class="font-body text-chalk-dim mt-4" style="font-size: 0.9375rem; max-width: 32ch; line-height: 1.55;">
-            Traditional chalk-board class. On your screen. CBSE / NCERT for grades 8–12.
-          </p>
-        </div>
-
-        <div class="md:col-span-4">
-          <p class="font-mono-util text-chalk-dim mb-4" style="font-size: 0.6875rem;">Links</p>
-          <ul class="list-none m-0 p-0 flex flex-col gap-2">
-            <li><a href="#syllabus" class="text-chalk font-body" style="font-size: 0.9375rem;">Syllabus</a></li>
-            <li><a href="#proof" class="text-chalk font-body" style="font-size: 0.9375rem;">About</a></li>
-            <li><a href="#" class="text-chalk font-body" style="font-size: 0.9375rem;">Terms</a></li>
-            <li><a href="#" class="text-chalk font-body" style="font-size: 0.9375rem;">Privacy</a></li>
-            <li><a href="#syllabus" class="text-chalk font-body" style="font-size: 0.9375rem;">FAQ</a></li>
-            <li><a href="#contact" class="text-chalk font-body" style="font-size: 0.9375rem;">Contact</a></li>
-          </ul>
-        </div>
-
-        <div class="md:col-span-3">
-          <p class="font-mono-util text-chalk-dim mb-4" style="font-size: 0.6875rem;">WhatsApp</p>
-          <a href="https://wa.me/971568056001" class="text-chalk font-body" style="font-size: 0.9375rem;">+971 568056001</a>
-        </div>
-      </div>
-
-      <p class="font-body text-chalk-dim" style="font-size: 0.8125rem; border-top: 1px solid var(--board-soft); padding-top: 1.5rem;">
-        © 2025 G-TEC eLessons. All rights reserved.
-      </p>
-    </div>
-  </footer>
-
-  <!-- 14 STICKY MOBILE BAR -->
-  <div class="sticky-mobile-bar" role="region" aria-label="Buy annual package">
-    <span class="font-mono-util text-chalk-amber" style="font-size: 0.75rem;">AED 1200 / year</span>
-    <a href="#courses" class="btn-amber py-2 px-4 text-sm">Buy now</a>
   </div>
+</header>
+
+<!-- ══ 03 HERO ══ -->
+<section class="hero" id="top">
+  <span class="hero-photo" aria-hidden="true">
+    <img src="public/images/v23/hero-photo.webp" alt="" width="980" height="949" fetchpriority="high">
+  </span>
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <img class="hero-logo rv" src="public/images/v23/gtec-logo.webp" alt="G-TEC Education" width="420" height="245">
+
+      <span class="pill rv"><span class="dot"></span> CBSE / NCERT &middot; Grades 8&ndash;12 &middot; Live + recorded</span>
+
+      <h1 class="hero-title rv">
+        <span class="t-light">Traditional</span>
+        Chalk-Board Class
+      </h1>
+
+      <span class="gold-rule rv" aria-hidden="true"></span>
+
+      <p class="hero-sub rv">from <strong>The comfort of your home !</strong></p>
+
+
+      <div class="flex g2 wrapf mt4 rv">
+        <a href="#courses" class="btn btn-red">Enrol for the year
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#demo" class="btn btn-ghost-light">Watch a free class</a>
+      </div>
+
+      <div class="hero-trust flex center g3 wrapf mt3 rv">
+        <span><strong class="price" data-inr="From &#8377;12,000" data-aed="From AED 800" style="color:#fff">From &#8377;12,000</strong> / full year</span>
+        <span aria-hidden="true">&middot;</span>
+        <span>CBSE / NCERT &middot; Grades 8&ndash;12</span>
+        <span aria-hidden="true">&middot;</span>
+        <span>UAE &middot; India &middot; Bahrain &middot; KSA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 04 MARQUEE ══ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item">
+      <span>Physics</span><span class="dot"></span><span>Chemistry</span><span class="dot"></span><span>Mathematics</span><span class="dot"></span>
+      <span>Biology</span><span class="dot"></span><span>Computer Science</span><span class="dot"></span><span>Accountancy</span><span class="dot"></span>
+      <span>English</span><span class="dot"></span><span>Grammar</span><span class="dot"></span>
+    </div>
+    <div class="marquee-item">
+      <span>Physics</span><span class="dot"></span><span>Chemistry</span><span class="dot"></span><span>Mathematics</span><span class="dot"></span>
+      <span>Biology</span><span class="dot"></span><span>Computer Science</span><span class="dot"></span><span>Accountancy</span><span class="dot"></span>
+      <span>English</span><span class="dot"></span><span>Grammar</span><span class="dot"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 05 HOW IT WORKS ══ -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="flex between center wrapf g3">
+      <div>
+        <p class="eyebrow" style="color:var(--red)">How it works</p>
+        <h2 class="dsp h2 mt2 maxw-sm">Three steps, then the whole year is yours.</h2>
+      </div>
+      <a href="#demo" class="btn btn-ghost-dark btn-sm">See a sample lesson</a>
+    </div>
+
+    <div class="grid cols3 g3 mt5">
+      <div class="card card-hover rv">
+        <div class="flex between center">
+          <span class="icon-badge">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
+          </span>
+          <span class="mono" style="color:var(--line);font-size:1.6rem;font-weight:800">01</span>
+        </div>
+        <h3 class="h3 mt3">Pick your class</h3>
+        <p class="mt1" style="color:var(--slate);font-size:.95rem">Grades 8 to 12, in Maths, Science and English. Take one subject on its own or all three together.</p>
+      </div>
+
+      <div class="card card-hover rv">
+        <div class="flex between center">
+          <span class="icon-badge">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="15" rx="2.5"/><path d="M10 9.5l5 2.5-5 2.5z"/></svg>
+          </span>
+          <span class="mono" style="color:var(--line);font-size:1.6rem;font-weight:800">02</span>
+        </div>
+        <h3 class="h3 mt3">Everything unlocks at once</h3>
+        <p class="mt1" style="color:var(--slate);font-size:.95rem">No drip schedule. Every chapter and every notes file is there the moment you pay.</p>
+      </div>
+
+      <div class="card card-hover rv">
+        <div class="flex between center">
+          <span class="icon-badge">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v14a1.6 1.6 0 0 0-1.6-1.6H5.5A2.5 2.5 0 0 1 3 17.9z"/><path d="M21 6.5A2.5 2.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v14a1.6 1.6 0 0 1 1.6-1.6h4.9A2.5 2.5 0 0 0 21 17.9z"/></svg>
+          </span>
+          <span class="mono" style="color:var(--line);font-size:1.6rem;font-weight:800">03</span>
+        </div>
+        <h3 class="h3 mt3">Rewatch until it lands</h3>
+        <p class="mt1" style="color:var(--slate);font-size:.95rem">Unlimited replays through the full academic year, plus printable notes per chapter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 06 DEMO / PROOF ══ -->
+<section id="demo" class="sec lattice lattice-dark" style="background:var(--mist)">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--red)">Proof, not promises</p>
+    <h2 class="dsp h2 mt2 maxw-sm">See a class before you pay a rupee.</h2>
+
+    <div class="rv mt5">
+      <div class="asym demo-card" style="border:1px solid var(--line)">
+        <div class="slot slot-lg">
+          <button type="button" class="play play-lg" aria-label="Play the sample lesson"></button>
+          <span class="mono">Sample lesson &mdash; 90 seconds</span>
+        </div>
+      </div>
+      <p class="mt3" style="color:var(--slate);font-size:1rem;max-width:66ch">One chapter, taught end to end &mdash; exactly what every lesson in the course looks like, with the written notes for that chapter included.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 07 CLASSES ══ -->
+<section id="courses" class="sec">
+  <div class="wrap">
+    <div class="flex between center wrapf g3">
+      <div>
+        <p class="eyebrow" style="color:var(--red)">Classes</p>
+        <h2 class="dsp h2 mt2">Take one subject, or take them all.</h2>
+      </div>
+      <p class="lead maxw-xs" style="font-size:.94rem">Buy a single subject or the full-year bundle. Either way you get live classes and recorded lessons for the whole academic year.</p>
+    </div>
+
+    <div class="cur-row mt4">
+      <span class="mono cur-label">Showing prices for</span>
+      <select class="cur-select cur-pricing" aria-label="Country and currency">
+        <option value="inr|IN" selected>India · ₹ INR</option>
+        <option value="aed|AE">United Arab Emirates · AED</option>
+        <option value="aed|BH">Bahrain · AED</option>
+        <option value="aed|SA">Saudi Arabia · AED</option>
+        <option value="aed|QA">Qatar · AED</option>
+        <option value="aed|KW">Kuwait · AED</option>
+        <option value="aed|OM">Oman · AED</option>
+      </select>
+      <span class="price-note"></span>
+    </div>
+
+    <div class="classbanner rv mt4">
+      <img src="public/images/v23/brand-lockup.webp" alt="" aria-hidden="true" width="1400" height="350" loading="lazy">
+      <div class="classbanner-body">
+        <p class="eyebrow" style="color:var(--gold)">Grades 8 to 12</p>
+        <h3 class="dsp mt2" style="font-size:clamp(1.35rem,2.4vw,2rem);color:#fff">Every subject. Live and recorded.</h3>
+        <p class="mt2" style="color:rgba(255,255,255,.8);font-size:.96rem">Sit in on the live class and ask questions as they come up, or watch the recording as many times as it takes. Both come with every class, for the full academic year.</p>
+        <div class="modes mt3"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+      </div>
+    </div>
+
+    <div class="flex wrapf g1 mt4" role="group" aria-label="Filter classes">
+      <button class="filter" aria-pressed="false">Grade 8</button>
+      <button class="filter" aria-pressed="false">Grade 9</button>
+      <button class="filter" aria-pressed="false">Grade 10</button>
+      <button class="filter" aria-pressed="false">Grade 11</button>
+      <button class="filter" aria-pressed="false">Grade 12</button>
+    </div>
+
+    <!-- RENDER ONCE -->
+    <div class="grid cols4 g2 mt4" id="course-grid">
+      <article class="course course-img card-hover" data-tags="Grade 8|Maths" style="--banner:#073790">
+        <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#073790">Grade 8 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Maths</h3>
+          <p class="mono subj-tagline" style="color:#073790">Think. Solve. Succeed.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 8|Science" style="--banner:#397417">
+        <span class="sub-banner sb-science" role="img" aria-label="Science — Explore. Understand. Excel."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#397417">Grade 8 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Science</h3>
+          <p class="mono subj-tagline" style="color:#397417">Explore. Understand. Excel.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Physics, chemistry and biology, with the experiments that make each idea stick.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 8|English" style="--banner:#47207C">
+        <span class="sub-banner sb-english" role="img" aria-label="English — Read. Write. Communicate."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#47207C">Grade 8 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">English</h3>
+          <p class="mono subj-tagline" style="color:#47207C">Read. Write. Communicate.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Grammar, vocabulary, writing and literature — the four strands the paper tests.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;4,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;4,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-bundle card-hover" data-tags="Grade 8" style="--banner:var(--gold)">
+        <span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>
+        <span class="course-ghost" aria-hidden="true">8</span>
+        <p class="mono bundle-flag">Best value</p>
+        <div class="flex g2" style="align-items:flex-start">
+          <span class="course-num">8</span>
+          <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Maths, Science and English together for grade 8 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <div style="margin-top:auto">
+          <p class="bundle-was">Separately <s class="price" data-inr="&#8377;20,000" data-aed="AED 1,200">&#8377;20,000</s></p>
+          <p class="price bundle-price" data-inr="&#8377;12,000" data-aed="AED 800">&#8377;12,000</p>
+          <p class="bundle-save">Save <span class="price" data-inr="&#8377;8,000" data-aed="AED 400">&#8377;8,000</span> against buying the three separately</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 9|Maths" style="--banner:#073790">
+        <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#073790">Grade 9 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Maths</h3>
+          <p class="mono subj-tagline" style="color:#073790">Think. Solve. Succeed.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 9|Science" style="--banner:#397417">
+        <span class="sub-banner sb-science" role="img" aria-label="Science — Explore. Understand. Excel."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#397417">Grade 9 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Science</h3>
+          <p class="mono subj-tagline" style="color:#397417">Explore. Understand. Excel.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Physics, chemistry and biology, with the experiments that make each idea stick.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 9|English" style="--banner:#47207C">
+        <span class="sub-banner sb-english" role="img" aria-label="English — Read. Write. Communicate."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#47207C">Grade 9 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">English</h3>
+          <p class="mono subj-tagline" style="color:#47207C">Read. Write. Communicate.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Grammar, vocabulary, writing and literature — the four strands the paper tests.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;4,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;4,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-bundle card-hover" data-tags="Grade 9" style="--banner:var(--gold)">
+        <span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>
+        <span class="course-ghost" aria-hidden="true">9</span>
+        <p class="mono bundle-flag">Best value</p>
+        <div class="flex g2" style="align-items:flex-start">
+          <span class="course-num">9</span>
+          <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Maths, Science and English together for grade 9 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <div style="margin-top:auto">
+          <p class="bundle-was">Separately <s class="price" data-inr="&#8377;20,000" data-aed="AED 1,200">&#8377;20,000</s></p>
+          <p class="price bundle-price" data-inr="&#8377;12,000" data-aed="AED 800">&#8377;12,000</p>
+          <p class="bundle-save">Save <span class="price" data-inr="&#8377;8,000" data-aed="AED 400">&#8377;8,000</span> against buying the three separately</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 10|Maths" style="--banner:#073790">
+        <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#073790">Grade 10 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Maths</h3>
+          <p class="mono subj-tagline" style="color:#073790">Think. Solve. Succeed.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 10|Science" style="--banner:#397417">
+        <span class="sub-banner sb-science" role="img" aria-label="Science — Explore. Understand. Excel."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#397417">Grade 10 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Science</h3>
+          <p class="mono subj-tagline" style="color:#397417">Explore. Understand. Excel.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Physics, chemistry and biology, with the experiments that make each idea stick.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 10|English" style="--banner:#47207C">
+        <span class="sub-banner sb-english" role="img" aria-label="English — Read. Write. Communicate."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#47207C">Grade 10 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">English</h3>
+          <p class="mono subj-tagline" style="color:#47207C">Read. Write. Communicate.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Grammar, vocabulary, writing and literature — the four strands the paper tests.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;4,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;4,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-bundle card-hover" data-tags="Grade 10" style="--banner:var(--gold)">
+        <span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>
+        <span class="course-ghost" aria-hidden="true">10</span>
+        <p class="mono bundle-flag">Best value</p>
+        <div class="flex g2" style="align-items:flex-start">
+          <span class="course-num">10</span>
+          <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Maths, Science and English together for grade 10 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <div style="margin-top:auto">
+          <p class="bundle-was">Separately <s class="price" data-inr="&#8377;20,000" data-aed="AED 1,200">&#8377;20,000</s></p>
+          <p class="price bundle-price" data-inr="&#8377;15,000" data-aed="AED 1,000">&#8377;15,000</p>
+          <p class="bundle-save">Save <span class="price" data-inr="&#8377;5,000" data-aed="AED 200">&#8377;5,000</span> against buying the three separately</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 11|Maths" style="--banner:#073790">
+        <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#073790">Grade 11 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Maths</h3>
+          <p class="mono subj-tagline" style="color:#073790">Think. Solve. Succeed.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 11|Science" style="--banner:#397417">
+        <span class="sub-banner sb-science" role="img" aria-label="Science — Explore. Understand. Excel."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#397417">Grade 11 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Science</h3>
+          <p class="mono subj-tagline" style="color:#397417">Explore. Understand. Excel.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Physics, chemistry and biology, with the experiments that make each idea stick.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 11|English" style="--banner:#47207C">
+        <span class="sub-banner sb-english" role="img" aria-label="English — Read. Write. Communicate."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#47207C">Grade 11 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">English</h3>
+          <p class="mono subj-tagline" style="color:#47207C">Read. Write. Communicate.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Grammar, vocabulary, writing and literature — the four strands the paper tests.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;4,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;4,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-bundle card-hover" data-tags="Grade 11" style="--banner:var(--gold)">
+        <span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>
+        <span class="course-ghost" aria-hidden="true">11</span>
+        <p class="mono bundle-flag">Best value</p>
+        <div class="flex g2" style="align-items:flex-start">
+          <span class="course-num">11</span>
+          <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Maths, Science and English together for grade 11 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <div style="margin-top:auto">
+          <p class="bundle-was">Separately <s class="price" data-inr="&#8377;24,000" data-aed="AED 1,500">&#8377;24,000</s></p>
+          <p class="price bundle-price" data-inr="&#8377;18,000" data-aed="AED 1,200">&#8377;18,000</p>
+          <p class="bundle-save">Save <span class="price" data-inr="&#8377;6,000" data-aed="AED 300">&#8377;6,000</span> against buying the three separately</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 12|Maths" style="--banner:#073790">
+        <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#073790">Grade 12 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Maths</h3>
+          <p class="mono subj-tagline" style="color:#073790">Think. Solve. Succeed.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 12|Science" style="--banner:#397417">
+        <span class="sub-banner sb-science" role="img" aria-label="Science — Explore. Understand. Excel."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#397417">Grade 12 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">Science</h3>
+          <p class="mono subj-tagline" style="color:#397417">Explore. Understand. Excel.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Physics, chemistry and biology, with the experiments that make each idea stick.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-img card-hover" data-tags="Grade 12|English" style="--banner:#47207C">
+        <span class="sub-banner sb-english" role="img" aria-label="English — Read. Write. Communicate."></span>
+        <div>
+          <p class="mono card-kicker" style="color:#47207C">Grade 12 &middot; single subject</p>
+          <h3 class="h3" style="margin-top:.25rem">English</h3>
+          <p class="mono subj-tagline" style="color:#47207C">Read. Write. Communicate.</p>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Grammar, vocabulary, writing and literature — the four strands the paper tests.</p>
+        <div style="margin-top:auto">
+          <p class="price" data-inr="&#8377;4,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;4,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+      <article class="course course-bundle card-hover" data-tags="Grade 12" style="--banner:var(--gold)">
+        <span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>
+        <span class="course-ghost" aria-hidden="true">12</span>
+        <p class="mono bundle-flag">Best value</p>
+        <div class="flex g2" style="align-items:flex-start">
+          <span class="course-num">12</span>
+          <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
+        </div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <p class="card-blurb">Maths, Science and English together for grade 12 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <div style="margin-top:auto">
+          <p class="bundle-was">Separately <s class="price" data-inr="&#8377;24,000" data-aed="AED 1,500">&#8377;24,000</s></p>
+          <p class="price bundle-price" data-inr="&#8377;18,000" data-aed="AED 1,200">&#8377;18,000</p>
+          <p class="bundle-save">Save <span class="price" data-inr="&#8377;6,000" data-aed="AED 300">&#8377;6,000</span> against buying the three separately</p>
+          <a href="#" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 08 BOARD BAND ══ -->
+<section class="board">
+  <div class="wrap board-grid">
+    <div>
+      <p class="eyebrow" style="color:var(--gold)">The difference</p>
+      <h2 class="dsp h2 mt2" style="color:#fff">No animation.<br>No graphics.<br><span style="color:var(--gold)">Just the board.</span></h2>
+      <p class="mt3" style="color:rgba(226,232,240,.72);max-width:44ch">
+        Most online classes replace the teacher with motion graphics. We film the teacher,
+        the chalk, and the board &mdash; because that is what your child already knows how to learn from.
+      </p>
+
+      <div class="mt4" style="max-width:430px">
+        <div class="flex g2 wrapf" style="align-items:flex-end;padding-left:.3rem">
+          <a href="#courses" class="btn btn-red">Enrol now</a>
+          <a href="#demo" class="btn btn-ghost-light">Watch first</a>
+          <span style="width:44px;height:9px;border-radius:6px;background:#F8FAFC;transform:rotate(-2deg)" aria-hidden="true"></span>
+          <span style="width:44px;height:9px;border-radius:6px;background:var(--gold);transform:rotate(2deg)" aria-hidden="true"></span>
+        </div>
+        <div class="ledge" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="board-stage rv">
+      <figure class="board-portrait">
+        <img src="public/images/v23/board-model.webp" alt="" aria-hidden="true" width="560" height="700" loading="lazy">
+      </figure>
+      <div class="board-card">
+        <span class="board-card-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none"/></svg></span>
+        <span>
+          <span class="mono board-card-k">Grades 8 to 12</span>
+          <span class="board-card-h">Live + recorded</span>
+          <span class="board-card-s">Rewatch any lesson, any time</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 09 WHY ══ -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--red)">Why parents choose us</p>
+    <h2 class="dsp h2 mt2 maxw-sm">Six reasons, in plain language.</h2>
+
+    <div class="grid cols3 g2 mt5">
+      <div class="card card-hover rv"><span class="icon-badge"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3 2 8l10 5 10-5z"/><path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/></svg></span>
+        <h3 class="h3 mt3">Built for CBSE / NCERT</h3><p class="mt1" style="color:var(--slate);font-size:.94rem">Grades 8 to 12, mapped to the textbook chapter by chapter. One curriculum, taught properly.</p></div>
+
+      <div class="card card-hover rv"><span class="icon-badge"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+        <h3 class="h3 mt3">Chalk-board class on mobile</h3><p class="mt1" style="color:var(--slate);font-size:.94rem">Filmed clearly and delivered to the phone your child already carries. No new device needed.</p></div>
+
+      <div class="card card-hover rv"><span class="icon-badge"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h5M9.5 14.5h5"/></svg></span>
+        <h3 class="h3 mt3">Less than a movie ticket</h3><p class="mt1" style="color:var(--slate);font-size:.94rem">One payment covers every subject for the whole year. No monthly billing, no per-chapter charges.</p></div>
+
+      <div class="card card-hover rv"><span class="icon-badge"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span>
+        <h3 class="h3 mt3">Teachers, not presenters</h3><p class="mt1" style="color:var(--slate);font-size:.94rem">Every lesson is recorded by someone who has taught the same syllabus in a real classroom for years.</p></div>
+
+      <div class="card card-hover rv"><span class="icon-badge"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.3l3.4 2"/></svg></span>
+        <h3 class="h3 mt3">Learn at your own pace</h3><p class="mt1" style="color:var(--slate);font-size:.94rem">Rewatch a hard topic as often as needed, or run ahead of school. The full year unlocks on day one.</p></div>
+
+      <div class="card card-hover rv"><span class="icon-badge"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></span>
+        <h3 class="h3 mt3">From home</h3><p class="mt1" style="color:var(--slate);font-size:.94rem">No travel and no fixed timing. Study when your child is actually able to concentrate.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 10 STATS ══ -->
+<section class="statband">
+  <div class="wrap grid cols3 g3" style="padding-block:clamp(2rem,3.5vw,2.75rem)">
+    <div><p class="stat-num">4,000<span style="color:var(--gold)">+</span></p><p class="mono mt2" style="font-size:.68rem;opacity:.8">Sessions recorded</p></div>
+    <div><p class="stat-num">80,000<span style="color:var(--gold)">+</span></p><p class="mono mt2" style="font-size:.68rem;opacity:.8">Video minutes</p></div>
+    <div><p class="stat-num">1,000<span style="color:var(--gold)">+</span></p><p class="mono mt2" style="font-size:.68rem;opacity:.8">Notes files</p></div>
+  </div>
+</section>
+
+<!-- ══ 12 TESTIMONIALS ══ -->
+<section class="sec lattice lattice-dark" id="reviews" style="background:var(--mist)">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--red)">In their words</p>
+    <h2 class="dsp h2 mt2">Students, parents, and teachers.</h2>
+
+    <div class="flex g4 mt4" style="border-bottom:1px solid var(--line)" role="tablist">
+      <button class="tab" role="tab" aria-selected="true"  data-panel="p-stu">Students</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="p-par">Parents</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="p-edu">Educators</button>
+    </div>
+    <div id="panels" class="mt4">
+  <div class="grid cols3 g2" id="p-stu" role="tabpanel">
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">The teachers are experienced and the video is crystal clear. It is just like our own classroom, and the notes follow the NCERT books closely enough to use for competitive exam prep.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CFE0F7"/><stop offset="1" stop-color="#A9C6EC"/></linearGradient>
+<clipPath id="cpt1"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt1)">
+<rect width="200" height="200" fill="url(#bgt1)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#1F3D6E"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#16304F"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#C68F62"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#DFA97C"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#C68F62"/><circle cx="133.5" cy="83" r="6.6" fill="#C68F62"/>
+<path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#241C16"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#241C16" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Mohammed Iftiqar</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Grade 12 · UAE</span></span>
+      </div>
+    </div>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">Private tuition options are limited for us here in the Gulf. A proper chalk-board class taught by expert teachers, available online until the end of the year, solved that.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CFEBDB"/><stop offset="1" stop-color="#A2D6BB"/></linearGradient>
+<clipPath id="cpt2"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt2)">
+<rect width="200" height="200" fill="url(#bgt2)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#1B6A47"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#12513F"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#8E5535"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#A96A45"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#8E5535"/><circle cx="133.5" cy="83" r="6.6" fill="#8E5535"/>
+<path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#241C16"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#241C16" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Shayaan Mohammed</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Grade 9 · UAE</span></span>
+      </div>
+    </div>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">The full year is in my dashboard from the start, notes included. I can read ahead and arrive at my school class already knowing the topic.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBDCD9"/><stop offset="1" stop-color="#F2B6B0"/></linearGradient>
+<clipPath id="cpt3"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt3)">
+<rect width="200" height="200" fill="url(#bgt3)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#9C2733"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#7B1C26"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#DCA87F"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#F0C09A"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#DCA87F"/><circle cx="133.5" cy="83" r="6.6" fill="#DCA87F"/>
+<path d="M100 38c-21 0-37 15-37 37v29c0-7 3.4-11.4 7.6-12.8V75c0-8 1.8-13.6 5.4-16.4C82 62.4 90 64 100 64s18-1.6 24-5.4c3.6 2.8 5.4 8.4 5.4 16.4v16.2c4.2 1.4 7.6 5.8 7.6 12.8V75c0-22-16-37-37-37Z" fill="#3A2A1E"/><path d="M63 96c-2 14-1 24 2 32 5-9 6-20 5-32Z" fill="#3A2A1E"/><path d="M137 96c2 14 1 24-2 32-5-9-6-20-5-32Z" fill="#3A2A1E"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#3A2A1E" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Hana Hamza</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Grade 9 · India</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="grid cols3 g2" id="p-par" role="tabpanel" hidden>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">We were looking for an economical CBSE online class for our son and were referred here. No animation, no graphics — just classroom teaching from good Indian teachers.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E3DBF7"/><stop offset="1" stop-color="#C4B5EB"/></linearGradient>
+<clipPath id="cpt4"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt4)">
+<rect width="200" height="200" fill="url(#bgt4)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#5B3E96"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#432C73"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#C68F62"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#DFA97C"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#C68F62"/><circle cx="133.5" cy="83" r="6.6" fill="#C68F62"/>
+<circle cx="131" cy="47" r="14.5" fill="#241C16"/><path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#241C16"/><path d="M66 74c2-14 9-22 20-25-6 6-9 14-9 25Z" fill="#241C16" opacity=".85"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#241C16" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Ms Haseela Shafiq</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Parent · UAE</span></span>
+      </div>
+    </div>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">It covers everything the textbook covers, and the notes are genuinely useful. The classes stay available until the end of the academic year, for a small fee.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FCE7BE"/><stop offset="1" stop-color="#F6CE84"/></linearGradient>
+<clipPath id="cpt5"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt5)">
+<rect width="200" height="200" fill="url(#bgt5)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#0A3170"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#062350"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#AC7049"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#C4855C"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#AC7049"/><circle cx="133.5" cy="83" r="6.6" fill="#AC7049"/>
+<path d="M100 38c-21 0-37 15-37 37v29c0-7 3.4-11.4 7.6-12.8V75c0-8 1.8-13.6 5.4-16.4C82 62.4 90 64 100 64s18-1.6 24-5.4c3.6 2.8 5.4 8.4 5.4 16.4v16.2c4.2 1.4 7.6 5.8 7.6 12.8V75c0-22-16-37-37-37Z" fill="#241C16"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#241C16" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+<g fill="none" stroke="#33404F" stroke-width="2.6" stroke-linecap="round"><rect x="77" y="71" width="21" height="17" rx="7.5"/><rect x="102" y="71" width="21" height="17" rx="7.5"/><path d="M98 78.5h4M77 76l-10 2M123 76l10 2"/></g>
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Ms Sushma</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Parent · India</span></span>
+      </div>
+    </div>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">The lessons are detailed and no step is skipped. Compared to regular tutoring it gives us freedom of time, unlimited revision, and no travel.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D5E6FA"/><stop offset="1" stop-color="#AFCCF0"/></linearGradient>
+<clipPath id="cpt6"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt6)">
+<rect width="200" height="200" fill="url(#bgt6)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#1B6A47"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#12513F"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#DCA87F"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#F0C09A"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#DCA87F"/><circle cx="133.5" cy="83" r="6.6" fill="#DCA87F"/>
+<path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#3A2A1E"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#3A2A1E" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Parent name</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Parent · India</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="grid cols3 g2" id="p-edu" role="tabpanel" hidden>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">After 25 years of teaching I have watched a great many video lessons. What is different here is the planning: every topic is explained in enough detail that a weaker student still follows it.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6DFF6"/><stop offset="1" stop-color="#C7B9E9"/></linearGradient>
+<clipPath id="cpt7"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt7)">
+<rect width="200" height="200" fill="url(#bgt7)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#9C2733"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#7B1C26"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#AC7049"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#C4855C"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#AC7049"/><circle cx="133.5" cy="83" r="6.6" fill="#AC7049"/>
+<circle cx="131" cy="47" r="14.5" fill="#5C5F63"/><path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#5C5F63"/><path d="M66 74c2-14 9-22 20-25-6 6-9 14-9 25Z" fill="#5C5F63" opacity=".85"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#5C5F63" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+<g fill="none" stroke="#33404F" stroke-width="2.6" stroke-linecap="round"><rect x="77" y="71" width="21" height="17" rx="7.5"/><rect x="102" y="71" width="21" height="17" rx="7.5"/><path d="M98 78.5h4M77 76l-10 2M123 76l10 2"/></g>
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Ms Lalana Shenoy</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Academician · India</span></span>
+      </div>
+    </div>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">Most e-learning takes you away from the classroom. This takes you straight back into one — chalk, board, and the same ambience. You forget it is an online class.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBDDD4"/><stop offset="1" stop-color="#F3B9A7"/></linearGradient>
+<clipPath id="cpt8"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt8)">
+<rect width="200" height="200" fill="url(#bgt8)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#4B3B86"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#382B67"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#DCA87F"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#F0C09A"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#DCA87F"/><circle cx="133.5" cy="83" r="6.6" fill="#DCA87F"/>
+<path d="M100 38c-21 0-37 15-37 37v29c0-7 3.4-11.4 7.6-12.8V75c0-8 1.8-13.6 5.4-16.4C82 62.4 90 64 100 64s18-1.6 24-5.4c3.6 2.8 5.4 8.4 5.4 16.4v16.2c4.2 1.4 7.6 5.8 7.6 12.8V75c0-22-16-37-37-37Z" fill="#9AA0A6"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#9AA0A6" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+
+<path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Ms Sudha Baliga</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Educationist · India</span></span>
+      </div>
+    </div>
+    <div class="card card-hover" style="display:flex;flex-direction:column;gap:1rem">
+      <span class="qmark" aria-hidden="true">&ldquo;</span>
+      <p style="font-size:.95rem;color:var(--slate-500)">Coverage matches the NCERT syllabus topic for topic, the audio and video quality hold up, and students see every class upfront rather than waiting for a release schedule.</p>
+      <div class="flex center g2" style="margin-top:auto">
+        <span class="avatar avatar-img"><svg aria-hidden="true" viewBox="0 0 200 200" class="avatar-svg" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="bgt9" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D3EAE0"/><stop offset="1" stop-color="#A6D5C1"/></linearGradient>
+<clipPath id="cpt9"><rect width="200" height="200" rx="100"/></clipPath></defs>
+<g clip-path="url(#cpt9)">
+<rect width="200" height="200" fill="url(#bgt9)"/>
+<circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+<path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#0A3170"/>
+<path d="M85 130.5 100 152l15-21.5-8.5-4.5h-13Z" fill="#062350"/>
+<path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#C68F62"/>
+<ellipse cx="100" cy="80" rx="33" ry="37" fill="#DFA97C"/>
+<circle cx="66.5" cy="83" r="6.6" fill="#C68F62"/><circle cx="133.5" cy="83" r="6.6" fill="#C68F62"/>
+<path d="M67 77C67 52 82 40 100 40s33 12 33 37c-3-12-8-17-15-19-6 5-12 7-18 7s-12-2-18-7c-7 2-12 7-15 19Z" fill="#9AA0A6"/>
+<ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+<path d="M82.5 70.5q6.5-4.5 13 0M104.5 70.5q6.5-4.5 13 0" stroke="#9AA0A6" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+<g fill="none" stroke="#33404F" stroke-width="2.6" stroke-linecap="round"><rect x="77" y="71" width="21" height="17" rx="7.5"/><rect x="102" y="71" width="21" height="17" rx="7.5"/><path d="M98 78.5h4M77 76l-10 2M123 76l10 2"/></g><path d="M90 90.5q10-5 20 0" stroke="#9AA0A6" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+<path d="M91 97q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+</g></svg></span>
+        <span><span style="display:block;font-weight:700;font-size:.92rem;color:var(--navy-900)">Educator name</span>
+        <span class="mono" style="font-size:.58rem;color:var(--red)">Mentor · India</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
+
+<!-- ══ 12b APP ══ -->
+<section id="app" class="appband">
+  <div class="wrap flex between center wrapf g4" style="padding-block:clamp(2.25rem,4vw,3.25rem)">
+    <div style="max-width:56ch">
+      <p class="eyebrow" style="color:var(--gold)">Coming soon</p>
+      <h2 class="dsp mt2" style="font-size:clamp(1.5rem,2.6vw,2.2rem);color:#fff">The eLessons app.</h2>
+      <p class="mt1" style="color:rgba(255,255,255,.78)">Every class and every notes file on the phone your child already carries, with downloads for watching offline. Launching soon on the App Store and Google Play.</p>
+    </div>
+    <div class="flex g2 wrapf">
+      <span class="store"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.6"/><path d="M10.5 18.5h3"/></svg><span><small>Coming soon on the</small><strong>App Store</strong></span></span>
+      <span class="store"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M4 18.5v1.2A1.3 1.3 0 0 0 5.3 21h13.4a1.3 1.3 0 0 0 1.3-1.3v-1.2"/></svg><span><small>Coming soon on</small><strong>Google Play</strong></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 13 FAQ ══ -->
+<section id="faq" class="sec">
+  <div class="wrap">
+    <div class="flex between center wrapf g3">
+      <div>
+        <p class="eyebrow" style="color:var(--red)">Questions</p>
+        <h2 class="dsp h2 mt2">Before you buy.</h2>
+      </div>
+      <p class="lead maxw-xs" style="font-size:.94rem">Still unsure? Message us on WhatsApp and a real person will answer.</p>
+    </div>
+    <div class="faq-grid mt5">
+    <details class="faq"><summary>What exactly do I get for the annual fee?</summary><div class="body">Every video lesson and every notes file for one class, for the full academic year. Bundles run from &#8377;12,000, and single subjects start at &#8377;4,000. Grades 8 and 9 are <span class="price" data-inr="&#8377;12,000" data-aed="AED 800">&#8377;12,000</span>, grade 10 is <span class="price" data-inr="&#8377;15,000" data-aed="AED 1,000">&#8377;15,000</span>, and grades 11 and 12 are <span class="price" data-inr="&#8377;18,000" data-aed="AED 1,200">&#8377;18,000</span>. There is nothing else to buy and no chapter is held back.</div></details>
+    <details class="faq"><summary>Are the classes live or recorded?</summary><div class="body">Both, and you do not choose between them. Every class has scheduled live sessions you can attend and ask questions in, and every session is recorded so it can be rewatched at any time until the academic year ends.</div></details>
+    <details class="faq"><summary>How long do I have access?</summary><div class="body">Until the end of the academic year you enrolled for. The whole year unlocks the day you pay, so you can revise or run ahead at any point.</div></details>
+    <details class="faq"><summary>Do you follow NCERT?</summary><div class="body">Yes. Lessons and notes are mapped chapter by chapter to the NCERT textbooks for the CBSE curriculum, grades 8 to 12.</div></details>
+    <details class="faq"><summary>How do I pay?</summary><div class="body">Prices are listed and charged in Indian rupees. UPI, net banking, and Indian debit and credit cards all work at checkout.</div></details>
+    <details class="faq"><summary>Is there a free demo?</summary><div class="body">Yes. A full sample lesson and a sample notes page are available above, with more in the demo section. No sign-up needed to watch.</div></details>
+    <details class="faq"><summary>What if my child falls behind?</summary><div class="body">Nothing expires mid-year. Any lesson can be rewatched as often as needed, and the notes for that chapter stay downloadable throughout.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 14 CTA BAND ══ -->
+<section class="statband">
+  <div class="wrap flex between center wrapf g3" style="padding-block:clamp(2rem,3.5vw,2.75rem)">
+    <div>
+      <h2 class="dsp" style="font-size:clamp(1.6rem,2.8vw,2.3rem);color:#fff">Ready to start the year properly?</h2>
+      <p class="mt1" style="color:rgba(255,255,255,.8)"><span class="price" data-inr="From &#8377;12,000" data-aed="From AED 800">From &#8377;12,000</span> &mdash; all subjects, full academic year, unlocked today.</p>
+    </div>
+    <div class="flex g2 wrapf">
+      <a href="#courses" class="btn btn-red">Enrol for the year</a>
+      <a href="https://wa.me/971568056001" class="btn btn-ghost-light">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.6 2 2.18 6.42 2.18 11.86c0 1.94.53 3.76 1.45 5.32L2 22l4.96-1.58a9.8 9.8 0 0 0 5.08 1.4c5.43 0 9.85-4.42 9.85-9.86S17.47 2 12.04 2Zm5.77 14c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.13.07-1.82-.11a15.6 15.6 0 0 1-1.65-.62c-2.9-1.26-4.8-4.2-4.94-4.4-.15-.2-1.19-1.58-1.19-3.02 0-1.44.75-2.14 1.02-2.44.27-.29.59-.36.78-.36h.56c.18 0 .42-.07.66.5.24.59.83 2.03.9 2.18.07.15.12.32.02.51-.1.2-.15.32-.3.49-.14.17-.3.38-.44.51-.14.15-.29.3-.13.6.17.29.75 1.23 1.6 2 1.11.98 2.04 1.29 2.33 1.44.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.7.8 2 .95.29.15.48.22.55.34.07.13.07.73-.17 1.42Z"/></svg>
+        WhatsApp us
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 15 CONTACT ══ -->
+<section class="sec" id="contact">
+  <div class="wrap grid cols2 g4">
+    <div>
+      <p class="eyebrow" style="color:var(--red)">Contact</p>
+      <h2 class="dsp h2 mt2">Get in touch.</h2>
+
+      <div class="card mt4" style="border-radius:18px">
+        <p class="mono" style="font-size:.6rem;color:var(--red)">Corporate office</p>
+        <p class="mt1" style="font-size:.94rem;color:var(--slate)">eLessons.Net, #104, Level 5, Infantry Techno Park,<br>Infantry Road, Bangalore 560001, Karnataka, India</p>
+        <a href="mailto:contact@elessons.net" class="mt2" style="display:inline-block;font-weight:700;color:var(--navy);font-size:.92rem">contact@elessons.net</a>
+      </div>
+
+      <div class="card mt2" style="border-radius:18px">
+        <p class="mono" style="font-size:.6rem;color:var(--red)">Middle East office</p>
+        <p class="mt1" style="font-size:.94rem;color:var(--slate)">Staffin Consultancy FZE, Sharjah Research Technology<br>&amp; Innovation Park, Sharjah, UAE</p>
+        <a href="https://wa.me/971568056001" class="mt2" style="display:inline-block;font-weight:700;color:var(--navy);font-size:.92rem">+971 568056001</a>
+      </div>
+    </div>
+
+    <div class="card" style="border-radius:22px">
+      <div class="grid g2">
+        <div class="field"><label for="f-n">Name</label><input id="f-n" type="text" autocomplete="name"></div>
+        <div class="field"><label for="f-e">Email</label><input id="f-e" type="email" autocomplete="email"></div>
+        <div class="field"><label for="f-m">Mobile number</label><input id="f-m" type="tel" autocomplete="tel"></div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg"></textarea></div>
+        <button type="button" class="btn btn-navy" style="justify-self:start">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 16 FOOTER ══ -->
+<footer style="background:var(--navy-900);color:rgba(255,255,255,.72)">
+  <div class="wrap" style="padding-block:clamp(2.75rem,5vw,4rem)">
+    <div class="grid cols3 g4">
+      <div>
+        <img class="brand-footer" src="public/images/v23/footer-logo.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191">
+        <p class="mt2" style="font-size:.9rem;max-width:32ch">CBSE / NCERT video lessons and notes for grades 8 to 12.</p>
+        <p class="mono mt2" style="font-size:.58rem;color:var(--gold)">iOS &amp; Android apps &mdash; coming soon</p>
+      </div>
+      <nav class="grid g1" style="align-content:start;font-size:.9rem">
+        <a href="#courses">Syllabus</a><a href="#">About us</a><a href="#">Terms</a>
+      </nav>
+      <nav class="grid g1" style="align-content:start;font-size:.9rem">
+        <a href="#">Privacy</a><a href="#faq">FAQ</a><a href="#contact">Contact us</a>
+      </nav>
+    </div>
+    <div class="board-rule" style="margin-block:2.25rem"></div>
+    <div class="flex between center wrapf g2" style="font-size:.8rem">
+      <p>&copy; 2026 G-TEC eLessons.net. All rights reserved.</p>
+      <a href="https://wa.me/971568056001">+971 568056001</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ 17 STICKY MOBILE BAR ══ -->
+<div class="stickybar">
+  <div>
+    <p class="mono" style="font-size:.9rem;color:#FCD34D;line-height:1.2"><span class="price" data-inr="From &#8377;12,000" data-aed="From AED 800">From &#8377;12,000</span></p>
+    <p style="font-size:.68rem;opacity:.7">per year &middot; all subjects</p>
+  </div>
+  <a href="#courses" class="btn btn-red btn-sm">Buy now</a>
+</div>
+
+<script>
+document.getElementById('announce-x').onclick=function(){document.getElementById('announce').remove()};
+
+document.querySelectorAll('.filter').forEach(function(f){
+  f.onclick=function(){
+    // no 'All' chip any more: clicking the active filter again clears it
+    var wasOn = f.getAttribute('aria-pressed')==='true';
+    document.querySelectorAll('.filter').forEach(function(o){o.setAttribute('aria-pressed','false')});
+    if(!wasOn) f.setAttribute('aria-pressed','true');
+    var key = wasOn ? null : f.textContent.trim();
+    document.querySelectorAll('#course-grid .course').forEach(function(c){
+      var show = !key || (c.dataset.tags||'').split('|').indexOf(key)>-1;
+      c.style.display = show ? '' : 'none';
+    });
+  };
+});
+
+var tabs=document.querySelectorAll('.tab');
+tabs.forEach(function(t){
+  t.onclick=function(){
+    tabs.forEach(function(o){o.setAttribute('aria-selected','false');document.getElementById(o.dataset.panel).hidden=true});
+    t.setAttribute('aria-selected','true');
+    document.getElementById(t.dataset.panel).hidden=false;
+  };
+});
+
+if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+  },{threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%4*90)+'ms';io.observe(el)});
+} else {
+  document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')});
+}
+</script>
+
+<script>
+/* ── country / currency switcher ───────────────────────────────────────────
+   Prices come from the two lists in the fee schedule (PAN INDIA in INR,
+   GCC in AED). Nothing is converted at runtime — each price element carries
+   both authored figures, so the two lists stay independent. */
+(function(){
+  var GULF_TZ = ['Asia/Dubai','Asia/Bahrain','Asia/Riyadh','Asia/Qatar',
+                 'Asia/Kuwait','Asia/Muscat','Asia/Aden'];
+  var pickers = document.querySelectorAll('.cur-select');
+
+  function render(cur){
+    document.querySelectorAll('.price').forEach(function(el){
+      var v = el.dataset[cur];
+      if (v) el.textContent = v;
+    });
+    document.querySelectorAll('.price-note').forEach(function(n){
+      n.textContent = cur === 'aed'
+        ? 'Gulf pricing, charged in AED at checkout.'
+        : 'India pricing, charged in Indian rupees at checkout.';
+    });
+    document.documentElement.setAttribute('data-currency', cur);
+  }
+
+  function sync(value){
+    var cur = value.split('|')[0];
+    pickers.forEach(function(sel){
+      var i, exact = -1, firstOfCur = -1;
+      for (i = 0; i < sel.options.length; i++){
+        if (sel.options[i].value === value) exact = i;
+        if (firstOfCur < 0 && sel.options[i].value.split('|')[0] === cur) firstOfCur = i;
+      }
+      // the nav picker lists currencies, the pricing picker lists countries, so
+      // fall back to the first option of the right currency when there is no exact match
+      sel.selectedIndex = exact > -1 ? exact : firstOfCur;
+    });
+    render(cur);
+  }
+
+  pickers.forEach(function(sel){
+    sel.addEventListener('change', function(){ sync(sel.value); });
+  });
+
+  var start = 'inr|IN';
+  try {
+    if (GULF_TZ.indexOf(Intl.DateTimeFormat().resolvedOptions().timeZone) > -1) start = 'aed|AE';
+  } catch (e) {}
+  sync(start);
+})();
+
+</script>
+<script>
+/* ── nav: mark the section currently in view ───────────────────────────────
+   Anchors do the scrolling natively; this only reflects where you are. */
+(function(){
+  var links = [].slice.call(document.querySelectorAll('.navlink[href^="#"]'))
+                .filter(function(a){ return a.getAttribute('href').length > 1; });
+  if (!links.length || !('IntersectionObserver' in window)) return;
+
+  var map = {};
+  links.forEach(function(a){
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (el) (map[el.id] = map[el.id] || []).push(a);
+  });
+  var targets = Object.keys(map).map(function(id){ return document.getElementById(id); });
+  if (!targets.length) return;
+
+  var visible = {};
+  function paint(){
+    var best = null;
+    targets.forEach(function(t){ if (visible[t.id] && (!best || visible[t.id] > visible[best.id])) best = t; });
+    links.forEach(function(a){ a.removeAttribute('aria-current'); });
+    if (best) (map[best.id] || []).forEach(function(a){ a.setAttribute('aria-current','true'); });
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ visible[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0; });
+    paint();
+  }, { rootMargin: '-96px 0px -55% 0px', threshold: [0, 0.15, 0.4, 0.75, 1] });
+  targets.forEach(function(t){ io.observe(t); });
+})();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,15 @@
+android
+ios
+lib
+test
+assets
+resources
+scripts/*.dart
+*.dart
+.dart_tool
+build
+analyze_*.txt
+swagger.json
+scratch.dart
+check.dart
+pkg.json
