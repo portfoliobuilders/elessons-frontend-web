@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>G-TEC eLessons.net — Traditional chalk-board class from the comfort of your home</title>
-  <meta name="description" content="CBSE / NCERT video lessons and notes for grades 8 to 12. A real teacher at a real board. AED 1200 for the full academic year.">
+
+  @include('components.head-seo')
 
   {{-- Phase 4: self-hosted fonts (no Google Fonts CDN on critical path) --}}
   <link rel="preload" href="/fonts/plus-jakarta-sans-800.woff2" as="font" type="font/woff2" crossorigin>
@@ -32,7 +33,6 @@
 
   @include('components.footer')
 
-  {{-- Phase 6: sticky mobile enroll (hidden on desktop via CSS) --}}
   <div class="mobile-enroll" role="region" aria-label="Quick enrol">
     <a href="#courses" class="btn btn--navy btn--sm">View packages</a>
     <a
@@ -47,5 +47,6 @@
   <script src="/js/config.js" defer></script>
   <script src="/js/nav.js" defer></script>
   <script src="/js/interactive.js" defer></script>
+  <script src="/js/form.js" defer></script>
 </body>
 </html>

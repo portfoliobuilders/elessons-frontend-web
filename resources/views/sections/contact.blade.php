@@ -13,7 +13,7 @@
       <div class="contact-card">
         <p class="contact-card__label">Middle East office</p>
         <p>Staffin Consultancy FZE, Sharjah Research Technology<br>&amp; Innovation Park, Sharjah, UAE</p>
-        <a href="https://wa.me/971568056001" rel="noopener noreferrer" target="_blank">+971 568056001</a>
+        <a href="https://wa.me/971568056001" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp +971 568056001">+971 568056001</a>
       </div>
     </div>
 
@@ -37,6 +37,7 @@
         <span id="msg-hint" class="field__hint">Optional — grade, board, or questions.</span>
       </div>
       <button type="submit" class="btn btn--navy" style="justify-self: start">Send message</button>
+      <p id="form-status" class="form-status field--full" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>

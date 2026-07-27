@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="G-TEC eLessons">
+  <rect width="64" height="64" rx="14" fill="#0F172A"/>
+  <path d="M14 40V24h10.5c4.2 0 6.8 2.2 6.8 5.6 0 3.5-2.6 5.7-6.8 5.7H20v4.7H14zm6-9.2h4c1.7 0 2.7-.8 2.7-2.1S25.7 26.6 24 26.6H20v4.2z" fill="#F8FAFC"/>
+  <path d="M36 40l8.2-16h6.2L58.4 40h-6.3l-1.2-2.7h-7.2L42.4 40H36zm9.2-7.2h4.6l-2.3-5.2-2.3 5.2z" fill="#FACC15"/>
+</svg>
