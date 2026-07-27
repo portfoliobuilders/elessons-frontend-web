@@ -126,11 +126,21 @@
 
 <link rel="preload" href="fonts/plus-jakarta-sans-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="images/hero/model-suit-640w.webp" as="image" type="image/webp" imagesrcset="images/hero/model-suit-320w.webp 320w, images/hero/model-suit-640w.webp 640w, images/hero/model-suit-960w.webp 960w" imagesizes="(min-width: 1000px) 520px, 90vw">
+<link rel="preload" href="images/hero/model-suit-640w.webp" as="image" type="image/webp" imagesrcset="images/hero/model-suit-320w.webp 320w, images/hero/model-suit-640w.webp 640w, images/hero/model-suit-960w.webp 960w" imagesizes="(min-width: 1000px) 55vw, 80vw">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
+
+<div class="announce" id="announce" role="region" aria-label="Site announcement">
+  <div class="announce__inner">
+    <p class="announce__msg">
+      <span class="announce__badge">New</span>
+      Academic year 2025–26 enrolment is open — ask about current offers at checkout.
+    </p>
+    <button type="button" class="announce__dismiss" id="announce-x" aria-label="Dismiss announcement">&times;</button>
+  </div>
+</div>
 
 <header class="site-header">
   <div class="site-header__inner">
@@ -169,13 +179,16 @@
           <a href="#courses" class="site-nav__link">Courses</a>
         </li>
         <li>
+          <a href="#demo" class="site-nav__link">Demo</a>
+        </li>
+        <li>
           <a href="#how" class="site-nav__link">How it works</a>
         </li>
         <li>
           <a href="#faq" class="site-nav__link">FAQ</a>
         </li>
         <li>
-          <a href="#contact" class="site-nav__link site-nav__cta">Get in touch</a>
+          <a href="#courses" class="site-nav__link site-nav__cta">Buy now</a>
         </li>
       </ul>
     </nav>
@@ -190,52 +203,101 @@
         <a href="#courses" class="site-nav__link">Courses</a>
       </li>
       <li>
+        <a href="#demo" class="site-nav__link">Demo</a>
+      </li>
+      <li>
         <a href="#how" class="site-nav__link">How it works</a>
       </li>
       <li>
         <a href="#faq" class="site-nav__link">FAQ</a>
       </li>
       <li>
-        <a href="#contact" class="site-nav__link site-nav__cta">Get in touch</a>
+        <a href="#courses" class="site-nav__link site-nav__cta">Buy now</a>
       </li>
     </ul>
   </div>
 </header>
 <main id="main" tabindex="-1">
 <section class="hero hero--lattice" aria-labelledby="hero-heading">
+  <div class="hero__photo" aria-hidden="true">
+    <picture>
+      <source
+        type="image/webp"
+        srcset="
+          images/hero/model-suit-320w.webp 320w,
+          images/hero/model-suit-640w.webp 640w,
+          images/hero/model-suit-960w.webp 960w
+        "
+        sizes="(min-width: 1000px) 55vw, 80vw"
+      >
+      <img
+        src="images/hero/model-suit-fallback.jpg"
+        srcset="
+          images/hero/model-suit-320w.jpg 320w,
+          images/hero/model-suit-640w.jpg 640w,
+          images/hero/model-suit-960w.jpg 960w
+        "
+        sizes="(min-width: 1000px) 55vw, 80vw"
+        alt=""
+        width="967"
+        height="1000"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      >
+    </picture>
+  </div>
+
   <div class="hero__grid">
     <div class="hero__copy">
       <div class="hero__brand hero__reveal">
         <picture>
-          <source srcset="images/brand/elessons-logo-white-64h.webp 1x, images/brand/elessons-logo-white-128h.webp 2x" type="image/webp">
+          <source srcset="images/brand/gtec-education-logo.webp" type="image/webp">
           <img
             class="hero__brand-img"
-            src="images/brand/elessons-logo-white-64h.png"
-            srcset="images/brand/elessons-logo-white-64h.png 1x, images/brand/elessons-logo-white-128h.png 2x"
-            width="246"
-            height="64"
-            alt="G-TEC eLessons.net Hybrid School"
+            src="images/brand/gtec-education-logo.png"
+            width="220"
+            height="114"
+            alt="G-TEC Education"
             decoding="async"
           >
         </picture>
       </div>
 
-      <p class="hero__eyebrow hero__reveal hero__reveal--delay">
-        <span class="hero__eyebrow-dot" aria-hidden="true"></span>
-        <span>CBSE / NCERT · Grades 8–12</span>
-      </p>
-
       <h1 id="hero-heading" class="hero__title hero__reveal hero__reveal--delay">
-        Traditional chalk-board class from
-        <span class="serif-accent">the comfort of your home</span>
+        <span class="hero__title-light">Traditional</span>
+        Chalk-Board Class
       </h1>
 
-      <p class="hero__lead hero__reveal hero__reveal--delay-2">
-        No animation. No graphics. A real teacher at a real board, filmed and delivered
-        to the device your child already owns — with notes for every chapter.
+      <span class="hero__gold-rule hero__reveal hero__reveal--delay" aria-hidden="true"></span>
+
+      <p class="hero__sub hero__reveal hero__reveal--delay-2">
+        from <strong>the comfort of your home</strong>
       </p>
 
-      <div class="hero__actions hero__reveal hero__reveal--delay-2">
+      <div class="hero__lockup hero__reveal hero__reveal--delay-2">
+        <svg class="hero__lockup-cap" viewBox="0 0 64 46" aria-hidden="true" focusable="false">
+          <path d="M32 2 62 15 32 28 2 15Z" fill="#0B0B0F" stroke="#FBC63F" stroke-width="1.15" stroke-linejoin="round"/>
+          <path d="M14 20v9c0 4 8 7.5 18 7.5s18-3.5 18-7.5v-9l-18 8Z" fill="#17171C"/>
+          <path d="M60.5 16v11" stroke="#FBC63F" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="60.5" cy="30" r="3.6" fill="#FBC63F"/>
+        </svg>
+        <span class="hero__lockup-pill">
+          <picture>
+            <source srcset="images/brand/elessons-logo-color-64h.webp 1x, images/brand/elessons-logo-color-128h.webp 2x" type="image/webp">
+            <img
+              src="images/brand/elessons-logo-color-64h.png"
+              srcset="images/brand/elessons-logo-color-64h.png 1x, images/brand/elessons-logo-color-128h.png 2x"
+              width="322"
+              height="84"
+              alt="G-TEC eLessons.net Hybrid School"
+              decoding="async"
+            >
+          </picture>
+        </span>
+      </div>
+
+      <div class="hero__actions hero__reveal hero__reveal--delay-3">
         <a href="#courses" class="btn btn--primary">
           Buy the annual package
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -243,56 +305,41 @@
         <a href="#demo" class="btn btn--ghost">Watch a free class</a>
       </div>
 
-      <p class="hero__proof hero__reveal hero__reveal--delay-2">
+      <p class="hero__proof hero__reveal hero__reveal--delay-3">
         <span><strong>AED 1,200</strong> / full year</span>
         <span aria-hidden="true">·</span>
-        <span>All subjects included</span>
+        <span>CBSE / NCERT · Grades 8–12</span>
         <span aria-hidden="true">·</span>
         <span>UAE · India · Bahrain · KSA</span>
       </p>
     </div>
-
-    <div class="hero__model-stage">
-      <div class="hero__model-halo" aria-hidden="true"></div>
-      <picture>
-        <source
-          type="image/webp"
-          srcset="
-            images/hero/model-suit-320w.webp 320w,
-            images/hero/model-suit-640w.webp 640w,
-            images/hero/model-suit-960w.webp 960w
-          "
-          sizes="(min-width: 1000px) 520px, (min-width: 640px) 420px, 90vw"
-        >
-        <img
-          class="hero__model"
-          src="images/hero/model-suit-fallback.jpg"
-          srcset="
-            images/hero/model-suit-320w.jpg 320w,
-            images/hero/model-suit-640w.jpg 640w,
-            images/hero/model-suit-960w.jpg 960w
-          "
-          sizes="(min-width: 1000px) 520px, (min-width: 640px) 420px, 90vw"
-          alt="G-TEC instructor in a light blue suit teaching"
-          width="967"
-          height="1000"
-          fetchpriority="high"
-          loading="eager"
-          decoding="async"
-        >
-      </picture>
-
-      <aside class="hero__float-card hero__float-card--top-left" aria-hidden="true">
-        <p class="label">Full year access</p>
-        <p>Unlocked day one</p>
-      </aside>
-      <aside class="hero__float-card hero__float-card--bottom-right hero__float-card--stat" aria-hidden="true">
-        <p class="label">Video minutes</p>
-        <p>80,000+</p>
-      </aside>
-    </div>
   </div>
 </section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <div class="marquee__item">
+      <span>Physics</span><span class="marquee__dot"></span>
+      <span>Chemistry</span><span class="marquee__dot"></span>
+      <span>Mathematics</span><span class="marquee__dot"></span>
+      <span>Biology</span><span class="marquee__dot"></span>
+      <span>Computer Science</span><span class="marquee__dot"></span>
+      <span>Accountancy</span><span class="marquee__dot"></span>
+      <span>English</span><span class="marquee__dot"></span>
+      <span>Grammar</span>
+    </div>
+    <div class="marquee__item">
+      <span>Physics</span><span class="marquee__dot"></span>
+      <span>Chemistry</span><span class="marquee__dot"></span>
+      <span>Mathematics</span><span class="marquee__dot"></span>
+      <span>Biology</span><span class="marquee__dot"></span>
+      <span>Computer Science</span><span class="marquee__dot"></span>
+      <span>Accountancy</span><span class="marquee__dot"></span>
+      <span>English</span><span class="marquee__dot"></span>
+      <span>Grammar</span>
+    </div>
+  </div>
+</div>
 <section id="how" class="sec" aria-labelledby="how-heading">
   <div class="wrap">
     <div class="section-head">
@@ -463,9 +510,14 @@
         Most online classes replace the teacher with motion graphics. We film the teacher,
         the chalk, and the board — because that is what your child already knows how to learn from.
       </p>
-      <div class="board__actions">
-        <a href="#courses" class="btn btn--primary">Enrol now</a>
-        <a href="#demo" class="btn btn--ghost">Watch first</a>
+      <div class="board__ledge-wrap">
+        <div class="board__ledge-ctas">
+          <a href="#courses" class="btn btn--primary">Enrol now</a>
+          <a href="#demo" class="btn btn--ghost">Watch first</a>
+          <span class="board__chalk board__chalk--white" aria-hidden="true"></span>
+          <span class="board__chalk board__chalk--gold" aria-hidden="true"></span>
+        </div>
+        <div class="board__ledge" aria-hidden="true"></div>
       </div>
     </div>
 
@@ -531,38 +583,95 @@
     </div>
   </div>
 </section>
+
+<section class="statband" aria-label="Platform scale">
+  <div class="statband__grid">
+    <div>
+      <p class="statband__num">4,000<span>+</span></p>
+      <p class="statband__label">Sessions recorded</p>
+    </div>
+    <div>
+      <p class="statband__num">80,000<span>+</span></p>
+      <p class="statband__label">Video minutes</p>
+    </div>
+    <div>
+      <p class="statband__num">1,000<span>+</span></p>
+      <p class="statband__label">Notes files</p>
+    </div>
+  </div>
+</section>
+
 <section id="teachers" class="sec bg-mist" aria-labelledby="teachers-heading">
   <div class="wrap">
     <p class="section-eyebrow">Faculty</p>
     <h2 id="teachers-heading" class="h2" style="margin-top: var(--space-sm)">The people at the board.</h2>
-    <p class="section-lead" style="margin-top: var(--space-sm); max-width: 42ch">
-      Concept-first CBSE teaching from faculty with 10–20+ years at the board. Photos coming soon — subjects below are ready now.
-    </p>
+    <p class="section-lead" style="margin-top: var(--space-md)">Experienced CBSE classroom teachers — filmed at a real board, not reading a script.</p>
 
     <div class="teachers-grid">
       <article class="teacher">
-        <div class="teacher__photo" aria-hidden="true"><span class="teacher__initials">Ph</span></div>
-        <h3 class="h3">Physics</h3>
-        <p class="teacher__role">Grades 11–12</p>
-        <p>18 years teaching CBSE</p>
+        <div class="teacher__photo" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <defs><linearGradient id="bgf1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#DCE9FB"/><stop offset="1" stop-color="#B9D2F2"/></linearGradient></defs>
+            <rect width="200" height="200" fill="url(#bgf1)"/>
+            <circle cx="163" cy="40" r="36" fill="#fff" opacity=".09"/><circle cx="26" cy="176" r="48" fill="#001A4E" opacity=".07"/>
+            <path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#1F3D6E"/>
+            <path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#C68F62"/><ellipse cx="100" cy="80" rx="33" ry="37" fill="#DFA97C"/>
+            <path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#241C16"/>
+            <ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+            <path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="h3">Physics faculty</h3>
+        <p class="teacher__role">Physics · Grades 11–12</p>
+        <p>Senior CBSE classroom experience</p>
       </article>
       <article class="teacher">
-        <div class="teacher__photo" aria-hidden="true"><span class="teacher__initials">Ma</span></div>
-        <h3 class="h3">Mathematics</h3>
-        <p class="teacher__role">Grades 8–10</p>
-        <p>22 years teaching CBSE</p>
+        <div class="teacher__photo" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <defs><linearGradient id="bgf2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDEBC9"/><stop offset="1" stop-color="#F7D48C"/></linearGradient></defs>
+            <rect width="200" height="200" fill="url(#bgf2)"/>
+            <path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#9C2733"/>
+            <path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#DCA87F"/><ellipse cx="100" cy="80" rx="33" ry="37" fill="#F0C09A"/>
+            <path d="M100 39c-19 0-34 14-34 33 0 5 .6 9 1.7 12.5 1.2-12.6 5.6-19.4 11.6-21.6 6.2 3.2 13.2 4.6 20.7 4.6s14.5-1.4 20.7-4.6c6 2.2 10.4 9 11.6 21.6 1.1-3.5 1.7-7.5 1.7-12.5 0-19-15-33-34-33Z" fill="#241C16"/>
+            <ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+            <path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="h3">Mathematics faculty</h3>
+        <p class="teacher__role">Mathematics · Grades 8–10</p>
+        <p>Senior CBSE classroom experience</p>
       </article>
       <article class="teacher">
-        <div class="teacher__photo" aria-hidden="true"><span class="teacher__initials">Ch</span></div>
-        <h3 class="h3">Chemistry</h3>
-        <p class="teacher__role">Grades 11–12</p>
-        <p>15 years teaching CBSE</p>
+        <div class="teacher__photo" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <defs><linearGradient id="bgf3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D8F0E2"/><stop offset="1" stop-color="#A9DCC2"/></linearGradient></defs>
+            <rect width="200" height="200" fill="url(#bgf3)"/>
+            <path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#1B6A47"/>
+            <path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#AC7049"/><ellipse cx="100" cy="80" rx="33" ry="37" fill="#C4855C"/>
+            <path d="M100 38c-21 0-37 15-37 37v29c0-7 3.4-11.4 7.6-12.8V75c0-8 1.8-13.6 5.4-16.4C82 62.4 90 64 100 64s18-1.6 24-5.4c3.6 2.8 5.4 8.4 5.4 16.4v16.2c4.2 1.4 7.6 5.8 7.6 12.8V75c0-22-16-37-37-37Z" fill="#3A2A1E"/>
+            <ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+            <path d="M91 94q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="h3">Chemistry faculty</h3>
+        <p class="teacher__role">Chemistry · Grades 11–12</p>
+        <p>Senior CBSE classroom experience</p>
       </article>
       <article class="teacher">
-        <div class="teacher__photo" aria-hidden="true"><span class="teacher__initials">Bi</span></div>
-        <h3 class="h3">Biology</h3>
-        <p class="teacher__role">Grades 9–12</p>
-        <p>19 years teaching CBSE</p>
+        <div class="teacher__photo" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <defs><linearGradient id="bgf4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6E1F8"/><stop offset="1" stop-color="#C6BCEE"/></linearGradient></defs>
+            <rect width="200" height="200" fill="url(#bgf4)"/>
+            <path d="M100 128c-34 0-58 21-64 53-1.6 8-2.4 14-2.4 19h132.8c0-5-.8-11-2.4-19-6-32-30-53-64-53Z" fill="#4B3B86"/>
+            <path d="M88 104h24v22a12 12 0 0 1-24 0Z" fill="#8E5535"/><ellipse cx="100" cy="80" rx="33" ry="37" fill="#A96A45"/>
+            <path d="M67 77C67 52 82 40 100 40s33 12 33 37c-3-12-8-17-15-19-6 5-12 7-18 7s-12-2-18-7c-7 2-12 7-15 19Z" fill="#5C5F63"/>
+            <ellipse cx="89" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/><ellipse cx="111" cy="80.5" rx="3.4" ry="4.3" fill="#2A2118"/>
+            <path d="M91 97q9 7.5 18 0" stroke="#8C5B45" stroke-width="2.7" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="h3">Biology faculty</h3>
+        <p class="teacher__role">Biology · Grades 9–12</p>
+        <p>Senior CBSE classroom experience</p>
       </article>
     </div>
   </div>
@@ -826,15 +935,28 @@
 <footer class="site-footer" role="contentinfo">
   <div class="site-footer__inner">
     <div>
-      <p>
-        <strong style="color: #fff">G-TEC eLessons</strong>
-        — CBSE / NCERT video lessons for grades 8–12.
-      </p>
+      <a href="/" aria-label="G-TEC eLessons home">
+        <picture>
+          <source srcset="images/brand/elessons-logo-on-dark-48h.webp 1x, images/brand/elessons-logo-on-dark-96h.webp 2x" type="image/webp">
+          <img
+            src="images/brand/elessons-logo-on-dark-48h.png"
+            srcset="images/brand/elessons-logo-on-dark-48h.png 1x, images/brand/elessons-logo-on-dark-96h.png 2x"
+            width="185"
+            height="48"
+            alt="G-TEC eLessons.net Hybrid School"
+            decoding="async"
+            style="height:48px;width:auto;margin-bottom:0.75rem"
+          >
+        </picture>
+      </a>
+      <p>CBSE / NCERT video lessons and notes for grades 8 to 12.</p>
       <p class="caption" style="margin-top: 0.5rem; color: var(--slate-400)">
-        © <span id="y">2026</span> G-TEC Education. AED pricing · UAE · India · Bahrain · KSA.
+        © <span id="y">2026</span> G-TEC eLessons.net. AED pricing · UAE · India · Bahrain · KSA.
       </p>
     </div>
     <nav aria-label="Footer">
+      <a href="#courses">Courses</a>
+      <span aria-hidden="true" style="margin-inline: 0.75rem; opacity: 0.4">·</span>
       <a href="#faq">FAQ</a>
       <span aria-hidden="true" style="margin-inline: 0.75rem; opacity: 0.4">·</span>
       <a href="#contact">Contact</a>
@@ -845,10 +967,22 @@
 </footer>
 <script>
   document.getElementById("y") && (document.getElementById("y").textContent = String(new Date().getFullYear()));
+  (function () {
+    var btn = document.getElementById("announce-x");
+    var bar = document.getElementById("announce");
+    if (!btn || !bar) return;
+    btn.addEventListener("click", function () {
+      bar.remove();
+    });
+  })();
 </script>
 <div class="mobile-enroll" role="region" aria-label="Quick enrol">
-<a href="#courses" class="btn btn--navy btn--sm">View packages</a>
-<a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)." class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer" aria-label="Enrol on WhatsApp">Enrol on WhatsApp</a></div>
+  <div class="mobile-enroll__price">
+    <p class="mobile-enroll__amount">AED 1,200</p>
+    <p class="mobile-enroll__meta">per year · all subjects</p>
+  </div>
+  <a href="#courses" class="btn btn--primary btn--sm">Buy now</a>
+</div>
 <script src="js/config.js" defer></script>
 <script src="js/nav.js" defer></script>
 <script src="js/interactive.js" defer></script>
