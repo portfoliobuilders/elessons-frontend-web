@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-TEC eLessons — Traditional chalk-board class. On your screen.</title>
+  <meta name="description" content="Full-year CBSE/NCERT video lessons for grades 8–12. No animation, no graphics — just a traditional chalk-board class, filmed. AED 1200 for the academic year." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --board: #16302A;
+      --board-soft: #24443B;
+      --chalk: #F2F0E6;
+      --chalk-dim: #A8B3AC;
+      --paper: #FAF8F2;
+      --ink: #1A1A18;
+      --chalk-amber: #E8C547;
+      --brand-cyan: #00AEEF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-display {
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .font-body {
+      font-family: "Instrument Sans", system-ui, sans-serif;
+    }
+
+    .font-mono-util {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .bg-board { background-color: var(--board); }
+    .bg-board-soft { background-color: var(--board-soft); }
+    .bg-paper { background-color: var(--paper); }
+    .bg-ink { background-color: var(--ink); }
+    .bg-chalk { background-color: var(--chalk); }
+    .bg-chalk-amber { background-color: var(--chalk-amber); }
+
+    .text-chalk { color: var(--chalk); }
+    .text-chalk-dim { color: var(--chalk-dim); }
+    .text-chalk-amber { color: var(--chalk-amber); }
+    .text-ink { color: var(--ink); }
+    .text-paper { color: var(--paper); }
+    .text-board { color: var(--board); }
+
+    .border-board-soft { border-color: var(--board-soft); }
+    .border-chalk-dim { border-color: var(--chalk-dim); }
+    .border-ink-10 { border-color: color-mix(in srgb, var(--ink) 10%, transparent); }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--brand-cyan); }
+
+    a.link-amber:hover { color: var(--brand-cyan); }
+
+    button, a, summary, input, textarea, select {
+      outline: none;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--chalk-amber);
+      outline-offset: 3px;
+    }
+
+    .btn-amber:focus-visible,
+    .btn-outline-chalk:focus-visible {
+      outline-color: var(--chalk-amber);
+      outline-offset: 3px;
+    }
+
+    /* Hero chalk-smudge texture */
+    .hero-board {
+      background-color: var(--board);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 18% 22%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 78% 68%, rgba(255, 255, 255, 0.035) 0%, transparent 50%),
+        radial-gradient(ellipse 45% 35% at 52% 40%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 25% at 88% 18%, rgba(255, 255, 255, 0.025) 0%, transparent 45%),
+        radial-gradient(ellipse 50% 30% at 30% 85%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+    }
+
+    /* Chalk ledge — warm brown gradient, 10px tall */
+    .chalk-ledge {
+      position: relative;
+      height: 10px;
+      width: 100%;
+      max-width: 36rem;
+      border-radius: 2px;
+      background: linear-gradient(
+        180deg,
+        #C4A574 0%,
+        #A07848 18%,
+        #8B6439 50%,
+        #6E4E2C 82%,
+        #5A3F24 100%
+      );
+      box-shadow: inset 0 1px 0 rgba(255, 230, 190, 0.45);
+    }
+
+    .ledge-wrap {
+      position: relative;
+      padding-bottom: 0;
+    }
+
+    .ledge-ctas {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 0.75rem;
+      margin-bottom: -5px;
+    }
+
+    .chalk-stick {
+      width: 28px;
+      height: 8px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-bottom: 1px;
+    }
+
+    .btn-amber {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--chalk-amber);
+      color: var(--ink);
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-amber:hover {
+      color: var(--ink);
+      filter: brightness(1.05);
+    }
+
+    .btn-outline-chalk {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--chalk);
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid var(--chalk);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-outline-chalk:hover {
+      color: var(--brand-cyan);
+      border-color: var(--brand-cyan);
+    }
+
+    .nav-link {
+      color: var(--ink);
+      font-size: 0.9375rem;
+      font-weight: 500;
+    }
+
+    .nav-link:hover { color: var(--brand-cyan); }
+
+    .offer-pill {
+      display: inline-flex;
+      align-items: center;
+      background: var(--chalk-amber);
+      color: var(--ink);
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--ink);
+      background: transparent;
+      cursor: default;
+    }
+
+    .filter-chip.is-active {
+      background: var(--ink);
+      color: var(--chalk);
+      border-color: var(--ink);
+    }
+
+    .course-card {
+      background: var(--board);
+      color: var(--chalk);
+      border: 1px solid var(--board-soft);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .subject-pill {
+      display: inline-block;
+      background: var(--board-soft);
+      color: var(--chalk-dim);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .why-card {
+      border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+      border-radius: 0;
+      padding: 1.5rem;
+    }
+
+    .teacher-avatar,
+    .quote-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px dashed var(--chalk-dim);
+      background: var(--board-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.5625rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--chalk-dim);
+      text-align: center;
+      line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .quote-avatar {
+      width: 40px;
+      height: 40px;
+      border-color: color-mix(in srgb, var(--ink) 20%, transparent);
+      background: color-mix(in srgb, var(--ink) 6%, transparent);
+      color: color-mix(in srgb, var(--ink) 45%, transparent);
+      font-size: 0.5rem;
+    }
+
+    .tab-btn {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.5rem 0;
+      margin-right: 1.5rem;
+      border: none;
+      background: transparent;
+      color: color-mix(in srgb, var(--ink) 40%, transparent);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .tab-btn.is-active {
+      color: var(--ink);
+      border-bottom-color: var(--chalk-amber);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+    }
+
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1.15rem 0;
+      font-weight: 500;
+      font-size: 1.0625rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: "+";
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 1.25rem;
+      color: var(--chalk-amber);
+      flex-shrink: 0;
+    }
+
+    .faq-item[open] summary::after { content: "−"; }
+
+    .faq-item p {
+      margin: 0 0 1.15rem;
+      color: color-mix(in srgb, var(--ink) 72%, transparent);
+      max-width: 62ch;
+      line-height: 1.6;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-field label {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: color-mix(in srgb, var(--ink) 55%, transparent);
+    }
+
+    .form-field input,
+    .form-field textarea {
+      background: transparent;
+      border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+      border-radius: 4px;
+      padding: 0.7rem 0.85rem;
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      font-size: 0.9375rem;
+      color: var(--ink);
+    }
+
+    .form-field input:focus-visible,
+    .form-field textarea:focus-visible {
+      border-color: var(--chalk-amber);
+    }
+
+    .sticky-mobile-bar {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      .sticky-mobile-bar {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background: var(--board);
+        padding: 0.75rem 1rem;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-top: 1px solid var(--board-soft);
+      }
+
+      body { padding-bottom: 4.5rem; }
+    }
+
+    /* Motion: ONE effect only — hero fade-up, staggered 120ms */
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-anim {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: heroFadeUp 0.6s ease forwards;
+      }
+
+      .hero-anim-1 { animation-delay: 0ms; }
+      .hero-anim-2 { animation-delay: 120ms; }
+      .hero-anim-3 { animation-delay: 240ms; }
+      .hero-anim-4 { animation-delay: 360ms; }
+      .hero-anim-5 { animation-delay: 480ms; }
+      .hero-anim-6 { animation-delay: 600ms; }
+
+      @keyframes heroFadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-anim {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .section-pad {
+      padding: 4.5rem 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .section-pad { padding: 5.5rem 2rem; }
+    }
+
+    @media (min-width: 1024px) {
+      .section-pad { padding: 6rem 2rem; }
+    }
+
+    .container-x {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .play-triangle {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 14px 0 14px 24px;
+      border-color: transparent transparent transparent var(--chalk);
+      margin-left: 4px;
+    }
+
+    .underline-amber {
+      text-decoration: underline;
+      text-decoration-color: var(--chalk-amber);
+      text-underline-offset: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 01 ANNOUNCE BAR -->
+  <div id="announce" class="bg-ink text-chalk" style="font-size: 0.8125rem;">
+    <div class="container-x flex items-center justify-center gap-3 px-4 py-2 relative">
+      <span class="font-body">New academic year 2025-26 is open</span>
+      <span class="offer-pill">50% OFF with code</span>
+      <button
+        type="button"
+        aria-label="Dismiss announcement"
+        onclick="document.getElementById('announce').style.display='none'"
+        class="absolute right-3 top-1/2 -translate-y-1/2 text-chalk hover:opacity-70 leading-none text-lg px-1"
+        style="background:none;border:none;cursor:pointer;color:var(--chalk);"
+      >×</button>
+    </div>
+  </div>
+
+  <!-- 02 NAV -->
+  <header class="bg-paper sticky top-0 z-40" style="backdrop-filter: blur(10px); background-color: color-mix(in srgb, var(--paper) 88%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);">
+    <nav class="container-x flex items-center justify-between gap-4 px-4 py-3 md:px-8">
+      <a href="#" class="shrink-0" style="color: var(--ink);">
+        <span class="font-display text-xl leading-tight block" style="letter-spacing: -0.02em;">eLessons.net</span>
+        <span class="font-mono-util block" style="font-size: 0.5625rem; color: color-mix(in srgb, var(--ink) 50%, transparent); margin-top: 2px;">Your virtual classroom</span>
+      </a>
+
+      <ul class="hidden lg:flex items-center gap-6 list-none m-0 p-0">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#courses" class="nav-link">Courses</a></li>
+        <li><a href="#proof" class="nav-link">Demo</a></li>
+        <li><a href="#syllabus" class="nav-link">Syllabus</a></li>
+        <li><a href="#courses" class="nav-link">Course Content</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3 md:gap-4 shrink-0">
+        <a href="#contact" class="nav-link hidden sm:inline">Sign in</a>
+
+        <a href="#courses" aria-label="Cart, 1 item" class="relative inline-flex items-center justify-center w-9 h-9" style="color: var(--ink);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-12z" />
+            <path d="M6 6l-1-3H2" />
+            <circle cx="9" cy="20" r="1.25" fill="currentColor" stroke="none" />
+            <circle cx="17" cy="20" r="1.25" fill="currentColor" stroke="none" />
+          </svg>
+          <span class="absolute -top-0.5 -right-0.5 flex items-center justify-center font-mono-util" style="width: 16px; height: 16px; border-radius: 999px; background: var(--chalk-amber); color: var(--ink); font-size: 0.5625rem;">1</span>
+        </a>
+
+        <a href="https://wa.me/971568056001" class="hidden md:inline-flex items-center gap-1.5 text-sm font-medium" style="color: var(--ink);" aria-label="WhatsApp +971 568056001">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.988-1.307A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.082-1.117l-.291-.173-3.05.8.815-2.973-.19-.305A7.96 7.96 0 014 12a8 8 0 1116 0 8 8 0 01-8 8z"/>
+          </svg>
+          <span>+971 568056001</span>
+        </a>
+
+        <a href="#courses" class="btn-amber text-sm py-2 px-3 md:px-4">Buy now</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- 03 HERO -->
+  <section class="hero-board text-chalk min-h-[88vh] section-pad flex items-center">
+    <div class="container-x w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <div class="lg:col-span-7">
+        <p class="font-mono-util hero-anim hero-anim-1 text-chalk-dim mb-4" style="font-size: 0.75rem;">CBSE / NCERT · Grades 8-12</p>
+
+        <h1 class="font-display hero-anim hero-anim-2 leading-[1.05] mb-5" style="font-size: clamp(2.75rem, 6vw, 5rem);">
+          <span class="text-chalk">Traditional chalk-board class.</span><br />
+          <span class="text-chalk-amber">On your screen.</span>
+        </h1>
+
+        <p class="font-body hero-anim hero-anim-3 text-chalk-dim mb-8" style="font-size: 1.125rem; line-height: 1.55; max-width: 46ch;">
+          Full-year video lessons and notes for grades 8 to 12, taught the way a real classroom teaches. AED 1200 for the whole year.
+        </p>
+
+        <div class="ledge-wrap hero-anim hero-anim-4 mb-6">
+          <div class="ledge-ctas">
+            <a href="#courses" class="btn-amber">Buy the annual package</a>
+            <a href="#proof" class="btn-outline-chalk">Watch a free class</a>
+            <span class="chalk-stick" style="background: var(--chalk);" aria-hidden="true"></span>
+            <span class="chalk-stick" style="background: var(--chalk-amber);" aria-hidden="true"></span>
+          </div>
+          <div class="chalk-ledge" aria-hidden="true"></div>
+        </div>
+
+        <p class="font-body hero-anim hero-anim-5 text-chalk-dim" style="font-size: 0.8125rem;">
+          Grades 8-12 · CBSE / NCERT · Students in UAE, India, Bahrain &amp; Saudi Arabia
+        </p>
+      </div>
+
+      <div class="lg:col-span-5 hero-anim hero-anim-6">
+        <div
+          class="w-full max-w-sm mx-auto lg:ml-auto lg:mr-0 flex items-center justify-center"
+          style="aspect-ratio: 3/4; border: 1px dashed var(--chalk-dim); border-radius: 4px;"
+        >
+          <span class="font-mono-util text-center px-4" style="font-size: 0.6875rem; color: var(--chalk-dim); line-height: 1.5;">
+            Brand model PNG — Transparent cutout
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PROOF -->
+  <section id="proof" class="bg-board-soft section-pad">
+    <div class="container-x">
+      <h2 class="font-display text-chalk mb-10" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
+        See a class before you pay.
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
+        <div>
+          <div class="relative flex items-center justify-center" style="aspect-ratio: 16/9; background: var(--board); border: 1px solid var(--board); border-radius: 4px;">
+            <div class="flex flex-col items-center gap-3">
+              <div class="flex items-center justify-center rounded-full" style="width: 56px; height: 56px; border: 1px solid var(--chalk);">
+                <div class="play-triangle" aria-hidden="true"></div>
+              </div>
+              <span class="font-mono-util text-chalk" style="font-size: 0.6875rem;">Sample lesson — 90 seconds</span>
+            </div>
+          </div>
+          <p class="font-body text-chalk-dim mt-3" style="font-size: 0.875rem;">
+            A short clip from a Grade 11 Physics board session — chalk, voice, and nothing else.
+          </p>
+        </div>
+
+        <div>
+          <div class="relative flex items-center justify-center" style="aspect-ratio: 16/9; background: var(--board); border: 1px solid var(--board); border-radius: 4px;">
+            <span class="font-mono-util text-chalk" style="font-size: 0.6875rem;">Sample notes page</span>
+          </div>
+          <p class="font-body text-chalk-dim mt-3" style="font-size: 0.875rem;">
+            Companion notes that match the board work, ready to print or study on screen.
+          </p>
+        </div>
+      </div>
+
+      <a href="#proof" class="font-body underline-amber text-chalk" style="font-size: 0.9375rem;">Try the full demo →</a>
+    </div>
+  </section>
+
+  <!-- 05 THESIS STRIP -->
+  <section class="bg-paper section-pad" style="padding-top: 3.5rem; padding-bottom: 3.5rem;">
+    <div class="container-x grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      <div>
+        <p class="font-mono-util mb-2" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">No animation</p>
+        <p class="font-display text-ink" style="font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.3;">Just a teacher, a board, and chalk.</p>
+      </div>
+      <div>
+        <p class="font-mono-util mb-2" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">No subscription</p>
+        <p class="font-display text-ink" style="font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.3;">One price, the full academic year.</p>
+      </div>
+      <div>
+        <p class="font-mono-util mb-2" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">No travel</p>
+        <p class="font-display text-ink" style="font-size: 1.25rem; letter-spacing: -0.02em; line-height: 1.3;">Every class, on the device you already own.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 COURSES -->
+  <section id="courses" class="bg-paper section-pad" style="padding-top: 2rem;">
+    <div class="container-x">
+      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Packages</p>
+      <h2 class="font-display text-ink mb-8" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
+        Nine annual packages.
+      </h2>
+
+      <div class="flex flex-wrap gap-2 mb-10" role="group" aria-label="Course filters">
+        <span class="filter-chip is-active">All</span>
+        <span class="filter-chip">Grade 8</span>
+        <span class="filter-chip">9</span>
+        <span class="filter-chip">10</span>
+        <span class="filter-chip">11</span>
+        <span class="filter-chip">12</span>
+        <span class="filter-chip">Science</span>
+        <span class="filter-chip">Commerce</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
+
+        <!-- Grade 8 ALL SUBJECTS -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">8</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">All subjects</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Physics</span>
+            <span class="subject-pill">Chemistry</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">Biology</span>
+            <span class="subject-pill">English</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 9 ALL SUBJECTS -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">9</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">All subjects</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Physics</span>
+            <span class="subject-pill">Chemistry</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">Biology</span>
+            <span class="subject-pill">English</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 10 ALL SUBJECTS -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">10</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">All subjects</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Physics</span>
+            <span class="subject-pill">Chemistry</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">Biology</span>
+            <span class="subject-pill">English</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 11 PCMB -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">11</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMB</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Physics</span>
+            <span class="subject-pill">Chemistry</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">Biology</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 12 PCMB -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">12</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMB</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Physics</span>
+            <span class="subject-pill">Chemistry</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">Biology</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 11 PCMC -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">11</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMC</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Physics</span>
+            <span class="subject-pill">Chemistry</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">Computer Science</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 12 PCMBC -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">12</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">PCMBC</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Physics</span>
+            <span class="subject-pill">Chemistry</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">Biology</span>
+            <span class="subject-pill">Computer Science</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 11 COMMERCE -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">11</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">Commerce</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Accountancy</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">English</span>
+            <span class="subject-pill">Grammar</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+        <!-- Grade 12 COMMERCE -->
+        <article class="course-card">
+          <div class="flex items-start gap-3">
+            <span class="font-display leading-none" style="font-size: 3.5rem;">12</span>
+            <span class="font-mono-util text-chalk-amber mt-2" style="font-size: 0.6875rem;">Commerce</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="subject-pill">Accountancy</span>
+            <span class="subject-pill">Maths</span>
+            <span class="subject-pill">English</span>
+            <span class="subject-pill">Grammar</span>
+          </div>
+          <div class="mt-auto">
+            <p class="font-mono-util text-chalk-amber" style="font-size: 0.875rem;">AED 1200</p>
+            <p class="text-chalk-dim mb-3" style="font-size: 0.75rem;">≈ ₹27,500 / year</p>
+            <a href="#contact" class="btn-amber w-full">Buy now</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 WHY -->
+  <section class="bg-paper section-pad" style="padding-top: 2rem;">
+    <div class="container-x">
+      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Reasons</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
+        <div class="why-card">
+          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Why G-TEC eLessons?</h3>
+          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+            Because the best tuition still looks like a classroom. We film real board teaching — no cartoons, no shortcuts — so students learn the way they learn at school.
+          </p>
+        </div>
+        <div class="why-card">
+          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Chalk-board class on your mobile</h3>
+          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+            Every lesson is recorded for phone, tablet, or laptop. Pause, rewind, and rewatch the board work until the concept settles.
+          </p>
+        </div>
+        <div class="why-card">
+          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Costs less than a movie ticket</h3>
+          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+            AED 1200 covers the full academic year — hundreds of sessions and notes. Spread across the year, that is less than a cinema outing a week.
+          </p>
+        </div>
+        <div class="why-card">
+          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Experienced teachers</h3>
+          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+            Faculty who have taught CBSE for years stand at the board. Clear explanations, exam-aware pacing, and subject depth you can trust.
+          </p>
+        </div>
+        <div class="why-card">
+          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Learn at your own pace</h3>
+          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+            Catch up after a busy week or push ahead before exams. The full library stays open for the year — you set the schedule.
+          </p>
+        </div>
+        <div class="why-card">
+          <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">From home</h3>
+          <p class="font-body" style="font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+            No traffic, no tuition centre commute. Students in the UAE, India, Bahrain, and Saudi Arabia join the same chalkboard classroom.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 TEACHERS -->
+  <section class="bg-board section-pad">
+    <div class="container-x">
+      <p class="font-mono-util text-chalk-dim mb-3" style="font-size: 0.6875rem;">Faculty</p>
+      <h2 class="font-display text-chalk mb-10" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
+        The people at the board.
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
+          <div class="teacher-avatar">Photo</div>
+          <div>
+            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Priya Nair</h3>
+            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Physics</p>
+            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
+          </div>
+        </article>
+        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
+          <div class="teacher-avatar">Photo</div>
+          <div>
+            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Rahul Menon</h3>
+            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Chemistry</p>
+            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
+          </div>
+        </article>
+        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
+          <div class="teacher-avatar">Photo</div>
+          <div>
+            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Anita Krishnan</h3>
+            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Mathematics</p>
+            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
+          </div>
+        </article>
+        <article class="flex flex-col items-start gap-3" style="border: 1px solid var(--board-soft); border-radius: 4px; padding: 1.25rem;">
+          <div class="teacher-avatar">Photo</div>
+          <div>
+            <h3 class="font-display text-chalk" style="font-size: 1.125rem; letter-spacing: -0.02em;">Farah Al-Hashimi</h3>
+            <p class="font-mono-util text-chalk-amber mt-1" style="font-size: 0.625rem;">Biology</p>
+            <p class="font-body text-chalk-dim mt-2" style="font-size: 0.8125rem;">18 years teaching CBSE</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 TESTIMONIALS -->
+  <section class="bg-paper section-pad">
+    <div class="container-x">
+      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Voices</p>
+      <h2 class="font-display text-ink mb-8" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
+        What families say.
+      </h2>
+
+      <div class="flex flex-wrap mb-8" role="tablist" aria-label="Testimonial audience">
+        <button type="button" class="tab-btn is-active" role="tab" aria-selected="true">Students</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false">Parents</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false">Educators</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <blockquote style="border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top: 1.5rem;">
+          <span class="font-display text-chalk-amber block leading-none mb-3" style="font-size: 3rem;" aria-hidden="true">“</span>
+          <p class="font-body text-ink mb-6" style="font-size: 1rem; line-height: 1.6;">
+            The classes feel like sitting in a real tuition centre. The teacher writes on the board and explains until it clicks — I finally understood electrostatics for my board exams.
+          </p>
+          <footer class="flex items-center gap-3">
+            <div class="quote-avatar">MI</div>
+            <div>
+              <cite class="font-display not-italic text-ink block" style="font-size: 0.9375rem;">Mohammed Iftiqar</cite>
+              <span class="font-mono-util block mt-0.5" style="font-size: 0.625rem; color: color-mix(in srgb, var(--ink) 50%, transparent);">Grade 12 · UAE</span>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote style="border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top: 1.5rem;">
+          <span class="font-display text-chalk-amber block leading-none mb-3" style="font-size: 3rem;" aria-hidden="true">“</span>
+          <p class="font-body text-ink mb-6" style="font-size: 1rem; line-height: 1.6;">
+            We tried animated apps first. My daughter switched to eLessons and her marks improved because the teaching matches how school actually works — board, chalk, and clear notes.
+          </p>
+          <footer class="flex items-center gap-3">
+            <div class="quote-avatar">HS</div>
+            <div>
+              <cite class="font-display not-italic text-ink block" style="font-size: 0.9375rem;">Ms Haseela Shafiq</cite>
+              <span class="font-mono-util block mt-0.5" style="font-size: 0.625rem; color: color-mix(in srgb, var(--ink) 50%, transparent);">Parent · UAE</span>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote style="border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); padding-top: 1.5rem;">
+          <span class="font-display text-chalk-amber block leading-none mb-3" style="font-size: 3rem;" aria-hidden="true">“</span>
+          <p class="font-body text-ink mb-6" style="font-size: 1rem; line-height: 1.6;">
+            As an academician I recommend this model. NCERT-aligned board teaching, without the distraction of graphics, is exactly what serious CBSE students need.
+          </p>
+          <footer class="flex items-center gap-3">
+            <div class="quote-avatar">LS</div>
+            <div>
+              <cite class="font-display not-italic text-ink block" style="font-size: 0.9375rem;">Ms Lalana Shenoy</cite>
+              <span class="font-mono-util block mt-0.5" style="font-size: 0.625rem; color: color-mix(in srgb, var(--ink) 50%, transparent);">Academician · India</span>
+            </div>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 NUMBERS -->
+  <section class="bg-board section-pad">
+    <div class="container-x grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 text-center md:text-left">
+      <div>
+        <p class="font-display text-chalk-amber leading-none mb-3" style="font-size: clamp(2.75rem, 6vw, 4.5rem); letter-spacing: -0.02em;">4,000+</p>
+        <p class="font-mono-util text-chalk-dim" style="font-size: 0.75rem;">4,000+ Sessions</p>
+      </div>
+      <div>
+        <p class="font-display text-chalk-amber leading-none mb-3" style="font-size: clamp(2.75rem, 6vw, 4.5rem); letter-spacing: -0.02em;">80,000+</p>
+        <p class="font-mono-util text-chalk-dim" style="font-size: 0.75rem;">80,000+ Video minutes</p>
+      </div>
+      <div>
+        <p class="font-display text-chalk-amber leading-none mb-3" style="font-size: clamp(2.75rem, 6vw, 4.5rem); letter-spacing: -0.02em;">1,000+</p>
+        <p class="font-mono-util text-chalk-dim" style="font-size: 0.75rem;">1,000+ Notes</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 FAQ -->
+  <section id="syllabus" class="bg-paper section-pad">
+    <div class="container-x" style="max-width: 42rem;">
+      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">FAQ</p>
+      <h2 class="font-display text-ink mb-8" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
+        Questions, answered.
+      </h2>
+
+      <div>
+        <details class="faq-item">
+          <summary>What exactly do I get for AED 1200?</summary>
+          <p>Full-year access to video lessons and companion notes for your chosen grade and stream. One price covers the academic package — no monthly subscription, no hidden add-ons.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long do I have access?</summary>
+          <p>Access runs for the full academic year of your package. Watch at your own pace, revisit topics before exams, and keep the notes available throughout.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you follow NCERT?</summary>
+          <p>Yes. Lessons follow the CBSE curriculum and NCERT textbooks, taught chapter by chapter at the board so school and home study stay aligned.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I pay in Indian rupees?</summary>
+          <p>Yes. Packages are priced at AED 1200 (approximately ₹27,500). Families in India can pay in INR — contact us and we will share the current rupee option.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is there a free demo?</summary>
+          <p>Yes. Watch a sample lesson and browse sample notes before you buy. Use the demo section above, or message us on WhatsApp for a guided walkthrough.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What if my child falls behind?</summary>
+          <p>Every lesson stays available for the year. Students can rewind board work, rewatch difficult chapters, and catch up without waiting for a live class timetable.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 CONTACT -->
+  <section id="contact" class="bg-paper section-pad" style="padding-top: 2rem;">
+    <div class="container-x">
+      <p class="font-mono-util mb-3" style="font-size: 0.6875rem; color: color-mix(in srgb, var(--ink) 45%, transparent);">Contact</p>
+      <h2 class="font-display text-ink mb-10" style="font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.02em;">
+        Talk to us.
+      </h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div class="flex flex-col gap-8">
+          <div>
+            <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Bangalore — Corporate</h3>
+            <p class="font-body" style="font-size: 0.9375rem; line-height: 1.6; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+              G-TEC Education<br />
+              Bangalore, Karnataka<br />
+              India
+            </p>
+          </div>
+          <div>
+            <h3 class="font-display text-ink mb-2" style="font-size: 1.125rem; letter-spacing: -0.02em;">Sharjah — Middle East</h3>
+            <p class="font-body" style="font-size: 0.9375rem; line-height: 1.6; color: color-mix(in srgb, var(--ink) 70%, transparent);">
+              G-TEC eLessons<br />
+              Sharjah<br />
+              United Arab Emirates
+            </p>
+          </div>
+          <p class="font-body">
+            <a href="mailto:contact@elessons.net" class="underline-amber" style="color: var(--ink);">contact@elessons.net</a>
+          </p>
+          <p class="font-body">
+            <a href="https://wa.me/971568056001" style="color: var(--ink);">WhatsApp +971 568056001</a>
+          </p>
+        </div>
+
+        <form action="#" method="post" onsubmit="return false;">
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="form-field">
+            <label for="mobile">Mobile</label>
+            <input id="mobile" name="mobile" type="tel" autocomplete="tel" required />
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn-amber">Send message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 FOOTER -->
+  <footer class="bg-board section-pad" style="padding-top: 3.5rem; padding-bottom: 3.5rem;">
+    <div class="container-x">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+        <div class="md:col-span-5">
+          <a href="#" class="inline-block" style="color: var(--chalk);">
+            <span class="font-display text-2xl block" style="letter-spacing: -0.02em;">eLessons.net</span>
+            <span class="font-mono-util text-chalk-dim block mt-1" style="font-size: 0.625rem;">Your virtual classroom</span>
+          </a>
+          <p class="font-body text-chalk-dim mt-4" style="font-size: 0.9375rem; max-width: 32ch; line-height: 1.55;">
+            Traditional chalk-board class. On your screen. CBSE / NCERT for grades 8–12.
+          </p>
+        </div>
+
+        <div class="md:col-span-4">
+          <p class="font-mono-util text-chalk-dim mb-4" style="font-size: 0.6875rem;">Links</p>
+          <ul class="list-none m-0 p-0 flex flex-col gap-2">
+            <li><a href="#syllabus" class="text-chalk font-body" style="font-size: 0.9375rem;">Syllabus</a></li>
+            <li><a href="#proof" class="text-chalk font-body" style="font-size: 0.9375rem;">About</a></li>
+            <li><a href="#" class="text-chalk font-body" style="font-size: 0.9375rem;">Terms</a></li>
+            <li><a href="#" class="text-chalk font-body" style="font-size: 0.9375rem;">Privacy</a></li>
+            <li><a href="#syllabus" class="text-chalk font-body" style="font-size: 0.9375rem;">FAQ</a></li>
+            <li><a href="#contact" class="text-chalk font-body" style="font-size: 0.9375rem;">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-3">
+          <p class="font-mono-util text-chalk-dim mb-4" style="font-size: 0.6875rem;">WhatsApp</p>
+          <a href="https://wa.me/971568056001" class="text-chalk font-body" style="font-size: 0.9375rem;">+971 568056001</a>
+        </div>
+      </div>
+
+      <p class="font-body text-chalk-dim" style="font-size: 0.8125rem; border-top: 1px solid var(--board-soft); padding-top: 1.5rem;">
+        © 2025 G-TEC eLessons. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- 14 STICKY MOBILE BAR -->
+  <div class="sticky-mobile-bar" role="region" aria-label="Buy annual package">
+    <span class="font-mono-util text-chalk-amber" style="font-size: 0.75rem;">AED 1200 / year</span>
+    <a href="#courses" class="btn-amber py-2 px-4 text-sm">Buy now</a>
+  </div>
+
+</body>
+</html>
