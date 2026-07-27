@@ -1,0 +1,7 @@
+/**
+ * G-TEC eLessons — Design system entry (Phase 1)
+ * Import order: tokens → typography → (components/layouts in later phases)
+ */
+
+@import "./tokens.css";
+@import "./typography.css";
