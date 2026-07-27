@@ -1,16 +1,16 @@
-{{-- G-TEC eLessons — Hero section (Phase 2)
+{{-- G-TEC eLessons — Hero section
      Expects asset base: /images/hero/ (public/)
 --}}
 <section class="hero hero--lattice" aria-labelledby="hero-heading">
   <div class="hero__grid">
     <div class="hero__copy">
-      <p class="hero__brand hero__reveal">
+      <p class="hero__brand hero__reveal" aria-hidden="true">
         G-TEC <span>eLessons</span>
       </p>
 
       <p class="hero__eyebrow hero__reveal hero__reveal--delay">
         <span class="hero__eyebrow-dot" aria-hidden="true"></span>
-        CBSE / NCERT · Grades 8–12
+        <span>CBSE / NCERT · Grades 8–12</span>
       </p>
 
       <h1 id="hero-heading" class="hero__title hero__reveal hero__reveal--delay">

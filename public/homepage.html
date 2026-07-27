@@ -12,17 +12,76 @@
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
-<main id="main">
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="/" class="site-header__logo" aria-label="G-TEC eLessons home">
+      G-TEC <span>eLessons</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <button
+        type="button"
+        class="site-nav__toggle"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-panel"
+      >
+        <span class="sr-only">Open navigation menu</span>
+        <span class="site-nav__toggle-bars" aria-hidden="true"></span>
+      </button>
+
+      <ul class="site-nav__list" role="list">
+        <li>
+          <a href="/" class="site-nav__link" aria-current="page">Home</a>
+        </li>
+        <li>
+          <a href="#courses" class="site-nav__link">Courses</a>
+        </li>
+        <li>
+          <a href="#how" class="site-nav__link">How it works</a>
+        </li>
+        <li>
+          <a href="#faq" class="site-nav__link">FAQ</a>
+        </li>
+        <li>
+          <a href="#contact" class="site-nav__link site-nav__cta">Get in touch</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="site-nav__panel" id="nav-panel" hidden>
+    <ul class="site-nav__list" role="list">
+      <li>
+        <a href="/" class="site-nav__link" aria-current="page">Home</a>
+      </li>
+      <li>
+        <a href="#courses" class="site-nav__link">Courses</a>
+      </li>
+      <li>
+        <a href="#how" class="site-nav__link">How it works</a>
+      </li>
+      <li>
+        <a href="#faq" class="site-nav__link">FAQ</a>
+      </li>
+      <li>
+        <a href="#contact" class="site-nav__link site-nav__cta">Get in touch</a>
+      </li>
+    </ul>
+  </div>
+</header>
+<main id="main" tabindex="-1">
 <section class="hero hero--lattice" aria-labelledby="hero-heading">
   <div class="hero__grid">
     <div class="hero__copy">
-      <p class="hero__brand hero__reveal">
+      <p class="hero__brand hero__reveal" aria-hidden="true">
         G-TEC <span>eLessons</span>
       </p>
 
       <p class="hero__eyebrow hero__reveal hero__reveal--delay">
         <span class="hero__eyebrow-dot" aria-hidden="true"></span>
-        CBSE / NCERT · Grades 8–12
+        <span>CBSE / NCERT · Grades 8–12</span>
       </p>
 
       <h1 id="hero-heading" class="hero__title hero__reveal hero__reveal--delay">
@@ -83,8 +142,97 @@
     </div>
   </div>
 </section>
-<section id="demo" class="sec wrap" hidden></section>
-<section id="courses" class="sec wrap" hidden></section>
+<section id="how" class="sec wrap" aria-labelledby="how-heading" hidden>
+  <h2 id="how-heading" class="h2">How it works</h2>
+</section>
+<section id="demo" class="sec wrap" aria-labelledby="demo-heading" hidden>
+  <h2 id="demo-heading" class="h2">Watch a free class</h2>
+</section>
+<section id="courses" class="sec wrap" aria-labelledby="courses-heading" hidden>
+  <h2 id="courses-heading" class="h2">Courses</h2>
+</section>
+<section id="faq" class="sec" aria-labelledby="faq-heading">
+  <div class="wrap">
+    <p class="label text-accent">Before you buy</p>
+    <h2 id="faq-heading" class="h2" style="margin-top: var(--space-md)">Common questions</h2>
+    <p class="body text-secondary" style="margin-top: var(--space-md); max-width: 55ch">
+      Straight answers about access, curriculum, and payment.
+    </p>
+
+    <div class="mt" style="margin-top: var(--space-2xl); max-width: 720px">
+      <details class="faq-item">
+        <summary>What exactly do I get for AED 1,200?</summary>
+        <div class="faq-item__body body">
+          Full-year video lessons for every subject in the package, chapter notes,
+          and access on the devices your child already uses.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How long do I have access?</summary>
+        <div class="faq-item__body body">
+          Access runs for the full academic year from the day you unlock the package.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Do you follow NCERT?</summary>
+        <div class="faq-item__body body">
+          Yes. Lessons follow CBSE / NCERT sequencing so they map to school chapters.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is there a free demo?</summary>
+        <div class="faq-item__body body">
+          Yes. Watch a sample class before you pay — use
+          <a href="#demo">Watch a free class</a> above, or message us from Contact.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="sec" aria-labelledby="contact-heading">
+  <div class="wrap" style="max-width: 560px">
+    <h2 id="contact-heading" class="h2">Get in touch</h2>
+    <p class="body text-secondary" style="margin-top: var(--space-md)">
+      Tell us your child’s grade and we will point you to the right package.
+    </p>
+    <form style="margin-top: var(--space-xl); display: grid; gap: var(--space-lg)" action="#" method="post">
+      <div class="field">
+        <label class="field__required" for="f-n">Parent or student name</label>
+        <input id="f-n" name="name" type="text" autocomplete="name" required aria-required="true">
+      </div>
+      <div class="field">
+        <label class="field__required" for="f-e">Email address</label>
+        <input id="f-e" name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="email-hint">
+        <span id="email-hint" class="field__hint">We’ll never share your email.</span>
+      </div>
+      <div class="field">
+        <label for="f-msg">Message</label>
+        <textarea id="f-msg" name="message" rows="4" aria-describedby="msg-hint"></textarea>
+        <span id="msg-hint" class="field__hint">Optional — grade, board, or questions.</span>
+      </div>
+      <button type="submit" class="btn btn--primary" style="justify-self: start">Send message</button>
+    </form>
+  </div>
+</section>
+
 </main>
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <p>
+      <strong style="color: #fff">G-TEC eLessons</strong>
+      — CBSE / NCERT video lessons for grades 8–12.
+    </p>
+    <nav aria-label="Footer">
+      <a href="#faq">FAQ</a>
+      <span aria-hidden="true" style="margin-inline: 0.75rem; opacity: 0.4">·</span>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+<script src="js/nav.js" defer></script>
 </body>
 </html>

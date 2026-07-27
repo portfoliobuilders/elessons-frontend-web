@@ -45,27 +45,7 @@ p {
   margin: 0;
 }
 
-:where(a, button, input, textarea, summary):focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-offset);
-  border-radius: 6px;
-}
-
-.skip-link {
-  position: absolute;
-  top: -48px;
-  left: var(--space-md);
-  z-index: 100;
-  background: var(--cta-accent);
-  color: var(--text-inverse);
-  padding: 0.65rem 1rem;
-  font-weight: 700;
-  border-radius: 6px;
-}
-
-.skip-link:focus {
-  top: var(--space-md);
-}
+/* Focus + skip-link live in base/a11y.css (Phase 3) */
 
 /* Buttons (minimal set for hero CTAs — expanded in Phase 5) */
 .btn {
