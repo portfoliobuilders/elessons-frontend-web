@@ -1,6 +1,6 @@
 /**
- * G-TEC eLessons — Hero section (Phase 2)
- * Full-bleed navy surface · text + model grid from 1000px up
+ * G-TEC eLessons — Hero section
+ * Full-bleed navy · text + model · float cards clear of face
  */
 
 .hero {
@@ -16,23 +16,20 @@
 }
 
 .hero__brand {
-  font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
-  font-weight: 800;
-  letter-spacing: var(--ls-tight);
-  line-height: 1.1;
-  color: var(--text-inverse);
+  margin: 0 0 var(--space-md);
 }
 
-.hero__brand span {
-  font-weight: 600;
-  color: var(--gold);
+.hero__brand-img {
+  display: block;
+  height: clamp(40px, 8vw, 64px);
+  width: auto;
+  max-width: min(280px, 80vw);
 }
 
 .hero__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
   width: 100%;
   max-width: var(--max-width);
@@ -49,7 +46,6 @@
 
 @media (min-width: 1280px) {
   .hero {
-    min-height: 100vh;
     padding-block: clamp(3rem, 5vw, 4.5rem);
   }
 }
@@ -68,7 +64,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: var(--ls-wider);
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .hero__eyebrow-dot {
@@ -81,36 +77,58 @@
 
 .hero__title {
   margin-top: var(--space-lg);
+  margin-bottom: 1.5rem;
   font-family: var(--font-display);
-  font-size: var(--text-hero-h1);
+  font-size: clamp(1.75rem, 5vw, 4.4rem);
   font-weight: 800;
-  line-height: 1.02;
+  line-height: 1.05;
   letter-spacing: var(--ls-tight);
   color: var(--text-inverse);
-  max-width: 16ch;
+  max-width: 90%;
 }
 
-.hero__title-accent {
+.hero__title-accent,
+.serif-accent {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  color: var(--gold);
+  color: var(--gold-text); /* #FCD34D — AA on navy (~4.2:1+) */
   letter-spacing: -0.01em;
 }
 
 .hero__lead {
-  margin-top: var(--space-lg);
-  max-width: 50ch;
-  font-size: var(--text-hero-sub);
-  line-height: var(--lh-relaxed);
-  color: rgba(255, 255, 255, 0.82);
+  margin-top: 0;
+  margin-bottom: 1.75rem;
+  max-width: 85%;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+@media (min-width: 768px) {
+  .hero__title {
+    max-width: 16ch;
+  }
+
+  .hero__lead {
+    max-width: 50ch;
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hero__title {
+    font-size: clamp(2.5rem, 4.5vw, 4.4rem);
+    max-width: 100%;
+  }
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-md);
-  margin-top: var(--space-xl);
+  margin-top: 0;
+  width: 100%;
 }
 
 .hero__proof {
@@ -120,7 +138,7 @@
   gap: 0.65rem 1.1rem;
   margin-top: var(--space-xl);
   font-size: var(--text-sm);
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .hero__proof strong {
@@ -131,13 +149,14 @@
 /* ── Model stage ───────────────────────────────────────────────────── */
 .hero__model-stage {
   position: relative;
-  aspect-ratio: 9 / 10;
+  aspect-ratio: 9 / 11;
   width: 100%;
-  max-width: 470px;
+  max-width: 520px;
   margin-inline: auto;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  overflow: visible;
 }
 
 .hero__model-halo {
@@ -151,6 +170,7 @@
   );
   filter: blur(6px);
   pointer-events: none;
+  z-index: 0;
 }
 
 .hero__model {
@@ -163,7 +183,76 @@
   filter: drop-shadow(0 26px 46px rgba(0, 0, 0, 0.42));
 }
 
-/* Lattice motif (subtle, non-blocking) */
+/* Float cards — desktop only, clear of face */
+.hero__float-card {
+  position: absolute;
+  background: rgba(15, 23, 42, 0.95);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 16px 34px -14px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  display: none;
+  pointer-events: none;
+}
+
+.hero__float-card .label {
+  color: var(--gold-text);
+  font-size: 0.65rem;
+}
+
+.hero__float-card p:last-child {
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin-top: 0.2rem;
+  color: #fff;
+}
+
+.hero__float-card--stat p:last-child {
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .hero__float-card {
+    display: block;
+  }
+
+  .hero__float-card--top-left {
+    top: 8%;
+    left: 0;
+    max-width: 200px;
+  }
+
+  .hero__float-card--bottom-right {
+    bottom: 10%;
+    right: -8%;
+    max-width: 180px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .hero__float-card--top-left {
+    top: 10%;
+    left: -4%;
+  }
+
+  .hero__float-card--bottom-right {
+    bottom: 12%;
+    right: -6%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero__float-card--bottom-right {
+    right: 2%;
+  }
+}
+
+/* Lattice motif */
 .hero--lattice::before {
   content: "";
   position: absolute;
@@ -182,7 +271,6 @@
     );
 }
 
-/* Motion — presence, not noise */
 @media (prefers-reduced-motion: no-preference) {
   .hero__reveal {
     opacity: 0;
@@ -217,5 +305,15 @@
     opacity: 1;
     transform: none;
     animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__actions {
+    flex-direction: column;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
   }
 }

@@ -12,8 +12,9 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="{{ $siteUrl }}/">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="G-TEC eLessons">
@@ -41,7 +42,7 @@
       "url": "{{ $siteUrl }}/",
       "email": "contact@elessons.net",
       "telephone": "+971568056001",
-      "logo": "{{ $siteUrl }}/favicon.svg",
+      "logo": "{{ $siteUrl }}/images/brand/elessons-logo-color.png",
       "sameAs": ["https://wa.me/971568056001"]
     },
     {

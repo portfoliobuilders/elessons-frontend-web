@@ -4,9 +4,20 @@
 <section class="hero hero--lattice" aria-labelledby="hero-heading">
   <div class="hero__grid">
     <div class="hero__copy">
-      <p class="hero__brand hero__reveal" aria-hidden="true">
-        G-TEC <span>eLessons</span>
-      </p>
+      <div class="hero__brand hero__reveal">
+        <picture>
+          <source srcset="/images/brand/elessons-logo-white-64h.webp 1x, /images/brand/elessons-logo-white-128h.webp 2x" type="image/webp">
+          <img
+            class="hero__brand-img"
+            src="/images/brand/elessons-logo-white-64h.png"
+            srcset="/images/brand/elessons-logo-white-64h.png 1x, /images/brand/elessons-logo-white-128h.png 2x"
+            width="246"
+            height="64"
+            alt="G-TEC eLessons.net Hybrid School"
+            decoding="async"
+          >
+        </picture>
+      </div>
 
       <p class="hero__eyebrow hero__reveal hero__reveal--delay">
         <span class="hero__eyebrow-dot" aria-hidden="true"></span>
@@ -15,7 +26,7 @@
 
       <h1 id="hero-heading" class="hero__title hero__reveal hero__reveal--delay">
         Traditional chalk-board class from
-        <span class="hero__title-accent">the comfort of your home</span>
+        <span class="serif-accent">the comfort of your home</span>
       </h1>
 
       <p class="hero__lead hero__reveal hero__reveal--delay-2">
@@ -50,7 +61,7 @@
             /images/hero/model-suit-640w.webp 640w,
             /images/hero/model-suit-960w.webp 960w
           "
-          sizes="(min-width: 1000px) 470px, (min-width: 640px) 420px, 90vw"
+          sizes="(min-width: 1000px) 520px, (min-width: 640px) 420px, 90vw"
         >
         <img
           class="hero__model"
@@ -60,8 +71,8 @@
             /images/hero/model-suit-640w.jpg 640w,
             /images/hero/model-suit-960w.jpg 960w
           "
-          sizes="(min-width: 1000px) 470px, (min-width: 640px) 420px, 90vw"
-          alt="G-TEC instructor in a light blue suit"
+          sizes="(min-width: 1000px) 520px, (min-width: 640px) 420px, 90vw"
+          alt="G-TEC instructor in a light blue suit teaching"
           width="967"
           height="1000"
           fetchpriority="high"
@@ -69,6 +80,15 @@
           decoding="async"
         >
       </picture>
+
+      <aside class="hero__float-card hero__float-card--top-left" aria-hidden="true">
+        <p class="label">Full year access</p>
+        <p>Unlocked day one</p>
+      </aside>
+      <aside class="hero__float-card hero__float-card--bottom-right hero__float-card--stat" aria-hidden="true">
+        <p class="label">Video minutes</p>
+        <p>80,000+</p>
+      </aside>
     </div>
   </div>
 </section>

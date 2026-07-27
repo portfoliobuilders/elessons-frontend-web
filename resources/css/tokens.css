@@ -19,9 +19,10 @@
   --slate-300: #CBD5E1;
   --slate-200: #E2E8F0;
   --slate-50: #F8FAFC;
-  --red: #EF4444; /* brand signal — use for icons, dots, borders */
-  --red-cta: #DC2626; /* AA white-on-red (~4.6:1) for button fills */
-  --gold: #FACC15;
+  --red: #EF4444; /* brand signal — icons, dots, borders only */
+  --red-cta: #DC2626; /* AA white-on-red (~4.8:1) for button fills */
+  --gold: #FACC15; /* decorative accents (chips, dots) */
+  --gold-text: #FCD34D; /* text on navy — ~4.2:1+ AA */
   --sci: #1B6A47; /* Science stream banner */
   --com: #5B3E96; /* Commerce stream banner */
 

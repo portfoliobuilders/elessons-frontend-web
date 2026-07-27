@@ -9,9 +9,10 @@
 <meta name="color-scheme" content="light">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://elessons.net/">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://elessons.net/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="G-TEC eLessons">
 <meta property="og:locale" content="en_AE">
@@ -36,7 +37,7 @@
       "url": "https://elessons.net/",
       "email": "contact@elessons.net",
       "telephone": "+971568056001",
-      "logo": "https://elessons.net/favicon.svg",
+      "logo": "https://elessons.net/images/brand/elessons-logo-color.png",
       "sameAs": [
         "https://wa.me/971568056001"
       ]
@@ -121,9 +122,11 @@
   ]
 }
 </script>
+
+
 <link rel="preload" href="fonts/plus-jakarta-sans-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="images/hero/model-suit-640w.webp" as="image" type="image/webp" imagesrcset="images/hero/model-suit-320w.webp 320w, images/hero/model-suit-640w.webp 640w, images/hero/model-suit-960w.webp 960w" imagesizes="(min-width: 1000px) 470px, 90vw">
+<link rel="preload" href="images/hero/model-suit-640w.webp" as="image" type="image/webp" imagesrcset="images/hero/model-suit-320w.webp 320w, images/hero/model-suit-640w.webp 640w, images/hero/model-suit-960w.webp 960w" imagesizes="(min-width: 1000px) 520px, 90vw">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -132,7 +135,18 @@
 <header class="site-header">
   <div class="site-header__inner">
     <a href="/" class="site-header__logo" aria-label="G-TEC eLessons home">
-      G-TEC <span>eLessons</span>
+      <picture>
+        <source srcset="images/brand/elessons-logo-color-48h.webp 1x, images/brand/elessons-logo-color-96h.webp 2x" type="image/webp">
+        <img
+          class="site-header__logo-img"
+          src="images/brand/elessons-logo-color-48h.png"
+          srcset="images/brand/elessons-logo-color-48h.png 1x, images/brand/elessons-logo-color-96h.png 2x"
+          width="185"
+          height="48"
+          alt="G-TEC eLessons.net Hybrid School"
+          decoding="async"
+        >
+      </picture>
     </a>
 
     <nav class="site-nav" aria-label="Primary navigation">
@@ -191,9 +205,20 @@
 <section class="hero hero--lattice" aria-labelledby="hero-heading">
   <div class="hero__grid">
     <div class="hero__copy">
-      <p class="hero__brand hero__reveal" aria-hidden="true">
-        G-TEC <span>eLessons</span>
-      </p>
+      <div class="hero__brand hero__reveal">
+        <picture>
+          <source srcset="images/brand/elessons-logo-white-64h.webp 1x, images/brand/elessons-logo-white-128h.webp 2x" type="image/webp">
+          <img
+            class="hero__brand-img"
+            src="images/brand/elessons-logo-white-64h.png"
+            srcset="images/brand/elessons-logo-white-64h.png 1x, images/brand/elessons-logo-white-128h.png 2x"
+            width="246"
+            height="64"
+            alt="G-TEC eLessons.net Hybrid School"
+            decoding="async"
+          >
+        </picture>
+      </div>
 
       <p class="hero__eyebrow hero__reveal hero__reveal--delay">
         <span class="hero__eyebrow-dot" aria-hidden="true"></span>
@@ -202,7 +227,7 @@
 
       <h1 id="hero-heading" class="hero__title hero__reveal hero__reveal--delay">
         Traditional chalk-board class from
-        <span class="hero__title-accent">the comfort of your home</span>
+        <span class="serif-accent">the comfort of your home</span>
       </h1>
 
       <p class="hero__lead hero__reveal hero__reveal--delay-2">
@@ -237,7 +262,7 @@
             images/hero/model-suit-640w.webp 640w,
             images/hero/model-suit-960w.webp 960w
           "
-          sizes="(min-width: 1000px) 470px, (min-width: 640px) 420px, 90vw"
+          sizes="(min-width: 1000px) 520px, (min-width: 640px) 420px, 90vw"
         >
         <img
           class="hero__model"
@@ -247,8 +272,8 @@
             images/hero/model-suit-640w.jpg 640w,
             images/hero/model-suit-960w.jpg 960w
           "
-          sizes="(min-width: 1000px) 470px, (min-width: 640px) 420px, 90vw"
-          alt="G-TEC instructor in a light blue suit"
+          sizes="(min-width: 1000px) 520px, (min-width: 640px) 420px, 90vw"
+          alt="G-TEC instructor in a light blue suit teaching"
           width="967"
           height="1000"
           fetchpriority="high"
@@ -256,6 +281,15 @@
           decoding="async"
         >
       </picture>
+
+      <aside class="hero__float-card hero__float-card--top-left" aria-hidden="true">
+        <p class="label">Full year access</p>
+        <p>Unlocked day one</p>
+      </aside>
+      <aside class="hero__float-card hero__float-card--bottom-right hero__float-card--stat" aria-hidden="true">
+        <p class="label">Video minutes</p>
+        <p>80,000+</p>
+      </aside>
     </div>
   </div>
 </section>
@@ -366,137 +400,64 @@
     </div>
   </div>
 </section>
-<section id="courses" class="sec" aria-labelledby="courses-heading">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <p class="section-eyebrow">Annual packages</p>
-        <h2 id="courses-heading" class="h2" style="margin-top: var(--space-sm)">Nine packages. One price.</h2>
-      </div>
-      <p class="section-lead">Every package runs the full academic year and includes all subjects for that stream.</p>
-    </div>
-    <div class="course-filters" style="margin-top: var(--space-xl)" role="group" aria-label="Filter courses"><button type="button" class="course-filters__btn" data-filter="All" aria-pressed="true">All</button><button type="button" class="course-filters__btn" data-filter="Grade 8" aria-pressed="false">Grade 8</button><button type="button" class="course-filters__btn" data-filter="Grade 9" aria-pressed="false">Grade 9</button><button type="button" class="course-filters__btn" data-filter="Grade 10" aria-pressed="false">Grade 10</button><button type="button" class="course-filters__btn" data-filter="Grade 11" aria-pressed="false">Grade 11</button><button type="button" class="course-filters__btn" data-filter="Grade 12" aria-pressed="false">Grade 12</button><button type="button" class="course-filters__btn" data-filter="Science" aria-pressed="false">Science</button><button type="button" class="course-filters__btn" data-filter="Commerce" aria-pressed="false">Commerce</button></div>
-    <p id="filter-status" class="filter-status" aria-live="polite">9 packages shown</p>
-    <div class="course-grid" id="course-grid" style="margin-top: var(--space-xl)">
-      <article class="course-card" data-tags="Grade 8|Science|Commerce" data-grade="8" data-stream="All subjects" style="--banner: var(--navy-600)">
+<section id="courses" class="sec" aria-labelledby="courses-heading"><div class="wrap">
+<div class="section-head"><div><p class="section-eyebrow">Annual packages</p><h2 id="courses-heading" class="h2" style="margin-top: var(--space-sm)">Nine packages. One price.</h2></div>
+<p class="section-lead">Every package runs the full academic year and includes all subjects for that stream.</p></div>
+<div class="course-filters" style="margin-top: var(--space-xl)" role="group" aria-label="Filter courses"><button type="button" class="course-filters__btn" data-filter="All" aria-pressed="true">All</button><button type="button" class="course-filters__btn" data-filter="Grade 8" aria-pressed="false">Grade 8</button><button type="button" class="course-filters__btn" data-filter="Grade 9" aria-pressed="false">Grade 9</button><button type="button" class="course-filters__btn" data-filter="Grade 10" aria-pressed="false">Grade 10</button><button type="button" class="course-filters__btn" data-filter="Grade 11" aria-pressed="false">Grade 11</button><button type="button" class="course-filters__btn" data-filter="Grade 12" aria-pressed="false">Grade 12</button><button type="button" class="course-filters__btn" data-filter="Science" aria-pressed="false">Science</button><button type="button" class="course-filters__btn" data-filter="Commerce" aria-pressed="false">Commerce</button></div>
+<p id="filter-status" class="filter-status" aria-live="polite">9 packages shown</p>
+<div class="course-grid" id="course-grid" style="margin-top: var(--space-xl)"><article class="course-card" data-tags="Grade 8|Science|Commerce" data-grade="8" data-stream="All subjects" style="--banner: var(--navy-600)">
   <span class="course-card__ghost" aria-hidden="true">8</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">8</span>
-    <span class="course-card__stream">All subjects</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">8</span><span class="course-card__stream">All subjects</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">English</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%208%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 8 All subjects package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 9|Science|Commerce" data-grade="9" data-stream="All subjects" style="--banner: var(--navy-600)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%208%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 8 All subjects package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 9|Science|Commerce" data-grade="9" data-stream="All subjects" style="--banner: var(--navy-600)">
   <span class="course-card__ghost" aria-hidden="true">9</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">9</span>
-    <span class="course-card__stream">All subjects</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">9</span><span class="course-card__stream">All subjects</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">English</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%209%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 9 All subjects package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 10|Science|Commerce" data-grade="10" data-stream="All subjects" style="--banner: var(--navy-600)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%209%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 9 All subjects package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 10|Science|Commerce" data-grade="10" data-stream="All subjects" style="--banner: var(--navy-600)">
   <span class="course-card__ghost" aria-hidden="true">10</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">10</span>
-    <span class="course-card__stream">All subjects</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">10</span><span class="course-card__stream">All subjects</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">English</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2010%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 10 All subjects package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 11|Science" data-grade="11" data-stream="PCMB" style="--banner: var(--sci)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2010%20All%20subjects%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 10 All subjects package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 11|Science" data-grade="11" data-stream="PCMB" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">11</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">11</span>
-    <span class="course-card__stream">PCMB</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">11</span><span class="course-card__stream">PCMB</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20PCMB%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 PCMB package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 12|Science" data-grade="12" data-stream="PCMB" style="--banner: var(--sci)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20PCMB%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 PCMB package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 12|Science" data-grade="12" data-stream="PCMB" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">12</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">12</span>
-    <span class="course-card__stream">PCMB</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">12</span><span class="course-card__stream">PCMB</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20PCMB%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 PCMB package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 11|Science" data-grade="11" data-stream="PCMC" style="--banner: var(--sci)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20PCMB%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 PCMB package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 11|Science" data-grade="11" data-stream="PCMC" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">11</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">11</span>
-    <span class="course-card__stream">PCMC</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">11</span><span class="course-card__stream">PCMC</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Computer Science</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20PCMC%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 PCMC package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 12|Science" data-grade="12" data-stream="PCMBC" style="--banner: var(--sci)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20PCMC%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 PCMC package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 12|Science" data-grade="12" data-stream="PCMBC" style="--banner: var(--sci)">
   <span class="course-card__ghost" aria-hidden="true">12</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">12</span>
-    <span class="course-card__stream">PCMBC</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">12</span><span class="course-card__stream">PCMBC</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Physics</span><span class="course-card__chip">Chemistry</span><span class="course-card__chip">Maths</span><span class="course-card__chip">Biology</span><span class="course-card__chip">Computer Science</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20PCMBC%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 PCMBC package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 11|Commerce" data-grade="11" data-stream="Commerce" style="--banner: var(--com)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20PCMBC%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 PCMBC package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 11|Commerce" data-grade="11" data-stream="Commerce" style="--banner: var(--com)">
   <span class="course-card__ghost" aria-hidden="true">11</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">11</span>
-    <span class="course-card__stream">Commerce</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">11</span><span class="course-card__stream">Commerce</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Accountancy</span><span class="course-card__chip">Maths</span><span class="course-card__chip">English</span><span class="course-card__chip">Grammar</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20Commerce%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 Commerce package on WhatsApp">Buy now</a>
-  </div>
-</article><article class="course-card" data-tags="Grade 12|Commerce" data-grade="12" data-stream="Commerce" style="--banner: var(--com)">
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2011%20Commerce%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 11 Commerce package on WhatsApp">Buy now</a></div></article><article class="course-card" data-tags="Grade 12|Commerce" data-grade="12" data-stream="Commerce" style="--banner: var(--com)">
   <span class="course-card__ghost" aria-hidden="true">12</span>
-  <div class="course-card__head">
-    <span class="course-card__grade">12</span>
-    <span class="course-card__stream">Commerce</span>
-  </div>
+  <div class="course-card__head"><span class="course-card__grade">12</span><span class="course-card__stream">Commerce</span></div>
   <div class="course-card__subjects"><span class="course-card__chip">Accountancy</span><span class="course-card__chip">Maths</span><span class="course-card__chip">English</span><span class="course-card__chip">Grammar</span></div>
-  <div class="course-card__foot">
-    <p class="course-card__price">AED 1,200</p>
-    <p class="course-card__meta">≈ ₹27,500 · full academic year</p>
-    <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20Commerce%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 Commerce package on WhatsApp">Buy now</a>
-  </div>
-</article>
-    </div>
-  </div>
-</section>
+  <div class="course-card__foot"><p class="course-card__price">AED 1,200</p><p class="course-card__meta">≈ ₹27,500 · full academic year</p>
+  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20buy%20the%20Grade%2012%20Commerce%20annual%20package%20%28AED%201200%29." class="btn btn--primary btn--sm btn--block" target="_blank" rel="noopener noreferrer" aria-label="Buy Grade 12 Commerce package on WhatsApp">Buy now</a></div></article></div></div></section>
 <section class="board" aria-labelledby="board-heading">
   <div class="wrap board__grid">
     <div>
       <p class="section-eyebrow section-eyebrow--gold">The difference</p>
       <h2 id="board-heading" class="h2 board__title" style="margin-top: var(--space-sm)">
         No animation.<br>No graphics.<br>
-        <span class="hero__title-accent">Just the board.</span>
+        <span class="serif-accent">Just the board.</span>
       </h2>
       <p class="board__lead">
         Most online classes replace the teacher with motion graphics. We film the teacher,
@@ -791,25 +752,68 @@
       </div>
     </div>
 
-    <form class="contact-form" action="#" method="post">
+    <form class="contact-form" action="#" method="post" novalidate>
       <div class="field">
-        <label class="field__required" for="f-n">Name</label>
-        <input id="f-n" name="name" type="text" autocomplete="name" required aria-required="true">
+        <label for="f-n">
+          Name <span class="required" aria-hidden="true">*</span>
+          <span class="sr-only">(required)</span>
+        </label>
+        <input
+          id="f-n"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+          aria-required="true"
+          aria-describedby="name-hint"
+          placeholder="Your full name"
+        >
+        <span id="name-hint" class="field__hint">As you’d like us to address you</span>
       </div>
+
       <div class="field">
-        <label class="field__required" for="f-e">Email</label>
-        <input id="f-e" name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="email-hint">
-        <span id="email-hint" class="field__hint">We’ll never share your email.</span>
+        <label for="f-e">
+          Email <span class="required" aria-hidden="true">*</span>
+          <span class="sr-only">(required)</span>
+        </label>
+        <input
+          id="f-e"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+          aria-required="true"
+          aria-describedby="email-hint"
+          placeholder="parent@example.com"
+        >
+        <span id="email-hint" class="field__hint">We’ll never share your email</span>
       </div>
+
       <div class="field">
         <label for="f-m">Mobile number</label>
-        <input id="f-m" name="mobile" type="tel" autocomplete="tel">
+        <input
+          id="f-m"
+          name="mobile"
+          type="tel"
+          autocomplete="tel"
+          placeholder="+971 …"
+          aria-describedby="mobile-hint"
+        >
+        <span id="mobile-hint" class="field__hint">Optional — WhatsApp preferred</span>
       </div>
+
       <div class="field field--full">
         <label for="f-msg">Message</label>
-        <textarea id="f-msg" name="message" rows="4" aria-describedby="msg-hint"></textarea>
-        <span id="msg-hint" class="field__hint">Optional — grade, board, or questions.</span>
+        <textarea
+          id="f-msg"
+          name="message"
+          rows="4"
+          aria-describedby="msg-hint"
+          placeholder="Grade, board, or questions"
+        ></textarea>
+        <span id="msg-hint" class="field__hint">Optional — grade, board, or questions</span>
       </div>
+
       <button type="submit" class="btn btn--navy" style="justify-self: start">Send message</button>
       <p id="form-status" class="form-status field--full" role="status" aria-live="polite"></p>
     </form>
@@ -840,9 +844,8 @@
   document.getElementById("y") && (document.getElementById("y").textContent = String(new Date().getFullYear()));
 </script>
 <div class="mobile-enroll" role="region" aria-label="Quick enrol">
-  <a href="#courses" class="btn btn--navy btn--sm">View packages</a>
-  <a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)." class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer" aria-label="Enrol on WhatsApp">Enrol on WhatsApp</a>
-</div>
+<a href="#courses" class="btn btn--navy btn--sm">View packages</a>
+<a href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)." class="btn btn--primary btn--sm" target="_blank" rel="noopener noreferrer" aria-label="Enrol on WhatsApp">Enrol on WhatsApp</a></div>
 <script src="js/config.js" defer></script>
 <script src="js/nav.js" defer></script>
 <script src="js/interactive.js" defer></script>

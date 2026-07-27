@@ -23,19 +23,24 @@
 }
 
 .site-header__logo {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: var(--ls-tight);
-  color: var(--text-primary);
-  min-height: 44px;
   display: inline-flex;
   align-items: center;
+  min-height: 48px;
+  flex-shrink: 0;
 }
 
-.site-header__logo span {
-  color: var(--cta-accent);
-  font-weight: 700;
+.site-header__logo-img {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: min(200px, 52vw);
+}
+
+@media (min-width: 768px) {
+  .site-header__logo-img {
+    height: 48px;
+    max-width: 220px;
+  }
 }
 
 .site-nav {
