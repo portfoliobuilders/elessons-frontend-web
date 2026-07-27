@@ -65,6 +65,7 @@
           width="967"
           height="1000"
           fetchpriority="high"
+          loading="eager"
           decoding="async"
         >
       </picture>
