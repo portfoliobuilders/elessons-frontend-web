@@ -37,8 +37,6 @@
      exists — but the cart itself is real and survives reloads. */
   var CART_KEY = 'elessons_cart_v1';
   var GRADE_TINT = { 8: '#0D7377', 9: '#073790', 10: '#5B3E96', 11: '#9A3412', 12: '#1B6A47' };
-  /* PLACEHOLDER enrolment figures for related cards — replace with real counts. */
-  var GRADE_ENROLLED = { 8: 2100, 9: 4200, 10: 3800, 11: 1900, 12: 1600 };
 
   function loadCart() {
     try { return JSON.parse(localStorage.getItem(CART_KEY) || '{"items":[]}'); }
@@ -194,16 +192,129 @@
     var totalEl = $('mod-rail-total');
     var hint = $('mod-rail-hint');
     var addBtn = $('mod-rail-add');
+    var clearBtn = $('mod-rail-clear');
+    var list = $('mod-rail-list');
+    var be = $('mod-rail-breakeven');
+    var actions = $('mod-rail-actions');
     if (!countEl) return;
-    countEl.textContent = n + ' module' + (n === 1 ? '' : 's');
+    countEl.textContent = n + ' module' + (n === 1 ? '' : 's') + ' selected';
     var mp = planPrice(S.grade, 'module', S.mode);
-    setPrice(totalEl, mulMoney(mp, n));
+    var spend = mulMoney(mp, n);
+    setPrice(totalEl, spend);
+
+    if (list) {
+      var ids = Object.keys(S.modules);
+      if (!ids.length) {
+        list.hidden = true;
+        list.innerHTML = '';
+      } else {
+        list.hidden = false;
+        list.innerHTML = ids.map(function (mid) {
+          var parts = mid.split(':');
+          var stream = parts[0];
+          var ci = Number(parts[1]);
+          var ch = (streamChapters(S.grade, stream) || [])[ci];
+          var label = ch ? ch.c : mid;
+          var meta = STREAM_META[stream];
+          return '<li><span>' + esc(label) +
+            '<br><small>' + esc(meta ? meta.label : stream) + '</small></span>' +
+            '<button type="button" data-mod-remove="' + esc(mid) + '">Remove</button></li>';
+        }).join('');
+        list.querySelectorAll('[data-mod-remove]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            delete S.modules[b.dataset.modRemove];
+            paintModRail();
+            paintPrice();
+            paintTiers();
+          });
+        });
+      }
+    }
+
     if (hint) {
       hint.textContent = n
         ? 'Ready to add this selection to your cart.'
         : 'Pick chapters below to build your own pack.';
+      hint.hidden = false;
     }
-    if (addBtn) addBtn.disabled = n === 0;
+    if (clearBtn) clearBtn.hidden = n === 0;
+
+    /* Break-even nudge: never block purchase — shopper can decline. */
+    var subj = selectedModuleSubject();
+    var offer = betterThanModules(S.grade, n, subj);
+    if (beDeclinedFor !== n) beDeclinedFor = -1;
+    if (be) {
+      if (offer && n && beDeclinedFor !== n) {
+        be.hidden = false;
+        if (hint) hint.hidden = true;
+        var offerPrice = offer.price;
+        /* Recorded base prices for the comparison copy (module MRP is flat). */
+        var modSpend = mulMoney(PRICING[S.grade].modulePrice, n);
+        var save = { inr: modSpend.inr - offerPrice.inr, aed: modSpend.aed - offerPrice.aed };
+        var allCount = offer.type === 'full'
+          ? (hasRegister(S.grade) ? chapterTotal(S.grade) : null)
+          : subjectModuleCount(S.grade, offer.subject);
+        var copy = n + ' modules = ' + fmtMoney(modSpend.inr, 'inr') + '. ';
+        if (offer.type === 'full') {
+          copy += 'The Annual Package costs ' + fmtMoney(offerPrice.inr, 'inr') + '.';
+        } else {
+          copy += 'All ' + allCount + ' ' + offer.label + ' modules cost ' +
+                  fmtMoney(offerPrice.inr, 'inr') + '.';
+        }
+        if (save.inr > 0) copy += ' Switch and save ' + fmtMoney(save.inr, 'inr') + '.';
+        var ctaLabel = offer.type === 'full'
+          ? ('Get the Annual Package for ' + fmtMoney(offerPrice.inr, 'inr'))
+          : ('Get all of ' + offer.label + ' for ' + fmtMoney(offerPrice.inr, 'inr'));
+        be.innerHTML = '<p>' + esc(copy) + '</p>' +
+          '<button type="button" class="btn btn-red btn-sm btn-block" id="mod-be-switch">' + esc(ctaLabel) + '</button>' +
+          '<button type="button" class="btn btn-ghost-dark btn-sm btn-block" id="mod-be-keep">Keep my ' + n + ' modules</button>';
+        if (actions) actions.hidden = true;
+        var sw = $('mod-be-switch');
+        var keep = $('mod-be-keep');
+        if (sw) sw.addEventListener('click', function () {
+          var from = n;
+          S.modules = {};
+          beDeclinedFor = -1;
+          S.plan = offer.type;
+          if (offer.type === 'subject') S.subject = offer.subject;
+          paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated(); syncControls();
+          track('breakeven_switch', { from: from, to: offer.type, grade: S.grade });
+          $('buy-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        if (keep) keep.addEventListener('click', function () {
+          beDeclinedFor = n;
+          be.hidden = true;
+          if (actions) actions.hidden = false;
+          if (hint) hint.hidden = false;
+          if (addBtn) addBtn.disabled = n === 0;
+        });
+      } else {
+        be.hidden = true;
+        be.innerHTML = '';
+        if (actions) actions.hidden = false;
+      }
+    }
+
+    if (addBtn) {
+      addBtn.disabled = n === 0;
+      addBtn.textContent = 'Add to cart';
+    }
+  }
+
+  function selectedModuleSubject() {
+    var parents = {};
+    Object.keys(S.modules).forEach(function (mid) {
+      var stream = mid.split(':')[0];
+      var p = STREAM_META[stream] && STREAM_META[stream].parent;
+      if (p) parents[p] = true;
+    });
+    var keys = Object.keys(parents);
+    return keys.length === 1 ? keys[0] : null;
+  }
+  function subjectModuleCount(grade, subject) {
+    return streamsForSubject(subject).reduce(function (n, k) {
+      return n + streamChapters(grade, k).length;
+    }, 0);
   }
 
   function currentCartId() {
@@ -251,7 +362,7 @@
   }
 
   function bindCartUi() {
-    var openers = ['cart-open', 'mod-rail-open'];
+    var openers = ['cart-open'];
     openers.forEach(function (id) {
       var el = $(id);
       if (el) el.addEventListener('click', function (e) { e.preventDefault(); openCart(); });
@@ -280,6 +391,13 @@
     if (railAdd) railAdd.addEventListener('click', function () {
       S.plan = 'module';
       addCurrentPlanToCart();
+    });
+    var railClear = $('mod-rail-clear');
+    if (railClear) railClear.addEventListener('click', function () {
+      S.modules = {};
+      paintModRail();
+      paintPrice();
+      paintTiers();
     });
   }
 
@@ -333,13 +451,25 @@
     $('crumb-current').textContent = t;
     document.title = t + ' | G-TEC eLessons.net';
 
-    var banner = S.plan === 'subject' ? SUBJECT_META[S.subject].banner : 'sb-bundle';
-    var art = $('hero-art');
-    art.className = 'dhero-art sub-banner ' + banner;
-    art.style.margin = '0';
-    art.setAttribute('aria-label', S.plan === 'subject'
-      ? SUBJECT_META[S.subject].name + ' \u2014 ' + SUBJECT_META[S.subject].tag
-      : 'Maths, Science and English');
+    var pv = previewFor(S.grade, S.plan, S.subject);
+    var stage = document.getElementById('lesson-player');
+    if (stage) {
+      var cover = stage.querySelector('.player-cover');
+      var banner = S.plan === 'subject' ? SUBJECT_META[S.subject].banner : 'sb-bundle';
+      // poster = the same artwork the card uses, pulled from gtec.css
+      if (cover) cover.className = 'player-cover sub-banner ' + banner;
+      var pt = stage.querySelector('.player-title');
+      if (pt) pt.textContent = pv.title;
+      window.__elPreviewCtx = { grade: S.grade, plan: S.plan, subject: S.subject };
+      if (stage.dataset.vid !== pv.vid) {
+        stage.dataset.vid = pv.vid;
+        stage.dataset.cap = String(pv.cap);
+        if (typeof window.gtecPlayerReset === 'function') window.gtecPlayerReset(pv.vid, pv.cap, pv.title);
+      } else {
+        stage.dataset.vid = pv.vid;
+        stage.dataset.cap = String(pv.cap);
+      }
+    }
 
     $('course-lede').textContent = S.plan === 'subject'
       ? SUBJECT_META[S.subject].blurb
@@ -392,6 +522,23 @@
         : S.plan === 'subject' ? 'This subject \u00b7 full academic year'
                                : 'All three subjects \u00b7 full academic year';
 
+    var up = upgradeOffer(S.grade, S.plan, S.mode, S.subject);
+    var upEl = $('buy-upgrade');
+    if (upEl) {
+      if (up) {
+        upEl.hidden = false;
+        setPrice($('upgrade-diff'), up.diff);
+        var extra = $('upgrade-extra');
+        if (extra) {
+          extra.textContent = up.extraLessons != null
+            ? '\u2014 ' + up.extraLessons + ' more lessons'
+            : '';
+        }
+      } else {
+        upEl.hidden = true;
+      }
+    }
+
     var bar = $('stickybar');
     if (!bar || bar.dataset.mode !== 'cart') {
       $('bar-meta').textContent =
@@ -436,7 +583,7 @@
         document.querySelectorAll('#seg-mode button').forEach(function (o) {
           o.setAttribute('aria-checked', String(o.dataset.mode === S.mode));
         });
-        paintPrice(); paintTiers();
+        paintPrice(); paintTiers(); paintRelated();
         track('mode_change', { mode: S.mode, grade: S.grade, plan: S.plan });
       });
     });
@@ -444,9 +591,13 @@
 
   /* ══════════════ PURCHASE TIERS ══════════════ */
   function tierCard(opts) {
+    var modeHtml = opts.live
+      ? '<span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span>'
+      : '<span class="mode">Recorded</span>';
     return '<article class="tier' + (opts.on ? ' tier-on' : '') + '">' +
       '<p class="mono card-kicker" style="color:' + opts.colour + '">' + esc(opts.kicker) + '</p>' +
       '<h3 class="h3">' + esc(opts.title) + '</h3>' +
+      '<div class="modes">' + modeHtml + '</div>' +
       '<p class="price tier-price" data-inr="' + opts.price.inr + '" data-aed="' + opts.price.aed + '">' + opts.price.inr + '</p>' +
       '<p style="color:var(--slate-500);font-size:.75rem">' + esc(opts.note) + '</p>' +
       '<ul class="tier-inc">' + opts.inc.map(function (i) {
@@ -459,19 +610,20 @@
 
   function paintTiers() {
     var g = S.grade;
+    var isLive = S.mode === 'live';
 
     /* Full package */
     var fp = planPrice(g, 'full', S.mode), mrp = fullMrp(g);
     $('tier-full').innerHTML = tierCard({
       on: S.plan === 'full', colour: 'var(--navy-600)', kicker: 'Best value \u00b7 all subjects',
-      title: 'Grade ' + g + ' Annual Package', price: priceAttrs(fp),
+      title: 'Grade ' + g + ' Annual Package', price: priceAttrs(fp), live: isLive,
       note: 'Save ' + fmtMoney(mrp.inr - fp.inr, 'inr') + ' against buying separately',
       inc: ['Maths, Science and English in full',
             hasRegister(g) ? registerTotal(g) + ' video lessons across ' + chapterTotal(g) + ' chapters'
                            : 'Every chapter of the CBSE / NCERT syllabus',
             'Downloadable PDF notes for every chapter', 'Full academic year of LMS access',
-            S.mode === 'live' ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
-      cta: 'Choose this package', choose: 'full'
+            isLive ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
+      cta: 'Add to cart', choose: 'full'
     });
 
     /* By subject */
@@ -479,24 +631,32 @@
       var m = SUBJECT_META[sub], p = planPrice(g, 'subject', S.mode, sub);
       var count = planLessonCount(g, 'subject', sub);
       return tierCard({
-        on: S.plan === 'subject' && S.subject === sub, colour: m.colour,
+        on: S.plan === 'subject' && S.subject === sub, colour: m.colour, live: isLive,
         kicker: 'Grade ' + g + ' \u00b7 single subject', title: m.name, price: priceAttrs(p),
         note: 'This subject \u00b7 full academic year',
         inc: [m.tag, hasRegister(g) ? count + ' video lessons' : 'Every chapter of this subject',
               'PDF notes for every chapter',
-              S.mode === 'live' ? 'Live doubt-clearing included' : 'Recorded lessons, replay anytime'],
-        cta: 'Choose ' + m.name, choose: 'subject:' + sub
+              isLive ? 'Live doubt-clearing included' : 'Recorded lessons, replay anytime'],
+        cta: 'Add to cart', choose: 'subject:' + sub
       });
     }).join('');
 
-    /* By module */
+    /* By module
+       TODO commercial: flat per-module pricing is unfair across chapter sizes
+       (Coordinate Geometry = 3 lessons vs Polynomials = 18, both at the same fee).
+       Propose banded pricing — small (1–5 lessons), standard (6–12), large (13+) —
+       so lessons-per-rupee is not silently unfair. The break-even nudge is a
+       workaround until that decision is made. */
     var mp = planPrice(g, 'module', S.mode);
     var mpa = priceAttrs(mp);
+    var baseMp = PRICING[g].modulePrice;
+    var baseMpa = priceAttrs(baseMp);
     $('module-price-note').innerHTML =
       'Each module is <span class="price" data-inr="' + mpa.inr +
       '" data-aed="' + mpa.aed + '">' + mpa.inr + '</span>. Use Add all to grab a whole subject in one click.';
 
     var streams = registerStreams(g);
+    var mq = (moduleQuery || '').trim().toLowerCase();
     if (!streams.length) {
       $('tier-module-list').innerHTML =
         '<div class="reg-empty"><p class="h3">Module list for Grade ' + g + ' is being published</p>' +
@@ -505,28 +665,33 @@
       $('tier-module-list').innerHTML = streams.map(function (k) {
         var meta = STREAM_META[k], chs = streamChapters(g, k);
         if (!chs.length) return '';
+        var rows = chs.map(function (ch, ci) {
+          if (mq && ch.c.toLowerCase().indexOf(mq) === -1) return '';
+          var id = k + ':' + ci, on = !!S.modules[id];
+          var lessons = publishedLessons(ch).length;
+          return '<div class="mod-row">' +
+            '<p>' + esc(ch.c) + '<br><small>' +
+              '<span class="price" data-inr="' + baseMpa.inr + '" data-aed="' + baseMpa.aed + '">' + baseMpa.inr + '</span>' +
+              ' \u00b7 ' + lessons + ' lesson' + (lessons === 1 ? '' : 's') + '</small></p>' +
+            '<button type="button" class="mod-add" data-module="' + id + '" aria-pressed="' + on + '">' +
+              (on ? 'Selected' : 'Select') + '</button></div>';
+        }).filter(Boolean);
+        if (mq && !rows.length) return '';
+        var subjTotal = mulMoney(baseMp, chs.length);
+        var subjA = priceAttrs(subjTotal);
         return '<details class="mod-sub" style="--stream-colour:' + meta.colour + '"' + (k === streams[0] ? ' open' : '') + '>' +
           '<summary>' +
             '<span class="mod-sub__ico" aria-hidden="true">' + esc(meta.code) + '</span>' +
             '<span>' + esc(meta.label) + '</span>' +
             '<span class="mod-sub__actions">' +
               '<span class="chip">' + chs.length + ' modules</span>' +
-              '<button type="button" class="mod-add-all" data-add-all="' + k + '">Add all ' + chs.length + '</button>' +
+              '<button type="button" class="mod-add-all" data-add-all="' + k + '">Add all ' + chs.length +
+                ' \u00b7 <span class="price" data-inr="' + subjA.inr + '" data-aed="' + subjA.aed + '">' + subjA.inr + '</span></button>' +
             '</span>' +
           '</summary>' +
-          chs.map(function (ch, ci) {
-            var id = k + ':' + ci, on = !!S.modules[id];
-            var cartId = 'g' + g + '-mod-' + id + '-' + S.mode;
-            var inCart = cartHas(cartId);
-            var label = on || inCart
-              ? (inCart ? 'Added \u2713' : 'Selected')
-              : ('Add to cart \u2014 ' + mpa[cur()]);
-            return '<div class="mod-row">' +
-              '<p>' + esc(ch.c) + '<br><small>' + publishedLessons(ch).length + ' lessons</small></p>' +
-              '<button type="button" class="mod-add" data-module="' + id + '" aria-pressed="' + (on || inCart) + '">' +
-                label + '</button></div>';
-          }).join('') + '</details>';
-      }).join('');
+          rows.join('') + '</details>';
+      }).join('') ||
+        '<div class="reg-empty"><p class="h3">No modules match \u201c' + esc(moduleQuery) + '\u201d</p></div>';
     }
 
     document.querySelectorAll('[data-choose]').forEach(function (b) {
@@ -536,7 +701,7 @@
         if (v[1]) S.subject = v[1];
         paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated(); syncControls();
         track('plan_select', { plan: S.plan, subject: S.subject, mode: S.mode, grade: S.grade });
-        $('buy-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        addCurrentPlanToCart();
       });
     });
 
@@ -545,26 +710,8 @@
         e.preventDefault();
         e.stopPropagation();
         var id = b.dataset.module;
-        var parts = id.split(':');
-        var stream = parts[0];
-        var ci = Number(parts[1]);
-        var ch = (streamChapters(S.grade, stream) || [])[ci];
-        var cartId = 'g' + S.grade + '-mod-' + id + '-' + S.mode;
-        if (cartHas(cartId) || S.modules[id]) {
-          if (cartHas(cartId)) removeCartItem(cartId);
-          delete S.modules[id];
-        } else {
-          S.modules[id] = true;
-          if (ch) {
-            addCartItem(makeCartItem({
-              id: cartId, type: 'module', grade: S.grade, mode: S.mode,
-              title: ch.c,
-              subtitle: 'Grade ' + S.grade + ' \u00b7 ' + (STREAM_META[stream] ? STREAM_META[stream].label : stream) +
-                        ' \u00b7 ' + (S.mode === 'live' ? 'Live + Recorded' : 'Recorded'),
-              price: mp
-            }), { open: false });
-          }
-        }
+        if (S.modules[id]) delete S.modules[id];
+        else S.modules[id] = true;
         if (S.plan !== 'module') { S.plan = 'module'; paintHero(); syncControls(); }
         paintModRail();
         paintPrice();
@@ -580,24 +727,9 @@
         var chs = streamChapters(S.grade, k);
         chs.forEach(function (ch, ci) { S.modules[k + ':' + ci] = true; });
         if (S.plan !== 'module') { S.plan = 'module'; paintHero(); syncControls(); }
-        /* Add each to cart */
-        var added = 0;
-        chs.forEach(function (ch, ci) {
-          var mid = k + ':' + ci;
-          var cartId = 'g' + S.grade + '-mod-' + mid + '-' + S.mode;
-          if (cartHas(cartId)) return;
-          addCartItem(makeCartItem({
-            id: cartId, type: 'module', grade: S.grade, mode: S.mode,
-            title: ch.c,
-            subtitle: 'Grade ' + S.grade + ' \u00b7 ' + STREAM_META[k].label +
-                      ' \u00b7 ' + (S.mode === 'live' ? 'Live + Recorded' : 'Recorded'),
-            price: mp
-          }), { open: false });
-          added++;
-        });
-        paintPrice(); paintTiers();
-        if (added) { openCart(); toast(added + ' modules added'); }
-        else { toast('Those modules are already in your cart'); openCart(); }
+        paintModRail();
+        paintPrice();
+        paintTiers();
       });
     });
 
@@ -607,6 +739,8 @@
 
   /* ══════════════ VIDEO REGISTER ══════════════ */
   var stream = null, query = '';
+  var moduleQuery = '';
+  var beDeclinedFor = -1;
 
   function planStreams() { return streamsForPlan(S.grade, S.plan, S.subject); }
 
@@ -650,6 +784,8 @@
         'we will send the chapter list for Grade ' + S.grade + '.</p>' +
         '<a class="btn btn-red btn-sm mt3" data-wa="Grade ' + S.grade + ' class list" href="#">Ask for the class list</a></div>';
       $('register-summary').textContent = 'Class list coming soon';
+      var pt0 = $('register-plan-total');
+      if (pt0) pt0.textContent = '';
       $('register-search').hidden = true;
       $('download-pdf').hidden = true;
       bindWa();
@@ -699,9 +835,26 @@
       '<div class="reg-empty"><p class="h3">No lessons match \u201c' + esc(query) + '\u201d</p>' +
       '<p style="margin-top:.4rem;font-size:.9rem">Try a chapter name, an exercise number, or clear the search.</p></div>';
 
+    var planTot = $('register-plan-total');
+    if (planTot) {
+      var pn = planLessonCount(S.grade, S.plan, S.subject);
+      var pStreams = streamsForPlan(S.grade, S.plan, S.subject);
+      if (S.plan === 'full') {
+        planTot.textContent = pn + ' lessons across 3 subjects';
+      } else if (S.plan === 'subject') {
+        planTot.textContent = pn + ' lessons across ' + pStreams.length +
+          ' subject' + (pStreams.length === 1 ? '' : 's');
+      } else {
+        planTot.textContent = pn ? (pn + ' lessons in the published register') : '';
+      }
+    }
+
+    var streamLabel = stream && STREAM_META[stream] ? STREAM_META[stream].label : '';
     $('register-summary').textContent = q
       ? hits + ' lesson' + (hits === 1 ? '' : 's') + ' matching \u201c' + query + '\u201d'
-      : streamCount(S.grade, stream) + ' lessons \u00b7 ' + chapters.length + ' chapters';
+      : (streamLabel
+          ? (streamLabel + ' \u2014 ' + streamCount(S.grade, stream) + ' lessons \u00b7 ' + chapters.length + ' chapters')
+          : (streamCount(S.grade, stream) + ' lessons \u00b7 ' + chapters.length + ' chapters'));
 
     $('register-body').querySelectorAll('[data-preview]').forEach(function (a) {
       a.addEventListener('click', function () { track('preview_click', { lesson: a.dataset.preview, stream: stream }); });
@@ -800,12 +953,14 @@
       var mrp = asSubject ? null : fullMrp(g);
       var save = mrp ? { inr: mrp.inr - p.inr, aed: mrp.aed - p.aed } : null;
       var modP = planPrice(g, 'module', 'recorded');
-      var enrolled = GRADE_ENROLLED[g] ? GRADE_ENROLLED[g].toLocaleString('en-IN') + '+ students enrolled' : '';
       var micro = asSubject
         ? 'Full academic year \u00b7 this subject'
         : (save && save.inr > 0
             ? (priceAttrs(modP)[cur()] + '/module separately \u00b7 Save ' + priceAttrs(save)[cur()])
             : 'Full academic year');
+      var modeHtml = S.mode === 'live'
+        ? '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>'
+        : '<div class="modes"><span class="mode">Recorded</span></div>';
       return '<article class="rel-card" style="--banner:' + colour + ';--grade-tint:' + colour + '">' +
         '<div class="rel-card__art sub-banner ' + banner + '" role="img" aria-label="' + esc(label) + '">' +
           (g === popular ? '<span class="rel-card__badge">Most popular</span>' : '') +
@@ -814,19 +969,17 @@
           '<div><p class="mono card-kicker" style="color:' + colour + '">Grade ' + g +
             ' \u00b7 ' + (asSubject ? 'single subject' : 'all subjects') + '</p>' +
           '<h3 class="h3" style="margin-top:.25rem">' + esc(asSubject ? meta.name : 'Annual Package') + '</h3></div>' +
-          '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span>' +
-          '<span class="mode">Recorded lessons</span></div>' +
+          modeHtml +
           '<div><p class="price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" ' +
           'style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">' + a.inr + '</p>' +
           '<p class="note-sm">' + esc(micro) + '</p>' +
-          (enrolled ? '<p class="note-sm">' + esc(enrolled) + '</p>' : '') +
           '</div>' +
           '<div class="rel-card__actions">' +
             '<button type="button" class="btn btn-red btn-sm btn-block" data-rel-add="' + planId + '" ' +
               'data-grade="' + g + '" data-plan="' + (asSubject ? 'subject' : 'full') + '" ' +
               (asSubject ? 'data-subject="' + S.subject + '" ' : '') +
               'data-mode="' + S.mode + '">Add to cart</button>' +
-            '<a class="btn btn-ghost-dark btn-sm btn-block" href="' + href + '" data-plan-link="' + planId + '">View details</a>' +
+            '<a class="rel-card__details" href="' + href + '" data-plan-link="' + planId + '">View details</a>' +
           '</div>' +
         '</div></article>';
     }).join('');
@@ -888,11 +1041,16 @@
     el._t = setTimeout(function () { el.dataset.show = 'false'; }, 3200);
   }
   function bindBuy() {
-    var buy = $('buy-now');
-    if (buy) buy.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (buy.getAttribute('aria-disabled') === 'true') return;
+    function doBuy(e) {
+      if (e) e.preventDefault();
+      var buy = $('buy-now');
+      if (buy && buy.getAttribute('aria-disabled') === 'true') return;
       addCurrentPlanToCart();
+    }
+    var buy = $('buy-now');
+    if (buy) buy.addEventListener('click', doBuy);
+    document.querySelectorAll('[data-add-to-cart]').forEach(function (b) {
+      b.addEventListener('click', doBuy);
     });
     var bar = $('bar-buy');
     if (bar) bar.addEventListener('click', function (e) {
@@ -902,16 +1060,65 @@
       if (bar.getAttribute('aria-disabled') === 'true') return;
       addCurrentPlanToCart();
     });
+    var upCta = $('upgrade-cta');
+    if (upCta) upCta.addEventListener('click', function () {
+      S.plan = 'full';
+      paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated(); syncControls();
+      track('upgrade_click', { grade: S.grade, subject: S.subject, mode: S.mode });
+    });
+  }
+
+  function bindStickyPanel() {
+    var panel = $('buy-panel');
+    if (!panel || typeof IntersectionObserver !== 'function') return;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        document.body.classList.toggle('panel-gone', !en.isIntersecting);
+      });
+    }, { threshold: 0 }).observe(panel);
+  }
+
+  function bindModuleSearch() {
+    var box = $('module-search');
+    if (!box) return;
+    var t;
+    box.addEventListener('input', function (e) {
+      clearTimeout(t);
+      var v = e.target.value;
+      t = setTimeout(function () {
+        moduleQuery = v;
+        paintTiers();
+      }, 160);
+    });
+  }
+
+  /* Hide By module when this grade has no register; fall back to By subject. */
+  function syncModuleTabVisibility() {
+    var tab = document.querySelector('#tier-tabs [data-tier="module"]');
+    var has = registerStreams(S.grade).length > 0;
+    if (tab) {
+      tab.hidden = !has;
+      tab.style.display = has ? '' : 'none';
+    }
+    var search = $('module-search');
+    if (search) search.hidden = !has;
+    if (!has && S.plan === 'module') {
+      S.plan = 'subject';
+    }
   }
 
   /* Controls are static markup, so a URL that sets plan or mode would leave the
      tab bar and the segmented control contradicting the page. Sync them once,
      before gtec-ui.js reads aria-selected to set up roving tabindex. */
-  /* Controls are static markup, so a URL that sets plan or mode would leave the
-     tab bar and the segmented control contradicting the page. Sync them once,
-     before gtec-ui.js reads aria-selected to set up roving tabindex. */
   function syncControls() {
+    syncModuleTabVisibility();
     document.querySelectorAll('#tier-tabs .tab').forEach(function (t) {
+      if (t.hidden) {
+        t.setAttribute('aria-selected', 'false');
+        var p = $(t.dataset.panel);
+        if (p) p.hidden = true;
+        return;
+      }
       var on = t.dataset.tier === S.plan;
       t.setAttribute('aria-selected', String(on));
       var panel = $(t.dataset.panel);
@@ -923,6 +1130,7 @@
   }
 
   /* ---------- go ---------- */
+  syncModuleTabVisibility();
   paintHero();
   paintStreamTabs();
   paintRegister();
@@ -932,6 +1140,7 @@
   paintPrice();
   syncControls();
   bindMode(); bindTierTabs(); bindRegister(); bindLms(); bindBuy(); bindCartUi(); bindWa();
+  bindStickyPanel(); bindModuleSearch();
   paintCart();
   track('page_view', { page: 'course-detail', grade: S.grade, plan: S.plan, mode: S.mode });
 })();

@@ -20,8 +20,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/gtec.css?v=30">
-<link rel="stylesheet" href="/assets/css/detail.css?v=30">
+<link rel="stylesheet" href="/assets/css/gtec.css?v=31">
+<link rel="stylesheet" href="/assets/css/detail.css?v=31">
 </head>
 <body>
 
@@ -32,8 +32,8 @@
 <div class="announce" id="announce">
   <div class="wrap flex center between g2 wrapf" style="padding-block:.6rem;font-size:.82rem">
     <p style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <span class="mono" style="background:var(--red);color:#fff;font-size:.62rem;padding:.18rem .55rem;border-radius:999px">New</span>
-      Academic year 2025&ndash;26 enrolment is open &mdash; 50% off with coupon at checkout.
+      <span class="mono" style="background:var(--red-cta);color:#fff;font-size:.62rem;padding:.18rem .55rem;border-radius:999px">New</span>
+      Enrolment for 2025&ndash;26 is open.
     </p>
     <button id="announce-x" aria-label="Dismiss" style="cursor:pointer;opacity:.8;font-size:1.1rem;line-height:1">&times;</button>
   </div>
@@ -103,12 +103,7 @@
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead maxw-sm" id="course-lede">Maths, Science and English together for grade 9.</p>
 
-        <div class="flex center g2 wrapf mt3" style="align-items:center">
-          <span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-          <span style="font-size:.85rem;color:rgba(255,255,255,.8)">
-            <strong style="color:#fff">4.8</strong> from 412 reviews &middot; 6,800+ enrolled
-          </span>
-        </div>
+        <!-- TODO reinstate with real review data; do not ship invented figures -->
 
         <div class="dhero-facts mt3">
           <span class="fact" id="fact-lessons" hidden></span>
@@ -117,8 +112,46 @@
           <span class="fact">PDF notes included</span>
         </div>
 
-        <span class="dhero-art sub-banner sb-bundle mt3" id="hero-art" role="img"
-              aria-label="Maths, Science and English"></span>
+        <div class="dhero-player mt3" id="hero-art">
+          <div class="player" id="lesson-player" data-vid="" data-cap="" data-state="idle">
+            <div class="player-stage">
+              <div id="lesson-frame"></div>
+              <div class="player-shield"></div>
+
+              <div class="player-cover">
+                <p class="eyebrow">Sample lesson</p>
+                <p class="player-title">Watch the first 90 seconds</p>
+                <button class="play play-lg" type="button" aria-label="Play the sample lesson, 90 second preview"></button>
+                <p class="player-note">A real teacher at a real board &mdash; the same way every chapter is taught.</p>
+              </div>
+
+              <div class="player-end">
+                <p class="eyebrow" style="color:var(--gold)">Preview complete</p>
+                <p class="player-title">Continue learning inside the course</p>
+                <p class="player-note">The full chapter, every subject, and the written notes are included for the whole academic year.</p>
+                <div class="flex g2 wrapf" style="justify-content:center;margin-top:.4rem">
+                  <button type="button" class="btn btn-red" data-add-to-cart>Add to cart</button>
+                  <button type="button" id="p-replay" class="btn btn-ghost-light">Replay preview</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="player-bar" hidden>
+              <button class="pbtn" type="button" id="p-toggle" aria-label="Play">
+                <svg id="i-play" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="i-pause" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+              </button>
+              <div class="pscrub" role="slider" tabindex="0" aria-label="Seek within the preview"
+                   aria-valuemin="0" aria-valuemax="90" aria-valuenow="0"><span class="pfill"></span></div>
+              <span class="ptime mono">0:00 / 1:30</span>
+              <button class="pbtn" type="button" id="p-mute" aria-label="Mute">
+                <svg id="i-sound" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zm12.5 3a4 4 0 0 0-2.5-3.7v7.4a4 4 0 0 0 2.5-3.7z"/></svg>
+                <svg id="i-muted" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M4 9v6h4l5 4V5L8 9zm15.1-.5-1.4-1.4-2.2 2.2-2.2-2.2-1.4 1.4L14.1 11l-2.2 2.2 1.4 1.4 2.2-2.2 2.2 2.2 1.4-1.4L16.9 11z"/></svg>
+              </button>
+              <span class="pcap mono">90-second preview</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- BUY PANEL -->
@@ -134,6 +167,13 @@
         <p class="price buy-price" id="buy-price">&#8377;12,000</p>
         <p class="buy-save" id="buy-save">Save <span class="price">&#8377;8,000</span></p>
         <p class="buy-unit" id="buy-unit">All three subjects &middot; full academic year</p>
+
+        <div class="upgrade" id="buy-upgrade" hidden>
+          <p><strong>+<span class="price" id="upgrade-diff"></span></strong>
+             gets all three subjects <span id="upgrade-extra"></span></p>
+          <button type="button" class="btn btn-ghost-dark btn-sm btn-block" id="upgrade-cta">
+            Switch to the Annual Package</button>
+        </div>
 
         <div class="grid g1 mt3">
           <button type="button" class="btn btn-red btn-block" id="buy-now">Add to cart</button>
@@ -160,7 +200,7 @@
 <!-- ══════════════ PURCHASE OPTIONS ══════════════ -->
 <section class="sec" id="tiers">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--red)">Purchase options</p>
+    <p class="eyebrow" style="color:var(--red-cta)">Purchase options</p>
     <h2 class="dsp h2 mt2">Buy the whole year, one subject, or just the chapters you need.</h2>
     <span class="gold-rule" aria-hidden="true"></span>
 
@@ -178,15 +218,21 @@
     </div>
     <div id="tier-module-p" class="mt3" hidden>
       <p class="lead maxw-sm" id="module-price-note">Each module is priced on its own.</p>
+      <label class="hide-sm" for="module-search" style="position:absolute;left:-9999px">Search modules</label>
+      <input type="search" class="reg-search mt3" id="module-search" placeholder="Search a chapter&hellip;" autocomplete="off">
       <div class="mod-layout mt3">
         <div id="tier-module-list"></div>
         <aside class="mod-rail" id="mod-rail" aria-label="Module selection summary">
           <p class="mono card-kicker" style="color:var(--navy-600)">Your selection</p>
-          <p class="h3" id="mod-rail-count" style="margin-top:.35rem">0 modules</p>
+          <p class="h3" id="mod-rail-count" style="margin-top:.35rem">0 modules selected</p>
           <p class="price" id="mod-rail-total" style="font-weight:800;font-size:1.35rem;color:var(--navy-900);letter-spacing:-.02em;margin-top:.25rem">&#8377;0</p>
+          <ul class="mod-rail-list" id="mod-rail-list" hidden></ul>
           <p class="note-sm mt2" id="mod-rail-hint">Pick chapters below to build your own pack.</p>
-          <button type="button" class="btn btn-red btn-sm btn-block mt3" id="mod-rail-add" disabled>Add selection to cart</button>
-          <button type="button" class="btn btn-ghost-dark btn-sm btn-block mt2" id="mod-rail-open">View cart</button>
+          <div id="mod-rail-breakeven" class="mod-breakeven" hidden></div>
+          <div id="mod-rail-actions">
+            <button type="button" class="btn btn-red btn-sm btn-block mt3" id="mod-rail-add" disabled>Add to cart</button>
+            <button type="button" class="btn btn-ghost-dark btn-sm btn-block mt2" id="mod-rail-clear" hidden>Clear all</button>
+          </div>
         </aside>
       </div>
     </div>
@@ -198,7 +244,7 @@
   <div class="wrap">
     <div class="grid cols2 g4">
       <div class="prose">
-        <p class="eyebrow" style="color:var(--red)">About this course</p>
+        <p class="eyebrow" style="color:var(--red-cta)">About this course</p>
         <h2 class="dsp h2 mt2" style="font-size:clamp(1.6rem,2.6vw,2.3rem)">A real teacher at a real board.</h2>
         <span class="gold-rule" aria-hidden="true"></span>
         <p>Every lesson is taught the way it is taught in a classroom &mdash; chalk, board, worked
@@ -241,8 +287,9 @@
   <div class="wrap">
     <div class="reg-head">
       <div>
-        <p class="eyebrow" style="color:var(--red)">Course content</p>
+        <p class="eyebrow" style="color:var(--red-cta)">Course content</p>
         <h2 class="dsp h2 mt2" style="font-size:clamp(1.6rem,2.6vw,2.3rem)">Every lesson, listed.</h2>
+        <p class="note-sm mt2" id="register-plan-total"></p>
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead" id="register-summary"></p>
       </div>
@@ -265,7 +312,7 @@
 <!-- ══════════════ FAQ ══════════════ -->
 <section class="sec" id="faq" style="background:var(--mist)">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--red)">Questions</p>
+    <p class="eyebrow" style="color:var(--red-cta)">Questions</p>
     <h2 class="dsp h2 mt2" style="font-size:clamp(1.6rem,2.6vw,2.3rem)">Before you enrol.</h2>
     <span class="gold-rule" aria-hidden="true"></span>
     <div class="faq-grid mt3" id="faq-list" style="max-width:900px"></div>
@@ -280,7 +327,7 @@
 <!-- ══════════════ RELATED ══════════════ -->
 <section class="sec" id="related">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--red)">Other grades</p>
+    <p class="eyebrow" style="color:var(--red-cta)">Other grades</p>
     <h2 class="dsp h2 mt2" id="related-heading" style="font-size:clamp(1.6rem,2.6vw,2.3rem)">Also available.</h2>
     <span class="gold-rule" aria-hidden="true"></span>
     <div class="grid cols4 g3 mt3" id="related-grid"></div>
@@ -368,9 +415,9 @@
 </script>
 
 <!-- ORDER MATTERS: data -> page render -> shared bindings -->
-<script src="/assets/js/course-data.js?v=30"></script>
-<script src="/assets/js/detail.js?v=30"></script>
-<script src="/assets/js/gtec-ui.js?v=30"></script>
+<script src="/assets/js/course-data.js?v=31"></script>
+<script src="/assets/js/detail.js?v=31"></script>
+<script src="/assets/js/gtec-ui.js?v=31"></script>
 <script>
   var ax = document.getElementById('announce-x');
   if (ax) ax.onclick = function () { document.getElementById('announce').remove(); };
