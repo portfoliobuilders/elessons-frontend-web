@@ -259,41 +259,80 @@
 .print-only{display:none}
 
 
-/* Header row: true three-column balance so the primary links sit in the
-   optical centre, not shoved right by the wider tools cluster. */
+/* ══════════════ RESPONSIVE NAV ══════════════
+   Breakpoints mirror gtec.css:
+   - <640   logo + cart + burger (currency lives in the drawer)
+   - 640–999 logo + currency + cart + burger
+   - ≥1000  three-column: logo | links | full tools
+   The old 1fr/auto/1fr grid with a display:none centre nav left the
+   tools sitting in the middle column on tablet/phone. */
 .nav > .wrap{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  display:flex;
   align-items:center;
-  column-gap:1rem;
+  justify-content:space-between;
+  gap:.75rem;
+  min-width:0;
+  padding-block:.7rem;
 }
-.nav > .wrap > .brand{justify-self:start}
+.nav > .wrap > .brand{
+  flex:none;
+  min-width:0;
+}
+.nav > .wrap > .brand .el-logo{
+  width:clamp(110px,28vw,164px);
+}
 .nav > .wrap > nav[aria-label="Primary"]{
-  justify-self:center;
   margin-inline:0;
 }
 .nav > .wrap > .navtools{
-  justify-self:end;
   margin-left:0;
+  min-width:0;
 }
 
-/* ══════════════ CART BUTTON / BADGE ══════════════ */
-/* Nav tools: keep phone, currency, Sign in, cart and CTA on one baseline.
-   gtec's .hide-sm { display:block } overrides .btn { inline-flex } and leaves
-   the Sign in .navlink as a short block next to the 40px cart — they look
-   vertically staggered. Force one height and inline-flex for every control. */
-.navtools{
-  align-items:center;
-  gap:.75rem;
-  flex-wrap:nowrap;
+@media (min-width:1000px){
+  .nav > .wrap{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    align-items:center;
+    column-gap:1rem;
+    padding-block:.85rem;
+  }
+  .nav > .wrap > .brand{justify-self:start}
+  .nav > .wrap > nav[aria-label="Primary"]{justify-self:center}
+  .nav > .wrap > .navtools{justify-self:end}
 }
+
+/* Desktop-only tool items (Sign in, Browse) — don't use gtec .hide-sm,
+   which becomes display:block and breaks alignment. */
+.hide-md-nav{display:none !important}
+@media (min-width:1000px){
+  .hide-md-nav{display:inline-flex !important}
+}
+
+.navtools{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.5rem;
+  flex-wrap:nowrap;
+  flex:none;
+}
+@media (min-width:640px){
+  .navtools{gap:.65rem}
+}
+@media (min-width:1000px){
+  .navtools{gap:.75rem}
+}
+@media (min-width:1200px){
+  .navtools{gap:.85rem}
+}
+
 .navtools .navcall,
 .navtools .cur-nav,
 .navtools .navlink,
 .navtools .cart-btn,
 .navtools .btn,
 .navtools .burger{
-  display:inline-flex;
   align-items:center;
   justify-content:center;
   height:40px;
@@ -304,14 +343,29 @@
   line-height:1;
   vertical-align:middle;
 }
+.navtools .navlink,
+.navtools .cart-btn,
+.navtools .btn,
+.navtools .burger{
+  display:inline-flex;
+}
 .navtools .navlink{
   padding:0 .15rem;
   position:relative;
 }
 .navtools .cur-nav{
-  max-width:104px;
+  display:none; /* phone: currency lives in the drawer */
+  max-width:96px;
   padding-top:0;
   padding-bottom:0;
+  padding-inline:.7rem 1.7rem;
+  background-position:right .65rem center;
+}
+@media (min-width:640px){
+  .navtools .cur-nav{display:inline-flex}
+}
+@media (min-width:1000px){
+  .navtools .cur-nav{max-width:104px}
 }
 .navtools .btn-sm{
   height:40px;
@@ -322,14 +376,49 @@
   width:40px;
   padding:0;
 }
-@media (min-width:640px){
-  /* beat gtec .hide-sm { display:block } so Sign in + Browse stay inline-flex */
-  .navtools .hide-sm{display:inline-flex}
-}
-@media (min-width:1000px){
-  .navtools .navcall{display:inline-flex}
+.navtools .burger{
+  width:40px;
+  height:40px;
 }
 
+/* Phone: icon-only until there's room for the digits */
+.navtools .navcall{display:none; gap:.4rem; max-width:100%}
+.navtools .navcall-text{white-space:nowrap}
+@media (min-width:1000px){
+  .navtools .navcall{display:inline-flex}
+  .navtools .navcall-text{display:none} /* icon only — saves space beside tools */
+}
+@media (min-width:1180px){
+  .navtools .navcall-text{display:inline}
+}
+
+/* Mobile drawer extras */
+.mnav-tools{display:grid;gap:.45rem}
+.mnav-tools .cur-label{
+  font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-500);
+}
+.mnav-tools .cur-mnav{
+  width:100%;max-width:none;min-height:44px;
+}
+@media (min-width:1000px){
+  .mnav-tools{display:none}
+}
+
+/* Announce bar shouldn't overflow on narrow screens */
+.announce .wrap{
+  gap:.5rem;
+}
+.announce p{
+  min-width:0;
+  line-height:1.35;
+}
+
+/* Cart drawer: full-bleed on phones */
+@media (max-width:480px){
+  .cart-drawer{width:100vw}
+}
+
+/* ══════════════ CART BUTTON / BADGE ══════════════ */
 .cart-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;
   width:40px;height:40px;border-radius:12px;border:1.5px solid var(--line);background:#fff;
   color:var(--navy-700);cursor:pointer;flex:none;
