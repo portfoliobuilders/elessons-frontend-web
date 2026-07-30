@@ -51,7 +51,7 @@
 
 /* CTA-safe red for text-bearing buttons and small red text on this page only.
    --red #EF4444 on white is 3.76:1 and fails AA; --red-cta #D32F2F is 4.98:1.
-   Flag: --red as small text on white fails site-wide, not just here. */
+   Homepage + shared gtec.css now use --red-cta for buttons and small text. */
 :root{ --red-cta:#D32F2F; }
 .btn-red{background:var(--red-cta);border-color:var(--red-cta)}
 .eyebrow{color:var(--red-cta)}

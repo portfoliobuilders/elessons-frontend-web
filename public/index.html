@@ -21,7 +21,6 @@
 <meta property="og:url" content="https://elessons.net/">
 <meta property="og:title" content="Traditional chalk-board class, from the comfort of your home">
 <meta property="og:description" content="CBSE / NCERT live and recorded lessons with written notes for grades 8 to 12. From &#8377;12,000 for the full academic year.">
-<!-- TODO: upload a 1200x630 cover to this path -->
 <meta property="og:image" content="https://elessons.net/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -55,7 +54,8 @@
   --navy-700:#0A3170;  --navy-600:#1552A0;
   --slate-800:#1E293B; --slate-700:#334155; --slate-500:#64748B;
   --slate-400:#94A3B8; --slate-300:#CBD5E1; --slate-200:#E2E8F0; --slate-50:#F8FAFC;
-  --red:#EF4444;       --gold:#FBC63F;
+  --red:#EF4444;       --red-cta:#D32F2F; /* AA white-on-red */
+  --gold:#FBC63F;
   --sci:#1B6A47;       --com:#5B3E96;       /* _SubjectCard bannerColor */
   --ink:var(--navy-900); --slate:var(--slate-500); --line:var(--slate-200);
   --paper:#FFFFFF;     --mist:var(--slate-50);  --navy:var(--navy-700);
@@ -105,10 +105,10 @@ h1,h2,h3,h4,p{margin:0}
   height:54px;padding-inline:2rem;border-radius:999px;border:1.5px solid transparent;
   font-weight:700;font-size:1rem;letter-spacing:-.01em;cursor:pointer;white-space:nowrap;
   transition:all .25s cubic-bezier(.4,0,.2,1)}
-.btn-red{background:var(--red);color:#fff;box-shadow:0 8px 22px -8px rgba(239,68,68,.7)}
-.btn-red:hover{background:#DC2626;transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(239,68,68,.85)}
+.btn-red{background:var(--red-cta);color:#fff;box-shadow:0 8px 22px -8px rgba(211,47,47,.7)}
+.btn-red:hover{background:#B71C1C;transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(211,47,47,.85)}
 .btn-red:active{transform:translateY(0)}
-.btn-red:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:6px}
+.btn-red:focus-visible{outline:3px solid var(--red-cta);outline-offset:3px;border-radius:6px}
 .btn-outline{border:1.5px solid rgba(255,255,255,.3);color:#fff;background:transparent}
 .btn-outline:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.08)}
 .btn-navy{background:var(--navy-700);color:#fff;box-shadow:0 8px 22px -10px rgba(10,49,112,.75)}
@@ -132,7 +132,7 @@ h1,h2,h3,h4,p{margin:0}
 /* ══════════════ FORMS (v4: WCAG compliant) ══════════════ */
 .form-group{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
 .form-label{font-weight:700;font-size:.95rem;color:var(--ink)}
-.required{color:var(--red);font-weight:800;margin-left:.25rem}
+.required{color:var(--red-cta);font-weight:800;margin-left:.25rem}
 .form-hint{font-size:.75rem;color:var(--slate);font-style:italic}
 input[type="text"],input[type="email"],input[type="tel"],textarea{
   padding:.875rem 1rem;border:1.5px solid var(--line);border-radius:10px;
@@ -218,7 +218,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .hero .btn{height:58px;padding-inline:clamp(1.5rem,3.4vw,2.15rem);font-size:1.02rem}
 .hero .btn-red{background:linear-gradient(180deg,#F35C5C 0%,#DC2626 100%);
   box-shadow:0 10px 30px -10px rgba(220,38,38,.78),inset 0 1px 0 rgba(255,255,255,.28)}
-.hero .btn-red:hover{background:linear-gradient(180deg,#EF4444 0%,#C81E1E 100%);
+.hero .btn-red:hover{background:linear-gradient(180deg,#D32F2F 0%,#B71C1C 100%);
   box-shadow:0 18px 40px -12px rgba(220,38,38,.9),inset 0 1px 0 rgba(255,255,255,.34)}
 .hero .btn-ghost-light{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.09);
   -webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%)}
@@ -329,7 +329,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 
 /* ══════════════ TABS / QUOTES ══════════════ */
 .tab{padding:.6rem .1rem;font-size:.92rem;font-weight:700;color:var(--slate);border-bottom:2.5px solid transparent;cursor:pointer}
-.tab[aria-selected="true"]{color:var(--navy-700);border-bottom-color:var(--red)}
+.tab[aria-selected="true"]{color:var(--navy-700);border-bottom-color:var(--red-cta)}
 .qmark{font-family:"Instrument Serif",Georgia,serif;font-size:4rem;line-height:.55;color:var(--gold)}
 .avatar-img{padding:0;background:none;border:none;overflow:hidden}
 .avatar-img svg{display:block;width:100%;height:100%}
@@ -372,7 +372,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .mode{display:inline-flex;align-items:center;gap:.4rem;font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.55rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   border:1px solid var(--line);border-radius:999px;padding:.24rem .6rem;color:var(--slate-700)}
-.mode-live{border-color:rgba(239,68,68,.4);color:var(--red)}
+.mode-live{border-color:rgba(211,47,47,.4);color:var(--red-cta)}
 .dot-live{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
 @media (prefers-reduced-motion:no-preference){
   .dot-live{animation:livepulse 2.2s ease-in-out infinite}
@@ -409,7 +409,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .faq summary{list-style:none;cursor:pointer;padding:1.2rem 3rem 1.2rem 1.4rem;position:relative;font-weight:700;font-size:1rem}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";position:absolute;right:1.35rem;top:50%;transform:translateY(-50%);
-  font-family:"JetBrains Mono",monospace;color:var(--red);font-size:1.3rem}
+  font-family:"JetBrains Mono",monospace;color:var(--red-cta);font-size:1.3rem}
 .faq[open]{border-color:var(--navy-700)}
 .faq[open] summary::after{content:"−"}
 .faq .body{padding:0 1.4rem 1.3rem;color:var(--slate);font-size:.95rem;max-width:66ch}
@@ -558,7 +558,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 <div class="announce" id="announce">
   <div class="wrap flex center between g2 wrapf" style="padding-block:.6rem;font-size:.82rem">
     <p style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <span class="mono" style="background:var(--red);color:#fff;font-size:.62rem;padding:.18rem .55rem;border-radius:999px">New</span>
+      <span class="mono" style="background:var(--red-cta);color:#fff;font-size:.62rem;padding:.18rem .55rem;border-radius:999px">New</span>
       Academic year 2025&ndash;26 enrolment is open &mdash; 50% off with coupon at checkout.
     </p>
     <button id="announce-x" aria-label="Dismiss" style="cursor:pointer;opacity:.8;font-size:1.1rem;line-height:1">&times;</button>
@@ -668,7 +668,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
   <div class="wrap">
     <div class="flex between center wrapf g3">
       <div>
-        <p class="eyebrow" style="color:var(--red)">How it works</p>
+        <p class="eyebrow" style="color:var(--red-cta)">How it works</p>
         <h2 class="dsp h2 mt2 maxw-sm">Three steps, then the whole year is yours.</h2>
       </div>
       <a href="#demo" class="btn btn-ghost-dark btn-sm">See a sample lesson</a>
@@ -714,7 +714,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 <!-- ══ 06 DEMO / PROOF ══ -->
 <section id="demo" class="sec" style="background:var(--mist)">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--red)">Proof, not promises</p>
+    <p class="eyebrow" style="color:var(--red-cta)">Proof, not promises</p>
     <h2 class="dsp h2 mt2 maxw-sm">See a class before you pay a rupee.</h2>
 
     <div class="rv mt5">
@@ -766,7 +766,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
   <div class="wrap">
     <div class="flex between center wrapf g3">
       <div>
-        <p class="eyebrow" style="color:var(--red)">Classes</p>
+        <p class="eyebrow" style="color:var(--red-cta)">Classes</p>
         <h2 class="dsp h2 mt2">Take one subject, or take them all.</h2>
       </div>
       <p class="lead maxw-xs" style="font-size:.94rem">Buy a single subject or the full-year bundle. Either way you get live classes and recorded lessons for the whole academic year.</p>
@@ -1161,7 +1161,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 <!-- ══ 09 WHY ══ -->
 <section class="sec" id="why">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--red)">Why parents choose us</p>
+    <p class="eyebrow" style="color:var(--red-cta)">Why parents choose us</p>
     <h2 class="dsp h2 mt2 maxw-sm">Six reasons, in plain language.</h2>
 
     <div class="grid cols3 g2 mt5">
@@ -1198,7 +1198,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 <!-- ══ 12 TESTIMONIALS ══ -->
 <section class="sec" id="reviews" style="background:var(--mist)">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--red)">In their words</p>
+    <p class="eyebrow" style="color:var(--red-cta)">In their words</p>
     <h2 class="dsp h2 mt2">Students, parents, and teachers.</h2>
 
     <div class="flex g4 mt4" style="border-bottom:1px solid var(--line)" role="tablist">
@@ -1412,7 +1412,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
   <div class="wrap">
     <div class="flex between center wrapf g3">
       <div>
-        <p class="eyebrow" style="color:var(--red)">Questions</p>
+        <p class="eyebrow" style="color:var(--red-cta)">Questions</p>
         <h2 class="dsp h2 mt2">Before you buy.</h2>
       </div>
       <p class="lead maxw-xs" style="font-size:.94rem">Still unsure? Message us on WhatsApp and a real person will answer.</p>
@@ -1451,7 +1451,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 <section class="sec" id="contact">
   <div class="wrap grid cols2 g4">
     <div>
-      <p class="eyebrow" style="color:var(--red)">Contact</p>
+      <p class="eyebrow" style="color:var(--red-cta)">Contact</p>
       <h2 class="dsp h2 mt2">Get in touch.</h2>
 
       <div class="card mt4" style="border-radius:18px">
@@ -1580,14 +1580,21 @@ document.querySelectorAll('.filter').forEach(function(f){
   });
 })();
 
-if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches){
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
-  },{threshold:.12});
-  document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%4*90)+'ms';io.observe(el)});
-} else {
-  document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')});
-}
+(function(){
+  /* [HARDENED] unguarded matchMedia/IO used to blank the page (opacity:0 .rv) */
+  var animate = false;
+  try { animate = window.matchMedia('(prefers-reduced-motion: no-preference)').matches; }
+  catch (e) { animate = false; }
+  var nodes = document.querySelectorAll('.rv');
+  if (animate && typeof IntersectionObserver === 'function') {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: .12 });
+    nodes.forEach(function(el,i){ el.style.transitionDelay = (i%4*90)+'ms'; io.observe(el); });
+  } else {
+    nodes.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
 </script>
 
 <script>

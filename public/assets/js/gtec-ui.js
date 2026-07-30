@@ -143,7 +143,14 @@ document.querySelectorAll('[role="tablist"]').forEach(gtecInitTablist);
 
   var start = 'inr|IN';
   try {
-    if (GULF_TZ.indexOf(Intl.DateTimeFormat().resolvedOptions().timeZone) > -1) start = 'aed|AE';
+    var preset = document.documentElement.getAttribute('data-currency');
+    var fromUrl = null;
+    try { fromUrl = new URLSearchParams(location.search).get('currency'); } catch (e2) {}
+    var prefer = (fromUrl === 'aed' || fromUrl === 'inr') ? fromUrl
+               : (preset === 'aed' || preset === 'inr') ? preset : null;
+    if (prefer === 'aed') start = 'aed|AE';
+    else if (prefer === 'inr') start = 'inr|IN';
+    else if (GULF_TZ.indexOf(Intl.DateTimeFormat().resolvedOptions().timeZone) > -1) start = 'aed|AE';
   } catch (e) {}
   sync(start);
 })();

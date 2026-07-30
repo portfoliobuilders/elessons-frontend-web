@@ -1,0 +1,181 @@
+/* ==========================================================================
+   G-TEC eLessons — checkout (WhatsApp handoff)
+   Reads the same localStorage cart as course-detail. Card/Razorpay payment
+   can replace the WA CTA later without changing the cart format.
+   LOAD: course-data.js → checkout.js → gtec-ui.js
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var CART_KEY = 'elessons_cart_v1';
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function cur() {
+    var q = new URLSearchParams(location.search).get('currency');
+    if (q === 'aed' || q === 'inr') return q;
+    return document.documentElement.getAttribute('data-currency') || 'inr';
+  }
+  function track(event, params) {
+    var p = params || {};
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: event }, p));
+    if (typeof window.gtag === 'function') window.gtag('event', event, p);
+  }
+  function loadCart() {
+    try { return JSON.parse(localStorage.getItem(CART_KEY) || '{"items":[]}'); }
+    catch (e) { return { items: [] }; }
+  }
+  function saveCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
+  function moneyLabel(price, currency) {
+    var n = (price && price[currency]) || 0;
+    return currency === 'aed' ? ('AED ' + n.toLocaleString('en-AE')) : ('₹' + n.toLocaleString('en-IN'));
+  }
+  function cartTotal(cart) {
+    return cart.items.reduce(function (t, it) {
+      return {
+        inr: t.inr + ((it.price && it.price.inr) || 0),
+        aed: t.aed + ((it.price && it.price.aed) || 0)
+      };
+    }, { inr: 0, aed: 0 });
+  }
+  function buildMessage(cart, currency, parentName, phone) {
+    var lines = [
+      "Hi GTEC Team, I'd like to complete my eLessons enrolment.",
+      ''
+    ];
+    if (parentName) lines.push('Parent / guardian: ' + parentName);
+    if (phone) lines.push('Phone: ' + phone);
+    if (parentName || phone) lines.push('');
+    lines.push('Order (' + currency.toUpperCase() + '):');
+    cart.items.forEach(function (it, i) {
+      lines.push((i + 1) + '. ' + it.title +
+        (it.subtitle ? ' — ' + it.subtitle : '') +
+        ' · ' + moneyLabel(it.price, currency));
+    });
+    var tot = cartTotal(cart);
+    lines.push('');
+    lines.push('Total: ' + moneyLabel(tot, currency));
+    lines.push('');
+    lines.push('Please confirm availability and share payment instructions.');
+    return lines.join('\n');
+  }
+
+  function paint() {
+    var cart = loadCart();
+    var currency = cur();
+    document.documentElement.setAttribute('data-currency', currency);
+
+    var empty = $('co-empty');
+    var form = $('co-form');
+    var list = $('co-items');
+    var totalEl = $('co-total');
+    var note = $('co-currency-note');
+
+    if (!cart.items.length) {
+      if (empty) empty.hidden = false;
+      if (form) form.hidden = true;
+      return;
+    }
+    if (empty) empty.hidden = true;
+    if (form) form.hidden = false;
+
+    list.innerHTML = cart.items.map(function (it) {
+      return '<li class="co-item">' +
+        '<div><p class="co-item-title">' + esc(it.title) + '</p>' +
+        (it.subtitle ? '<p class="note-sm">' + esc(it.subtitle) + '</p>' : '') +
+        '</div>' +
+        '<div class="co-item-side">' +
+        '<span class="price" data-inr="' + esc(moneyLabel(it.price, 'inr')) +
+        '" data-aed="' + esc(moneyLabel(it.price, 'aed')) + '">' +
+        esc(moneyLabel(it.price, currency)) + '</span>' +
+        '<button type="button" class="co-remove" data-remove="' + esc(it.id) +
+        '" aria-label="Remove ' + esc(it.title) + '">Remove</button>' +
+        '</div></li>';
+    }).join('');
+
+    var tot = cartTotal(cart);
+    if (totalEl) {
+      totalEl.dataset.inr = moneyLabel(tot, 'inr');
+      totalEl.dataset.aed = moneyLabel(tot, 'aed');
+      totalEl.textContent = moneyLabel(tot, currency);
+    }
+    if (note) {
+      note.textContent = currency === 'aed'
+        ? 'Gulf pricing — your counsellor will confirm AED payment.'
+        : 'India pricing — your counsellor will confirm INR payment.';
+    }
+
+    list.querySelectorAll('[data-remove]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var next = loadCart();
+        next.items = next.items.filter(function (it) { return it.id !== btn.dataset.remove; });
+        saveCart(next);
+        track('remove_from_cart', { item_id: btn.dataset.remove });
+        paint();
+      });
+    });
+
+    syncWa();
+  }
+
+  function syncWa() {
+    var cart = loadCart();
+    var currency = cur();
+    var name = ($('co-name') && $('co-name').value.trim()) || '';
+    var phone = ($('co-phone') && $('co-phone').value.trim()) || '';
+    var msg = buildMessage(cart, currency, name, phone);
+    var href = (typeof elWhatsAppHref === 'function')
+      ? elWhatsAppHref(msg, currency)
+      : ('https://wa.me/' + ELESSONS.whatsapp + '?text=' + encodeURIComponent(msg));
+    var cta = $('co-wa');
+    if (cta) {
+      cta.href = href;
+      cta.rel = 'noopener';
+      cta.target = '_blank';
+    }
+  }
+
+  function bind() {
+    ['co-name', 'co-phone'].forEach(function (id) {
+      var el = $(id);
+      if (el) el.addEventListener('input', syncWa);
+    });
+    var cta = $('co-wa');
+    if (cta) {
+      cta.addEventListener('click', function () {
+        var cart = loadCart();
+        if (!cart.items.length) return;
+        var tot = cartTotal(cart);
+        track('begin_checkout', {
+          value: tot[cur()], currency: cur().toUpperCase(),
+          items: cart.items.map(function (it) { return it.id; }),
+          method: 'whatsapp'
+        });
+        track('whatsapp_lead', { context: 'checkout', currency: cur() });
+      });
+    }
+    document.querySelectorAll('.cur-select').forEach(function (sel) {
+      sel.addEventListener('change', function () {
+        /* gtec-ui updates data-currency; keep URL + WA in sync */
+        setTimeout(function () {
+          var c = document.documentElement.getAttribute('data-currency') || 'inr';
+          var u = new URL(location.href);
+          u.searchParams.set('currency', c);
+          history.replaceState(null, '', u.pathname + u.search);
+          paint();
+        }, 0);
+      });
+    });
+  }
+
+  paint();
+  bind();
+  track('page_view', { page: 'checkout', currency: cur(), items: loadCart().items.length });
+})();

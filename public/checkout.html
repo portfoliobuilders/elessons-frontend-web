@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Checkout | G-TEC eLessons.net</title>
+<meta name="description" content="Review your eLessons cart and complete enrolment with the G-TEC team.">
+<meta name="theme-color" content="#00133C">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://elessons.net/checkout">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="G-TEC eLessons.net">
+<meta property="og:title" content="Checkout | G-TEC eLessons.net">
+<meta property="og:image" content="https://elessons.net/og-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/gtec.css?v=34">
+<link rel="stylesheet" href="/assets/css/detail.css?v=34">
+<style>
+  .co-wrap{max-width:720px;margin:0 auto;padding:clamp(1.5rem,4vw,2.5rem) var(--gutter) 5rem}
+  .co-item{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;
+    padding:1rem 0;border-bottom:1px solid var(--line)}
+  .co-item-title{font-weight:700;color:var(--navy-900)}
+  .co-item-side{text-align:right;display:grid;gap:.35rem;justify-items:end}
+  .co-remove{font:inherit;font-size:.75rem;font-weight:700;color:var(--red-cta);background:none;border:0;cursor:pointer;padding:0}
+  .co-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:1.25rem}
+  .co-total-row .price{font-size:1.5rem;font-weight:800;color:var(--navy-900)}
+  .co-card{border:1.5px solid var(--line);border-radius:16px;padding:1.25rem 1.35rem;background:#fff}
+  .co-empty{text-align:center;padding:3rem 1rem}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+
+<a href="#main" class="btn btn-navy btn-sm" style="position:absolute;left:-9999px;top:.5rem;z-index:100"
+   onfocus="this.style.left='.5rem'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<header class="nav" id="sitenav">
+  <div class="wrap flex center between" style="height:var(--nav-h)">
+    <a href="/index.html" class="brand" aria-label="G-TEC eLessons home">
+      <img src="/assets/img/el-logo.webp" alt="G-TEC eLessons.net" width="160" height="40">
+    </a>
+    <div class="flex center g2">
+      <label class="sr-only" for="cur-nav">Currency</label>
+      <select id="cur-nav" class="cur-select" aria-label="Currency">
+        <option value="inr|IN">₹ INR</option>
+        <option value="aed|AE">AED</option>
+      </select>
+      <a href="/course-detail.html" class="btn btn-ghost-dark btn-sm">Continue shopping</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="co-wrap">
+  <p class="eyebrow" style="color:var(--red-cta)">Checkout</p>
+  <h1 class="dsp h2 mt2" style="font-size:clamp(1.75rem,3vw,2.4rem)">Complete your enrolment</h1>
+  <span class="gold-rule" aria-hidden="true"></span>
+  <p class="lead mt2" style="max-width:42ch">Review your cart, leave a contact number, and send the order to our team on WhatsApp. Card checkout will replace this step when payment is live.</p>
+
+  <div class="co-empty" id="co-empty" hidden>
+    <p class="h3">Your cart is empty</p>
+    <p class="note-sm mt2">Add a package, subject, or modules from a course page.</p>
+    <a href="/course-detail.html?grade=9&plan=full" class="btn btn-navy btn-sm mt3">Browse Grade 9</a>
+  </div>
+
+  <div id="co-form">
+    <section class="co-card mt3" aria-labelledby="co-order-heading">
+      <h2 class="h3" id="co-order-heading">Your order</h2>
+      <ul class="mt2" id="co-items" style="list-style:none;margin:0;padding:0"></ul>
+      <div class="co-total-row">
+        <span class="note-sm" id="co-currency-note">India pricing</span>
+        <span class="price" id="co-total">₹0</span>
+      </div>
+    </section>
+
+    <section class="co-card mt3" aria-labelledby="co-contact-heading">
+      <h2 class="h3" id="co-contact-heading">Contact</h2>
+      <p class="note-sm mt1">So we can call you back if WhatsApp is quiet.</p>
+      <div class="form-group mt3">
+        <label class="form-label" for="co-name">Parent / guardian name</label>
+        <input type="text" id="co-name" name="name" autocomplete="name" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="co-phone">Mobile number <span class="required" aria-hidden="true">*</span></label>
+        <input type="tel" id="co-phone" name="tel" autocomplete="tel" placeholder="+91 or +971…" required>
+      </div>
+    </section>
+
+    <a class="btn btn-red btn-block mt3" id="co-wa" href="#">Send order on WhatsApp</a>
+    <p class="note-sm mt2" style="text-align:center">Opens WhatsApp with your order details. Gulf shoppers (AED) reach our UAE line; India shoppers reach admissions in India.</p>
+  </div>
+</main>
+
+<footer style="background:var(--navy-900);color:rgba(255,255,255,.72)">
+  <div class="wrap flex between center wrapf g2" style="padding-block:2rem;font-size:.85rem">
+    <p>&copy; 2026 G-TEC eLessons.net</p>
+    <a href="/index.html">Back to home</a>
+  </div>
+</footer>
+
+<script src="/assets/js/course-data.js?v=34"></script>
+<script src="/assets/js/checkout.js?v=34"></script>
+<script src="/assets/js/gtec-ui.js?v=34"></script>
+</body>
+</html>
