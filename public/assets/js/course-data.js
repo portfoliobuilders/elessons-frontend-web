@@ -159,6 +159,14 @@ const STREAM_META = {
 
 
 
+/* ---------- REGISTERS BY GRADE ----------
+   Only Grade 9 has a published class list. Every register helper takes a grade
+   so a Grade 8 page can never silently display Grade 9's syllabus — add
+   REGISTER_8 etc. here and the pages pick them up with no other change. */
+const REGISTERS = { 9: REGISTER_9 };
+function registerFor(grade) { return REGISTERS[grade] || null; }
+function hasRegister(grade) { return !!REGISTERS[grade]; }
+
 /* ---------- HELPERS ---------- */
 function lessonTitle(l)  { return typeof l === 'string' ? l : l.t; }
 function lessonStatus(l) { return typeof l === 'string' ? 'ok' : (l.s || 'ok'); }
@@ -167,22 +175,45 @@ function lessonStatus(l) { return typeof l === 'string' ? 'ok' : (l.s || 'ok'); 
 function publishedLessons(ch) {
   return (ch.v || []).filter(function (l) { return lessonStatus(l) !== 'rejected'; });
 }
-function streamCount(key, opts) {
-  return (REGISTER_9[key] || []).reduce(function (n, ch) {
+function streamChapters(grade, key) {
+  var R = registerFor(grade);
+  return (R && R[key]) || [];
+}
+function streamCount(grade, key, opts) {
+  return streamChapters(grade, key).reduce(function (n, ch) {
     return n + (opts && opts.includeRejected ? (ch.v || []).length : publishedLessons(ch).length);
   }, 0);
 }
-function registerTotal(opts) {
-  return Object.keys(REGISTER_9).reduce(function (n, k) { return n + streamCount(k, opts); }, 0);
+function registerStreams(grade) {
+  var R = registerFor(grade);
+  return R ? Object.keys(R) : [];
 }
-function chapterTotal() {
-  return Object.keys(REGISTER_9).reduce(function (n, k) { return n + REGISTER_9[k].length; }, 0);
+function registerTotal(grade, opts) {
+  return registerStreams(grade).reduce(function (n, k) { return n + streamCount(grade, k, opts); }, 0);
+}
+function chapterTotal(grade) {
+  return registerStreams(grade).reduce(function (n, k) { return n + streamChapters(grade, k).length; }, 0);
 }
 function streamsForSubject(subject) {
   return Object.keys(STREAM_META).filter(function (k) { return STREAM_META[k].parent === subject; });
 }
 function subjectsForGrade(grade) {
   return SUBJECT_ORDER.filter(function (s) { return PRICING[grade] && PRICING[grade].subjects[s]; });
+}
+
+/* Streams a given plan actually unlocks — a Science purchase must not be
+   described using the whole catalog's lesson count. */
+function streamsForPlan(grade, plan, subject) {
+  var all = registerStreams(grade);
+  if (plan !== 'subject') return all;
+  var mine = streamsForSubject(subject);
+  return all.filter(function (k) { return mine.indexOf(k) > -1; });
+}
+function planLessonCount(grade, plan, subject) {
+  return streamsForPlan(grade, plan, subject).reduce(function (n, k) { return n + streamCount(grade, k); }, 0);
+}
+function planChapterCount(grade, plan, subject) {
+  return streamsForPlan(grade, plan, subject).reduce(function (n, k) { return n + streamChapters(grade, k).length; }, 0);
 }
 
 /* Returns { inr, aed } so a price element can carry BOTH authored figures,
