@@ -138,6 +138,28 @@
   color:var(--slate-500)}
 
 /* ══════════════ MISC ══════════════ */
+
+/* NOTE: .price-note is RESERVED by gtec-ui.js — the currency switcher rewrites
+   the text of every .price-note on the page. Use .note-sm for any caption of
+   your own, or it will be silently replaced with the currency line. */
+.note-sm{font-size:.75rem;color:var(--slate-500);line-height:1.55}
+.buy-unit{font-size:.78rem;color:var(--slate-500);margin-top:.5rem}
+.upsell{font-size:.82rem;color:var(--slate-700);background:var(--mist);border:1px solid var(--line);
+  border-radius:14px;padding:.75rem 1rem;max-width:74ch}
+.upsell a{color:var(--navy-700);font-weight:700;text-decoration:underline}
+
+/* The Full package panel holds exactly one card; a 3-column grid left it
+   stranded at a third width against dead space. Give it presence instead. */
+.tier-solo{grid-template-columns:minmax(0,1fr);max-width:760px}
+@media (min-width:860px){
+  .tier-solo .tier{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+    gap:.4rem 2rem;align-items:start;padding:1.9rem 1.8rem}
+  .tier-solo .tier>.mono,.tier-solo .tier>.h3,.tier-solo .tier>.tier-price,
+  .tier-solo .tier>p:not(.tier-price){grid-column:1}
+  .tier-solo .tier>.tier-inc{grid-column:2;grid-row:1 / span 5;align-self:center}
+  .tier-solo .tier>.tier-foot{grid-column:1;max-width:280px}
+}
+
 .feat{display:flex;gap:.9rem;align-items:flex-start}
 .feat-ico{width:42px;height:42px;border-radius:13px;flex:none;display:flex;align-items:center;
   justify-content:center;background:var(--mist);color:var(--navy-700);border:1px solid var(--line)}

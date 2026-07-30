@@ -29,8 +29,12 @@ document.querySelectorAll('.filter').forEach(function(f){
   };
 });
 
-/* [SCOPED] run the original logic once per tablist instead of once per page */
-document.querySelectorAll('[role="tablist"]').forEach(function(LIST){
+/* [SCOPED] run the original logic once per tablist instead of once per page.
+   [RE-INIT] exposed as window.gtecInitTablist so a tablist whose buttons are
+   re-rendered can be re-bound; without it, replacing innerHTML silently drops
+   the click and arrow-key handlers. Each tab is stamped so re-running on
+   untouched nodes cannot double-bind. */
+function gtecInitTablist(LIST){
   var tabs = [].slice.call(LIST.querySelectorAll('.tab'));
   if (!tabs.length) return;
 
@@ -50,6 +54,8 @@ document.querySelectorAll('[role="tablist"]').forEach(function(LIST){
   }
 
   tabs.forEach(function(t, i){
+    if (t.dataset.tabBound === '1') return;
+    t.dataset.tabBound = '1';
     var pid = t.dataset.panel, panel = document.getElementById(pid);
     t.id = 'tab-' + pid;
     t.setAttribute('aria-controls', pid);
@@ -66,7 +72,9 @@ document.querySelectorAll('[role="tablist"]').forEach(function(LIST){
       select((i + d + tabs.length) % tabs.length, true);
     });
   });
-});
+}
+window.gtecInitTablist = gtecInitTablist;
+document.querySelectorAll('[role="tablist"]').forEach(gtecInitTablist);
 
 /* [HARDENED] Originally this called window.matchMedia(...) and constructed an
    IntersectionObserver unguarded. If either API is missing the throw killed

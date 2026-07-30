@@ -95,8 +95,19 @@
         : 'Maths, Science and English together for grade ' + S.grade +
           ' \u2014 every lesson and every notes file, unlocked on day one.';
 
-    $('fact-lessons').innerHTML = '<strong>' + registerTotal() + '</strong> video lessons';
-    $('fact-chapters').innerHTML = '<strong>' + chapterTotal() + '</strong> chapters';
+    /* Counts must describe THIS purchase, not the whole catalog, and must not
+       borrow another grade's syllabus. */
+    var lc = $('fact-lessons'), cc = $('fact-chapters');
+    if (hasRegister(S.grade)) {
+      var n = planLessonCount(S.grade, S.plan, S.subject);
+      var c = planChapterCount(S.grade, S.plan, S.subject);
+      lc.hidden = cc.hidden = false;
+      lc.innerHTML = '<strong>' + n + '</strong> video lesson' + (n === 1 ? '' : 's');
+      cc.innerHTML = '<strong>' + c + '</strong> chapter' + (c === 1 ? '' : 's');
+    } else {
+      lc.hidden = cc.hidden = true;
+      lc.textContent = cc.textContent = '';
+    }
   }
 
   /* ══════════════ PRICE / BUY PANEL ══════════════ */
@@ -197,7 +208,9 @@
       on: S.plan === 'full', colour: 'var(--navy-600)', kicker: 'Best value \u00b7 all subjects',
       title: 'Grade ' + g + ' Annual Package', price: priceAttrs(fp),
       note: 'Save ' + fmtMoney(mrp.inr - fp.inr, 'inr') + ' against buying separately',
-      inc: ['Maths, Science and English in full', registerTotal() + ' video lessons across ' + chapterTotal() + ' chapters',
+      inc: ['Maths, Science and English in full',
+            hasRegister(g) ? registerTotal(g) + ' video lessons across ' + chapterTotal(g) + ' chapters'
+                           : 'Every chapter of the CBSE / NCERT syllabus',
             'Downloadable PDF notes for every chapter', 'Full academic year of LMS access',
             S.mode === 'live' ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
       cta: 'Choose this package', choose: 'full'
@@ -206,13 +219,13 @@
     /* By subject */
     $('tier-subject').innerHTML = subjectsForGrade(g).map(function (sub) {
       var m = SUBJECT_META[sub], p = planPrice(g, 'subject', S.mode, sub);
-      var streams = streamsForSubject(sub);
-      var count = streams.reduce(function (n, k) { return n + streamCount(k); }, 0);
+      var count = planLessonCount(g, 'subject', sub);
       return tierCard({
         on: S.plan === 'subject' && S.subject === sub, colour: m.colour,
         kicker: 'Grade ' + g + ' \u00b7 single subject', title: m.name, price: priceAttrs(p),
         note: 'This subject \u00b7 full academic year',
-        inc: [m.tag, count + ' video lessons', 'PDF notes for every chapter',
+        inc: [m.tag, hasRegister(g) ? count + ' video lessons' : 'Every chapter of this subject',
+              'PDF notes for every chapter',
               S.mode === 'live' ? 'Live doubt-clearing included' : 'Recorded lessons, replay anytime'],
         cta: 'Choose ' + m.name, choose: 'subject:' + sub
       });
@@ -224,8 +237,8 @@
       'Each module is <span class="price" data-inr="' + priceAttrs(mp).inr +
       '" data-aed="' + priceAttrs(mp).aed + '">' + priceAttrs(mp).inr + '</span>.';
 
-    $('tier-module-list').innerHTML = Object.keys(STREAM_META).map(function (k) {
-      var meta = STREAM_META[k], chs = REGISTER_9[k] || [];
+    $('tier-module-list').innerHTML = registerStreams(g).map(function (k) {
+      var meta = STREAM_META[k], chs = streamChapters(g, k);
       if (!chs.length) return '';
       return '<details class="mod-sub">' +
         '<summary><span>' + esc(meta.label) + '</span>' +
@@ -244,7 +257,7 @@
         var v = b.dataset.choose.split(':');
         S.plan = v[0];
         if (v[1]) S.subject = v[1];
-        paintHero(); paintPrice(); paintTiers();
+        paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated(); syncControls();
         track('plan_select', { plan: S.plan, subject: S.subject, mode: S.mode, grade: S.grade });
         $('buy-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
@@ -266,17 +279,59 @@
   }
 
   /* ══════════════ VIDEO REGISTER ══════════════ */
-  var stream = 'maths', query = '';
+  var stream = null, query = '';
+
+  function planStreams() { return streamsForPlan(S.grade, S.plan, S.subject); }
 
   function paintStreamTabs() {
-    $('stream-tabs').innerHTML = Object.keys(STREAM_META).map(function (k) {
+    var keys = planStreams();
+    if (keys.indexOf(stream) === -1) stream = keys[0] || null;
+    $('stream-tabs').hidden = keys.length < 2;
+    $('stream-tabs').innerHTML = keys.map(function (k) {
       return '<button class="tab" role="tab" data-stream="' + k + '" aria-selected="' + (k === stream) + '">' +
-        esc(STREAM_META[k].label) + '<small>' + streamCount(k) + ' lessons</small></button>';
+        esc(STREAM_META[k].label) + '<small>' + streamCount(S.grade, k) + ' lessons</small></button>';
     }).join('');
+
+    /* When only one subject is being bought, say what the full package adds
+       rather than silently hiding the rest of the catalog. */
+    var up = $('register-upsell');
+    var hidden = registerStreams(S.grade).filter(function (k) { return keys.indexOf(k) === -1; });
+    if (S.plan === 'subject' && hidden.length && hasRegister(S.grade)) {
+      var extra = hidden.reduce(function (n, k) { return n + streamCount(S.grade, k); }, 0);
+      up.hidden = false;
+      up.innerHTML = 'Showing the ' + esc(SUBJECT_META[S.subject].name) + ' syllabus only. ' +
+        'The Grade ' + S.grade + ' Annual Package adds ' + extra + ' more lessons across ' +
+        hidden.map(function (k) { return esc(STREAM_META[k].label); }).join(', ') +
+        ' \u2014 <a href="#tiers" data-see-full>see the full package</a>.';
+      up.querySelector('[data-see-full]').addEventListener('click', function () {
+        track('upsell_click', { from: S.subject, grade: S.grade });
+      });
+    } else { up.hidden = true; }
+
+    /* Re-rendering the buttons drops the handlers gtec-ui.js bound at load. */
+    if (typeof window.gtecInitTablist === 'function') window.gtecInitTablist($('stream-tabs'));
   }
 
   function paintRegister() {
-    var chapters = REGISTER_9[stream] || [];
+    /* No published class list for this grade: say so plainly instead of
+       showing another grade's chapters. */
+    if (!hasRegister(S.grade)) {
+      $('register-body').innerHTML =
+        '<div class="reg-empty"><p class="h3">The Grade ' + S.grade + ' class list is being published</p>' +
+        '<p style="margin-top:.5rem;font-size:.9rem;max-width:52ch;margin-inline:auto">Lesson titles for this ' +
+        'grade are not on the site yet. The syllabus follows the same CBSE / NCERT sequence \u2014 message us and ' +
+        'we will send the chapter list for Grade ' + S.grade + '.</p>' +
+        '<a class="btn btn-red btn-sm mt3" data-wa="Grade ' + S.grade + ' class list" href="#">Ask for the class list</a></div>';
+      $('register-summary').textContent = 'Class list coming soon';
+      $('register-search').hidden = true;
+      $('download-pdf').hidden = true;
+      bindWa();
+      return;
+    }
+    $('register-search').hidden = false;
+    $('download-pdf').hidden = false;
+
+    var chapters = stream ? streamChapters(S.grade, stream) : [];
     var q = query.trim().toLowerCase();
     var running = 0, hits = 0, html = '';
 
@@ -319,7 +374,7 @@
 
     $('register-summary').textContent = q
       ? hits + ' lesson' + (hits === 1 ? '' : 's') + ' matching \u201c' + query + '\u201d'
-      : streamCount(stream) + ' lessons \u00b7 ' + chapters.length + ' chapters';
+      : streamCount(S.grade, stream) + ' lessons \u00b7 ' + chapters.length + ' chapters';
 
     $('register-body').querySelectorAll('[data-preview]').forEach(function (a) {
       a.addEventListener('click', function () { track('preview_click', { lesson: a.dataset.preview, stream: stream }); });
@@ -372,7 +427,7 @@
         var v = m.target.dataset.tier;
         if (!v || v === S.plan) return;
         S.plan = v;
-        paintHero(); paintPrice(); paintTiers();
+        paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated();
         track('tier_tab', { tab: v });
       });
     }).observe(bar, { attributes: true, subtree: true, attributeFilter: ['aria-selected'] });
@@ -394,20 +449,37 @@
   }
 
   function paintRelated() {
-    var others = Object.keys(PRICING).map(Number)
-      .filter(function (g) { return g !== S.grade; }).slice(0, 4);
+    /* Show the SAME product in other grades. A Science shopper is far more
+       likely to want Grade 9 Science than a Grade 9 bundle, and it means the
+       four cards no longer share one identical image. */
+    var asSubject = S.plan === 'subject';
+    var others = Object.keys(PRICING).map(Number).filter(function (g) {
+      return g !== S.grade && (!asSubject || subjectsForGrade(g).indexOf(S.subject) > -1);
+    }).slice(0, 4);
+
+    $('related-heading').textContent = asSubject
+      ? SUBJECT_META[S.subject].name + ' in other grades.'
+      : 'Also available.';
+
     $('related-grid').innerHTML = others.map(function (g) {
-      var p = planPrice(g, 'full', S.mode), a = priceAttrs(p);
-      return '<a class="card card-hover course course-img" style="--banner:var(--navy-700)" ' +
-        'href="course-detail.html?grade=' + g + '&plan=full&mode=' + S.mode + '" data-plan="g' + g + '-full">' +
-        '<span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>' +
-        '<div><p class="mono card-kicker" style="color:var(--navy-600)">Grade ' + g + ' \u00b7 all subjects</p>' +
-        '<h3 class="h3" style="margin-top:.25rem">Annual Package</h3></div>' +
+      var p = asSubject ? planPrice(g, 'subject', S.mode, S.subject) : planPrice(g, 'full', S.mode);
+      var a = priceAttrs(p);
+      var meta = asSubject ? SUBJECT_META[S.subject] : null;
+      var banner = asSubject ? meta.banner : 'sb-bundle';
+      var colour = asSubject ? meta.colour : 'var(--navy-600)';
+      var label  = asSubject ? meta.name + ' \u2014 ' + meta.tag : 'Maths, Science and English';
+      var href   = 'course-detail.html?grade=' + g + '&plan=' + (asSubject ? 'subject&subject=' + S.subject : 'full') + '&mode=' + S.mode;
+      return '<a class="card card-hover course course-img" style="--banner:' + colour + '" ' +
+        'href="' + href + '" data-plan="g' + g + '-' + (asSubject ? S.subject : 'full') + '">' +
+        '<span class="sub-banner ' + banner + '" role="img" aria-label="' + esc(label) + '"></span>' +
+        '<div><p class="mono card-kicker" style="color:' + colour + '">Grade ' + g +
+          ' \u00b7 ' + (asSubject ? 'single subject' : 'all subjects') + '</p>' +
+        '<h3 class="h3" style="margin-top:.25rem">' + esc(asSubject ? meta.name : 'Annual Package') + '</h3></div>' +
         '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span>' +
         '<span class="mode">Recorded lessons</span></div>' +
         '<div style="margin-top:auto"><p class="price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" ' +
         'style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">' + a.inr + '</p>' +
-        '<p style="color:var(--slate-500);font-size:.75rem">Full academic year</p></div></a>';
+        '<p class="note-sm">Full academic year</p></div></a>';
     }).join('');
     $('related-grid').querySelectorAll('[data-plan]').forEach(function (a) {
       a.addEventListener('click', function () { track('plan_click', { plan_id: a.dataset.plan, mode: S.mode }); });
@@ -458,6 +530,21 @@
     });
   }
 
+  /* Controls are static markup, so a URL that sets plan or mode would leave the
+     tab bar and the segmented control contradicting the page. Sync them once,
+     before gtec-ui.js reads aria-selected to set up roving tabindex. */
+  function syncControls() {
+    document.querySelectorAll('#tier-tabs .tab').forEach(function (t) {
+      var on = t.dataset.tier === S.plan;
+      t.setAttribute('aria-selected', String(on));
+      var panel = $(t.dataset.panel);
+      if (panel) panel.hidden = !on;
+    });
+    document.querySelectorAll('#seg-mode button').forEach(function (b) {
+      b.setAttribute('aria-checked', String(b.dataset.mode === S.mode));
+    });
+  }
+
   /* ---------- go ---------- */
   paintHero();
   paintStreamTabs();
@@ -466,6 +553,7 @@
   paintFaq();
   paintRelated();
   paintPrice();
+  syncControls();
   bindMode(); bindTierTabs(); bindRegister(); bindLms(); bindBuy();
   track('page_view', { page: 'course-detail', grade: S.grade, plan: S.plan, mode: S.mode });
 })();
