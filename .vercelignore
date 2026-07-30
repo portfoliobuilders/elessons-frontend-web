@@ -2,7 +2,8 @@ android
 ios
 lib
 test
-assets
+# Root Flutter assets only — do NOT use bare "assets" or public/assets is excluded from Vercel
+/assets
 resources
 scripts/*.dart
 *.dart
