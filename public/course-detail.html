@@ -59,7 +59,11 @@
         <option value="aed|AE">AED</option>
       </select>
       <a href="#" class="navlink hide-sm" data-lms="1">Sign in</a>
-      <a href="#tiers" class="btn btn-navy btn-sm">Buy now</a>
+      <button type="button" class="cart-btn" id="cart-open" aria-label="Open cart" aria-haspopup="dialog" aria-controls="cart-drawer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 12.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="cart-badge" id="cart-badge" hidden>0</span>
+      </button>
+      <a href="#tiers" class="btn btn-ghost-dark btn-sm hide-sm">Browse options</a>
       <button class="burger" id="burger" type="button" aria-expanded="false"
               aria-controls="mnav" aria-label="Open menu"><span></span></button>
     </div>
@@ -132,7 +136,7 @@
         <p class="buy-unit" id="buy-unit">All three subjects &middot; full academic year</p>
 
         <div class="grid g1 mt3">
-          <a href="#" class="btn btn-red btn-block" id="buy-now">Buy this course</a>
+          <button type="button" class="btn btn-red btn-block" id="buy-now">Add to cart</button>
           <a href="#" class="btn btn-ghost-dark btn-block btn-sm" data-lms="1">Login to LMS portal</a>
           <a href="#" class="btn btn-ghost-dark btn-block btn-sm" data-wa data-wa-course>Enquire on WhatsApp</a>
         </div>
@@ -174,7 +178,17 @@
     </div>
     <div id="tier-module-p" class="mt3" hidden>
       <p class="lead maxw-sm" id="module-price-note">Each module is priced on its own.</p>
-      <div class="mt3" id="tier-module-list" style="max-width:820px"></div>
+      <div class="mod-layout mt3">
+        <div id="tier-module-list"></div>
+        <aside class="mod-rail" id="mod-rail" aria-label="Module selection summary">
+          <p class="mono card-kicker" style="color:var(--navy-600)">Your selection</p>
+          <p class="h3" id="mod-rail-count" style="margin-top:.35rem">0 modules</p>
+          <p class="price" id="mod-rail-total" style="font-weight:800;font-size:1.35rem;color:var(--navy-900);letter-spacing:-.02em;margin-top:.25rem">&#8377;0</p>
+          <p class="note-sm mt2" id="mod-rail-hint">Pick chapters below to build your own pack.</p>
+          <button type="button" class="btn btn-red btn-sm btn-block mt3" id="mod-rail-add" disabled>Add selection to cart</button>
+          <button type="button" class="btn btn-ghost-dark btn-sm btn-block mt2" id="mod-rail-open">View cart</button>
+        </aside>
+      </div>
     </div>
   </div>
 </section>
@@ -255,6 +269,11 @@
     <h2 class="dsp h2 mt2" style="font-size:clamp(1.6rem,2.6vw,2.3rem)">Before you enrol.</h2>
     <span class="gold-rule" aria-hidden="true"></span>
     <div class="faq-grid mt3" id="faq-list" style="max-width:900px"></div>
+    <div class="faq-cta mt4" style="max-width:900px">
+      <p class="h3">Still have questions?</p>
+      <p class="note-sm mt2">A counsellor can walk you through grades, live vs recorded, and what fits your child.</p>
+      <a href="#" class="btn btn-navy btn-sm mt3" data-wa data-wa-course>Chat on WhatsApp</a>
+    </div>
   </div>
 </section>
 
@@ -293,14 +312,38 @@
   </div>
 </footer>
 
-<!-- sticky mobile CTA -->
-<div class="stickybar" id="stickybar">
+<!-- sticky mobile CTA: product context OR cart summary -->
+<div class="stickybar" id="stickybar" data-mode="product">
   <div>
     <p class="price stickybar-price" id="bar-price">&#8377;12,000</p>
     <small id="bar-meta">Recorded &middot; Grade 9</small>
   </div>
-  <a href="#" class="btn btn-red btn-sm" id="bar-buy">Buy now</a>
+  <button type="button" class="btn btn-red btn-sm" id="bar-buy">Add to cart</button>
 </div>
+
+<!-- Cart drawer -->
+<div class="cart-scrim" id="cart-scrim" hidden></div>
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" hidden>
+  <div class="cart-drawer__head">
+    <h2 class="h3" id="cart-title">Your cart</h2>
+    <button type="button" class="cart-close" id="cart-close" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-drawer__body" id="cart-items">
+    <div class="cart-empty" id="cart-empty">
+      <p class="h3">Your cart is empty</p>
+      <p class="note-sm mt2">Add a full package, a subject, or individual modules to get started.</p>
+      <a href="#tiers" class="btn btn-navy btn-sm mt3" id="cart-browse">Browse options</a>
+    </div>
+  </div>
+  <div class="cart-drawer__foot" id="cart-foot" hidden>
+    <div class="flex between center">
+      <span class="note-sm" id="cart-count-label">0 items</span>
+      <span class="price" id="cart-total" style="font-weight:800;font-size:1.25rem;color:var(--navy-900)">&#8377;0</span>
+    </div>
+    <button type="button" class="btn btn-red btn-block mt3" id="cart-checkout">Checkout</button>
+    <p class="note-sm mt2" style="text-align:center">Checkout will open the payment flow. Prices are charged in the currency shown.</p>
+  </div>
+</aside>
 
 <a class="wa-float" data-wa data-wa-course href="#" aria-label="Enquire on WhatsApp">
   <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.6.2s-.7.9-.9 1.1c-.2.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.5.1-.7l.5-.5.3-.5v-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.4 2.5 1 3 .8 3.6.8.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
