@@ -259,6 +259,24 @@
 .print-only{display:none}
 
 
+/* Header row: true three-column balance so the primary links sit in the
+   optical centre, not shoved right by the wider tools cluster. */
+.nav > .wrap{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  column-gap:1rem;
+}
+.nav > .wrap > .brand{justify-self:start}
+.nav > .wrap > nav[aria-label="Primary"]{
+  justify-self:center;
+  margin-inline:0;
+}
+.nav > .wrap > .navtools{
+  justify-self:end;
+  margin-left:0;
+}
+
 /* ══════════════ CART BUTTON / BADGE ══════════════ */
 /* Nav tools: keep phone, currency, Sign in, cart and CTA on one baseline.
    gtec's .hide-sm { display:block } overrides .btn { inline-flex } and leaves
