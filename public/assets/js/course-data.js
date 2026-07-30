@@ -17,7 +17,22 @@ const ELESSONS = {
   defaultCurrency: 'inr'
 };
 
-/* Social proof — PLACEHOLDER. Replace with real values before launch. */
+const PREVIEWS = {
+  // Real ID from the existing home page player. Used as the fallback until
+  // per-subject previews are shot. Replace the TODOs with real YouTube IDs.
+  _default: { vid: 'OY1JSCKysz0', cap: 90, title: 'Watch the first 90 seconds' },
+  maths:   { vid: null, cap: 90, title: 'Watch a maths lesson' },   // TODO real ID
+  science: { vid: null, cap: 90, title: 'Watch a science lesson' }, // TODO real ID
+  english: { vid: null, cap: 90, title: 'Watch an English lesson' } // TODO real ID
+};
+
+function previewFor(grade, plan, subject) {
+  var key = plan === 'subject' ? subject : null;
+  var p = (key && PREVIEWS[key] && PREVIEWS[key].vid) ? PREVIEWS[key] : PREVIEWS._default;
+  return { vid: p.vid || PREVIEWS._default.vid, cap: p.cap || 90, title: p.title };
+}
+
+/* Social proof — PLACEHOLDER — DO NOT SHIP. Replace with real values before launch. */
 const TRUST = { rating: 4.8, reviewCount: 412, enrolled: 6800 };
 
 /* ---------- SUBJECTS ----------
@@ -230,6 +245,36 @@ function planPrice(grade, planType, mode, subjectKey) {
   if (planType === 'full')    return { inr: base.inr + up.inr,             aed: base.aed + up.aed };
   if (planType === 'subject') return { inr: base.inr + Math.round(up.inr / 2), aed: base.aed + Math.round(up.aed / 2) };
   return { inr: base.inr + 300, aed: base.aed + 15 };
+}
+
+// What the Annual Package adds over the plan being viewed. Returns null when
+// the current plan IS the full package, or when the upgrade is not cheaper.
+function upgradeOffer(grade, plan, mode, subject) {
+  if (plan !== 'subject') return null;
+  var now  = planPrice(grade, 'subject', mode, subject);
+  var full = planPrice(grade, 'full', mode);
+  var diff = { inr: full.inr - now.inr, aed: full.aed - now.aed };
+  if (diff.inr <= 0) return null;
+  var extra = hasRegister(grade)
+    ? registerTotal(grade) - planLessonCount(grade, 'subject', subject) : null;
+  return { price: full, diff: diff, extraLessons: extra };
+}
+
+// The cheaper unit once N modules are selected, or null while modules still win.
+// Grade 9 example: 12 modules beat a subject, 18 beat the whole package.
+function betterThanModules(grade, count, subject) {
+  if (!count) return null;
+  var mp = PRICING[grade].modulePrice;
+  var spend = mp.inr * count;
+  var full = PRICING[grade].bundle;
+  if (spend >= full.inr) return { type: 'full', label: 'Annual Package', price: full };
+  if (subject) {
+    var sub = PRICING[grade].subjects[subject];
+    if (sub && spend >= sub.inr) {
+      return { type: 'subject', subject: subject, label: SUBJECT_META[subject].name, price: sub };
+    }
+  }
+  return null;
 }
 function fullMrp(grade) {
   return subjectsForGrade(grade).reduce(function (t, s) {

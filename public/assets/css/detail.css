@@ -38,6 +38,24 @@
 .dhero-art{border-radius:var(--asym);overflow:hidden;border:1px solid rgba(255,255,255,.16);
   aspect-ratio:3/2;background-size:cover;background-position:center;min-height:180px}
 
+/* click-to-play sample lesson — banner artwork is the poster frame */
+.dhero-player{border-radius:var(--asym);overflow:hidden;border:1px solid rgba(255,255,255,.16);
+  position:relative;background:var(--navy-950)}
+.dhero-player .player-stage{aspect-ratio:16/9}
+/* the sb-* banner sits behind the play button as the poster frame */
+.dhero-player .player-cover{background-size:cover;background-position:center}
+.dhero-player .player-cover::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,19,60,.25) 0%,rgba(0,19,60,.82) 100%)}
+.dhero-player .player-cover>*{position:relative;z-index:1}
+@media (max-width:640px){ .dhero-player{border-radius:34px 8px 34px 8px} }
+
+/* CTA-safe red for text-bearing buttons and small red text on this page only.
+   --red #EF4444 on white is 3.76:1 and fails AA; --red-cta #D32F2F is 4.98:1.
+   Flag: --red as small text on white fails site-wide, not just here. */
+:root{ --red-cta:#D32F2F; }
+.btn-red{background:var(--red-cta);border-color:var(--red-cta)}
+.eyebrow{color:var(--red-cta)}
+
 /* ══════════════ BUY PANEL ══════════════ */
 .buy{background:#fff;color:var(--ink);border-radius:24px;padding:1.5rem 1.4rem;
   box-shadow:0 30px 70px -30px rgba(0,19,60,.6);border:1px solid rgba(255,255,255,.5)}
@@ -53,8 +71,15 @@
 .buy-list{display:grid;gap:.5rem;margin-top:1rem;font-size:.85rem;color:var(--slate-700)}
 .buy-list li{display:flex;gap:.55rem;align-items:flex-start;list-style:none}
 .buy-list svg{flex:none;margin-top:.18rem;color:var(--navy-600)}
-.buy-terms{font-size:.7rem;color:var(--slate-400);margin-top:.9rem;line-height:1.5}
+.buy-terms{font-size:.7rem;color:var(--slate-500);margin-top:.9rem;line-height:1.5}
 .buy-terms a{color:var(--slate-500);text-decoration:underline}
+
+/* subject → annual package upsell under the price */
+.upgrade{margin-top:.9rem;background:var(--mist);border:1px solid var(--line);border-radius:14px;
+  padding:.85rem 1rem;color:var(--navy-700);font-size:.84rem;line-height:1.45}
+.upgrade p{margin:0 0 .65rem}
+.upgrade strong{font-weight:800;color:var(--navy-900)}
+.upgrade .btn{margin-top:.15rem}
 
 /* segmented Recorded / Live control — the .mode badges made interactive */
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;background:var(--mist);
@@ -109,8 +134,8 @@
   overflow-x:auto;scrollbar-width:none;margin-top:1.2rem}
 .streambar::-webkit-scrollbar{display:display}
 .tab small{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:600;
-  font-size:.58rem;letter-spacing:.08em;color:var(--slate-400);margin-top:.15rem}
-.tab[aria-selected="true"] small{color:var(--red)}
+  font-size:.58rem;letter-spacing:.08em;color:var(--slate-500);margin-top:.15rem}
+.tab[aria-selected="true"] small{color:var(--red-cta)}
 
 .chap{border:1px solid var(--line);border-radius:16px;background:#fff;margin-bottom:.6rem;overflow:hidden}
 .chap[open]{border-color:var(--navy-700)}
@@ -121,12 +146,12 @@
   font-family:"JetBrains Mono",monospace;color:var(--red);font-size:1.25rem;line-height:1}
 .chap[open]>summary::after{content:"\2212"}
 .chap-n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;font-weight:600;
-  color:var(--slate-400);flex:none}
+  color:var(--slate-500);flex:none}
 .chap-count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;
   font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-500);
   background:var(--mist);border-radius:999px;padding:.22rem .6rem;flex:none}
 .lesson{display:flex;align-items:center;gap:.9rem;padding:.6rem 1.2rem;border-top:1px solid var(--slate-200)}
-.lesson-n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;color:var(--slate-400);
+.lesson-n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;color:var(--slate-500);
   flex:none;width:2.4rem}
 .lesson-name{font-size:.88rem;color:var(--slate-800);flex:1 1 auto;min-width:0}
 .lesson-end{margin-left:auto;display:flex;align-items:center;gap:.6rem;flex:none}
@@ -179,7 +204,7 @@
   box-shadow:0 18px 40px -16px rgba(0,19,60,.8);max-width:calc(100vw - 2rem);text-align:center}
 .toast[data-show="true"]{opacity:1;transform:translate(-50%,0)}
 
-/* sticky mobile CTA — .stickybar exists in gtec.css, this is its content */
+/* sticky CTA — mobile always; desktop only after the buy panel scrolls away */
 .stickybar-price{font-weight:800;font-size:1.1rem;letter-spacing:-.02em;line-height:1.15}
 .stickybar small{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.55rem;
   font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:.12rem}
@@ -188,10 +213,21 @@
   body{padding-bottom:78px}
   .wa-float{bottom:calc(78px + .9rem)}
 }
-@media (min-width:1000px){.stickybar{display:none}}
+@media (min-width:1000px){
+  .stickybar{
+    display:flex;
+    transform:translateY(110%);
+    transition:transform .28s ease;
+    pointer-events:none;
+  }
+  body.panel-gone .stickybar{
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+}
 
 @media (max-width:640px){
-  .dhero-art{border-radius:34px 8px 34px 8px}
+  .dhero-art,.dhero-player{border-radius:34px 8px 34px 8px}
   .buy{border-radius:20px;padding:1.25rem 1.1rem}
   .lesson{gap:.6rem;padding:.55rem .9rem}
   .lesson-n{width:2rem}
@@ -261,25 +297,43 @@ body.cart-open{overflow:hidden}
 
 /* ══════════════ MODULE PICKER LAYOUT ══════════════ */
 .mod-layout{display:grid;gap:1.25rem;align-items:start}
-@media (min-width:960px){
-  .mod-layout{grid-template-columns:minmax(0,1.4fr) minmax(260px,.7fr)}
+@media (min-width:1000px){
+  .mod-layout{grid-template-columns:minmax(0,1.45fr) minmax(280px,.75fr)}
   .mod-rail{position:sticky;top:calc(var(--nav-h,68px) + 1rem)}
 }
 .mod-rail{border:1px solid var(--card-line);border-radius:20px;background:#fff;padding:1.25rem 1.2rem;
   box-shadow:0 1px 2px rgba(10,49,112,.05),0 10px 26px -18px var(--card-shadow)}
+.mod-rail-list{list-style:none;margin:.85rem 0 0;padding:0;max-height:220px;overflow:auto;
+  border-top:1px solid var(--line)}
+.mod-rail-list li{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;
+  padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.82rem}
+.mod-rail-list button{font:inherit;font-size:.7rem;font-weight:700;color:var(--red-cta);
+  background:none;border:0;cursor:pointer;flex:none;padding:.1rem 0}
+.mod-rail-list button:hover{text-decoration:underline}
+.mod-breakeven{margin-top:.9rem;background:var(--mist);border:1px solid var(--line);border-radius:14px;
+  padding:.85rem 1rem;font-size:.82rem;color:var(--navy-700);line-height:1.45}
+.mod-breakeven p{margin:0 0 .7rem}
+.mod-breakeven .btn{margin-top:.35rem}
 .mod-sub{border-left:4px solid var(--stream-colour,var(--navy-600))}
 .mod-sub>summary{gap:.75rem}
 .mod-sub__ico{width:28px;height:28px;border-radius:9px;flex:none;display:inline-flex;align-items:center;
   justify-content:center;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.58rem;font-weight:700;
   letter-spacing:.04em;color:#fff;background:var(--stream-colour,var(--navy-600))}
-.mod-sub__actions{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}
+.mod-sub__actions{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-left:auto}
 .mod-add-all{font:inherit;font-size:.7rem;font-weight:700;border:1.5px solid var(--line);background:#fff;
   color:var(--navy-700);border-radius:999px;padding:.3rem .75rem;cursor:pointer}
 .mod-add-all:hover{border-color:var(--navy-700)}
 .mod-add-all:focus-visible{outline:3px solid var(--navy-600);outline-offset:2px}
 .mod-row{align-items:flex-start}
+.mod-row .mod-row-price{display:block;margin-top:.2rem;font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.66rem;font-weight:600;color:var(--slate-500)}
 .mod-add{border-radius:10px;padding:.45rem .75rem;white-space:nowrap;font-size:.72rem}
 .mod-add[aria-pressed="true"]{background:var(--sci);border-color:var(--sci)}
+/* mobile: selection summary sits above the sticky CTA as a bottom sheet */
+@media (max-width:999px){
+  .mod-rail{position:sticky;bottom:calc(78px + .5rem);z-index:40;
+    box-shadow:0 -12px 36px -18px rgba(0,19,60,.35)}
+}
 
 /* ══════════════ RELATED / ALSO AVAILABLE CARDS ══════════════ */
 .rel-card{display:flex;flex-direction:column;gap:.7rem;border:1px solid var(--card-line);
@@ -297,7 +351,10 @@ body.cart-open{overflow:hidden}
 .rel-card__body{padding:0 1.05rem 1.15rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
 .rel-card__actions{display:grid;grid-template-columns:1fr;gap:.45rem;margin-top:auto}
 .rel-card__actions .btn{justify-content:center;text-align:center;width:100%}
-.rel-card__actions .btn-red{box-shadow:0 8px 22px -8px rgba(239,68,68,.55)}
+.rel-card__actions .btn-red{box-shadow:0 8px 22px -8px rgba(211,47,47,.55)}
+.rel-card__details{display:inline-block;margin-top:.15rem;font-size:.78rem;font-weight:600;
+  color:var(--slate-500);text-align:center;text-decoration:underline;text-underline-offset:2px}
+.rel-card__details:hover{color:var(--navy-700)}
 .faq-cta{border:1px solid var(--line);border-radius:18px;background:#fff;padding:1.35rem 1.4rem}
 
 /* sticky cart mode */
