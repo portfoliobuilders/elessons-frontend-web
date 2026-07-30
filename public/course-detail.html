@@ -20,8 +20,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/gtec.css?v=32">
-<link rel="stylesheet" href="/assets/css/detail.css?v=32">
+<link rel="stylesheet" href="/assets/css/gtec.css?v=33">
+<link rel="stylesheet" href="/assets/css/detail.css?v=33">
 </head>
 <body>
 
@@ -53,17 +53,17 @@
       <a class="navlink" href="#faq">FAQ</a>
     </nav>
     <div class="navtools">
-      <a class="navcall" href="tel:+919745553944"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>+91 97455 53944</a>
+      <a class="navcall" href="tel:+919745553944"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg><span class="navcall-text">+91 97455 53944</span></a>
       <select class="cur-select cur-nav" aria-label="Currency">
         <option value="inr|IN" selected>&#8377; INR</option>
         <option value="aed|AE">AED</option>
       </select>
-      <a href="#" class="navlink hide-sm" data-lms="1">Sign in</a>
+      <a href="#" class="navlink hide-md-nav" data-lms="1">Sign in</a>
       <button type="button" class="cart-btn" id="cart-open" aria-label="Open cart" aria-haspopup="dialog" aria-controls="cart-drawer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 12.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6L23 6H6"/></svg>
         <span class="cart-badge" id="cart-badge" hidden>0</span>
       </button>
-      <a href="#tiers" class="btn btn-ghost-dark btn-sm hide-sm">Browse options</a>
+      <a href="#tiers" class="btn btn-ghost-dark btn-sm hide-md-nav">Browse options</a>
       <button class="burger" id="burger" type="button" aria-expanded="false"
               aria-controls="mnav" aria-label="Open menu"><span></span></button>
     </div>
@@ -78,8 +78,17 @@
       <a class="navlink" href="#tiers">Buy options</a>
       <a class="navlink" href="#syllabus">Syllabus</a>
       <a class="navlink" href="#faq">FAQ</a>
+      <a class="navlink" href="#" data-lms="1">Sign in</a>
     </nav>
-    <a class="btn btn-red btn-block mt3" href="tel:+919745553944">Call +91 97455 53944</a>
+    <div class="mnav-tools mt3">
+      <label class="mono cur-label" for="mnav-cur">Currency</label>
+      <select class="cur-select cur-mnav" id="mnav-cur" aria-label="Currency">
+        <option value="inr|IN" selected>India · ₹ INR</option>
+        <option value="aed|AE">United Arab Emirates · AED</option>
+      </select>
+    </div>
+    <a class="btn btn-ghost-dark btn-block mt3" href="#tiers">Browse options</a>
+    <a class="btn btn-red btn-block mt2" href="tel:+919745553944">Call +91 97455 53944</a>
   </div>
 </div>
 
@@ -415,9 +424,9 @@
 </script>
 
 <!-- ORDER MATTERS: data -> page render -> shared bindings -->
-<script src="/assets/js/course-data.js?v=32"></script>
-<script src="/assets/js/detail.js?v=32"></script>
-<script src="/assets/js/gtec-ui.js?v=32"></script>
+<script src="/assets/js/course-data.js?v=33"></script>
+<script src="/assets/js/detail.js?v=33"></script>
+<script src="/assets/js/gtec-ui.js?v=33"></script>
 <script>
   var ax = document.getElementById('announce-x');
   if (ax) ax.onclick = function () { document.getElementById('announce').remove(); };
