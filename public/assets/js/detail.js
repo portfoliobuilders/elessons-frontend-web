@@ -76,7 +76,7 @@
       return false;
     }
     cart.items.push(item);
-    saveCart(cart);
+    try { saveCart(cart); } catch (err) { /* private mode / blocked storage */ }
     track('add_to_cart', {
       item_id: item.id, item_name: item.title,
       value: item.price[cur()], currency: cur().toUpperCase()
@@ -541,15 +541,17 @@
     });
 
     document.querySelectorAll('[data-module]').forEach(function (b) {
-      b.addEventListener('click', function () {
+      b.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         var id = b.dataset.module;
         var parts = id.split(':');
         var stream = parts[0];
         var ci = Number(parts[1]);
         var ch = (streamChapters(S.grade, stream) || [])[ci];
         var cartId = 'g' + S.grade + '-mod-' + id + '-' + S.mode;
-        if (cartHas(cartId)) {
-          removeCartItem(cartId);
+        if (cartHas(cartId) || S.modules[id]) {
+          if (cartHas(cartId)) removeCartItem(cartId);
           delete S.modules[id];
         } else {
           S.modules[id] = true;
@@ -564,6 +566,7 @@
           }
         }
         if (S.plan !== 'module') { S.plan = 'module'; paintHero(); syncControls(); }
+        paintModRail();
         paintPrice();
         paintTiers();
       });
@@ -819,17 +822,21 @@
           (enrolled ? '<p class="note-sm">' + esc(enrolled) + '</p>' : '') +
           '</div>' +
           '<div class="rel-card__actions">' +
-            '<button type="button" class="btn btn-red btn-sm" data-rel-add="' + planId + '" ' +
+            '<button type="button" class="btn btn-red btn-sm btn-block" data-rel-add="' + planId + '" ' +
               'data-grade="' + g + '" data-plan="' + (asSubject ? 'subject' : 'full') + '" ' +
               (asSubject ? 'data-subject="' + S.subject + '" ' : '') +
               'data-mode="' + S.mode + '">Add to cart</button>' +
-            '<a class="btn btn-ghost-dark btn-sm" href="' + href + '" data-plan-link="' + planId + '">View details</a>' +
+            '<a class="btn btn-ghost-dark btn-sm btn-block" href="' + href + '" data-plan-link="' + planId + '">View details</a>' +
           '</div>' +
         '</div></article>';
     }).join('');
 
-    $('related-grid').querySelectorAll('[data-rel-add]').forEach(function (b) {
-      b.addEventListener('click', function () {
+    var grid = $('related-grid');
+    if (!grid) return;
+    grid.querySelectorAll('[data-rel-add]').forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         var g = Number(b.dataset.grade);
         var plan = b.dataset.plan;
         var sub = b.dataset.subject || null;
@@ -847,7 +854,7 @@
         track('plan_click', { plan_id: b.dataset.relAdd, mode: mode, action: 'add_to_cart' });
       });
     });
-    $('related-grid').querySelectorAll('[data-plan-link]').forEach(function (a) {
+    grid.querySelectorAll('[data-plan-link]').forEach(function (a) {
       a.addEventListener('click', function () { track('plan_click', { plan_id: a.dataset.planLink, mode: S.mode }); });
     });
   }
@@ -900,18 +907,6 @@
   /* Controls are static markup, so a URL that sets plan or mode would leave the
      tab bar and the segmented control contradicting the page. Sync them once,
      before gtec-ui.js reads aria-selected to set up roving tabindex. */
-  function syncControls() {
-    document.querySelectorAll('#tier-tabs .tab').forEach(function (t) {
-      var on = t.dataset.tier === S.plan;
-      t.setAttribute('aria-selected', String(on));
-      var panel = $(t.dataset.panel);
-      if (panel) panel.hidden = !on;
-    });
-    document.querySelectorAll('#seg-mode button').forEach(function (b) {
-      b.setAttribute('aria-checked', String(b.dataset.mode === S.mode));
-    });
-  }
-
   /* Controls are static markup, so a URL that sets plan or mode would leave the
      tab bar and the segmented control contradicting the page. Sync them once,
      before gtec-ui.js reads aria-selected to set up roving tabindex. */

@@ -295,8 +295,9 @@ body.cart-open{overflow:hidden}
   font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.55rem;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:.22rem .55rem}
 .rel-card__body{padding:0 1.05rem 1.15rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
-.rel-card__actions{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:auto}
-.rel-card__actions .btn{justify-content:center;text-align:center}
+.rel-card__actions{display:grid;grid-template-columns:1fr;gap:.45rem;margin-top:auto}
+.rel-card__actions .btn{justify-content:center;text-align:center;width:100%}
+.rel-card__actions .btn-red{box-shadow:0 8px 22px -8px rgba(239,68,68,.55)}
 .faq-cta{border:1px solid var(--line);border-radius:18px;background:#fff;padding:1.35rem 1.4rem}
 
 /* sticky cart mode */
