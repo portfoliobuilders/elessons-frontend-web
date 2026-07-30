@@ -912,6 +912,21 @@
     });
   }
 
+  /* Controls are static markup, so a URL that sets plan or mode would leave the
+     tab bar and the segmented control contradicting the page. Sync them once,
+     before gtec-ui.js reads aria-selected to set up roving tabindex. */
+  function syncControls() {
+    document.querySelectorAll('#tier-tabs .tab').forEach(function (t) {
+      var on = t.dataset.tier === S.plan;
+      t.setAttribute('aria-selected', String(on));
+      var panel = $(t.dataset.panel);
+      if (panel) panel.hidden = !on;
+    });
+    document.querySelectorAll('#seg-mode button').forEach(function (b) {
+      b.setAttribute('aria-checked', String(b.dataset.mode === S.mode));
+    });
+  }
+
   /* ---------- go ---------- */
   paintHero();
   paintStreamTabs();
