@@ -1,0 +1,199 @@
+/* ==========================================================================
+   G-TEC eLessons — course detail page
+   Additive only. Everything here is a component indexnew.html does not have.
+   Every colour, radius, font and easing is pulled from gtec.css tokens; there
+   are no new brand values in this file. Load AFTER gtec.css.
+   ========================================================================== */
+
+/* ══════════════ BREADCRUMB ══════════════ */
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase}
+.crumbs a{color:var(--slate-500)}
+.crumbs a:hover{color:var(--navy-700)}
+.crumbs li{display:flex;align-items:center;gap:.5rem;list-style:none}
+.crumbs li+li::before{content:"/";color:var(--slate-300)}
+.crumbs [aria-current="page"]{color:var(--navy-700)}
+.crumbs-dark a{color:rgba(255,255,255,.62)}
+.crumbs-dark a:hover{color:#fff}
+.crumbs-dark li+li::before{color:rgba(255,255,255,.32)}
+.crumbs-dark [aria-current="page"]{color:var(--gold)}
+
+/* ══════════════ DETAIL HERO ══════════════ */
+.dhero{background:var(--hero-grad);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.dhero::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
+  background:radial-gradient(120% 90% at 88% 4%,rgba(21,82,160,.5) 0%,transparent 62%)}
+.dhero-grid{display:grid;gap:clamp(1.75rem,3.4vw,3.25rem);align-items:start;
+  grid-template-columns:1fr;padding-block:clamp(1.75rem,3.4vw,2.75rem) clamp(2.5rem,5vw,4.25rem)}
+.dhero .lead{color:rgba(255,255,255,.76)}
+.dhero-title{font-size:clamp(1.9rem,4.1vw,3.3rem)}
+.dhero-facts{display:flex;flex-wrap:wrap;gap:.5rem}
+.fact{display:inline-flex;align-items:center;gap:.45rem;border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.07);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-radius:999px;padding:.42rem .95rem;font-size:.78rem;color:rgba(255,255,255,.9)}
+.fact strong{font-weight:800;color:#fff}
+.stars{color:var(--gold);letter-spacing:.08em;font-size:.95rem}
+
+/* subject art in the hero, reusing the .sb-* banners */
+.dhero-art{border-radius:var(--asym);overflow:hidden;border:1px solid rgba(255,255,255,.16);
+  aspect-ratio:3/2;background-size:cover;background-position:center;min-height:180px}
+
+/* ══════════════ BUY PANEL ══════════════ */
+.buy{background:#fff;color:var(--ink);border-radius:24px;padding:1.5rem 1.4rem;
+  box-shadow:0 30px 70px -30px rgba(0,19,60,.6);border:1px solid rgba(255,255,255,.5)}
+@media (min-width:1000px){
+  .dhero-grid{grid-template-columns:minmax(0,1.55fr) minmax(340px,.85fr)}
+  .buy{position:sticky;top:calc(var(--nav-h,68px) + 1rem)}
+}
+.buy-price{font-weight:800;font-size:clamp(2rem,3.6vw,2.7rem);letter-spacing:-.035em;
+  line-height:1.05;color:var(--navy-900)}
+.buy-was{font-size:.85rem;color:var(--slate-500)}
+.buy-save{display:inline-block;margin-top:.35rem;background:rgba(251,198,63,.22);color:#6B4C00;
+  border-radius:999px;padding:.22rem .7rem;font-size:.72rem;font-weight:700}
+.buy-list{display:grid;gap:.5rem;margin-top:1rem;font-size:.85rem;color:var(--slate-700)}
+.buy-list li{display:flex;gap:.55rem;align-items:flex-start;list-style:none}
+.buy-list svg{flex:none;margin-top:.18rem;color:var(--navy-600)}
+.buy-terms{font-size:.7rem;color:var(--slate-400);margin-top:.9rem;line-height:1.5}
+.buy-terms a{color:var(--slate-500);text-decoration:underline}
+
+/* segmented Recorded / Live control — the .mode badges made interactive */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;background:var(--mist);
+  border:1px solid var(--line);border-radius:999px;padding:.28rem;margin-bottom:1.1rem}
+.seg button{font:inherit;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-500);
+  background:transparent;border:0;border-radius:999px;padding:.6rem .5rem;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  transition:background-color .2s ease,color .2s ease,box-shadow .2s ease}
+.seg button[aria-checked="true"]{background:#fff;color:var(--navy-700);
+  box-shadow:0 1px 2px rgba(10,49,112,.14),0 6px 14px -10px var(--card-shadow)}
+.seg button[aria-checked="true"] .dot-live{background:var(--red)}
+.seg button:focus-visible{outline:3px solid var(--navy-600);outline-offset:2px}
+
+/* ══════════════ PURCHASE TIERS ══════════════ */
+.tierbar{display:flex;gap:clamp(1rem,2.4vw,2rem);border-bottom:1px solid var(--line);
+  overflow-x:auto;scrollbar-width:none}
+.tierbar::-webkit-scrollbar{display:none}
+.tier{border:1px solid var(--card-line);border-radius:20px;background:#fff;padding:1.4rem 1.3rem;
+  display:flex;flex-direction:column;gap:.7rem;
+  box-shadow:0 1px 2px rgba(10,49,112,.05),0 10px 26px -18px var(--card-shadow)}
+.tier-on{border-color:var(--navy-600);box-shadow:0 20px 44px -26px rgba(10,49,112,.5)}
+.tier-price{font-weight:800;font-size:1.5rem;letter-spacing:-.03em;color:var(--navy-900);line-height:1.1}
+.tier-inc{display:grid;gap:.4rem;font-size:.84rem;color:var(--slate-700);margin:0}
+.tier-inc li{display:flex;gap:.5rem;align-items:flex-start;list-style:none}
+.tier-inc svg{flex:none;margin-top:.2rem;color:var(--navy-600)}
+.tier-foot{margin-top:auto;display:grid;gap:.5rem}
+
+/* module picker rows */
+.mod-sub{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:.6rem}
+.mod-sub>summary{cursor:pointer;list-style:none;padding:.9rem 1.1rem;font-weight:700;font-size:.94rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.mod-sub>summary::-webkit-details-marker{display:none}
+.mod-sub[open]{border-color:var(--navy-700)}
+.mod-row{display:flex;align-items:center;gap:1rem;justify-content:space-between;
+  padding:.6rem 1.1rem;border-top:1px solid var(--line)}
+.mod-row p{font-size:.86rem;margin:0}
+.mod-row small{color:var(--slate-500);font-size:.72rem}
+.mod-add{font:inherit;font-size:.76rem;font-weight:700;border:1.5px solid var(--line);background:#fff;
+  color:var(--navy-700);border-radius:999px;padding:.34rem .85rem;cursor:pointer;flex:none;
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.mod-add:hover{border-color:var(--navy-700)}
+.mod-add[aria-pressed="true"]{background:var(--navy-700);border-color:var(--navy-700);color:#fff}
+.mod-add:focus-visible{outline:3px solid var(--navy-600);outline-offset:2px}
+
+/* ══════════════ VIDEO REGISTER ══════════════ */
+.reg-head{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between}
+.reg-search{font:inherit;font-size:.9rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+  border-radius:999px;padding:.7rem 1.1rem;min-width:min(320px,100%)}
+.reg-search:focus-visible{outline:3px solid var(--navy-600);outline-offset:2px;border-color:var(--navy-700)}
+.streambar{display:flex;gap:clamp(.9rem,2vw,1.8rem);border-bottom:1px solid var(--line);
+  overflow-x:auto;scrollbar-width:none;margin-top:1.2rem}
+.streambar::-webkit-scrollbar{display:display}
+.tab small{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:600;
+  font-size:.58rem;letter-spacing:.08em;color:var(--slate-400);margin-top:.15rem}
+.tab[aria-selected="true"] small{color:var(--red)}
+
+.chap{border:1px solid var(--line);border-radius:16px;background:#fff;margin-bottom:.6rem;overflow:hidden}
+.chap[open]{border-color:var(--navy-700)}
+.chap>summary{list-style:none;cursor:pointer;position:relative;
+  padding:1rem 3rem 1rem 1.2rem;display:flex;align-items:center;gap:.9rem;font-weight:700;font-size:.97rem}
+.chap>summary::-webkit-details-marker{display:none}
+.chap>summary::after{content:"+";position:absolute;right:1.3rem;top:50%;transform:translateY(-50%);
+  font-family:"JetBrains Mono",monospace;color:var(--red);font-size:1.25rem;line-height:1}
+.chap[open]>summary::after{content:"\2212"}
+.chap-n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;font-weight:600;
+  color:var(--slate-400);flex:none}
+.chap-count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-500);
+  background:var(--mist);border-radius:999px;padding:.22rem .6rem;flex:none}
+.lesson{display:flex;align-items:center;gap:.9rem;padding:.6rem 1.2rem;border-top:1px solid var(--slate-200)}
+.lesson-n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;color:var(--slate-400);
+  flex:none;width:2.4rem}
+.lesson-name{font-size:.88rem;color:var(--slate-800);flex:1 1 auto;min-width:0}
+.lesson-end{margin-left:auto;display:flex;align-items:center;gap:.6rem;flex:none}
+.lesson-dur{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;color:var(--slate-500)}
+.tag-free{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.55rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--sci);
+  border:1px solid rgba(27,106,71,.35);border-radius:999px;padding:.16rem .5rem;white-space:nowrap}
+.reg-empty{border:1px dashed var(--line);border-radius:20px;padding:2.5rem 1.5rem;text-align:center;
+  color:var(--slate-500)}
+
+/* ══════════════ MISC ══════════════ */
+.feat{display:flex;gap:.9rem;align-items:flex-start}
+.feat-ico{width:42px;height:42px;border-radius:13px;flex:none;display:flex;align-items:center;
+  justify-content:center;background:var(--mist);color:var(--navy-700);border:1px solid var(--line)}
+.prose p{color:var(--slate);margin-bottom:.85rem;max-width:70ch}
+.prose strong{color:var(--ink)}
+.notice{border-left:3px solid var(--gold);background:rgba(251,198,63,.09);border-radius:0 12px 12px 0;
+  padding:.9rem 1.1rem;font-size:.8rem;color:var(--slate-700);line-height:1.6}
+.wa-float{position:fixed;right:clamp(.9rem,2vw,1.6rem);bottom:clamp(.9rem,2vw,1.6rem);z-index:65;
+  width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;
+  align-items:center;justify-content:center;box-shadow:0 12px 30px -10px rgba(37,211,102,.75);
+  transition:transform .2s ease}
+.wa-float:hover{transform:translateY(-3px) scale(1.04)}
+.wa-float:focus-visible{outline:3px solid #128C7E;outline-offset:3px}
+.toast{position:fixed;left:50%;bottom:clamp(5.5rem,12vw,7rem);transform:translate(-50%,14px);z-index:90;
+  background:var(--navy-950);color:#fff;border-radius:999px;padding:.75rem 1.4rem;font-size:.85rem;
+  font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;
+  box-shadow:0 18px 40px -16px rgba(0,19,60,.8);max-width:calc(100vw - 2rem);text-align:center}
+.toast[data-show="true"]{opacity:1;transform:translate(-50%,0)}
+
+/* sticky mobile CTA — .stickybar exists in gtec.css, this is its content */
+.stickybar-price{font-weight:800;font-size:1.1rem;letter-spacing:-.02em;line-height:1.15}
+.stickybar small{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.55rem;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:.12rem}
+@media (max-width:999px){
+  .stickybar{display:flex}
+  body{padding-bottom:78px}
+  .wa-float{bottom:calc(78px + .9rem)}
+}
+@media (min-width:1000px){.stickybar{display:none}}
+
+@media (max-width:640px){
+  .dhero-art{border-radius:34px 8px 34px 8px}
+  .buy{border-radius:20px;padding:1.25rem 1.1rem}
+  .lesson{gap:.6rem;padding:.55rem .9rem}
+  .lesson-n{width:2rem}
+  .lesson-name{font-size:.84rem}
+  .chap>summary{padding:.85rem 2.6rem .85rem 1rem;font-size:.9rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .wa-float,.toast,.seg button,.mod-add{transition:none}
+}
+
+/* ══════════════ PRINT — this is what makes the class-list PDF ══════════════ */
+@media print{
+  @page{size:A4 portrait;margin:15mm 13mm}
+  .nav,.announce,.stickybar,.wa-float,.toast,.buy,.seg,.tierbar,#tiers,#faq,#related,
+  .reg-head,.streambar,footer,.btn,.crumbs{display:none !important}
+  body{background:#fff;color:#000;padding:0}
+  .dhero{background:#fff !important;color:#000}
+  .dhero::after{display:none}
+  .dhero .lead,.fact{color:#000;border-color:#999;background:none}
+  .sec{padding-block:0}
+  .chap{border:1px solid #999;break-inside:auto;margin-bottom:.4rem}
+  .chap>summary::after{display:none}
+  .lesson{border-top:1px solid #CCC;break-inside:avoid}
+  .print-only{display:block !important}
+}
+.print-only{display:none}
