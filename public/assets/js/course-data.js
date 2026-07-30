@@ -9,7 +9,7 @@ const ELESSONS = {
   whatsapp: '919745553944',
   phoneDisplay: '+91 97455 53944',
   lmsUrl: 'https://lms.elessons.net',        // TODO confirm the real LMS origin
-  classListPdf: 'video-list.html',
+  classListPdf: '/video-list.html',
 
   // Durations are NOT in the source syllabus PDF. Leaving this false hides the
   // column rather than shipping invented numbers.
