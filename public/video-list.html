@@ -115,7 +115,7 @@
 <script src="/assets/js/course-data.js"></script>
 <script>
 (function () {
-  var ORDER = ['maths', 'physics', 'chemistry', 'biology', 'english'];
+  var ORDER = registerStreams(9);
   var HEADING = {
     maths:     'CBSE GRADE-9 (MATHEMATICS) TABLE OF VIDEO CLASSES',
     physics:   'CBSE GRADE-9 (PHYSICS) TABLE OF VIDEO CLASSES',
@@ -133,9 +133,9 @@
   // ---- summary table ----
   var sBody = document.getElementById('summary-body');
   sBody.innerHTML = ORDER.map(function (k) {
-    return '<tr><th>' + esc(STREAM_META[k].label) + '</th><td>' + streamCount(k) + '</td></tr>';
+    return '<tr><th>' + esc(STREAM_META[k].label) + '</th><td>' + streamCount(9, k) + '</td></tr>';
   }).join('');
-  document.getElementById('summary-total').textContent = registerTotal();
+  document.getElementById('summary-total').textContent = registerTotal(9);
 
   // ---- per-subject tables, chapter names merged with rowspan ----
   document.getElementById('tables').innerHTML = ORDER.map(function (k) {
