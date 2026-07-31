@@ -1,0 +1,16 @@
+android
+ios
+lib
+test
+# Root Flutter assets only — do NOT use bare "assets" or public/assets is excluded from Vercel
+/assets
+resources
+scripts/*.dart
+*.dart
+.dart_tool
+build
+analyze_*.txt
+swagger.json
+scratch.dart
+check.dart
+pkg.json

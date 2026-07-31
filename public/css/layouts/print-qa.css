@@ -1,0 +1,69 @@
+/**
+ * Phase 8 — Pitfall fixes (CLS, print, form feedback)
+ */
+
+/* Explicit aspect-ratio backup when width/height attrs are present */
+img[width][height] {
+  height: auto;
+}
+
+/* Avoid FOIT flash: system stack until webfonts swap in */
+.fonts-pending body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Contact form success state */
+.form-status {
+  display: none;
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--slate-50);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.form-status.is-visible {
+  display: block;
+}
+
+.form-status--ok {
+  border-color: var(--sci);
+  background: #ecf8f2;
+}
+
+.form-status--err {
+  border-color: var(--cta-accent);
+  background: #fef2f2;
+}
+
+/* Print: drop sticky chrome, keep content readable */
+@media print {
+  .site-header,
+  .mobile-enroll,
+  .wa-float,
+  .skip-link,
+  .cta-band,
+  .site-nav__toggle {
+    display: none !important;
+  }
+
+  body {
+    padding-bottom: 0 !important;
+    color: #000;
+    background: #fff;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    font-weight: 400;
+    color: #334155;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript"]::after {
+    content: "";
+  }
+}

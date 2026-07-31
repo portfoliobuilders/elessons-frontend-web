@@ -1,0 +1,1059 @@
+--- PAGE 1 ---
+Page 1 of 24 
+ 
+ 
+ 
+CBSE (NCERT) GRADE 12 - LIST OF VIDEO CLASSES  
+PCMB  
+Subject Number of Videos 
+Mathematics  216 
+Physics 165 
+Chemistry 183 
+Biology 148 
+English Grammar  82 
+Total  794 
+ 
+ 
+CBSE GRADE - 12 (MATHAMATICS) TABLE OF VIDEO CLASSES 
+CHAPTER NAME VIDEO NAME 
+Relations and Functions  Equivalence Relation 
+Equivalence Relation - Problems 
+Types of Functions 
+Composite Functions. Exercise. 1.3 [3(ii), 4] 
+Invertible Function, How to Find the Value of Inverse, 
+Exercise.1.3 [5] 
+Exercise. 1.3 [8, 11,13] 
+Exercise. 1.3 [14], Binary Operations; Exercise. 1.4 [1(i, iii), 2, 9(ii)] 
+Exercise. 1.4 [9(i, v), 11]; Identity Element 
+Exercise 1.1 (2,3,4,5) 
+Exercise 1.1 (6,7,9i,9ii) 
+Exercise 1.1 [10 ( i,ii,iii,iv,v), 15,16] 
+Exercise1.4 [6(i,ii,iii,iv,v),7,8,12(i,ii),13] 
+Inverse Trigonometric Functions  Introduction, Properties; Exercise. 2.1 [2, 3, 4] 
+Exercise. 2.2 [1, 2, 3, 4, 5] 
+Exercise. 2.2 [6, 7, 8, 9, 10] 
+Exercise. 2.2 [11, 12, 13, 14, 15, 16] 
+Exercise. 2.2 [17, 18, 19, 20, 21] 
+Miscellaneous Exercise. [3, 4, 5, 8] 
+Exercise 2.1 (1,5,6,7,8,9,10,11,12,13) 
+Matrices  Introduction, Types of Matrices, Operations on Matrices. 
+Transpose of a Matrix, Results of Transpose of a Matrix, Exercise. 
+3.1 [ 1, 2] 
+--- PAGE 2 ---
+Page 2 of 24 
+ 
+ 
+Exercise. 3.1 [ 4, 5] 
+Exercise 3.1 [6, 7, 9] 
+Exercise 3.2 [1(i, ii, iii, iv, v), 2(i, ii, iii, iv), 3(i, ii, iii) 
+Exercise. 3.2 [3 (iv, v, vi), 4, 5] 
+Exercise. 3.2 [6, 7 (i, ii), 8, 9] 
+Exercise. 3.2 [10, 11, 12,13] 
+Exercise. 3.2 [14(i, ii)] 
+Exercise. 3.2 15, 16 
+Exercise. 3.2 17, 18 
+Exercise. 3.3 [ 1(i, ii, iii), 2(i, ii), 3(i, ii) , 4] 
+Exercise 3.3 [5 (i, ii), 6(i, ii)]; Concept of Symmetric and Skew 
+Symmetric Matrix 
+Exercise 3.3 [8(i, ii), 9, 12, 10(i)] 
+Exercise 3.3 [ 10 (iv)]; ex 3.4 [1] 
+Exercise 3.4 [2, 3, 4, 5,6] 
+Exercise 3.4 [7, 8, 9, 10, 11] 
+Exercise. 3.4 [12, 13, 14, 15] 
+Determinants  Introduction To Determinants; Exercise 4.1 [1, 2(i, ii), 3, 4] 
+Exercise 4.1 [5 (i,ii,iii,iv) , 6, 7 (i,ii), 8] 
+Properties of Determinants; Exercise 4.2(1) 
+Exercise 4.2(2 TO 5) 
+Exercise 4.2[ 6,7,8 (i,ii)] 
+Exercise 4.2[9,10(i,ii),11(i)] 
+Exercise 4.2[11(ii),12,13,14] 
+Area of triangle and Collinearity; Exercise 4.3 [ 1-(i,ii,iii),2,3(i,ii) ] ; 
+Equation of line joining given two points 
+Exercise 4.3 [ 4(i,ii),5];Minors and Cofactors; Exercise 4.4 
+[1(i,ii),2(i),3,4] 
+Adjoint of Matrix; Exercise 4.5 (1,2,3,4) 
+Exercise 4.5 (5 to 10) 
+Exercise 4.5 (11 to 14) 
+Exercise 4.5 (15,16) 
+Consistency of system of equations; Exercise 4.6 (1,2,3,4,5,6) 
+Exercise 4.6 (7,8,9,10,11) 
+Exercise 4.6 (12,13,14) 
+Exercise 4.6 (15); Miscellaneous Exercise (16) 
+Continuity and Differentiability  Introduction; Properties of Continuity 
+Exercise 5.1 (3-d,4,5,6,7) 
+Exercise 5.1 (8 to 13) 
+Exercise 5.1 (14 to 18, 20) 
+Exercise 5.1 (21 a,b,c) 
+--- PAGE 3 ---
+Page 3 of 24 
+ 
+ 
+Exercise 5.1 (22,23,24) 
+Differentiability; Exercise 5.3 (1 to 10) 
+Exercise 5.3 (11,13,14,15); Exercise 5.4 (1 to 10) 
+Exercise 5.5 (1 to 4) 
+Exercise 5.5 (5 to 8) 
+Exercise 5.5 (9 to 13) 
+Exercise 5.5 (14,15,16,17a) 
+Exercise 5.6 (1 to 7) 
+Exercise 5.6 (8 to 11); Exercise 5.7 (1 to 5) 
+Exercise 5.7 (6 to 11) 
+Exercise 5.7 (13 to 17) 
+Rolle's theorem; Exercise 5.8 (1 to 4) 
+Exercise 5.1 (26 to 30) 
+Exercise 5.2 (1 to 9) 
+Application of Derivatives  Application of Derivatives; Rate of Change of Quantities; Exercise 
+6.1 (1 to 4) 
+Exercise 6.1 (5 to 9) 
+Exercise 6.1 (10 to 18) 
+Increasing and Decreasing Functions; Theorem 1; Exercise 6.2 (1 
+to 5) 
+Exercise 6.2 (7,6) 
+Exercise 6.2 (9,10 ,13 to 16) (17 to 19) 
+Tangents & Normals; Exercise 6.3 (1 to 5) 
+Exercise 6.3 (7 to 11) 
+Exercise 6.3 (13,14) 
+Exercise 6.3 (15 to 17) 
+Exercise 6.3 (18 to 21) 
+Exercise 6.3 (22 to 26) 
+Exercise 6.4 [1 - (i to v)] 
+Exercise 6.4 [1 - (vi to xii)] 
+Exercise 6.4 [1 - (vi to xii),2,3] 
+Exercise 6.4 (4,5,6,7,8) 
+Exercise 6.4 (9); Exercise 6.5 [1-(a,b,c,d)] 
+Exercise 6.5 [2 - (i to v)] 
+Exercise 6.5 [3 - (i to iv)] 
+Exercise 6.5 [3 - (v to viii)] 
+Exercise 6.5 [4- (a,b,c),5-(a,b,c)] 
+Exercise 6.5 (5,6,7) 
+Exercise 6.5 (8,9,11) 
+Exercise 6.5 (12 to 14) 
+Exercise 6.5 (15 to 17) 
+--- PAGE 4 ---
+Page 4 of 24 
+ 
+ 
+Exercise 6.5 (19 to 20) 
+Exercise 6.5 (21,22) 
+Exercise 6.5 (23) 
+Exercise 6.5 (24,25) 
+Exercise 6.5 (27,28,29) 
+Integrals  Integrals; Exercise 7.1 (1 to 7) 
+Exercise 7.1 (8,9,12,13,14,15) 
+Exercise 7.1 (16 to 21) 
+Exercise 7.1 (22); Exercise 7.2 (1 to 5) 
+Exercise 7.2 (6 to 10) 
+Exercise 7.2 (11 to 17) 
+Exercise 7.2 (18,21 to 26) 
+Exercise 7.2 (27 to 33) 
+Exercise 7.2 (34 to 39); Exercise 7.3 (1,2) 
+Exercise 7.3 (3,5,6) 
+Exercise 7.3 (7 to 10) 
+Exercise 7.3 (11 to 13) 
+Exercise 7.3 (14 to 18) 
+Exercise 7.3 (20,21) 
+Exercise 7.3 (22 to 24); Exercise 7.4(1) 
+Exercise 7.4 (2,4,5,6) 
+Exercise 7.4 (7 to 11) 
+Exercise 7.4 (12 to 14) 
+Exercise 7.4 (15 to 17) 
+Exercise 7.4 (18) 
+Exercise 7.4 (19,20) 
+Exercise 7.4 (21,22) 
+Exercise 7.4(23 to 25) 
+Exercise 7.5 (1 to 3) 
+Exercise 7.5 (4,5) 
+Exercise 7.5 (9,10) 
+Exercise 7.5 (11,12) 
+Exercise 7.5 (13 to 15) 
+Exercise 7.5 (16 to 18) 
+Exercise 7.5 (20 to 23) 
+Exercise 7.6 (1 to 5) 
+Exercise 7.6 (6 to 9) 
+Exercise 7.6 (10 to 14) 
+Exercise 7.6 (15 to 21) 
+Exercise 7.6 (22 to 24); Exercise 7.7 (1,2) 
+--- PAGE 5 ---
+Page 5 of 24 
+ 
+ 
+Exercise 7.7 (3,4,5,6) 
+Exercise 7.7 (7 to 11) 
+Definite Integrals; Exercise 7.8(1,2) 
+Exercise 7.8(4) 
+Exercise 7.8(5.6) 
+Exercise 7.9(1 to 8) 
+Exercise 7.9(15 to 18) 
+Exercise 7.9(19,21,22); Exercise 7.10(1) 
+Exercise 7.10(2,3) 
+Exercise 7.10(4,5,7,8) 
+Exercise 7.11(2,3,4,5) 
+Exercise 7.11(7,8,9,10) 
+Exercise 7.11(15,17,18,19,20,21) 
+Application of Integrals  Introduction 
+Exercise 8.1(1,2,3) 
+Exercise 8.1(8,9,10) 
+Exercise 8.1(11,12,13); Exercise 8.2(1) 
+Exercise 8.2(2,3) 
+Exercise 8.2(4,6,7) 
+Differential Equations  Introduction 
+Exercise 9.4(11) 
+Exercise 9.4(12,13,14,16) 
+Exercise 9.2(1,2,3,4,5,6) 
+Exercise 9.2(7,8,9,10,11,12) 
+Exercise 9.3(1,2,5,10,11,12) 
+Exercise 9.4(1,2,3,4,5,6,7,9) 
+Exercise 9.4(17,18,19) 
+Exercise 9.4(22,23); Exercise 9.5(1) 
+Exercise 9.5(2,3,4) 
+Exercise 9.5(5,6,7) 
+Exercise 9.5(8,9,10) 
+Exercise 9.5(12,17) 
+Exercise 9.6(1,2,3,5) 
+Exercise 9.6(6,7,8,10) 
+Exercise 9.6(11,12,13,14,15) 
+Exercise 9.6(16,17,18,19) 
+Vector Algebra  Introduction 
+Exercise 10.2 (2,3,4,6,7,9,10) 
+Exercise 10.2 (12 to 18) 
+Exercise 10.3 (1 to 7) 
+--- PAGE 6 ---
+Page 6 of 24 
+ 
+ 
+Exercise 10.3 (8 to 15) 
+Exercise 10.3 (18); Exercise 10.4 (1,2,3,5); 
+Exercise 10.4 (6,7,9,10,11,12) 
+Three-Dimensional Geometry  Introduction 
+Exercise 11.1(1,2,3,4) 
+Exercise 11.1(5); Exercises 11.2(1,2,3,4) 
+Exercise 11.2(6,7,12) 
+Exercise 11.2(13,14,15) 
+Exercise 11.2(16,17); Exercise 11.3(1) 
+Exercise 11.3(3,4,7) 
+Exercise 11.3(8,9,10) 
+Exercise 11.3(11,12,13) 
+Exercise 11.3 [14(a,b,c,d)] 
+Linear Programming  Introduction 
+Exercise 12.1(4,5) 
+Exercise 12.1(6,7) 
+Exercise 12.2(1,2) 
+Exercise 12.2(3,4) 
+Exercise 12.2(5) 
+Exercise 12.2(6,7) 
+Exercise 12.2(8) 
+Exercise 12.2(9,11) 
+Probability  Introduction 
+Exercise 13.1(1 to 5) 
+Exercise 13.1[6(i,ii)] 
+Exercise 13.1[6(iii),8,9] 
+Exercise 13.1(10,11) 
+Exercise 13.1(12,14,15); Exercise 13.2(1,2) 
+Exercise 13.2(3,5,8,11) 
+Exercise 13.2(10,16) 
+Exercise 13.2(6,7,9,12,15) 
+Exercise 13.3(1,3,4) 
+Exercise 13.3(5,6,7) 
+Exercise 13.3(8,9,10,11) 
+Exercise 13.3(12,13); Exercise 13.4(1,2,3) 
+Exercise 13.4(4,6) 
+Exercise 13.4(9,11,14) 
+Exercise 13.5(1,9,12,13) 
+ 
+ 
+--- PAGE 7 ---
+Page 7 of 24 
+ 
+ 
+CBSE GRADE - 12 (PHYSICS) TABLE OF VIDEO CLASSES 
+CHAPTER NAME VIDEO NAME 
+Electric Charges and Fields  Basic Properties of Charges 
+Electric Charges and Fields 
+Coulomb's Law 
+Force Between Multiple Charges 
+Electric Field; Dipole 
+Solved Problems 
+Electrostatic Potential and Capacitance  Introduction 
+Electrostatics of Conductors 
+Dielectric 
+Capacitor and Capacitance; Parallel Plate Conductors 
+Effect of Dielectric; Combination of Capacitors 
+Energy Stored in a Capacitor 
+Solved Problems 
+Current Electricity  Introduction 
+Limitations of Ohm's Law; Resistivity of Various Materials 
+Temperature and Resistivity; Combination of Resistors 
+Electrical Energy; Power; Cells; EMF; Internal Resistance 
+Cells in Series; Kirchoff's Rule 
+Wheatstone Bridge; Solved Problems 
+Potentiometer 
+Moving Charges and Magnetism  Introduction 
+Biot Savart Law - Direction of Magnetic Field 
+Magnetic Field in the Axis of Circular Loop 
+Ampere Circuital Law 
+Cyclotron 
+Circular Motion, Solenoid and Toroid 
+Magnetic Field Between 2 Wires Carrying Current 
+Torque on Current Loop, Magnetic Dipole 
+Magnetic Moment, Circular Current Loop as a Magnetic 
+Dipole 
+The Moving Coil Galvanometer, Sensitivity 
+Magnetism and Matter  Magnetism and Matter; Properties of Magnetic Field Lines 
+Bar Magnet as a Equivalent Solenoid 
+The Dipole in a Uniform Magnetic Field ; Magnetism and 
+Gauss's Law 
+The Earth's Magnetic Field , Magnetization, Magnetic 
+Intensity - Part 1 
+Magnetization and Magnetic Intensity; Magnetic 
+Properties of Materials - Part 2 
+--- PAGE 8 ---
+Page 8 of 24 
+ 
+ 
+Paramagnetism; Ferromagnetism 
+Relationship between B & H in Ferromagnetic Material; 
+Permanent Magnets & Electromagnets 
+Electromagnetic Induction  Introduction 
+Electromagnetic Induction; Experiment 6.3; Magnetic Flux 
+Faraday's Law of Electromagnetic Induction; Lenz's Law of 
+Conservation of energy 
+Motional Electromotive Force 
+Energy Consideration; Eddy Currents - Part 1 
+Eddy Currents - Part 2; Magnetic Braking; EM 
+Damping;Induction Furnace; Electric Meter 
+Inductance 
+Mutual Inductance 
+Self Inductance 
+Self Inductance Plays Role of Inertia 
+AC Generator 
+Alternating Current  Introduction 
+Effective Current and Effective Voltage ;AC Voltage Source 
+Connected across a Resistor 
+Representation of AC Current and Voltage by Rotating 
+Vectors 
+AC Voltage Applied to an Inductor 
+Activity to Understand the AC Voltage is Connected to an 
+Inductor 
+AC Voltage Source Connected across a Capacitor 
+AC Voltage Source Connected to a Series LCR 
+Disadvantages of Phasor Method; Analytical Solution 
+Resonance 
+Sharpness of Resonance 
+Power in an AC Circuit 
+LC Oscillations 
+Analogies between Mechanical & Electrical Quantities 
+Transformers - Part 1 
+Transformers - Part 2 
+Electromagnetic Waves  Introduction 
+Displacement Current; Electromagnetic Waves 
+Properties of Electromagnetic Waves; Electromagnetic 
+Spectrum - Part 1 
+Electromagnetic Spectrum - Part 2 
+Electromagnetic Spectrum - Part 3 
+Ray Optics and Optical Instruments  Introduction 
+Spherical Mirrors 
+--- PAGE 9 ---
+Page 9 of 24 
+ 
+ 
+Focal Length 
+Mirror Equation; Linear Magnification 
+Refraction 
+Lateral Shift 
+Atmospheric Refraction; Total Internal Reflection 
+Mirage; Diamond Prism; Optical Fibres 
+Refraction by a Lens 
+The lens Makers Formula; Power of Lens; Combination of 
+Thin Lenses in Contact 
+Refraction through a Prism 
+Dispersion 
+Rainbow formation; Scattering of Light 
+Human Eye 
+Eye Defects 
+Microscope 
+Compound Microscope 
+Reflection Telescope 
+Wave Optics  Introduction 
+Huygens Principle; Refraction of Plane Wave 
+Refraction at a Rarer Medium; Coherent and Incoherent 
+Addition of Waves - Part 1 
+Constructive and Destructive Overlap 
+Coherent and Incoherent Addition of Waves - Part 2; 
+Doppler's Effect 
+Young's Double Slit Experiment 
+Path Difference; Fringe Width 
+Sustained Interference; Diffraction 
+Maxima; Secondary Maxima; Comparison between 
+Diffraction and Interference 
+Resolving Power in Optical Instruments ; Diffraction in 
+Resolving Power of Telescope - Part 1 
+Diffraction in Resolving Power of Telescope - Part 2;Validity 
+of Wave Optics 
+Polarised Wave and Unpolarised Wave ; Polarisation 
+Polarisation by Polaroid 
+Dual Nature of Radiation and Matter  Introduction 
+Electron Emission; Types of Electron Emission 
+Photoelectric Effect - Part 1 
+Photoelectric Effect - Part 2 
+Experimental Observation of Photoelectric Effect - Part 1 
+Experimental Observation of Photoelectric Effect - Part 2; 
+Photoelectric Effect and Wave Theory of Light 
+--- PAGE 10 ---
+Page 10 of 24 
+ 
+ 
+Einstein's Photoelectric Equation - Part 1 
+Einstein's Photoelectric Equation - Part 2 
+Photon Picture of Radiation; Wave Nature of Matter - De 
+Broglie's Hypothesis 
+Heisenberg's Uncertainty Principle; Davisson - Germer 
+Experiment 
+Atoms Introduction 
+Atoms Rutherford's Nuclear Model of Atom 
+Atoms Drawbacks of Rutherford's Model;Atomic Spectra - Part 1 
+Atoms Atomic Spectra - Part 2; Types of Spectrums 
+Atoms Spectral Series - Part 1 
+Atoms Spectral Series - Part 2; Bohr's Model of Hydrogen Atom; 
+Bohr's Radius 
+Atoms Energy of Orbits; Drawbacks of Bohr's Model; De Broglie's 
+Hypothesis 
+Nuclei Introduction 
+Nuclei Nuclide; Einstein's Mass Energy Equivalence 
+Nuclei Nuclear Binding Energy per Nucleon 
+Nuclei Nuclear Force; Radioactivity 
+Nuclei Experiment of Radioactive ;Radioactive Nuclides; 
+Radioactive Decay 
+Nuclei Law of Radioactive Decay ; Generalised Expression for Law 
+of Radioactive Decay 
+Nuclei Decay Rate ; Mean Life of Radioactive Sample 
+Nuclei Alpha Decay; Beta Decay 
+Nuclei Gamma Decay ; Comparison between Alpha , Beta and 
+Gamma Decay 
+Nuclei Nuclear Energy ; Types of Nuclear Fission Reactions 
+Nuclei Nuclear Reactor - Part 1 
+Nuclei Nuclear Reactor - Part 2 
+Semiconductor Electronics; 
+Materials,Devices and Simple Circuits  
+Introduction 
+Classification of Metals, Conductors and Semiconductors - 
+On the Basis of Conductivity 
+Classification of Metals, Conductors and Semiconductors - 
+On the Basis of Energy Bands - Part 1 
+Classification of Metals, Conductors and Semiconductors - 
+On the Basis of Energy Bands - Part 2; Intrinsic 
+Semiconductor 
+P-n Junction - Part 1 
+P-n Junction - Part 2 
+Intrinsic and Extrinsic Semiconductors 
+n- type Semiconductor ; P- type Semiconductor 
+--- PAGE 11 ---
+Page 11 of 24 
+ 
+ 
+Energy Band Diagram of n- type Semiconductor & P- type 
+Semiconductor ; Semiconductor Diode 
+Semiconductor Diode - Forward Bias 
+Semiconductor Diode - Reverse Bias 
+V-I Characteristics of Diode; Half Wave Rectifier; Full Wave 
+Rectifier 
+Filters; Zener Diode - Part 1 
+Zener Diode - Part 2 
+Zener Diode as a Voltage Regulator 
+Opto Electronic Devices - Part 1 
+Opto Electronic Devices - Part 2 
+Opto Electronic Devices - Part 3; Digital Electronics 
+Logic Gates 
+Junction Transistor ; Pnp Transistor - Part 1 
+Pnp Transistor - Part 2; Common Emitter Transistor 
+Characteristics - Part 1 
+Common Emitter Transistor Characteristics - Part 2 
+Input Resistance; Output Resistance ; Current Amplification 
+Factor ; Transistor as a Device 
+Transistor as a Switch - Part 1 
+Transistor as a Switch - Part 2; Transistor as an Amplifier 
+Feedback Amplifier and Transistor Oscillator 
+Communication Systems  Introduction 
+Elements in the Communication System ; Modulation 
+Bandwidth of Signals ; Bandwidth of Transmission Medium 
+Data Representation of Signals 
+Attenuation; Amplification ; Range ; Bandwidth 
+Propagation of Waves; Different Layers of Atmosphere - 
+Part 1 
+Different Layers of Atmosphere - Part 2 
+Modulation- Part 1 
+Modulation- Part 2 ; Amplitude Modulation - Part 1 
+Amplitude Modulation - Part 2; Production of Amplitude 
+Modulated Wave- Part 1 
+Production of Amplitude Modulated Wave- Part 2; 
+Transmitting Antenna and Receiving Antenna 
+ 
+ 
+ 
+ 
+--- PAGE 12 ---
+Page 12 of 24 
+ 
+ 
+CBSE GRADE - 12 (CHEMISTRY) TABLE OF VIDEO CLASSES 
+CHAPTER NAME VIDEO NAME 
+Solid State  Introduction 
+Classification of Solids 
+Types of Crystalline Solids - Part 1 
+Types of Crystalline Solids - Part 2 
+Crystal Lattices / Unit Cells 
+Types of Unit Cells 
+Crystal Systems 
+Number of Atoms in Unit Cells - Part 1 
+Number of Atoms in Unit Cells - Part 2 
+Closed Packed Structures 
+3-Dimensional Close Packing 
+Formula of a Compound and Number of Voids Filled 
+Example 1.2 
+Locating Tetrahedral Void 
+Packing Efficiency in HCP and CCP 
+Packing Efficiency in Body Centered Cubic Structures 
+Packing Efficiency in Simple Cubic Lattice; Calculations 
+Imperfections in Solids - Part 1 
+Imperfections in Solids - Part 2 
+Electrical Properties 
+Conduction of Electricity in Semiconductors 
+Applications of n-Type and p-Type Conductors 
+Classification of Solids 
+Solutions  Introduction 
+Expressing Concentration of Solutions - Part 1 
+Expressing Concentration of Solutions - Part 2 
+Examples; Solbility - Part 1 
+Solubility - Part 2 
+In Text Questions 2.5, 2.6 and 2.7 
+Vapour Pressure of Solutions 
+In Text Questions 
+Vapour Pressure of Solutions of Solids in Liquids; Ideal 
+Solutions 
+Non-Ideal Solutions; Azeotropes 
+Colligative Properties and Determination of Molar Mass 
+Elevation of Boiling Point 
+Depression of Freezing Point 
+Osmosis, Reverse Osmosis, Abnormal Molar Mass 
+--- PAGE 13 ---
+Page 13 of 24 
+ 
+ 
+Van't Hoff Factor and Solved Problems 
+Electrochemistry  Introduction 
+Voltaic Cell 
+Measurement of Electrode Potential 
+Equilibrium Constant from Nernst Equation 
+Conductance of Electrolytic Solutions 
+Law of Independent Migration of Ions; Electrolysis 
+Products of Electrolysis 
+Chemical Kinetics  Rate of Chemical Reactions 
+Average and Instantaneous Rate 
+Reactions - Different Stoichiometry Coefficients 
+Rate Law Expressions - Part 1 
+Rate Law Expressions - Part 2 
+Unimolecular and Complex Reactions 
+Molecularity of a Reaction 
+Integrated Rate Equations - Part 1 
+Integrated Rate Equations - Part 2 
+Integrated Rate Equations - Part 3 
+Problem Solving - 1 
+Effect of Temperature on the Rate of a Reaction - Part 1 
+Effect of Temperature on the Rate of a Reaction - Part 2 
+Arrhenius Equation 
+Effect of Catalyst, Collision Theory 
+Collision Theory - Part 2 
+Surface Chemistry  Introduction 
+Distinction Between Adsorption and Absorption 
+Types of Adsorption 
+Adsorption Isotherms 
+Applications of Adsorption and Catalysts 
+Mechanism of Enzyme catalysis, Catalysis in Industry 
+Adsorption theory of Heterogeneous catalysis; Features of 
+Solid catalyst - Part 1 
+Features of Solid catalyst - Part 2;Shape Selective Catalysis, 
+Enzyme catalysis 
+Colloids; Types of Colloids; Classification of Colloids - Part 1 
+Classification of Colloids - Part 2 
+Preparation of Colloids & Purification of Colloids 
+Properties of Colloids - Part 1 
+Properties of Colloids - Part 2 
+Emulsions; Colloids around us; Application & Uses of Colloids 
+Occurrence of Metals; Concentration of Ores 
+--- PAGE 14 ---
+Page 14 of 24 
+ 
+ 
+General Principles and Processes of 
+Isolation of Elements  
+Extraction of Crude metal from Concentrated ore; 
+Thermodynamic Principles of Metallurgy 
+Extraction of Iron from its Oxides & Copper from its Oxides 
+Extraction of Zinc & Aluminium from its Oxides; Oxidation & 
+Reduction 
+Refining - Part 1 
+Refining - Part 2 
+The p-Block Elements  Introduction; Group 15 Elements 
+Ionisation Enthalpy; Electronegativity; Physical & Chemical 
+Properties - Group 15 
+Ammonia; Oxides of Nitrogen, Phosphorus 
+Chemical Properties of Group 15 Elements 
+p-Block - Group 16 Elements; Dioxygen 
+Simple Oxides; Ozone 
+Sulphur - Part 1 
+Sulphur - Part 2 
+Group 17 Elements 
+Chlorine 
+Oxoacids of Halogen; Interhalogen Compounds 
+Group 18 Elements 
+The d- and f- Block Elements  The d- and f- Block Elements 
+Atomization Enthalpy 
+Oxidation States 
+Magnetic Properties; Formation of Coloured Ions; Interstitial 
+Compounds; Alloys and Complex Compounds 
+Standard Electrode Potential, Trends 
+Trends and Stability of Higher Oxidation States; Compounds 
+of d- Block Elements - Part 1 
+Compounds of d- block Elements - Part 2 
+The Lanthanides - Part 1 
+The Lanthanides - Part 2 
+The Actinides - Part 1 
+The Actinides - Part 2 
+Coordination Compounds Introduction 
+Coordination Polyhedron; Oxidation Number; Werner's 
+Theory 
+Werner's Theory of Coordination Compounds 
+Nomenclature of Coordination Compounds 
+Writing Formulas of IUPAC Names; Valence Bond Theory - 
+Part 1 
+Isomerism in Coordination Compounds 
+--- PAGE 15 ---
+Page 15 of 24 
+ 
+ 
+Limitations of Valence Bond Theory; Crystal Field Theory 
+(CFT) (Octahedral Complexes) 
+Crystal Field Theory (Tetrahedral Complexes); Colour in 
+Coordination Complexes; Bonding in Metal Carbonyls 
+Stability of the Coordination Compounds & Applications 
+Haloalkanes and Haloarenes  Introduction 
+Nomenclature - Part 1; Nature of C-X Bond; Methods of 
+Preparation - Part 1 
+Methods of Preparation - Part 2; Physical Properties 
+Chemical Reactions - Part 1 
+Chemical Reactions - Part 2 
+Stereochemical Aspects of Nucleophilic Substitution 
+Reaction 
+Nomenclature - Part 2 
+Halogen Exchange; Reaction of Haloarenes; Polyhalogen 
+Compounds 
+Alcohols, Phenols and Ethers  Nomenclature; Alcohols 
+Nomenclature; Phenols and Ethers; Structure of Functional 
+Groups 
+Preparation of Alcohols & Phenols 
+Physical Properties of Alcohols, Phenols; Chemical Reactions 
+Electrophilic Aromatic Substitution & Important Reactions of 
+Phenols 
+Some Commercially Important Alcohols 
+Cleavage of - OH Bond 
+Esterification & Its Applications 
+Preparation of Ethers 
+Chemical Reaction of Ethers 
+Friedel Crafts Alkylation Reaction & Acylation Reaction; 
+Williamson Ether Synthesis 
+Acid Dissociation; Acidity of Alcohols; Cleavage of C-O Bond 
+in Ethers 
+Williamson Synthesis of Ethers 
+Aldehydes, Ketones & Carboxylic Acids  Physical Properties & Chemical Properties of Carboxylic 
+Acids - Part 1 
+Chemical Properties of Carboxylic Acids - Part 2 
+Carbonyl Group & Its Structure; Oxidation of Alcohol 
+Methods of Preparation of Aldehydes & Ketones 
+Mechanism of Nucleophilic Attack on the Carbonyl Group 
+Chemical Reactions Involving Nucleophilic Attack; Reduction 
+Reaction 
+Wolff - Kishner Reduction Oxidation Reaction; Haloform 
+Reaction 
+--- PAGE 16 ---
+Page 16 of 24 
+ 
+ 
+Electrophilic Substitution Reaction; Physical Properties of 
+Aldehydes & Ketones; Hydration of Alkynes 
+Reduction of Nitriles & Esters; Preparation of Ketones; 
+Chemical Properties of Carboxylic Acids 
+Resonance & Stability of Carboxylate Ion; Acidic Property & 
+Dissociation Constant of Carboxylic Acid 
+pKa Values & Effect of Substituent Group on Carboxylic Acids 
+Preparation of Carboxylic Acids 
+Reaction of Alpha - Hydrogen in Aldehydes & Ketones; Aldol 
+Condensation; Cross Condensation - Part 1 
+Cross Condensation - Part 2; Cannizzaro Reaction; Uses of 
+Aldehydes & Ketones 
+Nomenclature of Aldehyde, Ketones & Carboxylic Acids 
+Amines  Introduction 
+Preparation of Amines - Part 1 
+Preparation of Amines - Part 2 
+Classification of Amines 
+Physical Properties of Amines 
+Boiling Point; Nomenclature of Amines 
+Chemical Reactions; Structure - Basicity Relationship of 
+Amines 
+Acylation Reactions - Part 1 
+Acylation Reactions - Part 2; Carbylamines Test 
+Reaction of Aliphatic & Aromatic Amines with Nitrous Acid 
+Bromination Reactions of Aromatic Amines 
+Diazonium Salts - Preparation & Properties; Displacement 
+Reactions 
+Replacement of H group & Coupling Reaction of Diazonium 
+Salts; Displacement Reactions - Part 1 
+Displacement Reactions - Part 2 
+Reaction of Amines with Salts with Aryl Sulphonyl Chloride 
+Nitration & Sulphonation Reactions of Aromatic Amines 
+Sandmeyer Reaction 
+Biomolecules  Introduction 
+Classification of Carbohydrates; Preparation & Structure of 
+Glucose - Part 1 
+Preparation & Structure of Glucose - Part 2 
+Cyclic Structure of Glucose; Structure of Fructose; 
+Disaccharides; Sucrose 
+Disaccharides - Maltose, Lactose; Polysaccharides - Starch, 
+Glycogen 
+Polysaccharides - Cellulose; Importance of Carbohydrate; 
+Proteins 
+--- PAGE 17 ---
+Page 17 of 24 
+ 
+ 
+Types of Proteins; Structure of Proteins; Denaturation of 
+Proteins; Enzymes 
+Vitamins; Nucleic Acids - Part 1 
+Nucleic Acids - Part 2; Double Strand Helix of DNA 
+Classification of Amino Acids; Zwitterion; Structure of 
+Proteins; Structure of Fructose 
+Polymers  Introduction 
+Preparation of Addition Polymers; Condensation 
+Polymerisation 
+Rubber - Types of Rubber; Biodegradable Polymers; Addition 
+Polymers 
+Chemistry in Everyday Life 
+ 
+  
+Introduction 
+Receptors as Drug Targets; Therapeutic Action of Different 
+Classes of Drugs - Part 1 
+Therapeutic Action of Different Classes of Drugs - Part 2 
+Cleansing Agents: Soaps, Synthetic Detergents 
+ 
+CBSE GRADE - 12 (BIOLOGY) TABLE OF VIDEO CLASSES 
+CHAPTER NAME VIDEO NAME 
+Reproduction in Organisms  Introduction 
+Asexual Reproduction 
+Gametogenesis and Sexuality 
+Sexual Reproduction in Organisms 
+Events Involved in Sexual Reproduction 
+Sexual Reproduction in Flowering Plants  Introduction 
+Internal Structure of Anther 
+Formation of Male Gametophyte 
+Megasporangium and Development of Female 
+Gametophyte 
+Pollination 
+Adaptation Based on the Agent of Pollination 
+Adaptation Based on the Agencies - Part 1 
+Adaptation Based on the Agencies - Part 2 
+Fertilization 
+Post Fertilization Changes 
+Development of Dicot and Monocot Embryo 
+Post Fertilization Changes Continued; Artificial 
+Hybridization 
+Human Reproduction  Introduction 
+Hormonal Control of Male and Female Reproductive 
+Organs 
+--- PAGE 18 ---
+Page 18 of 24 
+ 
+ 
+Male Reproductive System - Part 1 
+Male Reproductive System - Part 2 
+Female Reproductive System - Part 1 
+Female Reproductive System - Part 2 
+Spermatogenesis 
+Structure of Sperm 
+Oogenesis 
+Structure of Egg; Comparison of Gametes 
+Menstrual Cycle 
+Fertilization - Part 1 
+Fertilization - Part 2 
+Fertilization - Part 3 
+Cleavage of Zygote 
+Implantation 
+Parturition and Lactation 
+Reproductive Health  Introduction 
+Methods of Contraception - Part 1 
+Methods of Contraception - Part 2 
+Amniocentesis and STD's 
+Infertility and Assisted Reproductive Techniques 
+Question and Answers - Part 1 
+Question and Answers - Part 2 
+Principles of Inheritance and Variation  Introduction 
+Mendel's Laws of Inheritance 
+Inheritance of One Gene 
+Phenotype and Genotype of Trihybrid Cross 
+Types of Cross 
+Variations From Mendel's Principles 
+Pleiotropy; Complementary Genes 
+Collaborator Gene; Duplicating Genes 
+Polygenic Inheritance 
+Epistasis; Supplementary Genes 
+Sex Determination 
+Mutation - Part 1 
+Mutation - Part 2 
+Mutation - Part 3 
+Genetic Disorders - Part 1 
+Genetic Disorders - Part 2 
+Genetic Disorders - Part 3 
+Linkage and Gene Mapping 
+--- PAGE 19 ---
+Page 19 of 24 
+ 
+ 
+Chromosomal Theory of Inheritance; Pedigree Analysis 
+Important Terms 
+Molecular basis of Inheritance  Introduction 
+Nucleotide Structure of DNA 
+Types of DNA; Important Terms Related to DNA 
+RNA; Types of RNA, mRNA 
+tRNA,rRNA; Structure of Nucleosome 
+Hershey & Chase Experiment; Properties of Genetic 
+Material (DNA vs RNA) 
+DNA Replication & Enzymes Involved- Part 1 
+DNA Replication - Part 2 
+DNA Replication - Part 3; Semi-Conservative Way of 
+Replication 
+Transcription Unit 
+Genetic Code & Its Salient Features 
+Translation- Part 1 
+Translation- Part 2 
+Reverse Transcription; Regulation of Gene Expression 
+Operon; Inducible Operon 
+Human Genome Project 
+DNA Fingerprinting 
+Griffith's Experiment 
+Double Helix DNA Model; Salient Features of DNA 
+Molecule 
+Evolution  Introduction 
+Theories of Origin of Life; Biogenesis and Modern Theory 
+Evidences of Evolution - Part 1 
+Evidences of Evolution - Part 2 
+Evidences of Evolution - Part 3 
+Theories of Evolution - Lamarck's Theory of Inheritance & 
+Acquired Characteristics 
+Theories of Evolution - Darwin's Theory of Natural 
+Selection; Mutation Theory of Evolution; Neo-Darwinism 
+Examples of Natural Selection - Industrial Melanism and 
+DDT Resistance in Mosquitoes 
+Types of Natural Selection - Artificial Selection 
+Population Genetics; Hardy Weinberg Principle; Evolution 
+of Humans 
+Urey-Miller Experiment; Evidences of Evolution 
+Evidences of Evolution - Part 4 
+Human Health and Diseases  Introduction 
+--- PAGE 20 ---
+Page 20 of 24 
+ 
+ 
+Common Diseases in Humans; Life Cycle of Plasmodium; 
+Immunity 
+Structure of an Antibody; Principle of Vaccination & 
+Immunisation; Allergy 
+Auto Immunity; Immune System of the Body; AIDS 
+Replication of Retrovirus; HIV; Prevention of AIDS 
+Cancer; Characteristic Features of Cancer Cells; Cancer 
+Detection and Diagnosis 
+Drug and Alcohol Abuse - Part 1 
+Drug and Alcohol Abuse - Part 2 
+Drug and Alcohol Abuse - Part 3 
+Strategies for Enhancement in Food 
+Production  
+Introduction 
+Animal Husbandry; MOET; Bee Keeping 
+Fisheries; Plant Breeding 
+Green Revolution; Plant Breeding for Disease Resistance 
+Mutational Breeding; Plant Breeding for Developing 
+Insect Resistance 
+Single Cell Proteins; Tissue Culture; Somatic Hybridisation 
+Microbes in Human Welfare  Introduction 
+Sewage Treatment; Microbes in Production of Biogas 
+Biogas Plant; Microbes as Biocontrol Agents and 
+Biofertilizers 
+Biotechnology : Principles and Processes  Introduction 
+Origin of Replication; Tools for DNA recombinant 
+technology 
+Vector DNA; Alien DNA; Separation and Isolation of DNA 
+Fragments 
+Cloning Vectors 
+Competent Host; Process of Recombinant DNA 
+technology - Part 1 
+Process of Recombinant DNA technology - Part 2 
+Biotechnology and Its Applications  Introduction 
+Biotechnology Applications in Agriculture - Part 1 
+Biotechnology Applications in Agriculture - Part 2; 
+Biotechnology Applications in Medicine - Part 1 
+Biotechnology Applications in Medicine - Part 2; 
+Transgenic Animals; Ethical Issues 
+Organisms and Populations  Introduction 
+Major Abiotic Factors; Response to Abiotic Factors-Part 1 
+Response to Abiotic Factors - Part 2; Adaptations; 
+Populations 
+Age Pyramid; Population Growth; Growth Models 
+Population Interactions; Predation 
+--- PAGE 21 ---
+Page 21 of 24 
+ 
+ 
+Competitions 
+Parasitism; Commensalism; Mutualism 
+Ecosystems  Introduction 
+Productivity; Decomposition - Part 1 
+Decomposition - Part 2 ; Energy Flow 
+Trophic Levels; Ecological Pyramid; Features of Ecological 
+Pyramid 
+Ecological Succession; Succession in Plants 
+Nutrient Cycles; Ecosystem Services 
+Biodiversity and Conservation  Loss of Biodiversity 
+Magnitude of Biodiversity; Levels of Biodiversity - Part 1 
+Levels of Biodiversity - Part 2; India as a Megadiversity 
+Region 
+Patterns of Biodiversity - Part 1;Species Diversity in 
+Ecosystem 
+Conversation of Biodiversity 
+Patterns of Biodiversity - Part 2 
+Environmental Issues  Introduction 
+Air Pollution 
+Water Pollution - Part 1 
+Water Pollution - Part 2 
+Solid Waste - Part 1 
+Solid Waste - Part 2; Agrochemicals and Their Effects; 
+Radioactive Wastes 
+Greenhouse Effect; Ozone Depletion in the Stratosphere - 
+Part 1 
+Ozone Depletion in the Stratosphere - Part 2; 
+Degradation by Improper Resource Utilization and 
+Maintenance 
+Deforestation; Conservation of Forests 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+--- PAGE 22 ---
+Page 22 of 24 
+ 
+ 
+ 
+ENGLISH GRAMMAR (COMPLIMENTARY) TABLE OF VIDEO CLASSES 
+CHAPTER NAME VIDEO NAME  
+Alphabet Vowels and Consonants 
+Parts of Speech Parts of Speech 
+Nouns 
+Pronouns 
+Adjectives 
+Verbs 
+Adverbs - 1 
+Adverbs - 2 
+Proposition - 1 
+Preposition - 2 
+Conjunctions 
+Types of Nouns Introduction to Nouns and Proper Nouns 
+Common Noun and Collective Noun 
+Countable and Uncountable Nouns - Part 1 
+Countable and Uncountable Nouns - Part 2 
+Concrete and Abstract Nouns 
+Noun Gender Noun Gender 
+Neuter Gender 
+Noun Cases Noun Cases 
+Objective Case / Accusative Case 
+Possessive Case 
+Vocative Case 
+Noun Number Noun Number - Singular - Plural Rules 1,2,3,4 
+Noun Number - Singular - Plural Rules 1,2,3,4 
+Noun Number - Singular - Plural Rules 11,12 
+Compound Nouns Compound Nouns - Part 1 
+Compound Nouns - Part 2 
+Compound Nouns - Part 3 
+Articles Articles - 1 
+Articles - 2 
+Definite Article "THE" - Part 1 
+Definite Article "THE" - Part 2 
+Verb Verb-1 
+Verb-2 
+Verb-3 
+Subject Verb Agreement -1 
+--- PAGE 23 ---
+Page 23 of 24 
+ 
+ 
+Subject Verb 
+Agreement 
+Subject Verb Agreement -2 
+Pronouns Pronouns - Personal Pronouns 
+Personal Pronouns as Subject and Object 
+Relative Pronoun - Demonstrative Pronoun 
+Indefinite Pronouns - 1 
+Indefinite Pronouns - 2 
+Reflexive Pronouns 
+Tenses Tenses 
+Present Tense - 1 
+Present Tense - 2 
+Past Tense - 1 
+Past Tense - 2 
+Future Tense 
+Figures of Speech Figures of Speech - 1 
+Figures of Speech - 2 
+Figures of Speech - 3 
+Figures of Speech - 4 
+Nouns Proper Noun and Common Noun 
+Types of Nouns 
+Adjectives Adjectives - 1 
+Adjectives - 2 
+Adjectives - 3 
+Types of Adjectives -1 
+Types of Adjectives -2 
+Articles Indefinite Articles 
+Definite Articles 
+Auxiliary Verbs Auxiliary Verbs -1 
+Auxiliary Verbs -2 
+Auxiliary Verbs - 3 
+Sentences The Sentence - Part 1 
+The Sentence - Part 2 
+Types of Sentences - Part 1 
+Types of Sentences - Part 2 
+Phrases and Clauses Types of Phrases 
+Types of Clauses 
+Idioms Idioms - Part 1 
+Idioms - Part 2 
+Idioms - Part 3 
+Idioms - Part 4 
+--- PAGE 24 ---
+Page 24 of 24 
+ 
+ 
+Idioms - Part 5 
+Question tags Question tags 
+Parts of a Sentence Parts of a Sentence -1 
+Parts of a Sentence -2 
+Pronouns Interrogative Pronoun 
+Possessive Pronoun 
+Verbs Main verbs; Auxiliary verbs 
+*English Grammar is being offered as Complimentary along with Annual Pack 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

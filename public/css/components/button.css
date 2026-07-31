@@ -1,0 +1,109 @@
+/**
+ * Button variants — consistent sizing, hover, touch targets
+ * Primary fill uses --cta-accent (#DC2626) for AA white-on-red (~4.8:1).
+ * Brand --red (#EF4444) is for accents only (fails AA as button fill).
+ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 54px;
+  height: 54px;
+  padding-inline: 2rem;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--sm {
+  min-height: 44px;
+  height: 44px;
+  padding-inline: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.btn--lg {
+  min-height: 56px;
+  height: 56px;
+  padding-inline: 2rem;
+  font-size: 1.05rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--primary {
+  background: var(--cta-accent);
+  color: var(--text-inverse);
+  box-shadow: 0 8px 22px -8px rgba(220, 38, 38, 0.7);
+}
+
+.btn--secondary {
+  background: var(--slate-50);
+  color: var(--navy-900);
+  border-color: var(--border);
+}
+
+.btn--navy {
+  background: var(--navy-700);
+  color: var(--text-inverse);
+}
+
+.btn--ghost {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text-inverse);
+  background: transparent;
+}
+
+.btn--ghost-dark {
+  border-color: var(--border);
+  color: var(--navy-700);
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition:
+      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn--primary:hover {
+    background: #b91c1c;
+    box-shadow: 0 14px 30px -10px rgba(220, 38, 38, 0.85);
+  }
+
+  .btn--ghost:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .btn--ghost-dark:hover {
+    background: var(--slate-50);
+  }
+}
+
+@media (max-width: 640px) {
+  .btn {
+    min-height: 48px;
+    height: auto;
+    padding-block: 0.75rem;
+  }
+}

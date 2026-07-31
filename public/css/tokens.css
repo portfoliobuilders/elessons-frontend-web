@@ -1,0 +1,145 @@
+/**
+ * G-TEC eLessons — Design tokens
+ * Source: landingscreen.dart / Flutter AppColors + homepage v3 palette.
+ * Change a variable here to update the whole marketing surface.
+ */
+
+:root {
+  /* ── COLOUR TOKENS (from Flutter Dart source) ────────────────────────── */
+  --navy-950: #0B1324;
+  --navy-900: #0F172A;
+  --navy-850: #131F37;
+  --navy-800: #131D35;
+  --navy-700: #16244A;
+  --navy-600: #234275;
+  --slate-800: #1E293B;
+  --slate-700: #334155;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --slate-300: #CBD5E1;
+  --slate-200: #E2E8F0;
+  --slate-50: #F8FAFC;
+  --red: #EF4444; /* brand signal — icons, dots, borders only */
+  --red-cta: #DC2626; /* AA white-on-red (~4.8:1) for button fills */
+  --gold: #FACC15; /* decorative accents (chips, dots) */
+  --gold-text: #FCD34D; /* text on navy — ~4.2:1+ AA */
+  --sci: #1B6A47; /* Science stream banner */
+  --com: #5B3E96; /* Commerce stream banner */
+
+  /* ── SEMANTIC ────────────────────────────────────────────────────────── */
+  --text-primary: var(--navy-900);
+  --text-secondary: var(--slate-500);
+  /* slate-400 on white is ~2.56:1 — fails AA; use slate-500 for light surfaces */
+  --text-tertiary: var(--slate-500);
+  --text-on-dark-muted: var(--slate-400); /* ≥ AA on navy-900 */
+  --text-inverse: #ffffff;
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--slate-50);
+  --bg-dark: var(--navy-900);
+  --border: var(--slate-200);
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.12);
+  --shadow-md: 0 6px 12px rgba(15, 23, 42, 0.15);
+  --shadow-lg: 0 12px 24px rgba(15, 23, 42, 0.18);
+  --shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.22);
+  /* CTA fill must meet WCAG AA with white label text — do not use --red alone */
+  --cta-accent: var(--red-cta);
+
+  /* ── GRADIENTS ───────────────────────────────────────────────────────── */
+  --grad-primary: linear-gradient(103deg, var(--navy-700) 0%, var(--navy-600) 100%);
+  --grad-hero: linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 52%, var(--navy-850) 100%);
+  /* Brochure hero (v11) — horizontal wash matching herobanner.png */
+  --grad-hero-brochure: linear-gradient(
+    100deg,
+    #001544 0%,
+    #001b50 26%,
+    #002561 46%,
+    #003175 66%,
+    #00397f 100%
+  );
+
+  /* ── TYPOGRAPHY ──────────────────────────────────────────────────────── */
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
+  --font-serif: "Instrument Serif", Georgia, serif;
+
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
+  --text-6xl: 3.75rem; /* 60px */
+
+  --lh-tight: 1.1;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.75;
+
+  --ls-tight: -0.035em;
+  --ls-normal: 0;
+  --ls-wide: 0.05em;
+  --ls-wider: 0.1em;
+  --ls-widest: 0.15em;
+
+  /* ── SPACING ─────────────────────────────────────────────────────────── */
+  --space-xs: 0.5rem; /* 8px */
+  --space-sm: 0.75rem; /* 12px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+  --gutter: clamp(1.15rem, 4vw, 4rem);
+  --max-width: 1260px;
+
+  /* ── BREAKPOINTS (reference; use in @media) ──────────────────────────── */
+  --bp-xs: 320px;
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1000px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1536px;
+
+  /* ── TRANSITIONS & ANIMATION ─────────────────────────────────────────── */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── RESPONSIVE FONT SCALING ─────────────────────────────────────────── */
+  --text-hero-h1: clamp(2.15rem, 5vw, 3.85rem);
+  --text-hero-sub: clamp(1.15rem, 2.6vw, 2.05rem);
+  --text-h2: clamp(1.95rem, 3.6vw, 3.1rem);
+
+  /* Focus ring (WCAG 2.4.7) */
+  --focus-ring: 3px solid var(--cta-accent);
+  --focus-offset: 3px;
+}
+
+/**
+ * Optional dark-scheme remap. Marketing pages may opt out by setting
+ * data-color-scheme="light" on <html> (see override below).
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-color-scheme="light"]) {
+    --text-primary: var(--slate-50);
+    --text-secondary: var(--slate-300);
+    --bg-primary: var(--navy-900);
+    --bg-secondary: var(--navy-800);
+  }
+}
+
+/* Force light marketing surface regardless of OS preference */
+:root[data-color-scheme="light"] {
+  --text-primary: var(--navy-900);
+  --text-secondary: var(--slate-500);
+  --text-tertiary: var(--slate-500);
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--slate-50);
+}

@@ -1,0 +1,302 @@
+/**
+ * G-TEC eLessons — Brochure hero (v11)
+ * Full-bleed navy · edge-to-edge model photo · brand-first lockup
+ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: var(--text-inverse);
+  background: var(--grad-hero-brochure);
+  min-height: clamp(480px, 52vw, 760px);
+  display: flex;
+  align-items: center;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    115% 85% at 16% 45%,
+    rgba(0, 17, 54, 0.62),
+    transparent 60%
+  );
+}
+
+/* Full-bleed model plane (edge-to-edge, not inset card) */
+.hero__photo {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero__photo img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.hero__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 21, 68, 0.05) 0%,
+    rgba(0, 27, 80, 0.55) 42%,
+    rgba(0, 37, 97, 0.82) 100%
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: clamp(2.5rem, 5vw, 4rem) var(--gutter);
+}
+
+.hero__copy {
+  max-width: min(100%, 640px);
+}
+
+.hero__brand-img {
+  display: block;
+  width: clamp(148px, 16vw, 220px);
+  height: auto;
+  /* Logo ships with a black plate — screen blend clears it on navy */
+  mix-blend-mode: screen;
+}
+
+.hero__title {
+  margin: clamp(1.15rem, 2.6vw, 2rem) 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-size: clamp(2.15rem, 5vw, 3.85rem);
+  color: var(--text-inverse);
+  max-width: 14ch;
+}
+
+.hero__title-light {
+  display: block;
+  font-weight: 400;
+}
+
+.hero__gold-rule {
+  display: block;
+  width: clamp(132px, 16vw, 228px);
+  height: 7px;
+  border-radius: 4px;
+  background: var(--gold);
+  margin: clamp(0.95rem, 2vw, 1.45rem) 0 clamp(1rem, 2vw, 1.5rem);
+}
+
+.hero__sub {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.6vw, 2.05rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.94);
+  max-width: 22ch;
+}
+
+.hero__sub strong {
+  font-weight: 800;
+  color: var(--gold-text);
+}
+
+/* Brand lockup — white pill + graduation cap (brochure motif) */
+.hero__lockup {
+  position: relative;
+  display: inline-block;
+  margin-top: clamp(1.45rem, 3.2vw, 2.25rem);
+}
+
+.hero__lockup-pill {
+  display: block;
+  background: #fff;
+  border-radius: clamp(16px, 2.4vw, 30px);
+  padding: clamp(0.7rem, 1.35vw, 1.05rem) clamp(1.2rem, 2.3vw, 1.9rem)
+    clamp(0.7rem, 1.35vw, 1.05rem) clamp(2.8rem, 5.4vw, 4.6rem);
+  box-shadow: 0 20px 44px -20px rgba(0, 0, 0, 0.6);
+}
+
+.hero__lockup-pill img {
+  width: clamp(200px, 28vw, 340px);
+  height: auto;
+  display: block;
+}
+
+.hero__lockup-cap {
+  position: absolute;
+  left: clamp(-40px, -3.2vw, -18px);
+  bottom: -14px;
+  width: clamp(62px, 8.5vw, 110px);
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__lockup-cap {
+    animation: heroCapBob 7s ease-in-out infinite;
+  }
+
+  @keyframes heroCapBob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-6deg);
+    }
+    50% {
+      transform: translateY(-9px) rotate(-2deg);
+    }
+  }
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  width: 100%;
+}
+
+.hero__proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1.15rem;
+  margin-top: var(--space-xl);
+  font-size: clamp(0.88rem, 1.2vw, 1rem);
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.hero__proof strong {
+  color: var(--text-inverse);
+  font-weight: 800;
+}
+
+/* Lattice motif */
+.hero--lattice::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.045) 0 1px,
+      transparent 1px 74px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.045) 0 1px,
+      transparent 1px 74px
+    );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroReveal 0.7s var(--easing-out) forwards;
+  }
+
+  .hero__reveal--delay {
+    animation-delay: 0.1s;
+  }
+
+  .hero__reveal--delay-2 {
+    animation-delay: 0.2s;
+  }
+
+  .hero__reveal--delay-3 {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes heroReveal {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1180px) {
+  .hero__photo {
+    opacity: 0.58;
+    right: -8%;
+  }
+
+  .hero__copy {
+    max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .hero {
+    min-height: clamp(520px, 88vh, 680px);
+    align-items: flex-end;
+  }
+
+  .hero__photo {
+    opacity: 0.42;
+    right: -22%;
+    height: 92%;
+  }
+
+  .hero__title {
+    max-width: none;
+    font-size: clamp(2rem, 9vw, 2.65rem);
+  }
+
+  .hero__sub {
+    max-width: none;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  .hero__lockup-pill img {
+    width: clamp(180px, 62vw, 260px);
+  }
+}
+
+@media (max-width: 380px) {
+  .hero__proof {
+    font-size: 0.82rem;
+    gap: 0.45rem 0.75rem;
+  }
+}
