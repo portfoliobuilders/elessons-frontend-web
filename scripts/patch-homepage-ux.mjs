@@ -27,8 +27,10 @@ h = h.replace(
   `$1${waAe}$2`
 );
 
-h = h.replace(/>Buy now</g, '>Enrol<');
-h = h.replace(/>Enrol now</g, '>Enrol<');
+h = h.replace(/>Buy now</g, '>Enroll Now<');
+h = h.replace(/>Enrol now</g, '>Enroll Now<');
+h = h.replace(/>Enrol</g, '>Enroll Now<');
+h = h.replace(/>View package</g, '>Enroll Now<');
 
 h = h.replace(
   '<button type="button" class="filter" aria-pressed="false">Grade 10</button>',
@@ -45,7 +47,7 @@ h = h.replace(
   'src="images/v25/brand-lockup.webp"',
   'src="images/v25/brand-lockup.webp" onerror="this.onerror=null;this.src=\'images/v23/brand-lockup.webp\'"'
 );
-h = h.replace('src="images/v25/board-model.webp"', 'src="images/hero/model-board.webp"');
+/* Keep the yellow-stripe thumbs-up model in the board band (v25/board-model.webp). */
 
 h = h.replace(
   'id="announce-x" aria-label="Dismiss" style="cursor:pointer;opacity:.8;font-size:1.1rem;line-height:1"',
