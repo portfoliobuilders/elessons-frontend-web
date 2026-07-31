@@ -21,31 +21,29 @@ const ELESSONS = {
   showDurations: false,
   defaultCurrency: 'inr'
 };
-/* Published class-list PDFs (under /assets/pdfs/). */
-const CLASSLIST_PDFS = {
-  8:  { pcmb: '/assets/pdfs/grade-8-pcmb.pdf' },
-  9:  { pcmb: '/video-list.html' },
-  10: { pcmb: '/assets/pdfs/grade-10-pcmb.pdf' },
-  11: { pcmc: '/assets/pdfs/grade-11-pcmc.pdf', commerce: '/assets/pdfs/grade-11-commerce.pdf' },
+
+/** Source PDF (or printable HTML list) for a grade / stream package. */
+const CLASS_LIST_PDF = {
+  8:  '/assets/pdfs/grade-8-pcmb.pdf',
+  9:  '/video-list.html?grade=9',
+  10: '/assets/pdfs/grade-10-pcmb.pdf',
+  11: {
+    pcmb: '/assets/pdfs/grade-11-pcmc.pdf', /* Biology list not in source set; PCMC PDF covers shared subjects */
+    pcmc: '/assets/pdfs/grade-11-pcmc.pdf',
+    commerce: '/assets/pdfs/grade-11-commerce.pdf'
+  },
   12: {
     pcmb: '/assets/pdfs/grade-12-pcmb.pdf',
     pcmc: '/assets/pdfs/grade-12-pcmc.pdf',
     commerce: '/assets/pdfs/grade-12-commerce.pdf'
   }
 };
-function classListPdfFor(grade, streamKey) {
-  var map = CLASSLIST_PDFS[grade];
-  if (!map) return ELESSONS.classListPdf;
-  if (streamKey && map[streamKey]) return map[streamKey];
-  var order = ['pcmb', 'pcmc', 'commerce'];
-  for (var i = 0; i < order.length; i++) {
-    if (map[order[i]]) return map[order[i]];
-  }
-  return ELESSONS.classListPdf;
+function classListPdfFor(grade, pkg) {
+  var entry = CLASS_LIST_PDF[grade];
+  if (!entry) return ELESSONS.classListPdf + '?grade=' + grade;
+  if (typeof entry === 'string') return entry;
+  return entry[pkg] || entry.pcmb || (ELESSONS.classListPdf + '?grade=' + grade);
 }
-
-
-
 /** Active WhatsApp digits for the shopper's currency (INR → India, AED → Gulf). */
 function elWhatsAppNumber(currency) {
   var c = currency || (typeof document !== 'undefined' &&

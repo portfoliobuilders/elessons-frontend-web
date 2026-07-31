@@ -641,15 +641,70 @@
     var g = S.grade;
     var isLive = S.mode === 'live';
 
+    /* Grades 11–12: three stream packages instead of subject + bundle. */
+    if (isStreamGrade(g)) {
+      $('tier-full').innerHTML = packagesForGrade(g).map(function (pkg) {
+        var meta = PACKAGE_META[pkg];
+        var fp = planPrice(g, 'full', S.mode, null, pkg);
+        var nLessons = hasRegister(g, pkg) ? planLessonCount(g, 'full', null, pkg) : null;
+        return tierCard({
+          on: S.stream === pkg, colour: meta.colour, live: isLive,
+          kicker: 'Grade ' + g + ' \u00b7 stream package',
+          title: meta.name, price: priceAttrs(fp),
+          note: 'English Grammar included free',
+          inc: [meta.tag,
+                nLessons != null ? nLessons + ' video lessons' : 'Every chapter of this stream',
+                'Complimentary English Grammar',
+                'Downloadable PDF notes', 'Full academic year of LMS access',
+                isLive ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
+          cta: 'Add to cart', choose: 'stream:' + pkg
+        });
+      }).join('');
+      $('tier-subject').innerHTML = '';
+      var modNote = $('module-price-note');
+      if (modNote && modNote.parentElement) modNote.parentElement.hidden = true;
+      var modGrid = $('module-grid');
+      if (modGrid) modGrid.hidden = true;
+      var modList = $('tier-module-list');
+      if (modList) modList.innerHTML = '';
+      document.querySelectorAll('[data-choose]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var v = b.dataset.choose.split(':');
+          if (v[0] === 'stream') {
+            S.plan = 'full';
+            S.stream = v[1];
+            S.subject = null;
+            if (history && history.replaceState) {
+              history.replaceState(null, '', 'course-detail.html?grade=' + S.grade +
+                '&plan=full&stream=' + encodeURIComponent(S.stream) + '&mode=' + S.mode);
+            }
+          } else {
+            S.plan = v[0];
+            if (v[1]) S.subject = v[1];
+          }
+          paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated(); syncControls();
+          track('plan_select', { plan: S.plan, subject: S.subject, stream: S.stream, mode: S.mode, grade: S.grade });
+          addCurrentPlanToCart();
+        });
+      });
+      return;
+    }
+
+    var modNoteShow = $('module-price-note');
+    if (modNoteShow && modNoteShow.parentElement) modNoteShow.parentElement.hidden = false;
+    var modGridShow = $('module-grid');
+    if (modGridShow) modGridShow.hidden = false;
+
     /* Full package */
     var fp = planPrice(g, 'full', S.mode), mrp = fullMrp(g);
     $('tier-full').innerHTML = tierCard({
       on: S.plan === 'full', colour: 'var(--navy-600)', kicker: 'Best value \u00b7 all subjects',
       title: 'Grade ' + g + ' Annual Package', price: priceAttrs(fp), live: isLive,
-      note: 'Save ' + fmtMoney(mrp.inr - fp.inr, 'inr') + ' against buying separately',
+      note: 'Save ' + fmtMoney(mrp.inr - fp.inr, 'inr') + ' against buying separately \u00b7 English Grammar free',
       inc: ['Maths, Science and English in full',
             hasRegister(g, S.stream) ? registerTotal(g, null, S.stream) + ' video lessons across ' + chapterTotal(g, S.stream) + ' chapters'
                            : 'Every chapter of the CBSE / NCERT syllabus',
+            'English Grammar complimentary with the annual package',
             'Downloadable PDF notes for every chapter', 'Full academic year of LMS access',
             isLive ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
       cta: 'Add to cart', choose: 'full'
@@ -726,10 +781,20 @@
     document.querySelectorAll('[data-choose]').forEach(function (b) {
       b.addEventListener('click', function () {
         var v = b.dataset.choose.split(':');
-        S.plan = v[0];
-        if (v[1]) S.subject = v[1];
+        if (v[0] === 'stream') {
+          S.plan = 'full';
+          S.stream = v[1];
+          S.subject = null;
+          if (history && history.replaceState) {
+            history.replaceState(null, '', 'course-detail.html?grade=' + S.grade +
+              '&plan=full&stream=' + encodeURIComponent(S.stream) + '&mode=' + S.mode);
+          }
+        } else {
+          S.plan = v[0];
+          if (v[1]) S.subject = v[1];
+        }
         paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated(); syncControls();
-        track('plan_select', { plan: S.plan, subject: S.subject, mode: S.mode, grade: S.grade });
+        track('plan_select', { plan: S.plan, subject: S.subject, stream: S.stream, mode: S.mode, grade: S.grade });
         addCurrentPlanToCart();
       });
     });
@@ -1032,21 +1097,25 @@
       var modP = planPrice(g, 'module', 'recorded');
       var micro = isSub
         ? 'Full academic year \u00b7 this subject'
+        : isPkg
+          ? 'Annual package \u00b7 English Grammar free'
         : (save && save.inr > 0
             ? (priceAttrs(modP)[cur()] + '/module separately \u00b7 Save ' + priceAttrs(save)[cur()])
             : 'Full academic year');
       var modeHtml = S.mode === 'live'
         ? '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>'
         : '<div class="modes"><span class="mode">Recorded</span></div>';
-      var isPopular = isSub ? (sub === popularSubject) : (g === popularGrade);
+      var isPopular = isSub ? (sub === popularSubject)
+                    : isPkg ? (pkg === popularStream)
+                    : (g === popularGrade);
       return '<article class="rel-card" style="--banner:' + colour + ';--grade-tint:' + colour + '">' +
         '<div class="rel-card__art sub-banner ' + banner + '" role="img" aria-label="' + esc(label) + '">' +
           (isPopular ? '<span class="rel-card__badge">Most popular</span>' : '') +
         '</div>' +
         '<div class="rel-card__body">' +
           '<div><p class="mono card-kicker" style="color:' + colour + '">Grade ' + g +
-            ' \u00b7 ' + (isSub ? 'single subject' : 'all subjects') + '</p>' +
-          '<h3 class="h3" style="margin-top:.25rem">' + esc(isSub ? meta.name : 'Annual Package') + '</h3></div>' +
+            ' \u00b7 ' + (isSub ? 'single subject' : isPkg ? 'stream package' : 'all subjects') + '</p>' +
+          '<h3 class="h3" style="margin-top:.25rem">' + esc(isSub ? meta.name : isPkg ? meta.name : 'Annual Package') + '</h3></div>' +
           modeHtml +
           '<div><p class="price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" ' +
           'style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">' + a.inr + '</p>' +
@@ -1056,6 +1125,7 @@
             '<button type="button" class="btn btn-red btn-sm btn-block" data-rel-add="' + planId + '" ' +
               'data-grade="' + g + '" data-plan="' + c.plan + '" ' +
               (isSub ? 'data-subject="' + sub + '" ' : '') +
+              (isPkg ? 'data-stream="' + pkg + '" ' : '') +
               'data-mode="' + S.mode + '">Add to cart</button>' +
             '<a class="rel-card__details" href="' + href + '" data-plan-link="' + planId + '">View details</a>' +
           '</div>' +
