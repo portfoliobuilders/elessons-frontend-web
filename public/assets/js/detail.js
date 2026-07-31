@@ -930,31 +930,51 @@
   }
 
   function paintRelated() {
-    /* Same product shape in other grades, with unique grade tint + Add to cart. */
+    /* Subject pages: other subjects in the same grade.
+       Bundle pages: same annual package in other grades. */
     var asSubject = S.plan === 'subject';
-    var others = Object.keys(PRICING).map(Number).filter(function (g) {
-      return g !== S.grade && (!asSubject || subjectsForGrade(g).indexOf(S.subject) > -1);
-    }).slice(0, 4);
+    var cards = [];
 
-    $('related-heading').textContent = asSubject
-      ? SUBJECT_META[S.subject].name + ' in other grades.'
-      : 'Also available.';
+    if (asSubject) {
+      subjectsForGrade(S.grade).forEach(function (sub) {
+        if (sub === S.subject) return;
+        cards.push({ grade: S.grade, plan: 'subject', subject: sub });
+      });
+      $('related-heading').textContent = 'Other subjects in Grade ' + S.grade + '.';
+    } else {
+      Object.keys(PRICING).map(Number).filter(function (g) {
+        return g !== S.grade;
+      }).slice(0, 4).forEach(function (g) {
+        cards.push({ grade: g, plan: 'full', subject: null });
+      });
+      $('related-heading').textContent = 'Also available.';
+    }
 
-    var popular = others.indexOf(9) > -1 ? 9 : (others.indexOf(10) > -1 ? 10 : others[0]);
+    var popularGrade = null;
+    if (!asSubject) {
+      var grades = cards.map(function (c) { return c.grade; });
+      popularGrade = grades.indexOf(9) > -1 ? 9 : (grades.indexOf(10) > -1 ? 10 : grades[0]);
+    }
+    var popularSubject = asSubject && cards.length
+      ? (cards.some(function (c) { return c.subject === 'maths'; }) ? 'maths' : cards[0].subject)
+      : null;
 
-    $('related-grid').innerHTML = others.map(function (g) {
-      var p = asSubject ? planPrice(g, 'subject', S.mode, S.subject) : planPrice(g, 'full', S.mode);
+    $('related-grid').innerHTML = cards.map(function (c) {
+      var g = c.grade;
+      var sub = c.subject;
+      var isSub = c.plan === 'subject';
+      var p = isSub ? planPrice(g, 'subject', S.mode, sub) : planPrice(g, 'full', S.mode);
       var a = priceAttrs(p);
-      var meta = asSubject ? SUBJECT_META[S.subject] : null;
-      var banner = asSubject ? meta.banner : 'sb-bundle';
-      var colour = asSubject ? meta.colour : (GRADE_TINT[g] || '#073790');
-      var label  = asSubject ? meta.name + ' \u2014 ' + meta.tag : 'Maths, Science and English';
-      var href   = 'course-detail.html?grade=' + g + '&plan=' + (asSubject ? 'subject&subject=' + S.subject : 'full') + '&mode=' + S.mode;
-      var planId = 'g' + g + '-' + (asSubject ? S.subject : 'full') + '-' + S.mode;
-      var mrp = asSubject ? null : fullMrp(g);
+      var meta = isSub ? SUBJECT_META[sub] : null;
+      var banner = isSub ? meta.banner : 'sb-bundle';
+      var colour = isSub ? meta.colour : (GRADE_TINT[g] || '#073790');
+      var label  = isSub ? meta.name + ' \u2014 ' + meta.tag : 'Maths, Science and English';
+      var href   = 'course-detail.html?grade=' + g + '&plan=' + (isSub ? 'subject&subject=' + sub : 'full') + '&mode=' + S.mode;
+      var planId = 'g' + g + '-' + (isSub ? sub : 'full') + '-' + S.mode;
+      var mrp = isSub ? null : fullMrp(g);
       var save = mrp ? { inr: mrp.inr - p.inr, aed: mrp.aed - p.aed } : null;
       var modP = planPrice(g, 'module', 'recorded');
-      var micro = asSubject
+      var micro = isSub
         ? 'Full academic year \u00b7 this subject'
         : (save && save.inr > 0
             ? (priceAttrs(modP)[cur()] + '/module separately \u00b7 Save ' + priceAttrs(save)[cur()])
@@ -962,14 +982,15 @@
       var modeHtml = S.mode === 'live'
         ? '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>'
         : '<div class="modes"><span class="mode">Recorded</span></div>';
+      var isPopular = isSub ? (sub === popularSubject) : (g === popularGrade);
       return '<article class="rel-card" style="--banner:' + colour + ';--grade-tint:' + colour + '">' +
         '<div class="rel-card__art sub-banner ' + banner + '" role="img" aria-label="' + esc(label) + '">' +
-          (g === popular ? '<span class="rel-card__badge">Most popular</span>' : '') +
+          (isPopular ? '<span class="rel-card__badge">Most popular</span>' : '') +
         '</div>' +
         '<div class="rel-card__body">' +
           '<div><p class="mono card-kicker" style="color:' + colour + '">Grade ' + g +
-            ' \u00b7 ' + (asSubject ? 'single subject' : 'all subjects') + '</p>' +
-          '<h3 class="h3" style="margin-top:.25rem">' + esc(asSubject ? meta.name : 'Annual Package') + '</h3></div>' +
+            ' \u00b7 ' + (isSub ? 'single subject' : 'all subjects') + '</p>' +
+          '<h3 class="h3" style="margin-top:.25rem">' + esc(isSub ? meta.name : 'Annual Package') + '</h3></div>' +
           modeHtml +
           '<div><p class="price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" ' +
           'style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">' + a.inr + '</p>' +
@@ -977,8 +998,8 @@
           '</div>' +
           '<div class="rel-card__actions">' +
             '<button type="button" class="btn btn-red btn-sm btn-block" data-rel-add="' + planId + '" ' +
-              'data-grade="' + g + '" data-plan="' + (asSubject ? 'subject' : 'full') + '" ' +
-              (asSubject ? 'data-subject="' + S.subject + '" ' : '') +
+              'data-grade="' + g + '" data-plan="' + c.plan + '" ' +
+              (isSub ? 'data-subject="' + sub + '" ' : '') +
               'data-mode="' + S.mode + '">Add to cart</button>' +
             '<a class="rel-card__details" href="' + href + '" data-plan-link="' + planId + '">View details</a>' +
           '</div>' +
