@@ -103,6 +103,18 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .el-logo{display:block;aspect-ratio:760/191;background-size:contain;background-repeat:no-repeat;
   background-position:center;background-image:url("../img/el-logo.webp")}
 .brand-footer{width:clamp(160px,22vw,208px);height:auto;margin-bottom:.9rem}
+.powered-by{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.7rem;font-weight:600;letter-spacing:.03em;
+  color:rgba(255,255,255,.48);text-decoration:none;line-height:1;
+  white-space:nowrap;transition:color .2s ease
+}
+.powered-by:hover{color:rgba(255,255,255,.92)}
+.powered-by__mark{
+  width:.42rem;height:.42rem;flex:none;border-radius:1px;background:#E10600
+}
+.powered-by__brand{color:rgba(255,255,255,.82);font-weight:700;letter-spacing:.02em}
+.powered-by:hover .powered-by__brand{color:#fff}
 .navlink{font-size:.92rem;font-weight:600;color:var(--ink);padding:.3rem 0;position:relative}
 .navlink[aria-current="true"]{color:var(--navy-700)}
 .navlink[aria-current="true"]::after{right:0}
