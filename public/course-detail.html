@@ -20,8 +20,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/gtec.css?v=41">
-<link rel="stylesheet" href="/assets/css/detail.css?v=41">
+<link rel="stylesheet" href="/assets/css/gtec.css?v=43">
+<link rel="stylesheet" href="/assets/css/detail.css?v=43">
 </head>
 <body>
 
@@ -33,9 +33,9 @@
   <div class="wrap flex center between g2 wrapf" style="padding-block:.6rem;font-size:.82rem">
     <p style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
       <span class="mono" style="background:var(--red-cta);color:#fff;font-size:.62rem;padding:.18rem .55rem;border-radius:999px">New</span>
-      Enrolment for 2025&ndash;26 is open.
+      Enrolment for 2026&ndash;27 is open.
     </p>
-    <button id="announce-x" aria-label="Dismiss" style="cursor:pointer;opacity:.8;font-size:1.1rem;line-height:1">&times;</button>
+    <button id="announce-x" aria-label="Dismiss" style="cursor:pointer;opacity:.8;font-size:1.1rem;line-height:1;min-width:44px;min-height:44px">&times;</button>
   </div>
 </div>
 
@@ -81,7 +81,7 @@
 
     <div class="dhero-grid">
       <div>
-        <p class="eyebrow" style="color:var(--gold)">CBSE / NCERT &middot; 2025&ndash;26</p>
+        <p class="eyebrow" style="color:var(--gold)">CBSE / NCERT &middot; 2026&ndash;27</p>
         <h1 class="dsp dhero-title" id="course-title" style="margin-top:.5rem">Grade 9 &mdash; Annual Package</h1>
         <span class="gold-rule" aria-hidden="true"></span>
         <p class="lead maxw-sm" id="course-lede">Maths, Science and English together for grade 9.</p>
@@ -140,10 +140,10 @@
       <!-- BUY PANEL -->
       <aside class="buy" id="buy-panel" aria-label="Purchase this course">
         <div class="seg" id="seg-mode" role="radiogroup" aria-label="Learning mode">
-          <button type="button" role="radio" data-mode="recorded" aria-checked="true">Recorded</button>
-          <button type="button" role="radio" data-mode="live" aria-checked="false">
+          <button type="button" role="radio" data-mode="live" aria-checked="true">
             <span class="dot-live" aria-hidden="true"></span>Live + Recorded
           </button>
+          <button type="button" role="radio" data-mode="recorded" aria-checked="false">Recorded</button>
         </div>
 
         <p class="buy-was" id="buy-was-wrap">Separately <s class="price" id="buy-was">&#8377;20,000</s></p>
@@ -173,7 +173,7 @@
 
         <p class="buy-terms">Access runs for the full academic year from the date of purchase. Fees are
           non-refundable once the LMS account is activated. Prices are charged in the currency shown at
-          checkout. <a href="#">Terms &amp; conditions</a>.</p>
+          checkout. <a href="terms.html">Terms &amp; conditions</a>.</p>
       </aside>
     </div>
   </div>
@@ -329,24 +329,23 @@
   <div class="wrap" style="padding-block:clamp(2.75rem,5vw,4rem)">
     <div class="grid cols3 g4">
       <div>
-        <img class="brand-footer" src="/assets/img/brand-footer.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191" loading="lazy">
+        <img class="brand-footer" src="assets/img/brand-footer.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191" loading="lazy">
         <p class="mt2" style="font-size:.9rem;max-width:32ch">CBSE / NCERT video lessons and notes for grades 8 to 12.</p>
-        <p class="mono mt2" style="font-size:.58rem;color:var(--gold)">iOS &amp; Android apps &mdash; coming soon</p>
+        <p class="mono mt2" style="font-size:.7rem;color:var(--gold)">iOS &amp; Android apps &mdash; coming soon</p>
       </div>
       <nav class="grid g1" style="align-content:start;font-size:.9rem">
-        <a href="#syllabus">Syllabus</a><a href="#">About us</a><a href="#">Terms</a>
+        <a href="#syllabus">Syllabus</a><a href="about.html">About us</a><a href="terms.html">Terms</a>
       </nav>
       <nav class="grid g1" style="align-content:start;font-size:.9rem">
-        <a href="#">Privacy</a><a href="#faq">FAQ</a><a href="index.html#contact">Contact us</a>
+        <a href="privacy.html">Privacy</a><a href="#faq">FAQ</a><a href="index.html#contact">Contact us</a>
       </nav>
     </div>
     <div class="board-rule" style="margin-block:2.25rem"></div>
     <div class="flex between center wrapf g2" style="font-size:.8rem">
-      <p>&copy; 2026 G-TEC eLessons.net. All rights reserved.</p>
-      <a class="powered-by" href="https://portfolix.tech/" target="_blank" rel="noopener noreferrer">
+      <p>&copy; 2026 <a href="https://www.gteceducation.com/" target="_blank" rel="noopener noreferrer">G-TEC</a> eLessons.net. All rights reserved.</p>
+      <a class="powered-by" href="https://portfolix.tech/" target="_blank" rel="noopener noreferrer" title="Portfolix.Tech">
         <span>Powered by</span>
-        <span class="powered-by__mark" aria-hidden="true"></span>
-        <span class="powered-by__brand">Portfolix Tech</span>
+        <img class="powered-by__logo" src="/assets/img/portfolix-tech.png" alt="Portfolix.Tech" width="760" height="428" loading="lazy">
       </a>
       <span class="flex center g2 wrapf"><a href="tel:+919745553944">+91 97455 53944</a></span>
     </div>
@@ -357,7 +356,7 @@
 <div class="stickybar" id="stickybar" data-mode="product">
   <div>
     <p class="price stickybar-price" id="bar-price">&#8377;12,000</p>
-    <small id="bar-meta">Recorded &middot; Grade 9</small>
+    <small id="bar-meta">Live + Recorded &middot; Grade 9</small>
   </div>
   <button type="button" class="btn btn-red btn-sm" id="bar-buy">Add to cart</button>
 </div>
@@ -381,8 +380,8 @@
       <span class="note-sm" id="cart-count-label">0 items</span>
       <span class="price" id="cart-total" style="font-weight:800;font-size:1.25rem;color:var(--navy-900)">&#8377;0</span>
     </div>
-    <button type="button" class="btn btn-red btn-block mt3" id="cart-checkout">Checkout</button>
-    <p class="note-sm mt2" style="text-align:center">Opens checkout — complete enrolment on WhatsApp until card payment is live.</p>
+    <button type="button" class="btn btn-red btn-block mt3" id="cart-checkout">Enquire on WhatsApp</button>
+    <p class="note-sm mt2" style="text-align:center">Sends your cart summary to our admissions team on WhatsApp. Card payment is coming soon.</p>
   </div>
 </aside>
 
@@ -409,9 +408,9 @@
 </script>
 
 <!-- ORDER MATTERS: data -> page render -> shared bindings -->
-<script src="/assets/js/registers-generated.js?v=36"></script>
-<script src="/assets/js/course-data.js?v=43"></script>
-<script src="/assets/js/detail.js?v=43"></script>
+<script src="/assets/js/registers-generated.js?v=45"></script>
+<script src="/assets/js/course-data.js?v=45"></script>
+<script src="/assets/js/detail.js?v=45"></script>
 <script src="/assets/js/gtec-ui.js?v=36"></script>
 <script>
   var ax = document.getElementById('announce-x');

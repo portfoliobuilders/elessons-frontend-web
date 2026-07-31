@@ -83,8 +83,8 @@ const SUBJECT_META = {
              tag: 'Think. Solve. Succeed.',
              blurb: 'Concept clarity first, then problem solving — worked at the board, step by step.' },
   science: { name: 'Science', code: 'SCI', banner: 'sb-science', colour: '#397417',
-             tag: 'Explore. Understand. Excel.',
-             blurb: 'Physics, chemistry and biology, with the experiments that make each idea stick.' },
+             tag: 'Physics, Chemistry & Biology.',
+             blurb: 'Physics, chemistry and biology together — with the experiments that make each idea stick.' },
   english: { name: 'English', code: 'ENG', banner: 'sb-english', colour: '#47207C',
              tag: 'Read. Write. Communicate.',
              blurb: 'Grammar, vocabulary, writing and literature — the four strands the paper tests.' },
@@ -308,7 +308,34 @@ function hasRegister(grade, pkg) {
 }
 
 /* ---------- HELPERS ---------- */
-function lessonTitle(l)  { return typeof l === 'string' ? l : l.t; }
+/** Repair PDF-extracted glued titles: "inOne" → "in One", "ofaNumber" → "of a Number". */
+function elHumanizeTitle(s) {
+  if (!s) return '';
+  var t = String(s).replace(/\s+/g, ' ').trim();
+  t = t.replace(/([a-z])([A-Z])/g, '$1 $2');
+  t = t.replace(/ofalgebraic/gi, 'of algebraic')
+       .replace(/andalgebraic/gi, 'and algebraic')
+       .replace(/andincluded/gi, 'and included')
+       .replace(/aformula/gi, 'a formula')
+       .replace(/aforce/gi, 'a force')
+       .replace(/Due toan/gi, 'Due to an')
+       .replace(/ANecessary/gi, 'A Necessary')
+       .replace(/andinaudible/gi, 'and inaudible')
+       .replace(/anglesofa/gi, 'angles of a')
+       .replace(/Diagonalsofa/gi, 'Diagonals of a')
+       .replace(/ARectangle/gi, 'A Rectangle')
+       .replace(/ABar Graph/gi, 'A Bar Graph')
+       .replace(/andarea/gi, 'and area')
+       .replace(/OFPolygons/g, 'of Polygons');
+  t = t.replace(/\bofa\b/gi, 'of a').replace(/\bona\b/gi, 'on a').replace(/\banda\b/gi, 'and a');
+  t = t.replace(/\btoa\b/gi, 'to a').replace(/\bbya\b/gi, 'by a').replace(/\bina\b/gi, 'in a');
+  t = t.replace(/\bOF\b/g, 'of');
+  return t.replace(/\s+/g, ' ').trim();
+}
+function lessonTitle(l)  {
+  var raw = typeof l === 'string' ? l : (l && l.t) || '';
+  return elHumanizeTitle(raw);
+}
 function lessonStatus(l) { return typeof l === 'string' ? 'ok' : (l.s || 'ok'); }
 
 /* A lesson the source marks "Rejected" must never reach a learner. */

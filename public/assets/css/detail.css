@@ -142,9 +142,10 @@
 .chap>summary{list-style:none;cursor:pointer;position:relative;
   padding:1rem 3rem 1rem 1.2rem;display:flex;align-items:center;gap:.9rem;font-weight:700;font-size:.97rem}
 .chap>summary::-webkit-details-marker{display:none}
-.chap>summary::after{content:"+";position:absolute;right:1.3rem;top:50%;transform:translateY(-50%);
-  font-family:"JetBrains Mono",monospace;color:var(--red);font-size:1.25rem;line-height:1}
-.chap[open]>summary::after{content:"\2212"}
+.chap>summary::after{content:"";position:absolute;right:1.35rem;top:50%;width:.55rem;height:.55rem;
+  border-right:2px solid var(--navy-700);border-bottom:2px solid var(--navy-700);
+  transform:translateY(-65%) rotate(45deg);transition:transform .2s ease}
+.chap[open]>summary::after{transform:translateY(-35%) rotate(225deg);color:inherit}
 .chap-n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;font-weight:600;
   color:var(--slate-500);flex:none}
 .chap-count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;
@@ -223,24 +224,30 @@
 .stickybar-price{font-weight:800;font-size:1.1rem;letter-spacing:-.02em;line-height:1.15}
 .stickybar small{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.55rem;
   font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:.12rem}
+/* Reserve space so footer (incl. Powered by) clears the sticky cart/CTA bar. */
+:root{--stickybar-offset:0px}
+body{padding-bottom:var(--stickybar-offset);scroll-padding-bottom:var(--stickybar-offset)}
+footer{position:relative;z-index:1}
 @media (max-width:999px){
   .stickybar{display:flex}
-  body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+  :root{--stickybar-offset:calc(96px + env(safe-area-inset-bottom,0px))}
 }
 @media (min-width:1000px){
   .stickybar{
     display:flex;
     transform:translateY(110%);
-    transition:transform .28s ease;
+    transition:transform .28s ease,visibility .28s ease;
     pointer-events:none;
+    visibility:hidden;
   }
   body.panel-gone .stickybar,
   body.cart-has-items .stickybar{
     transform:translateY(0);
     pointer-events:auto;
+    visibility:visible;
   }
   body.panel-gone,
-  body.cart-has-items{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+  body.cart-has-items{--stickybar-offset:calc(96px + env(safe-area-inset-bottom,0px))}
 }
 
 @media (max-width:640px){

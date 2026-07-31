@@ -6,9 +6,13 @@
         — CBSE / NCERT video lessons for grades 8–12.
       </p>
       <p class="caption" style="margin-top: 0.5rem; color: var(--slate-400)">
-        © <span id="y">2026</span> G-TEC Education. AED pricing · UAE · India · Bahrain · KSA.
+        © <span id="y">2026</span> <a href="https://www.gteceducation.com/" target="_blank" rel="noopener noreferrer">G-TEC</a> Education. AED pricing · UAE · India · Bahrain · KSA.
       </p>
     </div>
+    <a class="powered-by" href="https://portfolix.tech/" target="_blank" rel="noopener noreferrer" title="Portfolix.Tech">
+      <span>Powered by</span>
+      <img class="powered-by__logo" src="/assets/img/portfolix-tech.png" alt="Portfolix.Tech" width="760" height="428" loading="lazy">
+    </a>
     <nav aria-label="Footer">
       <a href="#faq">FAQ</a>
       <span aria-hidden="true" style="margin-inline: 0.75rem; opacity: 0.4">·</span>

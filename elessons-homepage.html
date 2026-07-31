@@ -152,6 +152,19 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .el-logo{display:block;aspect-ratio:760/191;background-size:contain;background-repeat:no-repeat;
   background-position:center;background-image:url("images/v25/nav-logo.webp")}
 .brand-footer{width:clamp(160px,22vw,208px);height:auto;margin-bottom:.9rem}
+.powered-by{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);text-decoration:none;line-height:1;
+  white-space:nowrap;transition:color .2s ease,opacity .2s ease,transform .2s ease
+}
+.powered-by:hover{color:rgba(255,255,255,.92);transform:translateY(-1px)}
+.powered-by:focus-visible{outline:2px solid rgba(255,255,255,.55);outline-offset:4px;border-radius:4px}
+.powered-by__logo{
+  display:block;height:clamp(26px,3.2vw,32px);width:auto;
+  border-radius:5px;box-shadow:0 0 0 1px rgba(255,255,255,.08)
+}
+.powered-by:hover .powered-by__logo{box-shadow:0 0 0 1px rgba(255,255,255,.18)}
 .navlink{font-size:.92rem;font-weight:600;color:var(--ink);padding:.3rem 0;position:relative}
 .navlink[aria-current="true"]{color:var(--navy-700)}
 .navlink[aria-current="true"]::after{right:0}
@@ -438,7 +451,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 /* ══════════════ STICKY BAR ══════════════ */
 .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--navy-950);color:#fff;
   border-top:1px solid rgba(255,255,255,.14);padding:.65rem var(--gutter);display:none;align-items:center;justify-content:space-between;gap:1rem}
-@media (max-width:767px){.stickybar{display:flex}body{padding-bottom:76px}}
+@media (max-width:767px){.stickybar{display:flex}body{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));scroll-padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
 
 /* ══════════════ REVEAL ══════════════ */
 @media (prefers-reduced-motion:no-preference){
@@ -1865,11 +1878,10 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
     </div>
     <div class="board-rule" style="margin-block:2.25rem"></div>
     <div class="flex between center wrapf g2" style="font-size:.8rem">
-      <p>&copy; 2026 G-TEC eLessons.net. All rights reserved.</p>
-      <a class="powered-by" href="https://portfolix.tech/" target="_blank" rel="noopener noreferrer">
+      <p>&copy; 2026 <a href="https://www.gteceducation.com/" target="_blank" rel="noopener noreferrer">G-TEC</a> eLessons.net. All rights reserved.</p>
+      <a class="powered-by" href="https://portfolix.tech/" target="_blank" rel="noopener noreferrer" title="Portfolix.Tech">
         <span>Powered by</span>
-        <span class="powered-by__mark" aria-hidden="true"></span>
-        <span class="powered-by__brand">Portfolix Tech</span>
+        <img class="powered-by__logo" src="images/portfolix-tech.png" alt="Portfolix.Tech" width="760" height="428" loading="lazy">
       </a>
       <span class="flex center g2 wrapf"><a href="tel:+919745553944">+91 97455 53944</a>
         <span aria-hidden="true" style="opacity:.4">&middot;</span>
