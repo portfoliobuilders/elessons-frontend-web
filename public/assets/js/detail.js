@@ -33,8 +33,8 @@
 
   /* ══════════════ CART (localStorage) ══════════════
      Brochure → store: parents can bundle packages, subjects and modules
-     without losing context. Checkout still toast-stubs until a payment route
-     exists — but the cart itself is real and survives reloads. */
+     without losing context. Checkout opens checkout.html (WhatsApp handoff until
+     card payment is wired) — the cart itself is real and survives reloads. */
   var CART_KEY = 'elessons_cart_v1';
   var GRADE_TINT = { 8: '#0D7377', 9: '#073790', 10: '#5B3E96', 11: '#9A3412', 12: '#1B6A47' };
 
@@ -379,13 +379,14 @@
     var checkout = $('cart-checkout');
     if (checkout) checkout.addEventListener('click', function () {
       var cart = loadCart();
+      if (!cart.items.length) { toast('Your cart is empty'); return; }
       var tot = cartTotal(cart);
       track('begin_checkout', {
         value: tot[cur()], currency: cur().toUpperCase(),
         items: cart.items.map(function (it) { return it.id; })
       });
-      /* TODO: replace with the real checkout route. */
-      toast('Checkout is not wired up yet — this is where payment starts.');
+      location.href = (ELESSONS.checkoutUrl || '/checkout.html') +
+        '?currency=' + encodeURIComponent(cur());
     });
     var railAdd = $('mod-rail-add');
     if (railAdd) railAdd.addEventListener('click', function () {
@@ -1016,14 +1017,26 @@
   function bindWa() {
     document.querySelectorAll('[data-wa]').forEach(function (a) {
       var msg = "Hi GTEC Team, I'm interested in " + a.dataset.wa + '. Can you share more details?';
-      a.href = 'https://wa.me/' + ELESSONS.whatsapp + '?text=' + encodeURIComponent(msg);
+      a.href = (typeof elWhatsAppHref === 'function')
+        ? elWhatsAppHref(msg, cur())
+        : ('https://wa.me/' + ELESSONS.whatsapp + '?text=' + encodeURIComponent(msg));
       a.rel = 'noopener';
       a.target = '_blank';
       if (a.dataset.waBound) return;
       a.dataset.waBound = '1';
       a.addEventListener('click', function () {
-        track('whatsapp_lead', { context: a.dataset.wa, page: location.pathname });
+        track('whatsapp_lead', {
+          context: a.dataset.wa, page: location.pathname, currency: cur()
+        });
       });
+    });
+  }
+  /* Currency switcher lives in gtec-ui.js — refresh WA destinations when it flips. */
+  function bindCurrencyWa() {
+    document.querySelectorAll('.cur-select').forEach(function (sel) {
+      if (sel.dataset.waCurrencyBound) return;
+      sel.dataset.waCurrencyBound = '1';
+      sel.addEventListener('change', function () { bindWa(); paintCart(); });
     });
   }
   function bindLms() {
@@ -1140,6 +1153,7 @@
   paintPrice();
   syncControls();
   bindMode(); bindTierTabs(); bindRegister(); bindLms(); bindBuy(); bindCartUi(); bindWa();
+  bindCurrencyWa();
   bindStickyPanel(); bindModuleSearch();
   paintCart();
   track('page_view', { page: 'course-detail', grade: S.grade, plan: S.plan, mode: S.mode });

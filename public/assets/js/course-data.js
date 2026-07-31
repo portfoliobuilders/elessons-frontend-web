@@ -6,16 +6,34 @@
 
 /* ---------- CONFIG ---------- */
 const ELESSONS = {
+  /* India admissions line (homepage schema + nav). Gulf enquiry uses whatsappAed. */
   whatsapp: '919745553944',
+  whatsappInr: '919745553944',
+  whatsappAed: '971568056001',   /* same Gulf number as homepage config.js */
   phoneDisplay: '+91 97455 53944',
+  phoneDisplayAed: '+971 568056001',
   lmsUrl: 'https://lms.elessons.net',        // TODO confirm the real LMS origin
   classListPdf: '/video-list.html',
+  checkoutUrl: '/checkout.html',
 
   // Durations are NOT in the source syllabus PDF. Leaving this false hides the
   // column rather than shipping invented numbers.
   showDurations: false,
   defaultCurrency: 'inr'
 };
+
+/** Active WhatsApp digits for the shopper's currency (INR → India, AED → Gulf). */
+function elWhatsAppNumber(currency) {
+  var c = currency || (typeof document !== 'undefined' &&
+    document.documentElement.getAttribute('data-currency')) || ELESSONS.defaultCurrency;
+  return c === 'aed' ? (ELESSONS.whatsappAed || ELESSONS.whatsapp)
+                     : (ELESSONS.whatsappInr || ELESSONS.whatsapp);
+}
+
+function elWhatsAppHref(message, currency) {
+  return 'https://wa.me/' + elWhatsAppNumber(currency) +
+    '?text=' + encodeURIComponent(message || '');
+}
 
 const PREVIEWS = {
   // Real ID from the existing home page player. Used as the fallback until
