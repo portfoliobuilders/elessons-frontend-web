@@ -42,6 +42,7 @@ img[width][height] {
 @media print {
   .site-header,
   .mobile-enroll,
+  .wa-float,
   .skip-link,
   .cta-band,
   .site-nav__toggle {

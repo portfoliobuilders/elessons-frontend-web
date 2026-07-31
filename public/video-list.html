@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <title>CBSE (NCERT) List of Video Classes | eLessons.net</title>
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex, follow">
+<meta name="author" content="G-TEC eLessons.net">
+<meta name="theme-color" content="#00133C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -62,6 +68,19 @@
     thead { display: table-header-group; }
     tr { break-inside: avoid; }
   }
+  @media (max-width: 640px) {
+    body { padding: 16px 12px 48px; }
+    .sheet { padding: 22px 14px 36px; border-radius: 10px; }
+    .summary { width: 100%; }
+    table, thead, tbody, th, td, tr { display: block; width: 100%; }
+    thead { display: none; }
+    tr { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; padding: 8px; background: #fff; }
+    td.chapter { width: 100%; display: block; background: var(--amber-soft); border: 0; margin-bottom: 6px; border-radius: 6px; }
+    td { border: 0; padding: 4px 2px; }
+    h1 { font-size: 14px; padding: 10px 12px; }
+    .bar { justify-content: stretch; }
+    .bar a, .bar button { flex: 1; text-align: center; min-height: 44px; }
+  }
 </style>
 </head>
 <body>
@@ -77,7 +96,7 @@
   </div>
 
   <h1 id="doc-title">CBSE (NCERT) — LIST OF VIDEO CLASSES</h1>
-  <h2 id="doc-stream">PCMB</h2>
+  <h2 id="doc-stream">Maths · Science · English</h2>
 
   <table class="summary">
     <thead><tr><th>Subject</th><th>Number of Videos</th></tr></thead>
@@ -92,8 +111,8 @@
   </p>
 </div>
 
-<script src="/assets/js/registers-generated.js?v=36"></script>
-<script src="/assets/js/course-data.js?v=36"></script>
+<script src="/assets/js/registers-generated.js?v=45"></script>
+<script src="/assets/js/course-data.js?v=45"></script>
 <script>
 (function () {
   var qp = new URLSearchParams(location.search);
@@ -107,7 +126,7 @@
   var R = registerFor(grade, pkg);
   var ORDER = registerStreams(grade, pkg);
   var streamLabel = pkg && PACKAGE_META[pkg] ? PACKAGE_META[pkg].name
-                   : (grade <= 10 ? 'PCMB' : 'Class list');
+                   : (grade <= 10 ? 'Maths · Science · English' : 'Class list');
 
   document.title = 'CBSE (NCERT) Grade ' + grade + (pkg ? ' ' + streamLabel : '') +
     ' — List of Video Classes | eLessons.net';
@@ -148,9 +167,10 @@
       var lessons = publishedLessons(ch);
       if (!lessons.length) return '';
       return lessons.map(function (l, i) {
-        var title = typeof l === 'string' ? l : l.t;
+        var title = (typeof elHumanizeTitle === 'function') ? elHumanizeTitle(lessonTitle(l)) : lessonTitle(l);
+        var chap = (typeof elHumanizeTitle === 'function') ? elHumanizeTitle(ch.c) : ch.c;
         var cell = i === 0
-          ? '<td class="chapter" rowspan="' + lessons.length + '">' + esc(ch.c) + '</td>'
+          ? '<td class="chapter" rowspan="' + lessons.length + '">' + esc(chap) + '</td>'
           : '';
         return '<tr>' + cell + '<td>' + esc(title) + '</td></tr>';
       }).join('');

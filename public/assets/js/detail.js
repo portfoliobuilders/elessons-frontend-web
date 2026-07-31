@@ -424,7 +424,7 @@
         if (cartHas(id)) return;
         addCartItem(makeCartItem({
           id: id, type: 'module', grade: S.grade, mode: S.mode,
-          title: ch.c,
+          title: (typeof elHumanizeTitle === 'function') ? elHumanizeTitle(ch.c) : ch.c,
           subtitle: 'Grade ' + S.grade + ' · ' + (STREAM_META[stream] ? STREAM_META[stream].label : stream) +
                     ' · ' + (S.mode === 'live' ? 'Live + Recorded' : 'Recorded'),
           price: mp
@@ -465,12 +465,27 @@
       var cart = loadCart();
       if (!cart.items.length) { toast('Your cart is empty'); return; }
       var tot = cartTotal(cart);
+      var currency = cur();
+      var symbol = currency === 'aed' ? 'AED ' : '\u20B9';
+      var lines = cart.items.map(function (it) {
+        var p = (it.price && it.price[currency] != null) ? it.price[currency] : 0;
+        return '- ' + (it.title || it.id) + ' (' + symbol + Number(p).toLocaleString('en-IN') + ')';
+      });
+      var msg = 'Hi G-TEC eLessons, I would like to enrol.\n\n' +
+        lines.join('\n') +
+        '\n\nTotal: ' + symbol + Number(tot[currency] || 0).toLocaleString('en-IN') +
+        '\nCurrency: ' + currency.toUpperCase() +
+        '\n\nPlease share payment and LMS activation steps.';
       track('begin_checkout', {
-        value: tot[cur()], currency: cur().toUpperCase(),
+        value: tot[currency], currency: currency.toUpperCase(),
         items: cart.items.map(function (it) { return it.id; })
       });
-      location.href = (ELESSONS.checkoutUrl || '/checkout.html') +
-        '?currency=' + encodeURIComponent(cur());
+      /* Card checkout page is not live yet — hand off to WhatsApp with a clear cart summary. */
+      var href = (typeof elWhatsAppHref === 'function')
+        ? elWhatsAppHref(msg, currency)
+        : ('https://wa.me/' + (ELESSONS.whatsappInr || ELESSONS.whatsapp || '919745553944') +
+           '?text=' + encodeURIComponent(msg));
+      window.open(href, '_blank', 'noopener');
     });
     var railAdd = $('mod-rail-add');
     if (railAdd) railAdd.addEventListener('click', function () {
@@ -509,7 +524,7 @@
     plan:    ['full', 'subject', 'module'].indexOf(qp.get('plan')) > -1 ? qp.get('plan') : 'full',
     subject: null,
     stream:  null,
-    mode:    qp.get('mode') === 'live' ? 'live' : 'recorded',
+    mode:    qp.get('mode') === 'recorded' ? 'recorded' : 'live',
     modules: {}
   };
   /* Grades 11–12: stream packages. Legacy ?subject= links map to a sensible stream. */
@@ -848,7 +863,7 @@
           var id = k + ':' + ci, on = !!S.modules[id];
           var lessons = publishedLessons(ch).length;
           return '<div class="mod-row">' +
-            '<p>' + esc(ch.c) + '<br><small>' +
+            '<p>' + esc((typeof elHumanizeTitle === 'function') ? elHumanizeTitle(ch.c) : ch.c) + '<br><small>' +
               '<span class="price" data-inr="' + baseMpa.inr + '" data-aed="' + baseMpa.aed + '">' + baseMpa.inr + '</span>' +
               ' \u00b7 ' + lessons + ' lesson' + (lessons === 1 ? '' : 's') + '</small></p>' +
             '<button type="button" class="mod-add" data-module="' + id + '" aria-pressed="' + on + '">' +
@@ -1023,9 +1038,10 @@
       if (!vis.length) return;
       hits += vis.length;
 
+      var chapTitle = (typeof elHumanizeTitle === 'function') ? elHumanizeTitle(ch.c) : ch.c;
       html += '<details class="chap"' + (q || ci === 0 ? ' open' : '') + '>' +
         '<summary><span class="chap-n">' + String(ci + 1).padStart(2, '0') + '</span>' +
-          '<span>' + esc(ch.c) + '</span>' +
+          '<span>' + esc(chapTitle) + '</span>' +
           '<span class="chap-count">' + vis.length + ' lesson' + (vis.length > 1 ? 's' : '') + '</span>' +
         '</summary>' +
         vis.map(function (e) {
@@ -1392,6 +1408,12 @@
       if (cs2.display !== 'none' && cs2.pointerEvents !== 'none') {
         stickyH = Math.max(64, Math.ceil(bar.getBoundingClientRect().height) || 64);
       }
+    }
+    /* Keep page end (footer) clear of the sticky cart/CTA bar. */
+    if (stickyH > 0) {
+      document.documentElement.style.setProperty('--stickybar-offset', (stickyH + 20) + 'px');
+    } else {
+      document.documentElement.style.removeProperty('--stickybar-offset');
     }
     var gap = 20;
     fab.style.setProperty('bottom', (stickyH > 0 ? stickyH + gap : 16) + 'px', 'important');

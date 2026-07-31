@@ -90,9 +90,41 @@ body {
   display: none;
 }
 
+/* WhatsApp floating action button — sits above sticky bars */
+.wa-float {
+  position: fixed;
+  right: clamp(0.9rem, 2vw, 1.6rem);
+  bottom: calc(clamp(0.9rem, 2vw, 1.6rem) + env(safe-area-inset-bottom, 0px));
+  z-index: 75;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 12px 30px -10px rgba(37, 211, 102, 0.75);
+  transition: transform 0.2s ease, bottom 0.28s ease;
+}
+.wa-float svg {
+  display: block;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+}
+.wa-float:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+.wa-float:focus-visible {
+  outline: 3px solid #128c7e;
+  outline-offset: 3px;
+}
+
 @media (max-width: 767px) {
   body {
-    padding-bottom: 76px;
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
   }
 
   .mobile-enroll {
@@ -114,6 +146,10 @@ body {
   .mobile-enroll .btn {
     flex: 1;
     min-height: 48px;
+  }
+
+  .wa-float {
+    bottom: calc(76px + 0.9rem + env(safe-area-inset-bottom, 0px));
   }
 }
 

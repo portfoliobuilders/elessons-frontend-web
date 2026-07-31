@@ -22,3 +22,6 @@ android/.gradle/
 .vercel-out/
 .env*.local
 node_modules/
+
+.vercel
+.env*

@@ -142,9 +142,10 @@
 .chap>summary{list-style:none;cursor:pointer;position:relative;
   padding:1rem 3rem 1rem 1.2rem;display:flex;align-items:center;gap:.9rem;font-weight:700;font-size:.97rem}
 .chap>summary::-webkit-details-marker{display:none}
-.chap>summary::after{content:"+";position:absolute;right:1.3rem;top:50%;transform:translateY(-50%);
-  font-family:"JetBrains Mono",monospace;color:var(--red);font-size:1.25rem;line-height:1}
-.chap[open]>summary::after{content:"\2212"}
+.chap>summary::after{content:"";position:absolute;right:1.35rem;top:50%;width:.55rem;height:.55rem;
+  border-right:2px solid var(--navy-700);border-bottom:2px solid var(--navy-700);
+  transform:translateY(-65%) rotate(45deg);transition:transform .2s ease}
+.chap[open]>summary::after{transform:translateY(-35%) rotate(225deg);color:inherit}
 .chap-n{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;font-weight:600;
   color:var(--slate-500);flex:none}
 .chap-count{margin-left:auto;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;
@@ -192,12 +193,27 @@
 .prose strong{color:var(--ink)}
 .notice{border-left:3px solid var(--gold);background:rgba(251,198,63,.09);border-radius:0 12px 12px 0;
   padding:.9rem 1.1rem;font-size:.8rem;color:var(--slate-700);line-height:1.6}
-.wa-float{position:fixed;right:clamp(.9rem,2vw,1.6rem);bottom:clamp(.9rem,2vw,1.6rem);z-index:65;
-  width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;
-  align-items:center;justify-content:center;box-shadow:0 12px 30px -10px rgba(37,211,102,.75);
-  transition:transform .2s ease}
+.wa-float{position:fixed;right:clamp(.9rem,2vw,1.6rem);bottom:1rem;
+  z-index:100;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  box-shadow:0 12px 30px -10px rgba(37,211,102,.75);
+  transition:transform .2s ease,bottom .28s ease,opacity .2s ease,visibility .2s ease}
+.wa-float svg{display:block;flex-shrink:0;width:28px;height:28px;pointer-events:none}
 .wa-float:hover{transform:translateY(-3px) scale(1.04)}
 .wa-float:focus-visible{outline:3px solid #128C7E;outline-offset:3px}
+.wa-float.is-hidden{opacity:0;visibility:hidden;pointer-events:none;transform:none}
+/* Keep FAB fully above the sticky cart/CTA bar (CSS fallback; JS fine-tunes). */
+@media (max-width:999px){
+  .wa-float{bottom:calc(4.75rem + 1rem + env(safe-area-inset-bottom,0px)) !important}
+  .wa-float.is-hidden{opacity:1;visibility:visible;pointer-events:auto}
+}
+@media (min-width:1000px){
+  body.panel-gone .wa-float,
+  body.cart-has-items .wa-float{
+    bottom:calc(4.75rem + 1rem + env(safe-area-inset-bottom,0px)) !important;
+    opacity:1 !important;visibility:visible !important;pointer-events:auto !important
+  }
+}
 .toast{position:fixed;left:50%;bottom:clamp(5.5rem,12vw,7rem);transform:translate(-50%,14px);z-index:90;
   background:var(--navy-950);color:#fff;border-radius:999px;padding:.75rem 1.4rem;font-size:.85rem;
   font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;
@@ -208,23 +224,30 @@
 .stickybar-price{font-weight:800;font-size:1.1rem;letter-spacing:-.02em;line-height:1.15}
 .stickybar small{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.55rem;
   font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:.12rem}
+/* Reserve space so footer (incl. Powered by) clears the sticky cart/CTA bar. */
+:root{--stickybar-offset:0px}
+body{padding-bottom:var(--stickybar-offset);scroll-padding-bottom:var(--stickybar-offset)}
+footer{position:relative;z-index:1}
 @media (max-width:999px){
   .stickybar{display:flex}
-  body{padding-bottom:78px}
-  .wa-float{bottom:calc(78px + .9rem)}
+  :root{--stickybar-offset:calc(96px + env(safe-area-inset-bottom,0px))}
 }
 @media (min-width:1000px){
   .stickybar{
     display:flex;
     transform:translateY(110%);
-    transition:transform .28s ease;
+    transition:transform .28s ease,visibility .28s ease;
     pointer-events:none;
+    visibility:hidden;
   }
-  body.panel-gone .stickybar{
+  body.panel-gone .stickybar,
+  body.cart-has-items .stickybar{
     transform:translateY(0);
     pointer-events:auto;
+    visibility:visible;
   }
-  body.panel-gone{padding-bottom:78px}
+  body.panel-gone,
+  body.cart-has-items{--stickybar-offset:calc(96px + env(safe-area-inset-bottom,0px))}
 }
 
 @media (max-width:640px){
@@ -560,10 +583,6 @@ body.cart-open{overflow:hidden}
 
 /* sticky cart mode */
 .stickybar[data-mode="cart"] .btn{min-width:7.5rem}
-@media (max-width:999px){
-  body.cart-has-items{padding-bottom:78px}
-  body.cart-has-items .wa-float{bottom:calc(78px + .9rem)}
-}
 
 @media (prefers-reduced-motion:reduce){
   .rel-card,.cart-btn{transition:none}
