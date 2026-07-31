@@ -213,7 +213,7 @@
           var parts = mid.split(':');
           var stream = parts[0];
           var ci = Number(parts[1]);
-          var ch = (streamChapters(S.grade, stream) || [])[ci];
+          var ch = (streamChapters(S.grade, stream, S.stream) || [])[ci];
           var label = ch ? ch.c : mid;
           var meta = STREAM_META[stream];
           return '<li><span>' + esc(label) +
@@ -252,7 +252,7 @@
         var modSpend = mulMoney(PRICING[S.grade].modulePrice, n);
         var save = { inr: modSpend.inr - offerPrice.inr, aed: modSpend.aed - offerPrice.aed };
         var allCount = offer.type === 'full'
-          ? (hasRegister(S.grade) ? chapterTotal(S.grade) : null)
+          ? (hasRegister(S.grade, S.stream) ? chapterTotal(S.grade, S.stream) : null)
           : subjectModuleCount(S.grade, offer.subject);
         var copy = n + ' modules = ' + fmtMoney(modSpend.inr, 'inr') + '. ';
         if (offer.type === 'full') {
@@ -313,7 +313,7 @@
   }
   function subjectModuleCount(grade, subject) {
     return streamsForSubject(subject).reduce(function (n, k) {
-      return n + streamChapters(grade, k).length;
+      return n + streamChapters(grade, k, S.stream).length;
     }, 0);
   }
 
@@ -333,7 +333,7 @@
         var parts = mid.split(':');
         var stream = parts[0];
         var ci = Number(parts[1]);
-        var chs = streamChapters(S.grade, stream);
+        var chs = streamChapters(S.grade, stream, S.stream);
         var ch = chs[ci];
         if (!ch) return;
         var id = 'g' + S.grade + '-mod-' + mid + '-' + S.mode;
@@ -424,11 +424,32 @@
     grade:   PRICING[qp.get('grade')] ? Number(qp.get('grade')) : 9,
     plan:    ['full', 'subject', 'module'].indexOf(qp.get('plan')) > -1 ? qp.get('plan') : 'full',
     subject: null,
+    stream:  null,
     mode:    qp.get('mode') === 'live' ? 'live' : 'recorded',
     modules: {}
   };
-  var subs = subjectsForGrade(S.grade);
-  S.subject = subs.indexOf(qp.get('subject')) > -1 ? qp.get('subject') : subs[0];
+  /* Grades 11–12: stream packages. Legacy ?subject= links map to a sensible stream. */
+  if (isStreamGrade(S.grade)) {
+    var reqStream = (qp.get('stream') || '').toLowerCase();
+    if (packagesForGrade(S.grade).indexOf(reqStream) > -1) {
+      S.stream = reqStream;
+    } else {
+      var legacySub = (qp.get('subject') || '').toLowerCase();
+      if (legacySub === 'english' || legacySub === 'maths') S.stream = 'pcmb';
+      else if (legacySub === 'science') S.stream = 'pcmb';
+      else {
+        var pkgs = packagesForGrade(S.grade);
+        /* Grade 11 has no dedicated PCMB syllabus PDF yet — prefer PCMC when present. */
+        if (S.grade === 11 && pkgs.indexOf('pcmc') > -1) S.stream = 'pcmc';
+        else S.stream = pkgs[0] || 'pcmb';
+      }
+    }
+    S.plan = 'full';
+    S.subject = null;
+  } else {
+    var subs = subjectsForGrade(S.grade);
+    S.subject = subs.indexOf(qp.get('subject')) > -1 ? qp.get('subject') : subs[0];
+  }
 
   /* ---------- current price ---------- */
   function moduleCount() { return Object.keys(S.modules).length; }
@@ -436,9 +457,12 @@
     if (S.plan === 'module') {
       return mulMoney(planPrice(S.grade, 'module', S.mode), moduleCount());
     }
-    return planPrice(S.grade, S.plan, S.mode, S.subject);
+    return planPrice(S.grade, S.plan, S.mode, S.subject, S.stream);
   }
   function currentTitle() {
+    if (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream]) {
+      return 'Grade ' + S.grade + ' \u2014 ' + PACKAGE_META[S.stream].name;
+    }
     if (S.plan === 'subject') return 'Grade ' + S.grade + ' \u2014 ' + SUBJECT_META[S.subject].name;
     if (S.plan === 'module')  return 'Grade ' + S.grade + ' \u2014 Build your own';
     return 'Grade ' + S.grade + ' \u2014 Annual Package';
@@ -472,19 +496,21 @@
       }
     }
 
-    $('course-lede').textContent = S.plan === 'subject'
+    $('course-lede').textContent = (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream])
+      ? PACKAGE_META[S.stream].blurb
+      : S.plan === 'subject'
       ? SUBJECT_META[S.subject].blurb
       : S.plan === 'module'
         ? 'Pick only the chapters you need. Every module is priced on its own and lands in your library the moment you buy it.'
         : 'Maths, Science and English together for grade ' + S.grade +
-          ' \u2014 every lesson and every notes file, unlocked on day one.';
+          ' \u2014 every lesson and notes file, with English Grammar included free.';
 
     /* Counts must describe THIS purchase, not the whole catalog, and must not
        borrow another grade's syllabus. */
     var lc = $('fact-lessons'), cc = $('fact-chapters');
-    if (hasRegister(S.grade)) {
-      var n = planLessonCount(S.grade, S.plan, S.subject);
-      var c = planChapterCount(S.grade, S.plan, S.subject);
+    if (hasRegister(S.grade, S.stream)) {
+      var n = planLessonCount(S.grade, S.plan, S.subject, S.stream);
+      var c = planChapterCount(S.grade, S.plan, S.subject, S.stream);
       lc.hidden = cc.hidden = false;
       lc.innerHTML = '<strong>' + n + '</strong> video lesson' + (n === 1 ? '' : 's');
       cc.innerHTML = '<strong>' + c + '</strong> chapter' + (c === 1 ? '' : 's');
@@ -501,7 +527,7 @@
     setPrice($('bar-price'), p);
 
     var wasWrap = $('buy-was-wrap'), saveEl = $('buy-save');
-    if (S.plan === 'full') {
+    if (S.plan === 'full' && !isStreamGrade(S.grade)) {
       var mrp = fullMrp(S.grade);
       var save = { inr: mrp.inr - p.inr, aed: mrp.aed - p.aed };
       wasWrap.hidden = false;
@@ -521,7 +547,9 @@
       S.plan === 'module'
         ? (n ? n + ' module' + (n > 1 ? 's' : '') + ' selected' : 'No modules selected yet')
         : S.plan === 'subject' ? 'This subject \u00b7 full academic year'
-                               : 'All three subjects \u00b7 full academic year';
+                               : (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream]
+                                  ? (PACKAGE_META[S.stream].name + ' stream \u00b7 English Grammar free')
+                                  : 'All subjects \u00b7 English Grammar free');
 
     var up = upgradeOffer(S.grade, S.plan, S.mode, S.subject);
     var upEl = $('buy-upgrade');
@@ -620,7 +648,7 @@
       title: 'Grade ' + g + ' Annual Package', price: priceAttrs(fp), live: isLive,
       note: 'Save ' + fmtMoney(mrp.inr - fp.inr, 'inr') + ' against buying separately',
       inc: ['Maths, Science and English in full',
-            hasRegister(g) ? registerTotal(g) + ' video lessons across ' + chapterTotal(g) + ' chapters'
+            hasRegister(g, S.stream) ? registerTotal(g, null, S.stream) + ' video lessons across ' + chapterTotal(g, S.stream) + ' chapters'
                            : 'Every chapter of the CBSE / NCERT syllabus',
             'Downloadable PDF notes for every chapter', 'Full academic year of LMS access',
             isLive ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
@@ -630,12 +658,12 @@
     /* By subject */
     $('tier-subject').innerHTML = subjectsForGrade(g).map(function (sub) {
       var m = SUBJECT_META[sub], p = planPrice(g, 'subject', S.mode, sub);
-      var count = planLessonCount(g, 'subject', sub);
+      var count = planLessonCount(g, 'subject', sub, S.stream);
       return tierCard({
         on: S.plan === 'subject' && S.subject === sub, colour: m.colour, live: isLive,
         kicker: 'Grade ' + g + ' \u00b7 single subject', title: m.name, price: priceAttrs(p),
         note: 'This subject \u00b7 full academic year',
-        inc: [m.tag, hasRegister(g) ? count + ' video lessons' : 'Every chapter of this subject',
+        inc: [m.tag, hasRegister(g, S.stream) ? count + ' video lessons' : 'Every chapter of this subject',
               'PDF notes for every chapter',
               isLive ? 'Live doubt-clearing included' : 'Recorded lessons, replay anytime'],
         cta: 'Add to cart', choose: 'subject:' + sub
@@ -656,7 +684,7 @@
       'Each module is <span class="price" data-inr="' + mpa.inr +
       '" data-aed="' + mpa.aed + '">' + mpa.inr + '</span>. Use Add all to grab a whole subject in one click.';
 
-    var streams = registerStreams(g);
+    var streams = registerStreams(g, S.stream);
     var mq = (moduleQuery || '').trim().toLowerCase();
     if (!streams.length) {
       $('tier-module-list').innerHTML =
@@ -664,7 +692,7 @@
         '<p style="margin-top:.4rem;font-size:.9rem">Message us on WhatsApp and we will share the chapter list.</p></div>';
     } else {
       $('tier-module-list').innerHTML = streams.map(function (k) {
-        var meta = STREAM_META[k], chs = streamChapters(g, k);
+        var meta = STREAM_META[k], chs = streamChapters(g, k, S.stream);
         if (!chs.length) return '';
         var rows = chs.map(function (ch, ci) {
           if (mq && ch.c.toLowerCase().indexOf(mq) === -1) return '';
@@ -725,7 +753,7 @@
         e.preventDefault();
         e.stopPropagation();
         var k = b.dataset.addAll;
-        var chs = streamChapters(S.grade, k);
+        var chs = streamChapters(S.grade, k, S.stream);
         chs.forEach(function (ch, ci) { S.modules[k + ':' + ci] = true; });
         if (S.plan !== 'module') { S.plan = 'module'; paintHero(); syncControls(); }
         paintModRail();
@@ -743,7 +771,7 @@
   var moduleQuery = '';
   var beDeclinedFor = -1;
 
-  function planStreams() { return streamsForPlan(S.grade, S.plan, S.subject); }
+  function planStreams() { return streamsForPlan(S.grade, S.plan, S.subject, S.stream); }
 
   function paintStreamTabs() {
     var keys = planStreams();
@@ -751,15 +779,17 @@
     $('stream-tabs').hidden = keys.length < 2;
     $('stream-tabs').innerHTML = keys.map(function (k) {
       return '<button class="tab" role="tab" data-stream="' + k + '" aria-selected="' + (k === stream) + '">' +
-        esc(STREAM_META[k].label) + '<small>' + streamCount(S.grade, k) + ' lessons</small></button>';
+        esc(STREAM_META[k].label) +
+        (STREAM_META[k].complimentary ? ' <span class="mono" style="font-size:.58rem;color:var(--gold)">Free</span>' : '') +
+        '<small>' + streamCount(S.grade, k, null, S.stream) + ' lessons</small></button>';
     }).join('');
 
     /* When only one subject is being bought, say what the full package adds
        rather than silently hiding the rest of the catalog. */
     var up = $('register-upsell');
-    var hidden = registerStreams(S.grade).filter(function (k) { return keys.indexOf(k) === -1; });
-    if (S.plan === 'subject' && hidden.length && hasRegister(S.grade)) {
-      var extra = hidden.reduce(function (n, k) { return n + streamCount(S.grade, k); }, 0);
+    var hidden = registerStreams(S.grade, S.stream).filter(function (k) { return keys.indexOf(k) === -1; });
+    if (S.plan === 'subject' && hidden.length && hasRegister(S.grade, S.stream)) {
+      var extra = hidden.reduce(function (n, k) { return n + streamCount(S.grade, k, null, S.stream); }, 0);
       up.hidden = false;
       up.innerHTML = 'Showing the ' + esc(SUBJECT_META[S.subject].name) + ' syllabus only. ' +
         'The Grade ' + S.grade + ' Annual Package adds ' + extra + ' more lessons across ' +
@@ -775,9 +805,19 @@
   }
 
   function paintRegister() {
+    var dl = $('download-pdf');
+    if (dl && typeof classListPdfFor === 'function') {
+      var href = classListPdfFor(S.grade, S.stream || 'pcmb');
+      if (href) {
+        dl.hidden = false;
+        dl.href = href;
+        if (/\.pdf($|\?)/i.test(href)) dl.setAttribute('download', '');
+        else dl.removeAttribute('download');
+      }
+    }
     /* No published class list for this grade: say so plainly instead of
        showing another grade's chapters. */
-    if (!hasRegister(S.grade)) {
+    if (!hasRegister(S.grade, S.stream)) {
       $('register-body').innerHTML =
         '<div class="reg-empty"><p class="h3">The Grade ' + S.grade + ' class list is being published</p>' +
         '<p style="margin-top:.5rem;font-size:.9rem;max-width:52ch;margin-inline:auto">Lesson titles for this ' +
@@ -795,7 +835,7 @@
     $('register-search').hidden = false;
     $('download-pdf').hidden = false;
 
-    var chapters = stream ? streamChapters(S.grade, stream) : [];
+    var chapters = stream ? streamChapters(S.grade, stream, S.stream) : [];
     var q = query.trim().toLowerCase();
     var running = 0, hits = 0, html = '';
 
@@ -838,8 +878,8 @@
 
     var planTot = $('register-plan-total');
     if (planTot) {
-      var pn = planLessonCount(S.grade, S.plan, S.subject);
-      var pStreams = streamsForPlan(S.grade, S.plan, S.subject);
+      var pn = planLessonCount(S.grade, S.plan, S.subject, S.stream);
+      var pStreams = streamsForPlan(S.grade, S.plan, S.subject, S.stream);
       if (S.plan === 'full') {
         planTot.textContent = pn + ' lessons across 3 subjects';
       } else if (S.plan === 'subject') {
@@ -854,8 +894,8 @@
     $('register-summary').textContent = q
       ? hits + ' lesson' + (hits === 1 ? '' : 's') + ' matching \u201c' + query + '\u201d'
       : (streamLabel
-          ? (streamLabel + ' \u2014 ' + streamCount(S.grade, stream) + ' lessons \u00b7 ' + chapters.length + ' chapters')
-          : (streamCount(S.grade, stream) + ' lessons \u00b7 ' + chapters.length + ' chapters'));
+          ? (streamLabel + ' \u2014 ' + streamCount(S.grade, stream, null, S.stream) + ' lessons \u00b7 ' + chapters.length + ' chapters')
+          : (streamCount(S.grade, stream, null, S.stream) + ' lessons \u00b7 ' + chapters.length + ' chapters'));
 
     $('register-body').querySelectorAll('[data-preview]').forEach(function (a) {
       a.addEventListener('click', function () { track('preview_click', { lesson: a.dataset.preview, stream: stream }); });
@@ -931,11 +971,17 @@
 
   function paintRelated() {
     /* Subject pages: other subjects in the same grade.
+       Stream pages: other streams in the same grade.
        Bundle pages: same annual package in other grades. */
-    var asSubject = S.plan === 'subject';
     var cards = [];
 
-    if (asSubject) {
+    if (isStreamGrade(S.grade)) {
+      packagesForGrade(S.grade).forEach(function (pkg) {
+        if (pkg === S.stream) return;
+        cards.push({ grade: S.grade, plan: 'full', stream: pkg });
+      });
+      $('related-heading').textContent = 'Other Grade ' + S.grade + ' streams.';
+    } else if (S.plan === 'subject') {
       subjectsForGrade(S.grade).forEach(function (sub) {
         if (sub === S.subject) return;
         cards.push({ grade: S.grade, plan: 'subject', subject: sub });
@@ -951,27 +997,37 @@
     }
 
     var popularGrade = null;
-    if (!asSubject) {
+    var asSubject = !isStreamGrade(S.grade) && S.plan === 'subject';
+    if (!asSubject && !isStreamGrade(S.grade)) {
       var grades = cards.map(function (c) { return c.grade; });
       popularGrade = grades.indexOf(9) > -1 ? 9 : (grades.indexOf(10) > -1 ? 10 : grades[0]);
     }
     var popularSubject = asSubject && cards.length
       ? (cards.some(function (c) { return c.subject === 'maths'; }) ? 'maths' : cards[0].subject)
       : null;
+    var popularStream = isStreamGrade(S.grade) && cards.length ? cards[0].stream : null;
 
     $('related-grid').innerHTML = cards.map(function (c) {
       var g = c.grade;
       var sub = c.subject;
+      var pkg = c.stream;
       var isSub = c.plan === 'subject';
-      var p = isSub ? planPrice(g, 'subject', S.mode, sub) : planPrice(g, 'full', S.mode);
+      var isPkg = !!pkg;
+      var p = isSub ? planPrice(g, 'subject', S.mode, sub)
+            : isPkg ? planPrice(g, 'full', S.mode, null, pkg)
+            : planPrice(g, 'full', S.mode);
       var a = priceAttrs(p);
-      var meta = isSub ? SUBJECT_META[sub] : null;
-      var banner = isSub ? meta.banner : 'sb-bundle';
-      var colour = isSub ? meta.colour : (GRADE_TINT[g] || '#073790');
-      var label  = isSub ? meta.name + ' \u2014 ' + meta.tag : 'Maths, Science and English';
-      var href   = 'course-detail.html?grade=' + g + '&plan=' + (isSub ? 'subject&subject=' + sub : 'full') + '&mode=' + S.mode;
-      var planId = 'g' + g + '-' + (isSub ? sub : 'full') + '-' + S.mode;
-      var mrp = isSub ? null : fullMrp(g);
+      var meta = isSub ? SUBJECT_META[sub] : (isPkg ? PACKAGE_META[pkg] : null);
+      var banner = isSub ? meta.banner : (isPkg ? meta.banner : 'sb-bundle');
+      var colour = isSub ? meta.colour : (isPkg ? meta.colour : (GRADE_TINT[g] || '#073790'));
+      var label  = isSub ? meta.name + ' \u2014 ' + meta.tag
+                 : isPkg ? meta.name + ' \u2014 ' + meta.tag
+                 : 'Maths, Science and English';
+      var href   = isPkg
+        ? ('course-detail.html?grade=' + g + '&plan=full&stream=' + pkg + '&mode=' + S.mode)
+        : ('course-detail.html?grade=' + g + '&plan=' + (isSub ? 'subject&subject=' + sub : 'full') + '&mode=' + S.mode);
+      var planId = 'g' + g + '-' + (isSub ? sub : (pkg || 'full')) + '-' + S.mode;
+      var mrp = (isSub || isPkg) ? null : fullMrp(g);
       var save = mrp ? { inr: mrp.inr - p.inr, aed: mrp.aed - p.aed } : null;
       var modP = planPrice(g, 'module', 'recorded');
       var micro = isSub
@@ -1129,7 +1185,7 @@
   /* Hide By module when this grade has no register; fall back to By subject. */
   function syncModuleTabVisibility() {
     var tab = document.querySelector('#tier-tabs [data-tier="module"]');
-    var has = registerStreams(S.grade).length > 0;
+    var has = registerStreams(S.grade, S.stream).length > 0;
     if (tab) {
       tab.hidden = !has;
       tab.style.display = has ? '' : 'none';

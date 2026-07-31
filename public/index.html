@@ -550,6 +550,17 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .qmark{margin-bottom:-.4rem}
 .tab{border-radius:6px 6px 0 0}
 .tab:focus-visible{outline-offset:-2px}
+
+.wa-float{position:fixed;right:clamp(.9rem,2vw,1.6rem);bottom:clamp(.9rem,2vw,1.6rem);z-index:65;
+  width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;
+  align-items:center;justify-content:center;box-shadow:0 12px 30px -10px rgba(37,211,102,.75);
+  transition:transform .2s ease;text-decoration:none}
+.wa-float:hover{transform:translateY(-3px) scale(1.04)}
+.wa-float:focus-visible{outline:3px solid #128C7E;outline-offset:3px}
+@media (max-width:767px){.wa-float{bottom:calc(76px + .9rem)}}
+.course{cursor:pointer}
+.course:focus-visible{outline:3px solid var(--navy-600);outline-offset:3px}
+
 </style>
 </head>
 <body>
@@ -683,7 +694,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
           <span class="mono" style="color:var(--line);font-size:1.6rem;font-weight:800">01</span>
         </div>
         <h3 class="h3 mt3">Pick your class</h3>
-        <p class="mt1" style="color:var(--slate);font-size:.95rem">Grades 8 to 12, in Maths, Science and English. Take one subject on its own or all three together.</p>
+        <p class="mt1" style="color:var(--slate);font-size:.95rem">Grades 8 to 10 by subject; grades 11 and 12 by stream (PCMB, PCMC, Commerce). English Grammar is free with every annual package.</p>
       </div>
 
       <div class="card card-hover rv">
@@ -860,7 +871,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
           <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Maths, Science and English together for grade 8 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <p class="card-blurb">Maths, Science and English together for grade 8 &mdash; every lesson and notes file, with English Grammar included free.</p>
         <div style="margin-top:auto">
           <p class="bundle-was">Separately <s class="price" data-inr="&#8377;20,000" data-aed="AED 1,200">&#8377;20,000</s></p>
           <p class="price bundle-price" data-inr="&#8377;12,000" data-aed="AED 800">&#8377;12,000</p>
@@ -922,7 +933,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
           <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Maths, Science and English together for grade 9 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <p class="card-blurb">Maths, Science and English together for grade 9 &mdash; every lesson and notes file, with English Grammar included free.</p>
         <div style="margin-top:auto">
           <p class="bundle-was">Separately <s class="price" data-inr="&#8377;20,000" data-aed="AED 1,200">&#8377;20,000</s></p>
           <p class="price bundle-price" data-inr="&#8377;12,000" data-aed="AED 800">&#8377;12,000</p>
@@ -984,7 +995,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
           <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Maths, Science and English together for grade 10 &mdash; every lesson and every notes file, unlocked on day one.</p>
+        <p class="card-blurb">Maths, Science and English together for grade 10 &mdash; every lesson and notes file, with English Grammar included free.</p>
         <div style="margin-top:auto">
           <p class="bundle-was">Separately <s class="price" data-inr="&#8377;20,000" data-aed="AED 1,200">&#8377;20,000</s></p>
           <p class="price bundle-price" data-inr="&#8377;15,000" data-aed="AED 1,000">&#8377;15,000</p>
@@ -992,128 +1003,94 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
           <a href="course-detail.html?grade=10&plan=full" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
         </div>
       </article>
-      <article class="course course-img card-hover" data-tags="Grade 11|Maths" style="--banner:#073790">
-        <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
+      <article class="course course-img card-hover" data-tags="Grade 11|PCMB|Science" style="--banner:#397417">
+        <span class="sub-banner sb-science" role="img" aria-label="PCMB — Physics, Chemistry, Maths, Biology"></span>
         <div>
-          <p class="mono card-kicker" style="color:#073790">Grade 11 &middot; single subject</p>
-          <h3 class="h3" style="margin-top:.25rem">Maths</h3>
-          <p class="mono subj-tagline" style="color:#073790">Think. Solve. Succeed.</p>
+          <p class="mono card-kicker" style="color:#397417">Grade 11 &middot; stream package</p>
+          <h3 class="h3" style="margin-top:.25rem">PCMB</h3>
+          <p class="mono subj-tagline" style="color:#397417">Physics · Chemistry · Maths · Biology</p>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
+        <p class="card-blurb">The full science stream for grade 11, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
-          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
-          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=subject&subject=maths" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+          <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">Annual package &middot; English Grammar free</p>
+          <a href="course-detail.html?grade=11&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
         </div>
       </article>
-      <article class="course course-img card-hover" data-tags="Grade 11|Science" style="--banner:#397417">
-        <span class="sub-banner sb-science" role="img" aria-label="Science — Explore. Understand. Excel."></span>
+      <article class="course course-img card-hover" data-tags="Grade 11|PCMC|Science" style="--banner:#0E7490">
+        <span class="sub-banner sb-science" role="img" aria-label="PCMC — Physics, Chemistry, Maths, Computer Science"></span>
         <div>
-          <p class="mono card-kicker" style="color:#397417">Grade 11 &middot; single subject</p>
-          <h3 class="h3" style="margin-top:.25rem">Science</h3>
-          <p class="mono subj-tagline" style="color:#397417">Explore. Understand. Excel.</p>
+          <p class="mono card-kicker" style="color:#0E7490">Grade 11 &middot; stream package</p>
+          <h3 class="h3" style="margin-top:.25rem">PCMC</h3>
+          <p class="mono subj-tagline" style="color:#0E7490">Physics · Chemistry · Maths · CS</p>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Physics, chemistry and biology, with the experiments that make each idea stick.</p>
+        <p class="card-blurb">Physics, chemistry, maths and computer science for grade 11, with free English Grammar included.</p>
         <div style="margin-top:auto">
-          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
-          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=subject&subject=science" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+          <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">Annual package &middot; English Grammar free</p>
+          <a href="course-detail.html?grade=11&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
         </div>
       </article>
-      <article class="course course-img card-hover" data-tags="Grade 11|English" style="--banner:#47207C">
-        <span class="sub-banner sb-english" role="img" aria-label="English — Read. Write. Communicate."></span>
+      <article class="course course-img card-hover" data-tags="Grade 11|Commerce" style="--banner:#92400E">
+        <span class="sub-banner sb-english" role="img" aria-label="Commerce — Accountancy and Maths"></span>
         <div>
-          <p class="mono card-kicker" style="color:#47207C">Grade 11 &middot; single subject</p>
-          <h3 class="h3" style="margin-top:.25rem">English</h3>
-          <p class="mono subj-tagline" style="color:#47207C">Read. Write. Communicate.</p>
+          <p class="mono card-kicker" style="color:#92400E">Grade 11 &middot; stream package</p>
+          <h3 class="h3" style="margin-top:.25rem">Commerce</h3>
+          <p class="mono subj-tagline" style="color:#92400E">Accountancy · Maths</p>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Grammar, vocabulary, writing and literature — the four strands the paper tests.</p>
+        <p class="card-blurb">Accountancy and maths for grade 11 commerce, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
-          <p class="price" data-inr="&#8377;4,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;4,000</p>
-          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=subject&subject=english" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+          <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">Annual package &middot; English Grammar free</p>
+          <a href="course-detail.html?grade=11&plan=full&stream=commerce" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
         </div>
       </article>
-      <article class="course course-bundle card-hover" data-tags="Grade 11" style="--banner:var(--gold)">
-        <span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>
-        <span class="course-ghost" aria-hidden="true">11</span>
-        <p class="mono bundle-flag">Best value</p>
-        <div class="flex g2" style="align-items:flex-start">
-          <span class="course-num">11</span>
-          <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
-        </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Maths, Science and English together for grade 11 &mdash; every lesson and every notes file, unlocked on day one.</p>
-        <div style="margin-top:auto">
-          <p class="bundle-was">Separately <s class="price" data-inr="&#8377;24,000" data-aed="AED 1,500">&#8377;24,000</s></p>
-          <p class="price bundle-price" data-inr="&#8377;18,000" data-aed="AED 1,200">&#8377;18,000</p>
-          <p class="bundle-save">Save <span class="price" data-inr="&#8377;6,000" data-aed="AED 300">&#8377;6,000</span> against buying the three separately</p>
-          <a href="course-detail.html?grade=11&plan=full" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
-        </div>
-      </article>
-      <article class="course course-img card-hover" data-tags="Grade 12|Maths" style="--banner:#073790">
-        <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
+      <article class="course course-img card-hover" data-tags="Grade 12|PCMB|Science" style="--banner:#397417">
+        <span class="sub-banner sb-science" role="img" aria-label="PCMB — Physics, Chemistry, Maths, Biology"></span>
         <div>
-          <p class="mono card-kicker" style="color:#073790">Grade 12 &middot; single subject</p>
-          <h3 class="h3" style="margin-top:.25rem">Maths</h3>
-          <p class="mono subj-tagline" style="color:#073790">Think. Solve. Succeed.</p>
+          <p class="mono card-kicker" style="color:#397417">Grade 12 &middot; stream package</p>
+          <h3 class="h3" style="margin-top:.25rem">PCMB</h3>
+          <p class="mono subj-tagline" style="color:#397417">Physics · Chemistry · Maths · Biology</p>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
+        <p class="card-blurb">The full science stream for grade 12, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
-          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
-          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=subject&subject=maths" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+          <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">Annual package &middot; English Grammar free</p>
+          <a href="course-detail.html?grade=12&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
         </div>
       </article>
-      <article class="course course-img card-hover" data-tags="Grade 12|Science" style="--banner:#397417">
-        <span class="sub-banner sb-science" role="img" aria-label="Science — Explore. Understand. Excel."></span>
+      <article class="course course-img card-hover" data-tags="Grade 12|PCMC|Science" style="--banner:#0E7490">
+        <span class="sub-banner sb-science" role="img" aria-label="PCMC — Physics, Chemistry, Maths, Computer Science"></span>
         <div>
-          <p class="mono card-kicker" style="color:#397417">Grade 12 &middot; single subject</p>
-          <h3 class="h3" style="margin-top:.25rem">Science</h3>
-          <p class="mono subj-tagline" style="color:#397417">Explore. Understand. Excel.</p>
+          <p class="mono card-kicker" style="color:#0E7490">Grade 12 &middot; stream package</p>
+          <h3 class="h3" style="margin-top:.25rem">PCMC</h3>
+          <p class="mono subj-tagline" style="color:#0E7490">Physics · Chemistry · Maths · CS</p>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Physics, chemistry and biology, with the experiments that make each idea stick.</p>
+        <p class="card-blurb">Physics, chemistry, maths and computer science for grade 12, with free English Grammar included.</p>
         <div style="margin-top:auto">
-          <p class="price" data-inr="&#8377;10,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;10,000</p>
-          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=subject&subject=science" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+          <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">Annual package &middot; English Grammar free</p>
+          <a href="course-detail.html?grade=12&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
         </div>
       </article>
-      <article class="course course-img card-hover" data-tags="Grade 12|English" style="--banner:#47207C">
-        <span class="sub-banner sb-english" role="img" aria-label="English — Read. Write. Communicate."></span>
+      <article class="course course-img card-hover" data-tags="Grade 12|Commerce" style="--banner:#92400E">
+        <span class="sub-banner sb-english" role="img" aria-label="Commerce — Accountancy and Maths"></span>
         <div>
-          <p class="mono card-kicker" style="color:#47207C">Grade 12 &middot; single subject</p>
-          <h3 class="h3" style="margin-top:.25rem">English</h3>
-          <p class="mono subj-tagline" style="color:#47207C">Read. Write. Communicate.</p>
+          <p class="mono card-kicker" style="color:#92400E">Grade 12 &middot; stream package</p>
+          <h3 class="h3" style="margin-top:.25rem">Commerce</h3>
+          <p class="mono subj-tagline" style="color:#92400E">Accountancy · Maths</p>
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Grammar, vocabulary, writing and literature — the four strands the paper tests.</p>
+        <p class="card-blurb">Accountancy and maths for grade 12 commerce, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
-          <p class="price" data-inr="&#8377;4,000" data-aed="AED 500" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;4,000</p>
-          <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=subject&subject=english" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
-        </div>
-      </article>
-      <article class="course course-bundle card-hover" data-tags="Grade 12" style="--banner:var(--gold)">
-        <span class="sub-banner sb-bundle" role="img" aria-label="Maths, Science and English"></span>
-        <span class="course-ghost" aria-hidden="true">12</span>
-        <p class="mono bundle-flag">Best value</p>
-        <div class="flex g2" style="align-items:flex-start">
-          <span class="course-num">12</span>
-          <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects</span>
-        </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
-        <p class="card-blurb">Maths, Science and English together for grade 12 &mdash; every lesson and every notes file, unlocked on day one.</p>
-        <div style="margin-top:auto">
-          <p class="bundle-was">Separately <s class="price" data-inr="&#8377;24,000" data-aed="AED 1,500">&#8377;24,000</s></p>
-          <p class="price bundle-price" data-inr="&#8377;18,000" data-aed="AED 1,200">&#8377;18,000</p>
-          <p class="bundle-save">Save <span class="price" data-inr="&#8377;6,000" data-aed="AED 300">&#8377;6,000</span> against buying the three separately</p>
-          <a href="course-detail.html?grade=12&plan=full" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
+          <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
+          <p style="color:var(--slate-500);font-size:.75rem">Annual package &middot; English Grammar free</p>
+          <a href="course-detail.html?grade=12&plan=full&stream=commerce" class="btn btn-red btn-sm btn-block" style="margin-top:.9rem">Enrol now</a>
         </div>
       </article>
     </div>
@@ -1518,6 +1495,10 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 </footer>
 
 <!-- ══ 17 STICKY MOBILE BAR ══ -->
+<a class="wa-float" href="https://wa.me/919745553944?text=Hi%20GTEC%20Team%2C%20I%27m%20interested%20in%20eLessons.%20Can%20you%20share%20more%20details%3F" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.6 2 2.18 6.42 2.18 11.86c0 1.94.53 3.76 1.45 5.32L2 22l4.96-1.58a9.8 9.8 0 0 0 5.08 1.4c5.43 0 9.85-4.42 9.85-9.86S17.47 2 12.04 2Zm5.77 14c-.24.68-1.4 1.3-1.93 1.34-.5.05-1.13.07-1.82-.11a15.6 15.6 0 0 1-1.65-.62c-2.9-1.26-4.8-4.2-4.94-4.4-.15-.2-1.19-1.58-1.19-3.02 0-1.44.75-2.14 1.02-2.44.27-.29.59-.36.78-.36h.56c.18 0 .42-.07.66.5.24.59.83 2.03.9 2.18.07.15.12.32.02.51-.1.2-.15.32-.3.49-.14.17-.3.38-.44.51-.14.15-.29.3-.13.6.17.29.75 1.23 1.6 2 1.11.98 2.04 1.29 2.33 1.44.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.7.8 2 .95.29.15.48.22.55.34.07.13.07.73-.17 1.42Z"/></svg>
+</a>
+
 <div class="stickybar">
   <div>
     <p class="mono" style="font-size:.9rem;color:#FCD34D;line-height:1.2"><span class="price" data-inr="From &#8377;12,000" data-aed="From AED 800">From &#8377;12,000</span></p>
@@ -1532,6 +1513,28 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 
 <script>
 document.getElementById('announce-x').onclick=function(){document.getElementById('announce').remove()};
+
+
+(function(){
+  document.querySelectorAll('#course-grid .course').forEach(function(card){
+    var link = card.querySelector('a.btn[href*="course-detail"]');
+    if (!link) return;
+    card.setAttribute('role','link');
+    card.setAttribute('tabindex','0');
+    var h = card.querySelector('h3');
+    card.setAttribute('aria-label', h && h.textContent
+      ? ('Open ' + h.textContent.trim() + ' course details')
+      : 'Open course details');
+    function go(e){
+      if (e.target.closest('a')) return;
+      location.href = link.href;
+    }
+    card.addEventListener('click', go);
+    card.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); location.href = link.href; }
+    });
+  });
+})();
 
 document.querySelectorAll('.filter').forEach(function(f){
   f.onclick=function(){
