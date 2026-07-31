@@ -3,16 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CBSE (NCERT) Grade 9 — List of Video Classes | eLessons.net</title>
+<title>CBSE (NCERT) List of Video Classes | eLessons.net</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  /* Standalone on purpose: this document is printed and emailed on its own,
-     so it must render correctly even when the site CSS is not loaded. */
   :root {
-    /* tokens matched to indexnew.html */
     --ink: #001A4E; --line: #CBD5E1; --amber: #FBC63F; --amber-soft: #FEF3D4;
     --blue: #1552A0; --muted: #64748B; --navy: #0A3170; --mist: #F8FAFC;
   }
@@ -26,13 +23,10 @@
     max-width: 900px; margin: 0 auto; background: #fff; padding: 42px 46px 56px;
     box-shadow: 0 10px 40px rgba(11,31,63,.12); border-radius: 6px;
   }
-
   .doc-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
   .logo { font-size: 30px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
   .logo span { color: var(--blue); }
-  .logo small { font-family:'JetBrains Mono',monospace; }
-  .logo small { display: block; font-size: 10px; font-weight: 500; letter-spacing: .16em; color: #8A93A3; text-transform: uppercase; margin-top: 3px; }
-
+  .logo small { display: block; font-family:'JetBrains Mono',monospace; font-size: 10px; font-weight: 500; letter-spacing: .16em; color: #8A93A3; text-transform: uppercase; margin-top: 3px; }
   h1 {
     background: var(--amber); margin: 0 0 22px; padding: 11px 16px;
     font-size: 17px; font-weight: 700; text-align: center; letter-spacing: .01em;
@@ -40,7 +34,6 @@
   h2 { font-size: 20px; text-align: center; margin: 0 0 18px; text-decoration: underline; text-underline-offset: 4px; }
   h3 { font-size: 13px; font-weight: 700; margin: 34px 0 10px; letter-spacing: .09em;
        font-family:'JetBrains Mono',monospace; text-transform: uppercase; }
-
   table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
   th, td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
   thead th { background: var(--amber-soft); font-weight: 700; }
@@ -50,11 +43,8 @@
   .summary tbody td { background: var(--amber-soft); text-align: center; width: 40%; }
   .summary tfoot th, .summary tfoot td { background: var(--amber); font-weight: 700; text-align: center; }
   .summary tfoot th { text-align: left; }
-
   td.chapter { font-weight: 600; background: #FAFBFD; width: 34%; }
   .note { font-size: 11.5px; color: var(--muted); margin-top: 14px; }
-  .withheld td { color: #98A0AE; font-style: italic; }
-
   .bar {
     max-width: 900px; margin: 0 auto 18px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;
   }
@@ -64,30 +54,20 @@
     cursor: pointer; text-decoration: none;
   }
   .bar button.primary { background: var(--navy); border-color: var(--navy); color: #fff; }
-  .bar button:hover { border-color: var(--navy); }
-
   @media print {
     @page { size: A4 portrait; margin: 15mm 13mm; }
     body { background: #fff; padding: 0; font-size: 10.5pt; }
     .sheet { box-shadow: none; max-width: none; padding: 0; border-radius: 0; }
     .bar { display: none !important; }
-    thead { display: table-header-group; }   /* repeat headers on every page */
+    thead { display: table-header-group; }
     tr { break-inside: avoid; }
-    h3 { break-after: avoid; }
-    h1, h2 { break-after: avoid; }
-  }
-  @media (max-width: 640px) {
-    body { padding: 14px 10px 40px; }
-    .sheet { padding: 22px 16px 32px; }
-    .summary { width: 100%; }
-    table { font-size: 11.5px; }
   }
 </style>
 </head>
 <body>
 
 <div class="bar">
-  <a href="course-detail.html?grade=9&amp;plan=full">&larr; Back to the course</a>
+  <a id="back-link" href="course-detail.html">&larr; Back to the course</a>
   <button type="button" class="primary" onclick="window.print()">Print / Save as PDF</button>
 </div>
 
@@ -96,8 +76,8 @@
     <div class="logo"><span>e</span>lessons.net<small>Your Virtual Classroom</small></div>
   </div>
 
-  <h1>CBSE (NCERT) GRADE 9 &ndash; LIST OF VIDEO CLASSES</h1>
-  <h2>PCMB</h2>
+  <h1 id="doc-title">CBSE (NCERT) — LIST OF VIDEO CLASSES</h1>
+  <h2 id="doc-stream">PCMB</h2>
 
   <table class="summary">
     <thead><tr><th>Subject</th><th>Number of Videos</th></tr></thead>
@@ -112,16 +92,35 @@
   </p>
 </div>
 
-<script src="/assets/js/course-data.js?v=30"></script>
+<script src="/assets/js/registers-generated.js?v=36"></script>
+<script src="/assets/js/course-data.js?v=36"></script>
 <script>
 (function () {
-  var ORDER = registerStreams(9);
+  var qp = new URLSearchParams(location.search);
+  var grade = PRICING[qp.get('grade')] ? Number(qp.get('grade')) : 9;
+  var pkg = (qp.get('stream') || '').toLowerCase();
+  if (isStreamGrade(grade) && packagesForGrade(grade).indexOf(pkg) === -1) {
+    pkg = packagesForGrade(grade)[0] || 'pcmb';
+  }
+  if (!isStreamGrade(grade)) pkg = null;
+
+  var R = registerFor(grade, pkg);
+  var ORDER = registerStreams(grade, pkg);
+  var streamLabel = pkg && PACKAGE_META[pkg] ? PACKAGE_META[pkg].name
+                   : (grade <= 10 ? 'PCMB' : 'Class list');
+
+  document.title = 'CBSE (NCERT) Grade ' + grade + (pkg ? ' ' + streamLabel : '') +
+    ' — List of Video Classes | eLessons.net';
+  document.getElementById('doc-title').textContent =
+    'CBSE (NCERT) GRADE ' + grade + ' – LIST OF VIDEO CLASSES';
+  document.getElementById('doc-stream').textContent = streamLabel;
+  document.getElementById('back-link').href =
+    'course-detail.html?grade=' + grade + '&plan=full' + (pkg ? '&stream=' + pkg : '');
+
   var HEADING = {
-    maths:     'CBSE GRADE-9 (MATHEMATICS) TABLE OF VIDEO CLASSES',
-    physics:   'CBSE GRADE-9 (PHYSICS) TABLE OF VIDEO CLASSES',
-    chemistry: 'CBSE GRADE-9 (CHEMISTRY) TABLE OF VIDEO CLASSES',
-    biology:   'CBSE GRADE-9 (BIOLOGY) TABLE OF VIDEO CLASSES',
-    english:   'ENGLISH GRAMMAR (COMPLIMENTARY) TABLE OF VIDEO CLASSES'
+    maths: 'MATHEMATICS', physics: 'PHYSICS', chemistry: 'CHEMISTRY',
+    biology: 'BIOLOGY', computer: 'COMPUTER SCIENCE', accountancy: 'ACCOUNTANCY',
+    english: 'ENGLISH GRAMMAR (COMPLIMENTARY)'
   };
 
   function esc(s) {
@@ -130,16 +129,22 @@
     });
   }
 
-  // ---- summary table ----
+  if (!R || !ORDER.length) {
+    document.getElementById('summary-body').innerHTML =
+      '<tr><th colspan="2">Class list not published for this selection yet.</th></tr>';
+    document.getElementById('summary-total').textContent = '—';
+    return;
+  }
+
   var sBody = document.getElementById('summary-body');
   sBody.innerHTML = ORDER.map(function (k) {
-    return '<tr><th>' + esc(STREAM_META[k].label) + '</th><td>' + streamCount(9, k) + '</td></tr>';
+    var label = STREAM_META[k].label + (STREAM_META[k].complimentary ? ' (complimentary)' : '');
+    return '<tr><th>' + esc(label) + '</th><td>' + streamCount(grade, k, null, pkg) + '</td></tr>';
   }).join('');
-  document.getElementById('summary-total').textContent = registerTotal(9);
+  document.getElementById('summary-total').textContent = registerTotal(grade, null, pkg);
 
-  // ---- per-subject tables, chapter names merged with rowspan ----
   document.getElementById('tables').innerHTML = ORDER.map(function (k) {
-    var rows = REGISTER_9[k].map(function (ch) {
+    var rows = (R[k] || []).map(function (ch) {
       var lessons = publishedLessons(ch);
       if (!lessons.length) return '';
       return lessons.map(function (l, i) {
@@ -151,7 +156,8 @@
       }).join('');
     }).join('');
 
-    return '<h3>' + esc(HEADING[k]) + '</h3>' +
+    return '<h3>CBSE GRADE-' + grade + ' (' + esc(HEADING[k] || k.toUpperCase()) +
+      ') TABLE OF VIDEO CLASSES</h3>' +
       '<table><thead><tr><th>CHAPTER NAME</th><th>VIDEO NAME</th></tr></thead>' +
       '<tbody>' + rows + '</tbody></table>';
   }).join('');
