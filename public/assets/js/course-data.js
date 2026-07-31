@@ -87,7 +87,23 @@ const SUBJECT_META = {
              blurb: 'Physics, chemistry and biology, with the experiments that make each idea stick.' },
   english: { name: 'English', code: 'ENG', banner: 'sb-english', colour: '#47207C',
              tag: 'Read. Write. Communicate.',
-             blurb: 'Grammar, vocabulary, writing and literature — the four strands the paper tests.' }
+             blurb: 'Grammar, vocabulary, writing and literature — the four strands the paper tests.' },
+  /* Grades 11–12 sell these as individual subjects inside a stream package. */
+  physics:     { name: 'Physics',          code: 'PHY', banner: 'sb-science', colour: '#2C5E14',
+                 tag: 'Matter. Motion. Force.',
+                 blurb: 'Mechanics, waves, electricity and modern physics — built at the board, equation by equation.' },
+  chemistry:   { name: 'Chemistry',        code: 'CHE', banner: 'sb-science', colour: '#397417',
+                 tag: 'Atoms to equations.',
+                 blurb: 'Physical, organic and inorganic chemistry with the NCERT exercise sequence.' },
+  biology:     { name: 'Biology',          code: 'BIO', banner: 'sb-science', colour: '#4A8C22',
+                 tag: 'Life, explained.',
+                 blurb: 'Cell biology, genetics, physiology and ecology — diagram-led and exam-ready.' },
+  computer:    { name: 'Computer Science', code: 'CSC', banner: 'sb-science', colour: '#0E7490',
+                 tag: 'Code. Logic. Systems.',
+                 blurb: 'Programming, data structures and computer systems for the CBSE paper.' },
+  accountancy: { name: 'Accountancy',      code: 'ACC', banner: 'sb-english', colour: '#92400E',
+                 tag: 'Books that balance.',
+                 blurb: 'Partnership, companies and financial statements — worked ledger by ledger.' }
 };
 const SUBJECT_ORDER = ['maths', 'science', 'english'];
 
@@ -120,11 +136,20 @@ const PRICING = {
         bundle: { inr: 12000, aed: 800  }, modulePrice: { inr: 699, aed: 35 } },
   10: { subjects: { maths: { inr: 8000,  aed: 400 }, science: { inr: 8000,  aed: 400 }, english: { inr: 4000, aed: 400 } },
         bundle: { inr: 15000, aed: 1000 }, modulePrice: { inr: 699, aed: 35 } },
-  /* Grades 11–12 sell stream packages (PCMB / PCMC / Commerce), not single subjects. */
-  11: { subjects: {},
+  /* Grades 11–12 sell stream packages (PCMB / PCMC / Commerce), with optional
+     single-subject and per-module buys from the same syllabus PDFs. */
+  11: { subjects: {
+          maths: { inr: 8000, aed: 400 }, physics: { inr: 8000, aed: 400 },
+          chemistry: { inr: 8000, aed: 400 }, biology: { inr: 8000, aed: 400 },
+          computer: { inr: 8000, aed: 400 }, accountancy: { inr: 8000, aed: 400 }
+        },
         streams: { pcmb: { inr: 18000, aed: 1200 }, pcmc: { inr: 18000, aed: 1200 }, commerce: { inr: 18000, aed: 1200 } },
         bundle: { inr: 18000, aed: 1200 }, modulePrice: { inr: 799, aed: 40 } },
-  12: { subjects: {},
+  12: { subjects: {
+          maths: { inr: 8000, aed: 400 }, physics: { inr: 8000, aed: 400 },
+          chemistry: { inr: 8000, aed: 400 }, biology: { inr: 8000, aed: 400 },
+          computer: { inr: 8000, aed: 400 }, accountancy: { inr: 8000, aed: 400 }
+        },
         streams: { pcmb: { inr: 18000, aed: 1200 }, pcmc: { inr: 18000, aed: 1200 }, commerce: { inr: 18000, aed: 1200 } },
         bundle: { inr: 18000, aed: 1200 }, modulePrice: { inr: 799, aed: 40 } }
 };
@@ -296,6 +321,7 @@ function streamChapters(grade, key, pkg) {
 }
 function streamCount(grade, key, opts, pkg) {
   return streamChapters(grade, key, pkg).reduce(function (n, ch) {
+    if (isRegisterHeaderChapter(ch)) return n;
     return n + (opts && opts.includeRejected ? (ch.v || []).length : publishedLessons(ch).length);
   }, 0);
 }
@@ -307,21 +333,52 @@ function registerTotal(grade, opts, pkg) {
   return registerStreams(grade, pkg).reduce(function (n, k) { return n + streamCount(grade, k, opts, pkg); }, 0);
 }
 function chapterTotal(grade, pkg) {
-  return registerStreams(grade, pkg).reduce(function (n, k) { return n + streamChapters(grade, k, pkg).length; }, 0);
+  return registerStreams(grade, pkg).reduce(function (n, k) {
+    return n + streamChapters(grade, k, pkg).filter(function (ch) {
+      return !isRegisterHeaderChapter(ch) && publishedLessons(ch).length > 0;
+    }).length;
+  }, 0);
 }
 function streamsForSubject(subject) {
   return Object.keys(STREAM_META).filter(function (k) { return STREAM_META[k].parent === subject; });
 }
-function subjectsForGrade(grade) {
+function subjectsForGrade(grade, pkg) {
+  if (isStreamGrade(grade)) {
+    var meta = PACKAGE_META[pkg || 'pcmb'];
+    if (!meta || !meta.subjects) return [];
+    return meta.subjects.filter(function (s) {
+      return streamChapters(grade, s, pkg).some(function (ch) {
+        return publishedLessons(ch).length > 0 && !isRegisterHeaderChapter(ch);
+      });
+    });
+  }
   return SUBJECT_ORDER.filter(function (s) { return PRICING[grade] && PRICING[grade].subjects && PRICING[grade].subjects[s]; });
+}
+
+/* PDF extracts sometimes keep the table header row as a fake chapter. */
+function isRegisterHeaderChapter(ch) {
+  var c = String((ch && ch.c) || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  if (c === 'chapter names' || c === 'chapter name' || c.indexOf('chapter names') === 0) return true;
+  var lessons = publishedLessons(ch);
+  if (lessons.length === 1 && String(lessonTitle(lessons[0])).toLowerCase().replace(/\s+/g, ' ').trim() === 'video names') {
+    return true;
+  }
+  return false;
 }
 
 /* Streams a given plan actually unlocks — a Science purchase must not be
    described using the whole catalog's lesson count. For stream grades, the
    package key (pcmb/pcmc/commerce) selects the register. */
 function streamsForPlan(grade, plan, subject, pkg) {
-  var all = registerStreams(grade, pkg);
+  var all = registerStreams(grade, pkg).filter(function (k) {
+    return streamChapters(grade, k, pkg).some(function (ch) {
+      return publishedLessons(ch).length > 0 && !isRegisterHeaderChapter(ch);
+    });
+  });
   if (isStreamGrade(grade)) {
+    if (plan === 'subject' && subject) {
+      return all.filter(function (k) { return k === subject; });
+    }
     var meta = PACKAGE_META[pkg || 'pcmb'];
     var allowed = (meta && meta.subjects ? meta.subjects.slice() : []).concat(['english']);
     return all.filter(function (k) { return allowed.indexOf(k) > -1; });
@@ -334,7 +391,11 @@ function planLessonCount(grade, plan, subject, pkg) {
   return streamsForPlan(grade, plan, subject, pkg).reduce(function (n, k) { return n + streamCount(grade, k, null, pkg); }, 0);
 }
 function planChapterCount(grade, plan, subject, pkg) {
-  return streamsForPlan(grade, plan, subject, pkg).reduce(function (n, k) { return n + streamChapters(grade, k, pkg).length; }, 0);
+  return streamsForPlan(grade, plan, subject, pkg).reduce(function (n, k) {
+    return n + streamChapters(grade, k, pkg).filter(function (ch) {
+      return !isRegisterHeaderChapter(ch) && publishedLessons(ch).length > 0;
+    }).length;
+  }, 0);
 }
 
 /* Returns { inr, aed } so a price element can carry BOTH authored figures,
@@ -362,26 +423,30 @@ function planPrice(grade, planType, mode, subjectKey, pkg) {
 
 // What the Annual Package adds over the plan being viewed. Returns null when
 // the current plan IS the full package, or when the upgrade is not cheaper.
-function upgradeOffer(grade, plan, mode, subject) {
+function upgradeOffer(grade, plan, mode, subject, pkg) {
   if (plan !== 'subject') return null;
-  var now  = planPrice(grade, 'subject', mode, subject);
-  var full = planPrice(grade, 'full', mode);
+  var now  = planPrice(grade, 'subject', mode, subject, pkg);
+  var full = planPrice(grade, 'full', mode, null, pkg);
   var diff = { inr: full.inr - now.inr, aed: full.aed - now.aed };
   if (diff.inr <= 0) return null;
-  var extra = hasRegister(grade)
-    ? registerTotal(grade) - planLessonCount(grade, 'subject', subject) : null;
+  var extra = hasRegister(grade, pkg)
+    ? planLessonCount(grade, 'full', null, pkg) - planLessonCount(grade, 'subject', subject, pkg) : null;
   return { price: full, diff: diff, extraLessons: extra };
 }
 
 // The cheaper unit once N modules are selected, or null while modules still win.
 // Grade 9 example: 12 modules beat a subject, 18 beat the whole package.
-function betterThanModules(grade, count, subject) {
+function betterThanModules(grade, count, subject, pkg) {
   if (!count) return null;
   var mp = PRICING[grade].modulePrice;
   var spend = mp.inr * count;
-  var full = PRICING[grade].bundle;
-  if (spend >= full.inr) return { type: 'full', label: 'Annual Package', price: full };
-  if (subject) {
+  var full = isStreamGrade(grade)
+    ? ((pkg && PRICING[grade].streams && PRICING[grade].streams[pkg]) || PRICING[grade].bundle)
+    : PRICING[grade].bundle;
+  if (spend >= full.inr) {
+    return { type: 'full', label: isStreamGrade(grade) && PACKAGE_META[pkg] ? PACKAGE_META[pkg].name : 'Annual Package', price: full };
+  }
+  if (subject && PRICING[grade].subjects && PRICING[grade].subjects[subject]) {
     var sub = PRICING[grade].subjects[subject];
     if (sub && spend >= sub.inr) {
       return { type: 'subject', subject: subject, label: SUBJECT_META[subject].name, price: sub };
@@ -389,9 +454,10 @@ function betterThanModules(grade, count, subject) {
   }
   return null;
 }
-function fullMrp(grade) {
-  return subjectsForGrade(grade).reduce(function (t, s) {
+function fullMrp(grade, pkg) {
+  return subjectsForGrade(grade, pkg).reduce(function (t, s) {
     var v = PRICING[grade].subjects[s];
+    if (!v) return t;
     return { inr: t.inr + v.inr, aed: t.aed + v.aed };
   }, { inr: 0, aed: 0 });
 }
@@ -459,7 +525,7 @@ const PLANS = buildPlans();
 const FAQS = [
   { q: 'What is the difference between Recorded and Live + Recorded?', a: 'Recorded gives you the full year of chalkboard video lessons plus notes, available the day you enrol, watched at your own pace. Live + Recorded adds weekly scheduled sessions with a mentor where you can ask questions in real time — and every live session is recorded and added to your library.' },
   { q: 'How long do I keep access?', a: 'Access runs for the full academic year from the date of purchase. Lessons stay unlocked for that entire period, so you can revise a chapter as many times as you need before an exam.' },
-  { q: 'Can I buy just one subject or one chapter?', a: 'For grades 8 to 10, yes — choose By Subject for a single subject, or By Module for individual chapters. Grades 11 and 12 are sold as stream packages (PCMB, PCMC or Commerce).' },
+  { q: 'Can I buy just one subject or one chapter?', a: 'Yes — choose By Subject for a single subject, or By Module for individual chapters. Grades 11 and 12 also offer full stream packages (PCMB, PCMC or Commerce) when you want every subject in the stream.' },
   { q: 'What do grades 11 and 12 include?', a: 'Each grade offers three annual stream packages: PCMB (Physics, Chemistry, Maths, Biology), PCMC (Physics, Chemistry, Maths, Computer Science), and Commerce (Accountancy, Maths). English Grammar is complimentary with every package.' },
   { q: 'Is English Grammar included?', a: 'Yes. English Grammar is complimentary — included free — with every Annual Package for grades 8 to 12.' },
   { q: 'Is the syllabus aligned to the latest CBSE/NCERT pattern?', a: 'Yes. Every chapter follows the current NCERT textbook order, including the numbered exercises, so a lesson maps directly to the exercise you are working through at school.' },
