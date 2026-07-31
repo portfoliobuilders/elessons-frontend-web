@@ -1,4 +1,9 @@
+# https://elessons.net/robots.txt
 User-agent: *
 Allow: /
+
+# Search crawlers must be able to read the favicon and images
+Allow: /favicon.ico
+Allow: /images/
 
 Sitemap: https://elessons.net/sitemap.xml
