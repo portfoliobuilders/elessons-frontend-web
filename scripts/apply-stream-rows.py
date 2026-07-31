@@ -166,10 +166,10 @@ def stream_row(grade: int, stream_key: str) -> str:
     return f'''    <div class="course-stream-row" data-tags="{tag_str}" data-stream="{stream_key}" data-grade="{grade}">
       <p class="course-stream-label mono">Grade {grade} &middot; {stream['label']}<span>{stream['tag_line']}</span></p>
       <div class="course-stream-grid">
+{bundle_card(grade, stream_key)}
         <div class="course-stream-subjects">
 {subjects_html}
         </div>
-{bundle_card(grade, stream_key)}
       </div>
     </div>'''
 
@@ -183,17 +183,15 @@ def build_stream_section() -> str:
 
 
 STREAM_CSS = """
-/* Stream rows — subjects left, All subjects package right */
+/* Stream rows — All subjects first, then individual subjects racked left */
 .course-stream-row{grid-column:1/-1;display:flex;flex-direction:column;gap:1rem}
 .course-stream-label{font-size:.62rem;color:var(--slate-500);letter-spacing:.04em;text-transform:uppercase;
   display:flex;flex-wrap:wrap;align-items:baseline;gap:.55rem .9rem}
 .course-stream-label span{color:var(--navy-700);font-weight:700;letter-spacing:.02em;text-transform:none;font-size:.72rem}
-.course-stream-grid{display:grid;gap:1rem;align-items:stretch}
-.course-stream-subjects{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr))}
-.course-stream-grid > .course-bundle{min-width:0}
-@media (min-width:1100px){
-  .course-stream-grid{grid-template-columns:minmax(0,1fr) minmax(280px,340px);gap:1.25rem}
-}
+.course-stream-grid{display:grid;gap:1rem;align-items:stretch;justify-content:start;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),280px))}
+.course-stream-subjects{display:contents}
+.course-stream-grid > .course-bundle{min-width:0;max-width:280px}
 .filter-group{display:flex;flex-wrap:wrap;gap:.55rem;align-items:center}
 .filter-group + .filter-group{margin-top:.65rem}
 .filter-group-label{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
