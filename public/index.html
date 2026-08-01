@@ -62,11 +62,9 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-/* sticky nav + announce bar — keep section titles visible after anchor jumps */
-:root{--announce-h:42px}
-:target,section[id],div[id]{scroll-margin-top:calc(var(--nav-h) + var(--announce-h) + 14px)}
+/* sticky nav — keep section titles visible after anchor jumps */
+:target,section[id],div[id]{scroll-margin-top:calc(var(--nav-h) + 14px)}
 #top{scroll-margin-top:0}
-body:not(:has(#announce)){--announce-h:0px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{margin:0;overflow-x:clip;background:var(--paper);color:var(--ink);
   font-family:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
@@ -139,8 +137,7 @@ input[type="text"],input[type="email"],input[type="tel"],textarea{
 input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,textarea:focus{
   outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(239,68,68,.1)
 }
-/* ══════════════ ANNOUNCE + NAV ══════════════ */
-.announce{background:var(--grad);color:#fff}
+/* ══════════════ NAV ══════════════ */
 .nav{position:sticky;top:0;z-index:60;background:rgba(253,253,253,.9);
   -webkit-backdrop-filter:saturate(170%) blur(14px);backdrop-filter:saturate(170%) blur(14px);
   border-bottom:1px solid var(--line)}
@@ -635,17 +632,6 @@ footer{position:relative;z-index:2;padding-bottom:calc(1rem + env(safe-area-inse
 </style>
 </head>
 <body>
-
-<!-- ══ 01 ANNOUNCE ══ -->
-<div class="announce" id="announce">
-  <div class="wrap flex center between g2 wrapf" style="padding-block:.6rem;font-size:.82rem">
-    <p style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-      <span class="mono" style="background:var(--red-cta);color:#fff;font-size:.62rem;padding:.18rem .55rem;border-radius:999px">New</span>
-      Academic year 2026&ndash;27 enrolment is open &mdash; 50% off with coupon at checkout.
-    </p>
-    <button id="announce-x" aria-label="Dismiss" style="cursor:pointer;opacity:.8;font-size:1.1rem;line-height:1;min-width:44px;min-height:44px">&times;</button>
-  </div>
-</div>
 
 <!-- ══ 02 NAV ══ -->
 <header class="nav" id="sitenav">
@@ -1945,9 +1931,6 @@ footer{position:relative;z-index:2;padding-bottom:calc(1rem + env(safe-area-inse
 </div>
 
 <script>
-document.getElementById('announce-x').onclick=function(){document.getElementById('announce').remove()};
-
-
 (function(){
   document.querySelectorAll('#course-grid .course').forEach(function(card){
     var link = card.querySelector('a.btn[href*="course-detail"]');
