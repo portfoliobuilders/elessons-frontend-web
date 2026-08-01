@@ -57,19 +57,28 @@ function elWhatsAppHref(message, currency) {
     '?text=' + encodeURIComponent(message || '');
 }
 
+/* eLessons demo clips from the shared Drive folder (not third-party YouTube).
+   player uses driveId with HTML5 / Drive preview — see gtec-ui.js. */
 const PREVIEWS = {
-  // Real ID from the existing home page player. Used as the fallback until
-  // per-subject previews are shot. Replace the TODOs with real YouTube IDs.
-  _default: { vid: 'OY1JSCKysz0', cap: 90, title: 'Watch the first 90 seconds' },
-  maths:   { vid: null, cap: 90, title: 'Watch a maths lesson' },   // TODO real ID
-  science: { vid: null, cap: 90, title: 'Watch a science lesson' }, // TODO real ID
-  english: { vid: null, cap: 90, title: 'Watch an English lesson' } // TODO real ID
+  _default: { driveId: '1rRTXrlm2e3n0-Tnllyn0p0WYAc-Ejhqo', cap: 90, title: 'Watch a free demo class' },
+  maths:      { driveId: '11F9JZjmJvTH4G81s_7R_5FPv9MtpucWd', cap: 90, title: 'Watch a maths lesson' },
+  physics:    { driveId: '1He7btriFnWAg6csY0fsyfbC-txdE2ql4', cap: 90, title: 'Watch a physics lesson' },
+  chemistry:  { driveId: '1w80LusfqXn7I3rhkseImc0CHzjIbuHWZ', cap: 90, title: 'Watch a chemistry lesson' },
+  biology:    { driveId: '1T3jAz35H-bcuPYGL4hdMbkBCotHX0t5R', cap: 90, title: 'Watch a biology lesson' },
+  science:    { driveId: '1He7btriFnWAg6csY0fsyfbC-txdE2ql4', cap: 90, title: 'Watch a science lesson' },
+  english:    { driveId: '1rRTXrlm2e3n0-Tnllyn0p0WYAc-Ejhqo', cap: 90, title: 'Watch a sample lesson' }
 };
 
 function previewFor(grade, plan, subject) {
   var key = plan === 'subject' ? subject : null;
-  var p = (key && PREVIEWS[key] && PREVIEWS[key].vid) ? PREVIEWS[key] : PREVIEWS._default;
-  return { vid: p.vid || PREVIEWS._default.vid, cap: p.cap || 90, title: p.title };
+  var p = (key && PREVIEWS[key] && (PREVIEWS[key].driveId || PREVIEWS[key].vid))
+    ? PREVIEWS[key] : PREVIEWS._default;
+  return {
+    driveId: p.driveId || PREVIEWS._default.driveId || null,
+    vid: p.vid || null,
+    cap: p.cap || 90,
+    title: p.title || PREVIEWS._default.title
+  };
 }
 
 /* Social proof — PLACEHOLDER — DO NOT SHIP. Replace with real values before launch. */
@@ -117,16 +126,15 @@ const SUBJECT_ORDER = ['maths', 'science', 'english'];
    the Gulf list deliberately charges the same for English as for Maths; that
    is their pricing, not a rounding artefact.
 
-   liveUplift is THE ONE INVENTED NUMBER on this page. indexnew.html sells live
-   and recorded together at a single price, but the brief asks for a mode
-   selector that moves the price. These are placeholders — sign them off or set
-   them to 0 to restore the current single-price behaviour.                  */
+   Homepage cards sell live + recorded together at one authored price.
+   Keep uplift at 0 so the enroll page matches the homepage (e.g. Grade 12
+   package stays ₹18,000, not ₹23,000).                                      */
 const LIVE_UPLIFT = {
-  8:  { inr: 4000, aed: 200 },
-  9:  { inr: 4000, aed: 200 },
-  10: { inr: 4000, aed: 200 },
-  11: { inr: 5000, aed: 250 },
-  12: { inr: 5000, aed: 250 }
+  8:  { inr: 0, aed: 0 },
+  9:  { inr: 0, aed: 0 },
+  10: { inr: 0, aed: 0 },
+  11: { inr: 0, aed: 0 },
+  12: { inr: 0, aed: 0 }
 };
 
 const PRICING = {

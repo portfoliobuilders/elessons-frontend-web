@@ -102,7 +102,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .brand{flex:none;display:block}
 .brand .el-logo{width:clamp(126px,17vw,164px)}
 .el-logo{display:block;aspect-ratio:760/191;background-size:contain;background-repeat:no-repeat;
-  background-position:center;background-image:url("../img/el-logo.webp")}
+  background-position:center;background-image:url("../../images/brand/elessons-logo-color.webp")}
 .brand-footer{width:clamp(160px,22vw,208px);height:auto;margin-bottom:.9rem}
 .powered-by{
   display:inline-flex;align-items:center;gap:.55rem;

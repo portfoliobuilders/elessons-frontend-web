@@ -147,7 +147,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .brand{flex:none;display:block}
 .brand .el-logo{width:clamp(126px,17vw,164px)}
 .el-logo{display:block;aspect-ratio:760/191;background-size:contain;background-repeat:no-repeat;
-  background-position:center;background-image:url("images/v25/nav-logo.webp")}
+  background-position:center;background-image:url("images/brand/elessons-logo-color.webp")}
 .brand-footer{width:clamp(160px,22vw,208px);height:auto;margin-bottom:.9rem}
 .powered-by{
   display:inline-flex;align-items:center;gap:.55rem;
@@ -282,7 +282,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 /* ══════════════ CARDS ══════════════ */
 .card{background:#fff;border:1px solid var(--card-line);border-radius:20px;padding:1.75rem 1.6rem;
   box-shadow:0 1px 2px rgba(10,49,112,.05),0 10px 26px -18px var(--card-shadow);
-  height:100%;display:flex;flex-direction:column}
+  display:flex;flex-direction:column}
+/* Equal-height only for direct grid children (How it works, benefits, testimonials) —
+   not nested cards like contact offices, which overflow the footer when height:100%. */
+.cols3 > .card,
+.cols4 > .card,
+#panels .card{height:100%}
 .card > p:last-child{margin-top:auto}
 @media (prefers-reduced-motion:no-preference){
   .card-hover{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
@@ -460,15 +465,31 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .faq .body{padding:0 1.4rem 1.3rem;color:var(--slate);font-size:.95rem;max-width:66ch}
 
 /* ══════════════ FORM ══════════════ */
-.field{display:flex;flex-direction:column;gap:.35rem}
+.field{display:flex;flex-direction:column;gap:.35rem;align-self:start;min-width:0}
 .field label{font-size:.78rem;font-weight:700}
 .field input,.field textarea{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:12px;
-  padding:.8rem .9rem;font:inherit;font-size:.93rem;color:var(--ink)}
-.field textarea{min-height:118px;resize:vertical}
+  padding:.8rem .9rem;font:inherit;font-size:.93rem;color:var(--ink);flex:none;height:auto;min-height:0;
+  box-sizing:border-box}
+.field input{min-height:48px;max-height:52px}
+.field textarea{min-height:118px;max-height:none;resize:vertical}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--navy-700)}
+#contact .wrap.grid{align-items:start}
+#contact .card{height:auto}
 
 /* ══════════════ STICKY BAR ══════════════ */
-.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--navy-950);color:#fff;
+/* contact + footer: no stretched empty cards, clear sticky bar */
+#contact .wrap.grid{align-items:start}
+#contact .card{height:auto !important;flex:none}
+#contact .contact-form{height:auto !important}
+footer{position:relative;z-index:2;padding-bottom:calc(1rem + env(safe-area-inset-bottom,0px))}
+@media (max-width:767px){
+  footer{padding-bottom:calc(108px + env(safe-area-inset-bottom,0px))}
+}
+.form-status{font-size:.86rem;color:var(--slate);margin:0}
+.form-status.is-visible{display:block}
+.form-status--ok{color:#166534}
+.form-status--err{color:var(--red-cta)}
+.stickybar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--navy-950);color:#fff;
   border-top:1px solid rgba(255,255,255,.14);padding:.65rem var(--gutter);display:none;align-items:center;justify-content:space-between;gap:1rem}
 @media (max-width:767px){.stickybar{display:flex}body{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));scroll-padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
 
@@ -776,15 +797,15 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
     <h2 class="dsp h2 mt2 maxw-sm">See a class before you pay a rupee.</h2>
 
     <div class="rv mt5">
-      <div class="player" id="lesson-player" data-vid="OY1JSCKysz0" data-cap="90" data-state="idle">
+      <div class="player" id="lesson-player" data-drive="1rRTXrlm2e3n0-Tnllyn0p0WYAc-Ejhqo" data-vid="" data-cap="90" data-state="idle">
         <div class="player-stage">
           <div id="lesson-frame"></div>
           <div class="player-shield"></div>
 
           <div class="player-cover">
             <p class="eyebrow">Sample lesson</p>
-            <p class="player-title">Watch the first 90 seconds</p>
-            <button class="play play-lg" type="button" aria-label="Play the sample lesson, 90 second preview"></button>
+            <p class="player-title">Watch a free eLessons demo class</p>
+            <button class="play play-lg" type="button" aria-label="Play the eLessons demo class"></button>
             <p class="player-note">A real teacher at a real board &mdash; the same way every chapter is taught.</p>
           </div>
 
@@ -811,7 +832,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
             <svg id="i-sound" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zm12.5 3a4 4 0 0 0-2.5-3.7v7.4a4 4 0 0 0 2.5-3.7z"/></svg>
             <svg id="i-muted" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M4 9v6h4l5 4V5L8 9zm15.1-.5-1.4-1.4-2.2 2.2-2.2-2.2-1.4 1.4L14.1 11l-2.2 2.2 1.4 1.4 2.2-2.2 2.2 2.2 1.4-1.4L16.9 11z"/></svg>
           </button>
-          <span class="pcap mono">90-second preview</span>
+          <span class="pcap mono">eLessons demo</span>
         </div>
       </div>
       <p class="mt3" style="color:var(--slate);font-size:1rem;max-width:66ch">One chapter, taught end to end &mdash; exactly what every lesson in the course looks like, with the written notes for that chapter included.</p>
@@ -834,12 +855,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
       <span class="mono cur-label">Showing prices for</span>
       <select class="cur-select cur-pricing" aria-label="Country and currency">
         <option value="inr|IN" selected>India · ₹ INR</option>
-        <option value="aed|AE">United Arab Emirates · AED</option>
-        <option value="aed|BH">Bahrain · priced in AED</option>
-        <option value="aed|SA">Saudi Arabia · priced in AED</option>
-        <option value="aed|QA">Qatar · priced in AED</option>
-        <option value="aed|KW">Kuwait · priced in AED</option>
-        <option value="aed|OM">Oman · priced in AED</option>
+        <option value="aed|AE">UAE &amp; Gulf · AED</option>
       </select>
       <span class="price-note"></span>
     </div>
@@ -1102,12 +1118,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Mechanics, waves, electricity and modern physics — built at the board, equation by equation.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=physics&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-11-pcmb-chemistry" class="course course-img card-hover" data-tags="Grade 11|PCMB|Chemistry|Science" style="--banner:#397417">
         <span class="sub-banner sb-science" role="img" aria-label="Chemistry"></span>
         <div>
@@ -1117,12 +1133,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Physical, organic and inorganic chemistry with the numericals and mechanisms the paper rewards.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=chemistry&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-11-pcmb-maths" class="course course-img card-hover" data-tags="Grade 11|PCMB|Maths|Science" style="--banner:#073790">
         <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
         <div>
@@ -1132,12 +1148,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=maths&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-11-pcmb-biology" class="course course-img card-hover" data-tags="Grade 11|PCMB|Biology|Science" style="--banner:#4A8C22">
         <span class="sub-banner sb-science" role="img" aria-label="Biology"></span>
         <div>
@@ -1147,12 +1163,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Cell biology, genetics, human physiology and ecology — diagrams and definitions that stick.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=biology&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
         </div>
       </div>
     </div>
@@ -1185,12 +1201,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Mechanics, waves, electricity and modern physics — built at the board, equation by equation.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=physics&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-11-pcmc-chemistry" class="course course-img card-hover" data-tags="Grade 11|PCMC|Chemistry|Science" style="--banner:#397417">
         <span class="sub-banner sb-science" role="img" aria-label="Chemistry"></span>
         <div>
@@ -1200,12 +1216,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Physical, organic and inorganic chemistry with the numericals and mechanisms the paper rewards.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=chemistry&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-11-pcmc-maths" class="course course-img card-hover" data-tags="Grade 11|PCMC|Maths|Science" style="--banner:#073790">
         <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
         <div>
@@ -1215,12 +1231,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=maths&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-11-pcmc-cs" class="course course-img card-hover" data-tags="Grade 11|PCMC|Computer Science|Science" style="--banner:#0E7490">
         <span class="sub-banner sb-science" role="img" aria-label="Computer Science"></span>
         <div>
@@ -1230,12 +1246,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Programming, data structures and computer fundamentals for the CBSE computer science paper.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=computer&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
         </div>
       </div>
     </div>
@@ -1268,12 +1284,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Journal entries, ledgers, final accounts and analysis — practised until the formats are automatic.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in Commerce</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=accountancy&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-11-commerce-maths" class="course course-img card-hover" data-tags="Grade 11|Commerce|Maths" style="--banner:#073790">
         <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
         <div>
@@ -1283,12 +1299,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in Commerce</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=11&plan=full&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=11&plan=subject&subject=maths&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
         </div>
       </div>
     </div>
@@ -1321,12 +1337,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Mechanics, waves, electricity and modern physics — built at the board, equation by equation.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=physics&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-12-pcmb-chemistry" class="course course-img card-hover" data-tags="Grade 12|PCMB|Chemistry|Science" style="--banner:#397417">
         <span class="sub-banner sb-science" role="img" aria-label="Chemistry"></span>
         <div>
@@ -1336,12 +1352,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Physical, organic and inorganic chemistry with the numericals and mechanisms the paper rewards.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=chemistry&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-12-pcmb-maths" class="course course-img card-hover" data-tags="Grade 12|PCMB|Maths|Science" style="--banner:#073790">
         <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
         <div>
@@ -1351,12 +1367,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=maths&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-12-pcmb-biology" class="course course-img card-hover" data-tags="Grade 12|PCMB|Biology|Science" style="--banner:#4A8C22">
         <span class="sub-banner sb-science" role="img" aria-label="Biology"></span>
         <div>
@@ -1366,12 +1382,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Cell biology, genetics, human physiology and ecology — diagrams and definitions that stick.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMB</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=biology&stream=pcmb" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
         </div>
       </div>
     </div>
@@ -1404,12 +1420,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Mechanics, waves, electricity and modern physics — built at the board, equation by equation.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=physics&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-12-pcmc-chemistry" class="course course-img card-hover" data-tags="Grade 12|PCMC|Chemistry|Science" style="--banner:#397417">
         <span class="sub-banner sb-science" role="img" aria-label="Chemistry"></span>
         <div>
@@ -1419,12 +1435,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Physical, organic and inorganic chemistry with the numericals and mechanisms the paper rewards.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=chemistry&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-12-pcmc-maths" class="course course-img card-hover" data-tags="Grade 12|PCMC|Maths|Science" style="--banner:#073790">
         <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
         <div>
@@ -1434,12 +1450,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=maths&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-12-pcmc-cs" class="course course-img card-hover" data-tags="Grade 12|PCMC|Computer Science|Science" style="--banner:#0E7490">
         <span class="sub-banner sb-science" role="img" aria-label="Computer Science"></span>
         <div>
@@ -1449,12 +1465,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Programming, data structures and computer fundamentals for the CBSE computer science paper.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in PCMC</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=computer&stream=pcmc" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
         </div>
       </div>
     </div>
@@ -1487,12 +1503,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Journal entries, ledgers, final accounts and analysis — practised until the formats are automatic.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in Commerce</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=accountancy&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
       <article id="course-12-commerce-maths" class="course course-img card-hover" data-tags="Grade 12|Commerce|Maths" style="--banner:#073790">
         <span class="sub-banner sb-maths" role="img" aria-label="Maths — Think. Solve. Succeed."></span>
         <div>
@@ -1502,12 +1518,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
         </div>
         <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
         <p class="card-blurb">Concept clarity first, then problem solving — worked at the board, step by step.</p>
-        <div class="course-foot">
-          <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in Commerce</p>
+                <div class="course-foot">
+          <p class="price" data-inr="&#8377;8,000" data-aed="AED 400" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;8,000</p>
           <p style="color:var(--slate-500);font-size:.75rem">This subject &middot; full academic year</p>
-          <a href="course-detail.html?grade=12&plan=full&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
+          <a href="course-detail.html?grade=12&plan=subject&subject=maths&stream=commerce" class="btn btn-red btn-sm btn-block">Enroll Now</a>
         </div>
-      </article>
+</article>
         </div>
       </div>
     </div>
@@ -1886,7 +1902,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
   <div class="wrap" style="padding-block:clamp(2.75rem,5vw,4rem)">
     <div class="grid cols3 g4">
       <div>
-        <img class="brand-footer" src="images/v25/footer-logo.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191" loading="lazy" decoding="async">
+        <img class="brand-footer" src="images/brand/elessons-logo-white.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191" loading="lazy" decoding="async">
         <p class="mt2" style="font-size:.9rem;max-width:32ch">CBSE / NCERT video lessons and notes for grades 8 to 12.</p>
         <p class="mono mt2" style="font-size:.7rem;color:var(--gold)">iOS &amp; Android apps &mdash; coming soon</p>
       </div>
@@ -1962,14 +1978,24 @@ document.getElementById('announce-x').onclick=function(){document.getElementById
   function hasTag(el, k){ return !k || (el.dataset.tags||'').split('|').indexOf(k)>-1; }
   function gradeNum(k){ var m = String(k||'').match(/Grade\s*(\d+)/i); return m ? m[1] : null; }
 
+  var STREAM_SUBJECTS = {
+    PCMB: ['Maths', 'Physics', 'Chemistry', 'Biology'],
+    PCMC: ['Maths', 'Physics', 'Chemistry', 'Computer Science'],
+    Commerce: ['Maths', 'Accountancy']
+  };
+
   function syncChipVisibility(){
     var g = gradeNum(gradeKey);
     var senior = g === '11' || g === '12';
     if (streamGroup) streamGroup.hidden = !senior;
     if (!senior) streamKey = null;
+    var streamSubs = streamKey ? STREAM_SUBJECTS[streamKey] : null;
     document.querySelectorAll('#course-filters [data-for="subject"] .filter').forEach(function(btn){
       var allowed = (btn.getAttribute('data-grades')||'').split(',');
       var show = !g || !allowed[0] || allowed.indexOf(g) > -1;
+      if (show && streamSubs) {
+        show = streamSubs.indexOf(btn.getAttribute('data-filter') || btn.textContent.trim()) > -1;
+      }
       btn.hidden = !show;
       if (!show && btn.getAttribute('aria-pressed')==='true') {
         btn.setAttribute('aria-pressed','false');
@@ -2294,181 +2320,54 @@ document.getElementById('announce-x').onclick=function(){document.getElementById
 </script>
 
 <script>
-/* ── lesson preview: plays inside the page, capped, no third-party chrome ──
-   The frame is covered by .player-shield so the pointer never reaches it and
-   the provider's own overlays never surface. Playback is hard-stopped twice:
-   the player's own end bound and a polling guard. */
+/* ── eLessons demo player (Google Drive clips) ── */
 (function () {
   var root = document.getElementById('lesson-player');
   if (!root) return;
-
-  var VID = root.dataset.vid;
-  var CAP = parseFloat(root.dataset.cap) || 90;
   var q = function (s) { return root.querySelector(s); };
-  var mount = q('#lesson-frame'), cover = q('.player-cover'), bar = q('.player-bar'),
-      fill = q('.pfill'), tlabel = q('.ptime'), scrub = q('.pscrub'),
-      shield = q('.player-shield'), bPlay = q('#p-toggle'), bMute = q('#p-mute'),
-      iPlay = q('#i-play'), iPause = q('#i-pause'), iSound = q('#i-sound'), iMuted = q('#i-muted');
-
-  var yt = null, timer = null, started = false, failed = false;
-
-  function fmt(s) {
-    s = Math.max(0, Math.floor(s || 0));
-    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
-  }
-  function paint(t) {
-    var p = Math.max(0, Math.min(1, t / CAP));
-    fill.style.width = (p * 100) + '%';
-    tlabel.textContent = fmt(t) + ' / ' + fmt(CAP);
-    scrub.setAttribute('aria-valuenow', Math.round(t));
-    scrub.setAttribute('aria-valuetext', fmt(t) + ' of ' + fmt(CAP));
-  }
-  function icons(playing) {
-    iPlay.style.display = playing ? 'none' : '';
-    iPause.style.display = playing ? '' : 'none';
-    bPlay.setAttribute('aria-label', playing ? 'Pause' : 'Play');
-  }
-  paint(0);
-
-  function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
-  function endNow() {
-    stopTimer();
-    try { yt && yt.pauseVideo(); } catch (e) {}
-    paint(CAP);
-    root.dataset.state = 'ended';
-  }
-  function watch() {
-    stopTimer();
-    timer = setInterval(function () {
-      if (!yt || !yt.getCurrentTime) return;
-      var t = yt.getCurrentTime();
-      if (t >= CAP - 0.12) { endNow(); return; }
-      paint(t);
-    }, 200);
-  }
-
-  function fallback(msg) {
-    if (failed || root.dataset.state === 'playing') return;
-    failed = true;
-    root.dataset.state = 'idle';
-    var n = q('.player-note');
-    if (n) n.textContent = msg;
-  }
-
-  function loadAPI(done) {
-    if (window.YT && window.YT.Player) return done();
-    var prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = function () { if (prev) prev(); done(); };
-    if (!document.getElementById('vp-api')) {
-      var s = document.createElement('script');
-      s.id = 'vp-api';
-      s.src = 'https://www.youtube.com/iframe_api';
-      s.onerror = function () { fallback('Preview could not load here. Browse the classes below.'); };
-      document.head.appendChild(s);
-    }
-    setTimeout(function () {
-      if (!(window.YT && window.YT.Player)) {
-        fallback('Preview could not load here. Browse the classes below.');
-      }
-    }, 7000);
-  }
-
-  function build() {
-    yt = new YT.Player(mount, {
-      videoId: VID,
-      host: 'https://www.youtube-nocookie.com',
-      playerVars: {
-        autoplay: 1, controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3,
-        disablekb: 1, fs: 0, playsinline: 1, cc_load_policy: 0,
-        end: Math.round(CAP), origin: window.location.origin
-      },
-      events: {
-        onReady: function (e) {
-          root.dataset.state = 'playing';
-          bar.hidden = false;
-          icons(true);
-          e.target.playVideo();
-          watch();
-        },
-        onStateChange: function (e) {
-          if (e.data === YT.PlayerState.PLAYING) { root.dataset.state = 'playing'; icons(true); watch(); }
-          else if (e.data === YT.PlayerState.PAUSED) { root.dataset.state = 'paused'; icons(false); stopTimer(); }
-          else if (e.data === YT.PlayerState.ENDED) { endNow(); }
-        },
-        onError: function () {
-          stopTimer();
-          fallback('This preview is unavailable right now. Browse the classes below.');
-        }
-      }
-    });
-  }
+  var cover = q('.player-cover'), bar = q('.player-bar'), shield = q('.player-shield');
+  var started = false, frame = null;
 
   function start() {
     if (started) return;
+    var id = root.dataset.drive;
+    if (!id) {
+      var n = q('.player-note');
+      if (n) n.textContent = 'Preview could not load here. Browse the classes below.';
+      return;
+    }
     started = true;
     root.dataset.state = 'loading';
-    loadAPI(build);
+    var stage = q('.player-stage');
+    var old = q('#lesson-frame');
+    if (old) old.parentNode.removeChild(old);
+    frame = document.createElement('iframe');
+    frame.id = 'lesson-frame';
+    frame.title = 'eLessons demo class';
+    frame.allow = 'autoplay; encrypted-media; picture-in-picture';
+    frame.allowFullscreen = true;
+    frame.src = 'https://drive.google.com/file/d/' + encodeURIComponent(id) + '/preview';
+    if (shield) { shield.style.pointerEvents = 'none'; shield.style.opacity = '0'; }
+    if (shield) stage.insertBefore(frame, shield); else stage.appendChild(frame);
+    if (bar) bar.hidden = true;
+    if (cover) cover.style.display = 'none';
+    root.dataset.state = 'playing';
   }
 
-  function toggle() {
-    if (!started) return start();
-    if (!yt) return;
-    if (root.dataset.state === 'playing') yt.pauseVideo(); else yt.playVideo();
-  }
-
-  cover.addEventListener('click', start);
-  shield.addEventListener('click', toggle);
-  bPlay.addEventListener('click', toggle);
-
-  bMute.addEventListener('click', function () {
-    if (!yt) return;
-    var m = yt.isMuted();
-    m ? yt.unMute() : yt.mute();
-    iSound.style.display = m ? '' : 'none';
-    iMuted.style.display = m ? 'none' : '';
-    bMute.setAttribute('aria-label', m ? 'Mute' : 'Unmute');
-  });
-
-  function seekFromX(clientX) {
-    if (!yt || !yt.seekTo) return;
-    var r = scrub.getBoundingClientRect();
-    var p = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
-    yt.seekTo(p * CAP, true);
-    paint(p * CAP);
-    if (root.dataset.state === 'ended') { root.dataset.state = 'playing'; yt.playVideo(); }
-  }
-  scrub.addEventListener('click', function (e) { seekFromX(e.clientX); });
-  scrub.addEventListener('keydown', function (e) {
-    if (!yt || !yt.getCurrentTime) return;
-    var t = yt.getCurrentTime(), step = e.shiftKey ? 10 : 5, n = null;
-    if (e.key === 'ArrowRight') n = Math.min(CAP, t + step);
-    if (e.key === 'ArrowLeft') n = Math.max(0, t - step);
-    if (e.key === 'Home') n = 0;
-    if (e.key === 'End') n = CAP - 1;
-    if (n === null) return;
-    e.preventDefault();
-    yt.seekTo(n, true); paint(n);
-  });
-
+  if (cover) cover.addEventListener('click', start);
+  if (shield) shield.addEventListener('click', start);
+  var playBtn = q('.play');
+  if (playBtn) playBtn.addEventListener('click', function (e) { e.stopPropagation(); start(); });
   var replay = q('#p-replay');
   if (replay) replay.addEventListener('click', function () {
-    if (!yt) return start();
-    root.dataset.state = 'playing';
-    yt.seekTo(0, true); yt.playVideo(); watch();
+    started = false;
+    if (cover) cover.style.display = '';
+    root.dataset.state = 'idle';
+    start();
   });
-
-  /* stop the clock if the section scrolls away */
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) {
-      es.forEach(function (en) {
-        if (!en.isIntersecting && yt && root.dataset.state === 'playing') {
-          try { yt.pauseVideo(); } catch (e) {}
-        }
-      });
-    }, { threshold: 0.15 }).observe(root);
-  }
 })();
 </script>
 
+<script src="js/form.js"></script>
 </body>
 </html>

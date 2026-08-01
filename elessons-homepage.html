@@ -277,7 +277,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 /* ══════════════ CARDS ══════════════ */
 .card{background:#fff;border:1px solid var(--card-line);border-radius:20px;padding:1.75rem 1.6rem;
   box-shadow:0 1px 2px rgba(10,49,112,.05),0 10px 26px -18px var(--card-shadow);
-  height:100%;display:flex;flex-direction:column}
+  display:flex;flex-direction:column}
+/* Equal-height only for direct grid children (How it works, benefits, testimonials) —
+   not nested cards like contact offices, which overflow the footer when height:100%. */
+.cols3 > .card,
+.cols4 > .card,
+#panels .card{height:100%}
 .card > p:last-child{margin-top:auto}
 @media (prefers-reduced-motion:no-preference){
   .card-hover{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
@@ -455,12 +460,16 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .faq .body{padding:0 1.4rem 1.3rem;color:var(--slate);font-size:.95rem;max-width:66ch}
 
 /* ══════════════ FORM ══════════════ */
-.field{display:flex;flex-direction:column;gap:.35rem}
+.field{display:flex;flex-direction:column;gap:.35rem;align-self:start;min-width:0}
 .field label{font-size:.78rem;font-weight:700}
 .field input,.field textarea{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:12px;
-  padding:.8rem .9rem;font:inherit;font-size:.93rem;color:var(--ink)}
-.field textarea{min-height:118px;resize:vertical}
+  padding:.8rem .9rem;font:inherit;font-size:.93rem;color:var(--ink);flex:none;height:auto;min-height:0;
+  box-sizing:border-box}
+.field input{min-height:48px;max-height:52px}
+.field textarea{min-height:118px;max-height:none;resize:vertical}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--navy-700)}
+#contact .wrap.grid{align-items:start}
+#contact .card{height:auto}
 
 /* ══════════════ STICKY BAR ══════════════ */
 .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:70;background:var(--navy-950);color:#fff;

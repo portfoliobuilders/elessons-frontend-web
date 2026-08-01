@@ -604,13 +604,13 @@
       var pt = stage.querySelector('.player-title');
       if (pt) pt.textContent = pv.title;
       window.__elPreviewCtx = { grade: S.grade, plan: S.plan, subject: S.subject };
-      if (stage.dataset.vid !== pv.vid) {
-        stage.dataset.vid = pv.vid;
-        stage.dataset.cap = String(pv.cap);
-        if (typeof window.gtecPlayerReset === 'function') window.gtecPlayerReset(pv.vid, pv.cap, pv.title);
-      } else {
-        stage.dataset.vid = pv.vid;
-        stage.dataset.cap = String(pv.cap);
+      var mediaId = pv.driveId || pv.vid || '';
+      var prevId = stage.dataset.drive || stage.dataset.vid || '';
+      stage.dataset.drive = pv.driveId || '';
+      stage.dataset.vid = pv.driveId ? '' : (pv.vid || '');
+      stage.dataset.cap = String(pv.cap);
+      if (prevId !== mediaId && typeof window.gtecPlayerReset === 'function') {
+        window.gtecPlayerReset(mediaId, pv.cap, pv.title);
       }
     }
 
