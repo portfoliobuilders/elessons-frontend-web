@@ -855,7 +855,7 @@ footer{position:relative;z-index:2;padding-bottom:calc(1rem + env(safe-area-inse
       <span class="mono cur-label">Showing prices for</span>
       <select class="cur-select cur-pricing" aria-label="Country and currency">
         <option value="inr|IN" selected>India · ₹ INR</option>
-        <option value="aed|AE">UAE &amp; Gulf · AED</option>
+        <option value="aed|AE">UAE &amp; Gulf &middot; AED</option>
       </select>
       <span class="price-note"></span>
     </div>
@@ -2077,6 +2077,9 @@ document.getElementById('announce-x').onclick=function(){document.getElementById
       } else if (kind === 'stream') {
         streamKey = wasOn ? null : key;
         if (!wasOn) f.setAttribute('aria-pressed','true');
+        subjectKey = null;
+        document.querySelectorAll('#course-filters [data-for="subject"] .filter')
+          .forEach(function(o){ o.setAttribute('aria-pressed','false'); });
       } else {
         subjectKey = wasOn ? null : key;
         if (!wasOn) f.setAttribute('aria-pressed','true');
