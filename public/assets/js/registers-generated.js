@@ -252,6 +252,8 @@ const REGISTER_11_PCMB = {
     { c: "Hydrocarbons", v: ["Introduction","Preparation of Alkanes","Properties of Alkanes; Conformations","Alkanes Conformations; Nomenclature of Alkenes","Alkenes - Isomers; Preparations; Physical Properties","Alkenes - Chemical Properties - Part 1","Alkenes - Chemical Properties - Part 2","Alkynes - Preparations; Physical & Chemical Properties;","Aromatic Hydrocarbons","Structure of Benzene; Huckel Rule; Preparation of","Benzene; Properties of Benzene","Properties of Benzene - Part 2; Directive Influence of","Functional Group in Monosubstituted Benzene;","Carcinogenicity & Toxicity of Hydrocarbons","Nomenclature & Isomerism in Alkane; Decarboxylation","& Kolbe's Electrolytic Method; Addition Reactions;","Dihedral Angle"] },
     { c: "Environmental Chemistry", v: ["Smog","Environmental Pollution","Tropospheric Pollution","Stratospheric Pollution; Water Pollution","International Standards for Drinking Water; Soil","Pollution; Strategies to Control Environmental Pollution;","Green Chemistry"] },
   ],
+  biology: [
+  ],
   english: [
     { c: "Alphabet", v: ["Vowels and Consonants"] },
     { c: "Parts of Speech", v: ["Parts of Speech","Nouns","Pronouns","Adjectives","Verbs","Adverbs - 1","Adverbs - 2","Proposition - 1","Preposition - 2","Conjunctions"] },
