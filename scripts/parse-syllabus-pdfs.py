@@ -12,27 +12,51 @@ from pypdf import PdfReader
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "_pdf_extract"
 PDF_DIR = ROOT / "public" / "assets" / "pdfs"
+PDF_MIRROR = ROOT / "public" / "pdfs"
+# Prefer repo copies so CI / cloud agents can regenerate without Windows paths.
+# Optional local Downloads override (used when refreshing from a machine that has them).
 DL = Path(r"C:\Users\ASUS\Downloads")
 
-SOURCES = {
-    "grade8_pcmb": DL / "1716007295-6648317fb9fde.pdf",
-    "grade10_pcmb": DL / "1716008042-6648346a2a058.pdf",
-    "grade11_pcmc": DL / "Grade_11_PCMC.pdf",
-    "grade12_pcmb": DL / "1716008366-664835ae8b171.pdf",
-    "grade12_pcmc": DL / "Grade_12_PCMC.pdf",
-    "grade11_commerce": DL / "1716008402-664835d2299b5.pdf",
-    "grade12_commerce": DL / "1716008448-66483600b8b2a.pdf",
-}
-
+# Canonical filenames under public/assets/pdfs/
 COPY_AS = {
     "grade8_pcmb": "grade-8-pcmb.pdf",
     "grade10_pcmb": "grade-10-pcmb.pdf",
     "grade11_pcmc": "grade-11-pcmc.pdf",
+    "grade11_pcmb": "grade-11-pcmb.pdf",  # optional; falls back to PCMC shared subjects
     "grade12_pcmb": "grade-12-pcmb.pdf",
     "grade12_pcmc": "grade-12-pcmc.pdf",
     "grade11_commerce": "grade-11-commerce.pdf",
     "grade12_commerce": "grade-12-commerce.pdf",
+    "grade9_pcmb": "grade-9-pcmb.pdf",  # optional when supplied
 }
+
+# Alternate Downloads filenames (newest names first) used only when repo copy is missing.
+DL_ALIASES = {
+    "grade8_pcmb": ["Grade 8.pdf", "1716007295-6648317fb9fde.pdf"],
+    "grade9_pcmb": ["Grade 9.pdf"],
+    "grade10_pcmb": ["Grade 10.pdf", "1716008042-6648346a2a058.pdf"],
+    "grade11_pcmc": ["Grade 11 - PCMC.pdf", "Grade_11_PCMC.pdf"],
+    "grade11_pcmb": ["Grade 11 - PCMB.pdf"],
+    "grade11_commerce": ["Grade 11 - Commerce.pdf", "1716008402-664835d2299b5.pdf"],
+    "grade12_pcmb": ["Grade 12 - PCMB.pdf", "1716008366-664835ae8b171.pdf"],
+    "grade12_pcmc": ["Grade 12 - PCMC.pdf", "Grade_12_PCMC.pdf"],
+    "grade12_commerce": ["Grade 12 - Commerce.pdf", "1716008448-66483600b8b2a.pdf"],
+}
+
+
+def resolve_source(key: str) -> Path | None:
+    """Resolve a syllabus PDF: repo copy first, then Downloads aliases."""
+    repo = PDF_DIR / COPY_AS[key]
+    if repo.exists():
+        return repo
+    for name in DL_ALIASES.get(key, []):
+        candidate = DL / name
+        if candidate.exists():
+            return candidate
+    return None
+
+
+SOURCES = {key: resolve_source(key) for key in COPY_AS}
 
 
 def normalize_subject(s: str) -> str | None:
@@ -299,40 +323,73 @@ def emit_register_js(name: str, subjects: dict) -> str:
     return "\n".join(parts)
 
 
+REQUIRED = (
+    "grade8_pcmb",
+    "grade10_pcmb",
+    "grade11_pcmc",
+    "grade11_commerce",
+    "grade12_pcmb",
+    "grade12_pcmc",
+    "grade12_commerce",
+)
+
+
 def main():
     OUT.mkdir(exist_ok=True)
     PDF_DIR.mkdir(parents=True, exist_ok=True)
+    PDF_MIRROR.mkdir(parents=True, exist_ok=True)
+
+    # Re-resolve after optional Downloads appear mid-run
+    sources = {key: resolve_source(key) for key in COPY_AS}
 
     parsed = {}
-    for key, path in SOURCES.items():
-        if not path.exists():
-            print("MISSING", path)
+    for key, path in sources.items():
+        if path is None:
+            print("MISSING", key, "— looked for", COPY_AS[key], "and", DL_ALIASES.get(key, []))
             continue
         subj, exp = parse_pdf(path)
         got = count_v(subj)
         print(f"=== {key} ===")
+        print("  source  :", path)
         print("  expected:", exp)
         print("  got     :", got)
         for k, chs in subj.items():
             print(f"  {k}: {len(chs)} chapters / {got[k]} videos")
         parsed[key] = {"subjects": subj, "expected": exp}
         dest = PDF_DIR / COPY_AS[key]
-        shutil.copy2(path, dest)
-        print("  copied ->", dest.name)
+        if path.resolve() != dest.resolve():
+            shutil.copy2(path, dest)
+            print("  copied ->", dest.name)
+        else:
+            print("  kept     ", dest.name)
+        # Keep /public/pdfs mirror in sync for hosts that still serve that path
+        mirror = PDF_MIRROR / COPY_AS[key]
+        shutil.copy2(dest, mirror)
+        print("  mirrored ->", mirror.relative_to(ROOT))
+
+    missing_required = [k for k in REQUIRED if k not in parsed]
+    if missing_required:
+        raise SystemExit("Required PDF sources missing: " + ", ".join(missing_required))
 
     # Build grade registers
     # Grade 8 / 10: flat PCMB+English
     reg8 = parsed["grade8_pcmb"]["subjects"]
     reg10 = parsed["grade10_pcmb"]["subjects"]
+    reg9 = parsed.get("grade9_pcmb", {}).get("subjects")
 
-    # Grade 11 PCMC from PDF; PCMB = PCMC maths/physics/chemistry + empty biology
+    # Grade 11 PCMC from PDF; PCMB prefers dedicated PDF, else shared PCMC subjects
     g11_pcmc = parsed["grade11_pcmc"]["subjects"]
-    g11_pcmb = {
-        k: g11_pcmc[k]
-        for k in ("maths", "physics", "chemistry", "english")
-        if k in g11_pcmc
-    }
-    # Biology not in provided Grade 11 PDFs
+    if "grade11_pcmb" in parsed:
+        g11_pcmb = parsed["grade11_pcmb"]["subjects"]
+    else:
+        g11_pcmb = {
+            k: g11_pcmc[k]
+            for k in ("maths", "physics", "chemistry", "english")
+            if k in g11_pcmc
+        }
+        # Biology not in the PCMC source set — keep key so UI can show an honest empty state
+        g11_pcmb.setdefault("biology", [])
+        print("NOTE: grade11_pcmb PDF missing — PCMB register uses PCMC shared subjects (no Biology list)")
     g11_commerce = parsed["grade11_commerce"]["subjects"]
 
     # Grade 12: PCMB PDF + CS from PCMC if any; Commerce separate
@@ -358,6 +415,8 @@ def main():
         "11": {"pcmb": g11_pcmb, "pcmc": g11_pcmc, "commerce": g11_commerce},
         "12": {"pcmb": g12_pcmb, "pcmc": g12_pcmc, "commerce": g12_commerce},
     }
+    if reg9:
+        payload["9"] = reg9
     (OUT / "parsed_registers.json").write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
@@ -373,6 +432,8 @@ def main():
         emit_register_js("REGISTER_12_PCMC", g12_pcmc),
         emit_register_js("REGISTER_12_COMMERCE", g12_commerce),
     ]
+    if reg9:
+        js_chunks.insert(2, emit_register_js("REGISTER_9_GEN", reg9))
     out_js = ROOT / "public" / "assets" / "js" / "registers-generated.js"
     out_js.write_text("\n\n".join(js_chunks) + "\n", encoding="utf-8")
     print("Wrote", out_js, "bytes", out_js.stat().st_size)
