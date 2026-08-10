@@ -68,6 +68,7 @@
       <select class="cur-select cur-nav" aria-label="Currency">
         <option value="inr|IN" selected>&#8377; INR</option>
         <option value="aed|AE">AED</option>
+        <option value="usd|US">$ USD</option>
       </select>
       <a href="https://lms.elessons.net" class="navlink hide-md-nav" data-lms="1">LMS Login</a>
       <button type="button" class="cart-btn" id="cart-open" aria-label="Open cart" aria-haspopup="dialog" aria-controls="cart-drawer">
@@ -404,11 +405,12 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 
-<!-- ORDER MATTERS: data -> page render -> shared bindings -->
-<script src="/assets/js/registers-generated.js?v=46"></script>
-<script src="/assets/js/course-data.js?v=46"></script>
-<script src="/assets/js/detail.js?v=46"></script>
-<script src="/assets/js/gtec-ui.js?v=46"></script>
+<!-- ORDER MATTERS: data -> page render -> geo pricing -> shared bindings -->
+<script src="/assets/js/registers-generated.js?v=47"></script>
+<script src="/assets/js/course-data.js?v=47"></script>
+<script src="/assets/js/detail.js?v=47"></script>
+<script src="/assets/js/geo-pricing.js?v=47"></script>
+<script src="/assets/js/gtec-ui.js?v=47"></script>
 <script>
   var ax = document.getElementById('announce-x');
   if (ax) ax.onclick = function () { document.getElementById('announce').remove(); };

@@ -1,8 +1,9 @@
 /* ==========================================================================
    G-TEC eLessons — shared site behaviour
    Lifted VERBATIM from indexnew.html so any new page behaves identically:
-   mobile drawer + measured --nav-h, the INR/AED currency switcher, the
-   scroll-reveal (.rv -> .in) and the accessible tab pattern.
+   mobile drawer + measured --nav-h, the location-based currency switcher
+   (INR / AED / USD via geo-pricing.js), the scroll-reveal (.rv -> .in) and
+   the accessible tab pattern.
 
    ONE deliberate change, marked [SCOPED] below: the original selected every
    .tab on the page as a single roving tablist. A detail page needs two
@@ -100,52 +101,28 @@ document.querySelectorAll('[role="tablist"]').forEach(gtecInitTablist);
 
 /* ══════════════ currency ══════════════ */
 
-/* ── country / currency switcher ───────────────────────────────────────────
-   Prices come from the two lists in the fee schedule (PAN INDIA in INR,
-   GCC in AED). Nothing is converted at runtime — each price element carries
-   both authored figures, so the two lists stay independent. */
-(function(){
-  var GULF_TZ = ['Asia/Dubai','Asia/Bahrain','Asia/Riyadh','Asia/Qatar',
-                 'Asia/Kuwait','Asia/Muscat','Asia/Aden'];
-  var pickers = document.querySelectorAll('.cur-select');
-
-  function render(cur){
-    document.querySelectorAll('.price').forEach(function(el){
-      var v = el.dataset[cur];
-      if (v) el.textContent = v;
+/* ── location-based country / currency switcher ────────────────────────────
+   Lives in geo-pricing.js. Detects country via IP (timezone fallback), maps
+   to INR / AED / USD, and paints every .price from its authored datasets.
+   Re-run detectAndApply if this file loads before the pickers exist. */
+(function () {
+  function boot() {
+    if (window.ELessonsGeoPricing && typeof window.ELessonsGeoPricing.detectAndApply === 'function') {
+      window.ELessonsGeoPricing.detectAndApply();
+      return;
+    }
+    /* Soft fallback if geo-pricing.js failed to load — keep India as last resort
+       so the page still paints something readable. */
+    document.querySelectorAll('.price').forEach(function (el) {
+      if (el.dataset.inr) el.textContent = el.dataset.inr;
     });
-    document.querySelectorAll('.price-note').forEach(function(n){
-      n.textContent = cur === 'aed'
-        ? 'Gulf pricing, charged in AED at checkout.'
-        : 'India pricing, charged in Indian rupees at checkout.';
-    });
-    document.documentElement.setAttribute('data-currency', cur);
+    document.documentElement.setAttribute('data-currency', 'inr');
   }
-
-  function sync(value){
-    var cur = value.split('|')[0];
-    pickers.forEach(function(sel){
-      var i, exact = -1, firstOfCur = -1;
-      for (i = 0; i < sel.options.length; i++){
-        if (sel.options[i].value === value) exact = i;
-        if (firstOfCur < 0 && sel.options[i].value.split('|')[0] === cur) firstOfCur = i;
-      }
-      // the nav picker lists currencies, the pricing picker lists countries, so
-      // fall back to the first option of the right currency when there is no exact match
-      sel.selectedIndex = exact > -1 ? exact : firstOfCur;
-    });
-    render(cur);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
-
-  pickers.forEach(function(sel){
-    sel.addEventListener('change', function(){ sync(sel.value); });
-  });
-
-  var start = 'inr|IN';
-  try {
-    if (GULF_TZ.indexOf(Intl.DateTimeFormat().resolvedOptions().timeZone) > -1) start = 'aed|AE';
-  } catch (e) {}
-  sync(start);
 })();
 
 
