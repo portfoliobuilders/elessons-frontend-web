@@ -165,8 +165,8 @@
 
 /* ══════════════ MISC ══════════════ */
 
-/* NOTE: .price-note is RESERVED by gtec-ui.js — the currency switcher rewrites
-   the text of every .price-note on the page. Use .note-sm for any caption of
+/* NOTE: .price-note is RESERVED by geo-pricing.js — location-based pricing
+   rewrites the text of every .price-note on the page. Use .note-sm for any caption of
    your own, or it will be silently replaced with the currency line. */
 .note-sm{font-size:.75rem;color:var(--slate-500);line-height:1.55}
 .buy-unit{font-size:.78rem;color:var(--slate-500);margin-top:.5rem}
@@ -283,7 +283,7 @@ footer{position:relative;z-index:1}
 
 
 /* ══════════════ RESPONSIVE NAV (course detail) ══════════════
-   Slim tools row: currency + Sign in + cart. No phone, Browse CTA, or burger.
+   Slim tools row: Sign in + cart. No phone, Browse CTA, burger, or currency picker.
    Primary links stay visible and scroll horizontally on narrow screens. */
 .nav > .wrap{
   display:flex;
@@ -359,7 +359,6 @@ footer{position:relative;z-index:1}
   .navtools{gap:.7rem}
 }
 
-.navtools .cur-nav,
 .navtools .navlink,
 .navtools .cart-btn{
   align-items:center;
@@ -378,17 +377,6 @@ footer{position:relative;z-index:1}
 .navtools .navlink{
   padding:0 .15rem;
   position:relative;
-}
-.navtools .cur-nav{
-  display:inline-flex;
-  max-width:96px;
-  padding-top:0;
-  padding-bottom:0;
-  padding-inline:.7rem 1.7rem;
-  background-position:right .65rem center;
-}
-@media (min-width:900px){
-  .navtools .cur-nav{max-width:104px}
 }
 .navtools .cart-btn{
   width:40px;

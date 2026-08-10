@@ -17,6 +17,9 @@ ios/.symlinks/
 android/.gradle/
 *.lock
 
+# Syllabus parse scratch output
+_pdf_extract/
+
 # Vercel
 .vercel/
 .vercel-out/
@@ -25,3 +28,6 @@ node_modules/
 
 .vercel
 .env*
+
+# Local deploy artifacts
+elessons-godaddy-upload.zip

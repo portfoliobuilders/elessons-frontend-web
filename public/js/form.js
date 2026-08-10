@@ -23,7 +23,7 @@
     var message = (form.querySelector("#f-msg") || {}).value || "";
 
     if (!name.trim() || !email.trim()) {
-      status.className = "form-status form-status--err is-visible";
+      status.hidden = false; status.className = "form-status form-status--err is-visible";
       status.textContent = "Please enter your name and email.";
       return;
     }
@@ -45,7 +45,7 @@
       "&body=" +
       encodeURIComponent(body);
 
-    status.className = "form-status form-status--ok is-visible";
+    status.hidden = false; status.className = "form-status form-status--ok is-visible";
     status.textContent = "Opening your email app to send the message…";
     window.location.href = mailto;
   });

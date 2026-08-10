@@ -2,7 +2,8 @@
    G-TEC eLessons — checkout (WhatsApp handoff)
    Reads the same localStorage cart as course-detail. Card/Razorpay payment
    can replace the WA CTA later without changing the cart format.
-   LOAD: course-data.js → checkout.js → gtec-ui.js
+   Currency is IP-only via geo-pricing.js — no manual switcher.
+   LOAD: course-data.js → checkout.js → geo-pricing.js → gtec-ui.js
    ========================================================================== */
 (function () {
   'use strict';
@@ -16,8 +17,6 @@
     });
   }
   function cur() {
-    var q = new URLSearchParams(location.search).get('currency');
-    if (q === 'aed' || q === 'inr') return q;
     return document.documentElement.getAttribute('data-currency') || 'inr';
   }
   function track(event, params) {
@@ -35,15 +34,18 @@
   }
   function moneyLabel(price, currency) {
     var n = (price && price[currency]) || 0;
-    return currency === 'aed' ? ('AED ' + n.toLocaleString('en-AE')) : ('₹' + n.toLocaleString('en-IN'));
+    if (currency === 'aed') return 'AED ' + n.toLocaleString('en-AE');
+    if (currency === 'usd') return '$' + n.toLocaleString('en-US');
+    return '₹' + n.toLocaleString('en-IN');
   }
   function cartTotal(cart) {
     return cart.items.reduce(function (t, it) {
       return {
         inr: t.inr + ((it.price && it.price.inr) || 0),
-        aed: t.aed + ((it.price && it.price.aed) || 0)
+        aed: t.aed + ((it.price && it.price.aed) || 0),
+        usd: t.usd + ((it.price && it.price.usd) || 0)
       };
-    }, { inr: 0, aed: 0 });
+    }, { inr: 0, aed: 0, usd: 0 });
   }
   function buildMessage(cart, currency, parentName, phone) {
     var lines = [
@@ -67,10 +69,15 @@
     return lines.join('\n');
   }
 
+  function noteFor(currency) {
+    if (currency === 'aed') return 'Gulf pricing — your counsellor will confirm AED payment.';
+    if (currency === 'usd') return 'International pricing — your counsellor will confirm USD payment.';
+    return 'India pricing — your counsellor will confirm INR payment.';
+  }
+
   function paint() {
     var cart = loadCart();
     var currency = cur();
-    document.documentElement.setAttribute('data-currency', currency);
 
     var empty = $('co-empty');
     var form = $('co-form');
@@ -93,7 +100,8 @@
         '</div>' +
         '<div class="co-item-side">' +
         '<span class="price" data-inr="' + esc(moneyLabel(it.price, 'inr')) +
-        '" data-aed="' + esc(moneyLabel(it.price, 'aed')) + '">' +
+        '" data-aed="' + esc(moneyLabel(it.price, 'aed')) +
+        '" data-usd="' + esc(moneyLabel(it.price, 'usd')) + '">' +
         esc(moneyLabel(it.price, currency)) + '</span>' +
         '<button type="button" class="co-remove" data-remove="' + esc(it.id) +
         '" aria-label="Remove ' + esc(it.title) + '">Remove</button>' +
@@ -104,13 +112,11 @@
     if (totalEl) {
       totalEl.dataset.inr = moneyLabel(tot, 'inr');
       totalEl.dataset.aed = moneyLabel(tot, 'aed');
+      totalEl.dataset.usd = moneyLabel(tot, 'usd');
+      totalEl.classList.add('price');
       totalEl.textContent = moneyLabel(tot, currency);
     }
-    if (note) {
-      note.textContent = currency === 'aed'
-        ? 'Gulf pricing — your counsellor will confirm AED payment.'
-        : 'India pricing — your counsellor will confirm INR payment.';
-    }
+    if (note) note.textContent = noteFor(currency);
 
     list.querySelectorAll('[data-remove]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -161,18 +167,8 @@
         track('whatsapp_lead', { context: 'checkout', currency: cur() });
       });
     }
-    document.querySelectorAll('.cur-select').forEach(function (sel) {
-      sel.addEventListener('change', function () {
-        /* gtec-ui updates data-currency; keep URL + WA in sync */
-        setTimeout(function () {
-          var c = document.documentElement.getAttribute('data-currency') || 'inr';
-          var u = new URL(location.href);
-          u.searchParams.set('currency', c);
-          history.replaceState(null, '', u.pathname + u.search);
-          paint();
-        }, 0);
-      });
-    });
+    /* Refresh totals when geo-pricing settles the market. */
+    document.addEventListener('el:currency', function () { paint(); });
   }
 
   paint();
