@@ -436,7 +436,7 @@ function planChapterCount(grade, plan, subject, pkg) {
 }
 
 /* Returns { inr, aed, usd } so a price element can carry every authored
-   figure, which is what the currency switcher reads. Never converts. */
+   figure, which is what location-based pricing reads. Never converts. */
 function planPrice(grade, planType, mode, subjectKey, pkg) {
   var p = PRICING[grade];
   if (!p) return { inr: 0, aed: 0, usd: 0 };

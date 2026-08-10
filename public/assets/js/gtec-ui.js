@@ -1,9 +1,9 @@
 /* ==========================================================================
    G-TEC eLessons — shared site behaviour
    Lifted VERBATIM from indexnew.html so any new page behaves identically:
-   mobile drawer + measured --nav-h, the location-based currency switcher
-   (INR / AED / USD via geo-pricing.js), the scroll-reveal (.rv -> .in) and
-   the accessible tab pattern.
+   mobile drawer + measured --nav-h, location-based currency painting
+   (INR / AED / USD via geo-pricing.js — no manual switcher), the
+   scroll-reveal (.rv -> .in) and the accessible tab pattern.
 
    ONE deliberate change, marked [SCOPED] below: the original selected every
    .tab on the page as a single roving tablist. A detail page needs two
@@ -101,10 +101,10 @@ document.querySelectorAll('[role="tablist"]').forEach(gtecInitTablist);
 
 /* ══════════════ currency ══════════════ */
 
-/* ── location-based country / currency switcher ────────────────────────────
+/* ── location-based currency (automatic only) ──────────────────────────────
    Lives in geo-pricing.js. Detects country via IP (timezone fallback), maps
    to INR / AED / USD, and paints every .price from its authored datasets.
-   Re-run detectAndApply if this file loads before the pickers exist. */
+   There is no manual currency picker. */
 (function () {
   function boot() {
     if (window.ELessonsGeoPricing && typeof window.ELessonsGeoPricing.detectAndApply === 'function') {

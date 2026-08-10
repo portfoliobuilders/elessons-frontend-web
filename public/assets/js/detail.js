@@ -515,10 +515,18 @@
     el.dataset.usd = a.usd;
     el.textContent = a[cur()];
   }
-  /* Re-runs the shared switcher so every .price repaints from its datasets. */
+  /* Re-paints after location-based currency detection (no manual switcher). */
   function repaint() {
-    var sel = document.querySelector('.cur-select');
-    if (sel) sel.dispatchEvent(new Event('change'));
+    if (window.ELessonsGeoPricing && typeof window.ELessonsGeoPricing.render === 'function') {
+      var cur = document.documentElement.getAttribute('data-currency') || 'inr';
+      var cc = document.documentElement.getAttribute('data-geo-country') || '';
+      window.ELessonsGeoPricing.render(cur, cc);
+      return;
+    }
+    document.querySelectorAll('.price').forEach(function (el) {
+      var v = el.dataset[cur()];
+      if (v) el.textContent = v;
+    });
   }
 
   var ICON_TICK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
@@ -1311,12 +1319,13 @@
       });
     });
   }
-  /* Currency switcher lives in gtec-ui.js — refresh WA destinations when it flips. */
+  /* Location-based currency (geo-pricing.js) — refresh WA/cart when it settles. */
   function bindCurrencyWa() {
-    document.querySelectorAll('.cur-select').forEach(function (sel) {
-      if (sel.dataset.waCurrencyBound) return;
-      sel.dataset.waCurrencyBound = '1';
-      sel.addEventListener('change', function () { bindWa(); paintCart(); });
+    if (document.documentElement.dataset.waCurrencyBound === '1') return;
+    document.documentElement.dataset.waCurrencyBound = '1';
+    document.addEventListener('el:currency', function () {
+      bindWa();
+      paintCart();
     });
   }
   function bindLms() {
