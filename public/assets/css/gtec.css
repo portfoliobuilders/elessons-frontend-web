@@ -354,17 +354,10 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 @media (prefers-reduced-motion:no-preference){
   .dot-live{animation:livepulse 2.2s ease-in-out infinite}
   @keyframes livepulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.72)}}}
-/* ══════════════ CURRENCY PICKER ══════════════ */
-.cur-select{font:inherit;font-size:.82rem;font-weight:600;color:var(--ink);background:#fff;
-  border:1.5px solid var(--line);border-radius:999px;padding:.4rem 1.9rem .4rem .85rem;cursor:pointer;
-  max-width:186px;appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' fill='none' stroke='%230A3170' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right .8rem center}
-.cur-select:hover{border-color:var(--navy-700)}
-.cur-nav{flex:none;min-height:38px;max-width:104px}
-@media (max-width:640px){.cur-nav{display:none}}  /* header has no room; the pricing picker covers it */
+/* ══════════════ LOCATION-BASED MARKET LABEL ══════════════ */
 .cur-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
 .cur-label{font-size:.6rem;color:var(--slate)}
+.cur-market{font:inherit;font-size:.82rem;font-weight:700;color:var(--ink);letter-spacing:-.01em}
 .price-note{font-size:.78rem;color:var(--slate)}
 
 /* ══════════════ APP BAND ══════════════ */

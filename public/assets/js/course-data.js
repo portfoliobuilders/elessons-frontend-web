@@ -19,7 +19,9 @@ const ELESSONS = {
   // Durations are NOT in the source syllabus PDF. Leaving this false hides the
   // column rather than shipping invented numbers.
   showDurations: false,
-  defaultCurrency: 'inr'
+  defaultCurrency: 'inr',
+  /* Rest-of-world fallback when IP country is not India or GCC. */
+  supportedCurrencies: ['inr', 'aed', 'usd']
 };
 
 /** Source PDF (or printable HTML list) for a grade / stream package. */
@@ -44,7 +46,7 @@ function classListPdfFor(grade, pkg) {
   if (typeof entry === 'string') return entry;
   return entry[pkg] || entry.pcmb || (ELESSONS.classListPdf + '?grade=' + grade);
 }
-/** Active WhatsApp digits for the shopper's currency (INR → India, AED → Gulf). */
+/** Active WhatsApp digits for the shopper's currency (INR → India, AED → Gulf, else India). */
 function elWhatsAppNumber(currency) {
   var c = currency || (typeof document !== 'undefined' &&
     document.documentElement.getAttribute('data-currency')) || ELESSONS.defaultCurrency;
@@ -117,49 +119,49 @@ const SUBJECT_META = {
 const SUBJECT_ORDER = ['maths', 'science', 'english'];
 
 /* ---------- PRICING ----------
-   TRANSCRIBED FROM indexnew.html, not estimated. Every grade balances in both
+   TRANSCRIBED FROM indexnew.html, not estimated. Every grade balances across
    currencies: the three subjects sum to the MRP, and MRP − bundle = the stated
    saving. Checked for all five grades in INR and AED.
 
-   INR and AED are two INDEPENDENT authored lists, exactly as the existing
-   currency switcher comment requires — nothing is converted at runtime. Note
-   the Gulf list deliberately charges the same for English as for Maths; that
-   is their pricing, not a rounding artefact.
+   INR, AED and USD are INDEPENDENT authored lists — nothing is converted at
+   runtime. USD is the rest-of-world fallback (≈ AED at the peg, rounded).
+   Note the Gulf/USD lists deliberately charge the same for English as for
+   Maths; that is their pricing, not a rounding artefact.
 
    Homepage cards sell live + recorded together at one authored price.
    Keep uplift at 0 so the enroll page matches the homepage (e.g. Grade 12
    package stays ₹18,000, not ₹23,000).                                      */
 const LIVE_UPLIFT = {
-  8:  { inr: 0, aed: 0 },
-  9:  { inr: 0, aed: 0 },
-  10: { inr: 0, aed: 0 },
-  11: { inr: 0, aed: 0 },
-  12: { inr: 0, aed: 0 }
+  8:  { inr: 0, aed: 0, usd: 0 },
+  9:  { inr: 0, aed: 0, usd: 0 },
+  10: { inr: 0, aed: 0, usd: 0 },
+  11: { inr: 0, aed: 0, usd: 0 },
+  12: { inr: 0, aed: 0, usd: 0 }
 };
 
 const PRICING = {
-  8:  { subjects: { maths: { inr: 8000,  aed: 400 }, science: { inr: 8000,  aed: 400 }, english: { inr: 4000, aed: 400 } },
-        bundle: { inr: 12000, aed: 800  }, modulePrice: { inr: 699, aed: 35 } },
-  9:  { subjects: { maths: { inr: 8000,  aed: 400 }, science: { inr: 8000,  aed: 400 }, english: { inr: 4000, aed: 400 } },
-        bundle: { inr: 12000, aed: 800  }, modulePrice: { inr: 699, aed: 35 } },
-  10: { subjects: { maths: { inr: 8000,  aed: 400 }, science: { inr: 8000,  aed: 400 }, english: { inr: 4000, aed: 400 } },
-        bundle: { inr: 15000, aed: 1000 }, modulePrice: { inr: 699, aed: 35 } },
+  8:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
+        bundle: { inr: 12000, aed: 800,  usd: 218 }, modulePrice: { inr: 699, aed: 35, usd: 10 } },
+  9:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
+        bundle: { inr: 12000, aed: 800,  usd: 218 }, modulePrice: { inr: 699, aed: 35, usd: 10 } },
+  10: { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
+        bundle: { inr: 15000, aed: 1000, usd: 272 }, modulePrice: { inr: 699, aed: 35, usd: 10 } },
   /* Grades 11–12 sell stream packages (PCMB / PCMC / Commerce), with optional
      single-subject and per-module buys from the same syllabus PDFs. */
   11: { subjects: {
-          maths: { inr: 8000, aed: 400 }, physics: { inr: 8000, aed: 400 },
-          chemistry: { inr: 8000, aed: 400 }, biology: { inr: 8000, aed: 400 },
-          computer: { inr: 8000, aed: 400 }, accountancy: { inr: 8000, aed: 400 }
+          maths: { inr: 8000, aed: 400, usd: 109 }, physics: { inr: 8000, aed: 400, usd: 109 },
+          chemistry: { inr: 8000, aed: 400, usd: 109 }, biology: { inr: 8000, aed: 400, usd: 109 },
+          computer: { inr: 8000, aed: 400, usd: 109 }, accountancy: { inr: 8000, aed: 400, usd: 109 }
         },
-        streams: { pcmb: { inr: 18000, aed: 1200 }, pcmc: { inr: 18000, aed: 1200 }, commerce: { inr: 18000, aed: 1200 } },
-        bundle: { inr: 18000, aed: 1200 }, modulePrice: { inr: 799, aed: 40 } },
+        streams: { pcmb: { inr: 18000, aed: 1200, usd: 327 }, pcmc: { inr: 18000, aed: 1200, usd: 327 }, commerce: { inr: 18000, aed: 1200, usd: 327 } },
+        bundle: { inr: 18000, aed: 1200, usd: 327 }, modulePrice: { inr: 799, aed: 40, usd: 11 } },
   12: { subjects: {
-          maths: { inr: 8000, aed: 400 }, physics: { inr: 8000, aed: 400 },
-          chemistry: { inr: 8000, aed: 400 }, biology: { inr: 8000, aed: 400 },
-          computer: { inr: 8000, aed: 400 }, accountancy: { inr: 8000, aed: 400 }
+          maths: { inr: 8000, aed: 400, usd: 109 }, physics: { inr: 8000, aed: 400, usd: 109 },
+          chemistry: { inr: 8000, aed: 400, usd: 109 }, biology: { inr: 8000, aed: 400, usd: 109 },
+          computer: { inr: 8000, aed: 400, usd: 109 }, accountancy: { inr: 8000, aed: 400, usd: 109 }
         },
-        streams: { pcmb: { inr: 18000, aed: 1200 }, pcmc: { inr: 18000, aed: 1200 }, commerce: { inr: 18000, aed: 1200 } },
-        bundle: { inr: 18000, aed: 1200 }, modulePrice: { inr: 799, aed: 40 } }
+        streams: { pcmb: { inr: 18000, aed: 1200, usd: 327 }, pcmc: { inr: 18000, aed: 1200, usd: 327 }, commerce: { inr: 18000, aed: 1200, usd: 327 } },
+        bundle: { inr: 18000, aed: 1200, usd: 327 }, modulePrice: { inr: 799, aed: 40, usd: 11 } }
 };
 
 /* Senior secondary stream packages. English Grammar is complimentary on every annual package. */
@@ -433,27 +435,35 @@ function planChapterCount(grade, plan, subject, pkg) {
   }, 0);
 }
 
-/* Returns { inr, aed } so a price element can carry BOTH authored figures,
-   which is what the existing currency switcher reads. Never converts. */
+/* Returns { inr, aed, usd } so a price element can carry every authored
+   figure, which is what location-based pricing reads. Never converts. */
 function planPrice(grade, planType, mode, subjectKey, pkg) {
   var p = PRICING[grade];
-  if (!p) return { inr: 0, aed: 0 };
+  if (!p) return { inr: 0, aed: 0, usd: 0 };
   var base;
   if (isStreamGrade(grade) && (planType === 'full' || planType === 'stream')) {
     base = (pkg && p.streams && p.streams[pkg]) || p.bundle;
   } else if (planType === 'full') {
     base = p.bundle;
   } else if (planType === 'subject') {
-    base = (p.subjects && p.subjects[subjectKey]) || { inr: 0, aed: 0 };
+    base = (p.subjects && p.subjects[subjectKey]) || { inr: 0, aed: 0, usd: 0 };
   } else {
     base = p.modulePrice;
   }
-  if (mode !== 'live') return { inr: base.inr, aed: base.aed };
+  if (mode !== 'live') return { inr: base.inr, aed: base.aed, usd: base.usd || 0 };
 
-  var up = LIVE_UPLIFT[grade] || { inr: 0, aed: 0 };
-  if (planType === 'full' || planType === 'stream') return { inr: base.inr + up.inr, aed: base.aed + up.aed };
-  if (planType === 'subject') return { inr: base.inr + Math.round(up.inr / 2), aed: base.aed + Math.round(up.aed / 2) };
-  return { inr: base.inr + 300, aed: base.aed + 15 };
+  var up = LIVE_UPLIFT[grade] || { inr: 0, aed: 0, usd: 0 };
+  if (planType === 'full' || planType === 'stream') {
+    return { inr: base.inr + up.inr, aed: base.aed + up.aed, usd: (base.usd || 0) + (up.usd || 0) };
+  }
+  if (planType === 'subject') {
+    return {
+      inr: base.inr + Math.round(up.inr / 2),
+      aed: base.aed + Math.round(up.aed / 2),
+      usd: (base.usd || 0) + Math.round((up.usd || 0) / 2)
+    };
+  }
+  return { inr: base.inr + 300, aed: base.aed + 15, usd: (base.usd || 0) + 4 };
 }
 
 // What the Annual Package adds over the plan being viewed. Returns null when
@@ -462,7 +472,7 @@ function upgradeOffer(grade, plan, mode, subject, pkg) {
   if (plan !== 'subject') return null;
   var now  = planPrice(grade, 'subject', mode, subject, pkg);
   var full = planPrice(grade, 'full', mode, null, pkg);
-  var diff = { inr: full.inr - now.inr, aed: full.aed - now.aed };
+  var diff = { inr: full.inr - now.inr, aed: full.aed - now.aed, usd: (full.usd || 0) - (now.usd || 0) };
   if (diff.inr <= 0) return null;
   var extra = hasRegister(grade, pkg)
     ? planLessonCount(grade, 'full', null, pkg) - planLessonCount(grade, 'subject', subject, pkg) : null;
@@ -493,20 +503,30 @@ function fullMrp(grade, pkg) {
   return subjectsForGrade(grade, pkg).reduce(function (t, s) {
     var v = PRICING[grade].subjects[s];
     if (!v) return t;
-    return { inr: t.inr + v.inr, aed: t.aed + v.aed };
-  }, { inr: 0, aed: 0 });
+    return { inr: t.inr + v.inr, aed: t.aed + v.aed, usd: t.usd + (v.usd || 0) };
+  }, { inr: 0, aed: 0, usd: 0 });
 }
-function addMoney(a, b) { return { inr: a.inr + b.inr, aed: a.aed + b.aed }; }
-function mulMoney(a, n) { return { inr: a.inr * n,     aed: a.aed * n     }; }
+function addMoney(a, b) {
+  return { inr: a.inr + b.inr, aed: a.aed + b.aed, usd: (a.usd || 0) + (b.usd || 0) };
+}
+function mulMoney(a, n) {
+  return { inr: a.inr * n, aed: a.aed * n, usd: (a.usd || 0) * n };
+}
 
-/* Formatting matches indexnew.html exactly: rupee glyph, Indian digit grouping,
-   "AED " prefix with plain thousands separators. */
+/* Formatting: rupee glyph + Indian grouping, "AED "/"$" with US grouping. */
 function fmtMoney(v, cur) {
   var n = Math.round(v);
   if (cur === 'aed') return 'AED ' + n.toLocaleString('en-US');
+  if (cur === 'usd') return '$' + n.toLocaleString('en-US');
   return '\u20B9' + n.toLocaleString('en-IN');
 }
-function priceAttrs(m) { return { inr: fmtMoney(m.inr, 'inr'), aed: fmtMoney(m.aed, 'aed') }; }
+function priceAttrs(m) {
+  return {
+    inr: fmtMoney(m.inr, 'inr'),
+    aed: fmtMoney(m.aed, 'aed'),
+    usd: fmtMoney(m.usd || 0, 'usd')
+  };
+}
 
 
 /* ---------- PLAN CATALOG ---------- */
