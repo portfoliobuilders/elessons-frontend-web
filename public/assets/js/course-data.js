@@ -24,13 +24,16 @@ const ELESSONS = {
   supportedCurrencies: ['inr', 'aed', 'usd']
 };
 
-/** Source PDF (or printable HTML list) for a grade / stream package. */
+/** Source PDF (or printable HTML list) for a grade / stream package.
+ *  PDFs live in /assets/pdfs/ (mirrored under /pdfs/). Grade 9 has no PDF yet —
+ *  Download PDF opens the printable HTML list. Grade 11 PCMB reuses the PCMC
+ *  PDF until a dedicated Biology-inclusive source is supplied. */
 const CLASS_LIST_PDF = {
   8:  '/assets/pdfs/grade-8-pcmb.pdf',
   9:  '/video-list.html?grade=9',
   10: '/assets/pdfs/grade-10-pcmb.pdf',
   11: {
-    pcmb: '/assets/pdfs/grade-11-pcmc.pdf', /* Biology list not in source set; PCMC PDF covers shared subjects */
+    pcmb: '/assets/pdfs/grade-11-pcmc.pdf',
     pcmc: '/assets/pdfs/grade-11-pcmc.pdf',
     commerce: '/assets/pdfs/grade-11-commerce.pdf'
   },
