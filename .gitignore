@@ -28,3 +28,6 @@ node_modules/
 
 .vercel
 .env*
+
+# Local deploy artifacts
+elessons-godaddy-upload.zip

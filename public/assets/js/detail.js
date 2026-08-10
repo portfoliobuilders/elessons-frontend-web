@@ -5,9 +5,9 @@
    This file renders synchronously so that by the time gtec-ui.js runs, every
    tab, price and disclosure it needs to bind already exists in the DOM.
 
-   Prices are never converted here. Each .price element carries BOTH authored
-   figures as data-inr / data-aed, exactly as indexnew.html does, and the
-   shared switcher decides which one is shown.
+   Prices are never converted here. Each .price element carries authored
+   figures as data-inr / data-aed / data-usd, and the shared location-based
+   switcher (geo-pricing.js) decides which one is shown.
    ========================================================================== */
 (function () {
   'use strict';
@@ -138,7 +138,7 @@
       mode: partial.mode,
       title: partial.title,
       subtitle: partial.subtitle || '',
-      price: { inr: partial.price.inr, aed: partial.price.aed }
+      price: { inr: partial.price.inr, aed: partial.price.aed, usd: partial.price.usd || 0 }
     };
   }
   function addCartItem(item, opts) {
@@ -220,7 +220,7 @@
         row.innerHTML =
           '<div><p class="cart-line__title">' + esc(it.title) + '</p>' +
           '<p class="cart-line__meta">' + esc(it.subtitle || ((it.mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' · Grade ' + it.grade)) + '</p></div>' +
-          '<p class="cart-line__price price" data-inr="' + a.inr + '" data-aed="' + a.aed + '">' + a[cur()] + '</p>' +
+          '<p class="cart-line__price price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" data-usd="' + a.usd + '">' + a[cur()] + '</p>' +
           '<button type="button" class="cart-line__remove" data-cart-remove="' + esc(it.id) + '">Remove</button>';
         box.appendChild(row);
       });
@@ -326,7 +326,11 @@
         var offerPrice = offer.price;
         /* Recorded base prices for the comparison copy (module MRP is flat). */
         var modSpend = mulMoney(PRICING[S.grade].modulePrice, n);
-        var save = { inr: modSpend.inr - offerPrice.inr, aed: modSpend.aed - offerPrice.aed };
+        var save = {
+          inr: modSpend.inr - offerPrice.inr,
+          aed: modSpend.aed - offerPrice.aed,
+          usd: (modSpend.usd || 0) - (offerPrice.usd || 0)
+        };
         var allCount = offer.type === 'full'
           ? (hasRegister(S.grade, S.stream) ? chapterTotal(S.grade, S.stream) : null)
           : subjectModuleCount(S.grade, offer.subject);
@@ -466,14 +470,15 @@
       if (!cart.items.length) { toast('Your cart is empty'); return; }
       var tot = cartTotal(cart);
       var currency = cur();
-      var symbol = currency === 'aed' ? 'AED ' : '\u20B9';
+      var symbol = currency === 'aed' ? 'AED ' : currency === 'usd' ? '$' : '\u20B9';
+      var locale = currency === 'inr' ? 'en-IN' : 'en-US';
       var lines = cart.items.map(function (it) {
         var p = (it.price && it.price[currency] != null) ? it.price[currency] : 0;
-        return '- ' + (it.title || it.id) + ' (' + symbol + Number(p).toLocaleString('en-IN') + ')';
+        return '- ' + (it.title || it.id) + ' (' + symbol + Number(p).toLocaleString(locale) + ')';
       });
       var msg = 'Hi G-TEC eLessons, I would like to enrol.\n\n' +
         lines.join('\n') +
-        '\n\nTotal: ' + symbol + Number(tot[currency] || 0).toLocaleString('en-IN') +
+        '\n\nTotal: ' + symbol + Number(tot[currency] || 0).toLocaleString(locale) +
         '\nCurrency: ' + currency.toUpperCase() +
         '\n\nPlease share payment and LMS activation steps.';
       track('begin_checkout', {
@@ -501,18 +506,27 @@
     });
   }
 
-  /* Writes both authored figures, then shows the active one. */
+  /* Writes all authored figures, then shows the active one. */
   function setPrice(el, money) {
     if (!el) return;
     var a = priceAttrs(money);
     el.dataset.inr = a.inr;
     el.dataset.aed = a.aed;
+    el.dataset.usd = a.usd;
     el.textContent = a[cur()];
   }
-  /* Re-runs the shared switcher so every .price repaints from its datasets. */
+  /* Re-paints after location-based currency detection (no manual switcher). */
   function repaint() {
-    var sel = document.querySelector('.cur-select');
-    if (sel) sel.dispatchEvent(new Event('change'));
+    if (window.ELessonsGeoPricing && typeof window.ELessonsGeoPricing.render === 'function') {
+      var cur = document.documentElement.getAttribute('data-currency') || 'inr';
+      var cc = document.documentElement.getAttribute('data-geo-country') || '';
+      window.ELessonsGeoPricing.render(cur, cc);
+      return;
+    }
+    document.querySelectorAll('.price').forEach(function (el) {
+      var v = el.dataset[cur()];
+      if (v) el.textContent = v;
+    });
   }
 
   var ICON_TICK = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
@@ -524,7 +538,7 @@
     plan:    ['full', 'subject', 'module'].indexOf(qp.get('plan')) > -1 ? qp.get('plan') : 'full',
     subject: null,
     stream:  null,
-    mode:    qp.get('mode') === 'recorded' ? 'recorded' : 'live',
+    mode:    'live', /* Live + Recorded only — no recorded-only SKU */
     modules: {}
   };
   /* Grades 11–12: stream packages. Legacy ?subject= links map to a sensible stream. */
@@ -604,13 +618,13 @@
       var pt = stage.querySelector('.player-title');
       if (pt) pt.textContent = pv.title;
       window.__elPreviewCtx = { grade: S.grade, plan: S.plan, subject: S.subject };
-      if (stage.dataset.vid !== pv.vid) {
-        stage.dataset.vid = pv.vid;
-        stage.dataset.cap = String(pv.cap);
-        if (typeof window.gtecPlayerReset === 'function') window.gtecPlayerReset(pv.vid, pv.cap, pv.title);
-      } else {
-        stage.dataset.vid = pv.vid;
-        stage.dataset.cap = String(pv.cap);
+      var mediaId = pv.driveId || pv.vid || '';
+      var prevId = stage.dataset.drive || stage.dataset.vid || '';
+      stage.dataset.drive = pv.driveId || '';
+      stage.dataset.vid = pv.driveId ? '' : (pv.vid || '');
+      stage.dataset.cap = String(pv.cap);
+      if (prevId !== mediaId && typeof window.gtecPlayerReset === 'function') {
+        window.gtecPlayerReset(mediaId, pv.cap, pv.title);
       }
     }
 
@@ -716,36 +730,24 @@
       var j = JSON.parse(el.textContent);
       j.name = currentTitle();
       j.offers.price = String(p[cur()] || p.inr);
-      j.offers.priceCurrency = cur() === 'aed' ? 'AED' : 'INR';
+      j.offers.priceCurrency = cur() === 'aed' ? 'AED' : cur() === 'usd' ? 'USD' : 'INR';
       el.textContent = JSON.stringify(j, null, 1);
     } catch (e) { /* schema is decorative; never let it break the page */ }
   }
 
-  /* ══════════════ MODE SEGMENTED CONTROL ══════════════ */
+  /* ══════════════ MODE (fixed: Live + Recorded) ══════════════ */
   function bindMode() {
-    document.querySelectorAll('#seg-mode button').forEach(function (b) {
-      b.addEventListener('click', function () {
-        if (S.mode === b.dataset.mode) return;
-        S.mode = b.dataset.mode;
-        document.querySelectorAll('#seg-mode button').forEach(function (o) {
-          o.setAttribute('aria-checked', String(o.dataset.mode === S.mode));
-        });
-        paintPrice(); paintTiers(); paintRelated();
-        track('mode_change', { mode: S.mode, grade: S.grade, plan: S.plan });
-      });
-    });
+    /* No mode switcher — every purchase includes live classes and recordings. */
   }
 
   /* ══════════════ PURCHASE TIERS ══════════════ */
   function tierCard(opts) {
-    var modeHtml = opts.live
-      ? '<span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span>'
-      : '<span class="mode">Recorded</span>';
+    var modeHtml = '<span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span>';
     return '<article class="tier' + (opts.on ? ' tier-on' : '') + '">' +
       '<p class="mono card-kicker" style="color:' + opts.colour + '">' + esc(opts.kicker) + '</p>' +
       '<h3 class="h3">' + esc(opts.title) + '</h3>' +
       '<div class="modes">' + modeHtml + '</div>' +
-      '<p class="price tier-price" data-inr="' + opts.price.inr + '" data-aed="' + opts.price.aed + '">' + opts.price.inr + '</p>' +
+      '<p class="price tier-price" data-inr="' + opts.price.inr + '" data-aed="' + opts.price.aed + '" data-usd="' + opts.price.usd + '">' + opts.price.inr + '</p>' +
       '<p style="color:var(--slate-500);font-size:.75rem">' + esc(opts.note) + '</p>' +
       '<ul class="tier-inc">' + opts.inc.map(function (i) {
         return '<li>' + ICON_TICK + '<span>' + esc(i) + '</span></li>';
@@ -839,7 +841,7 @@
     var baseMpa = priceAttrs(baseMp);
     $('module-price-note').innerHTML =
       'Each module is <span class="price" data-inr="' + mpa.inr +
-      '" data-aed="' + mpa.aed + '">' + mpa.inr + '</span>. Use Add all to grab a whole subject in one click.';
+      '" data-aed="' + mpa.aed + '" data-usd="' + mpa.usd + '">' + mpa.inr + '</span>. Use Add all to grab a whole subject in one click.';
 
     var streams = isStreamGrade(g)
       ? streamsForPlan(g, 'full', null, S.stream)
@@ -864,7 +866,7 @@
           var lessons = publishedLessons(ch).length;
           return '<div class="mod-row">' +
             '<p>' + esc((typeof elHumanizeTitle === 'function') ? elHumanizeTitle(ch.c) : ch.c) + '<br><small>' +
-              '<span class="price" data-inr="' + baseMpa.inr + '" data-aed="' + baseMpa.aed + '">' + baseMpa.inr + '</span>' +
+              '<span class="price" data-inr="' + baseMpa.inr + '" data-aed="' + baseMpa.aed + '" data-usd="' + baseMpa.usd + '">' + baseMpa.inr + '</span>' +
               ' \u00b7 ' + lessons + ' lesson' + (lessons === 1 ? '' : 's') + '</small></p>' +
             '<button type="button" class="mod-add" data-module="' + id + '" aria-pressed="' + on + '">' +
               (on ? 'Selected' : 'Select') + '</button></div>';
@@ -879,7 +881,7 @@
             '<span class="mod-sub__actions">' +
               '<span class="chip">' + chs.length + ' modules</span>' +
               '<button type="button" class="mod-add-all" data-add-all="' + k + '">Add all ' + chs.length +
-                ' \u00b7 <span class="price" data-inr="' + subjA.inr + '" data-aed="' + subjA.aed + '">' + subjA.inr + '</span></button>' +
+                ' \u00b7 <span class="price" data-inr="' + subjA.inr + '" data-aed="' + subjA.aed + '" data-usd="' + subjA.usd + '">' + subjA.inr + '</span></button>' +
             '</span>' +
           '</summary>' +
           rows.join('') + '</details>';
@@ -1229,9 +1231,7 @@
         : (save && save.inr > 0
             ? (priceAttrs(modP)[cur()] + '/module separately \u00b7 Save ' + priceAttrs(save)[cur()])
             : 'Full academic year');
-      var modeHtml = S.mode === 'live'
-        ? '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>'
-        : '<div class="modes"><span class="mode">Recorded</span></div>';
+      var modeHtml = '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>';
       var isPopular = isSub ? (sub === popularSubject)
                     : isPkg ? (pkg === popularStream)
                     : (g === popularGrade);
@@ -1244,7 +1244,7 @@
             ' \u00b7 ' + (isSub ? 'single subject' : isPkg ? 'stream package' : 'all subjects') + '</p>' +
           '<h3 class="h3" style="margin-top:.25rem">' + esc(isSub ? meta.name : isPkg ? meta.name : 'Annual Package') + '</h3></div>' +
           modeHtml +
-          '<div><p class="price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" ' +
+          '<div><p class="price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" data-usd="' + a.usd + '" ' +
           'style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">' + a.inr + '</p>' +
           '<p class="note-sm">' + esc(micro) + '</p>' +
           '</div>' +
@@ -1305,12 +1305,13 @@
       });
     });
   }
-  /* Currency switcher lives in gtec-ui.js — refresh WA destinations when it flips. */
+  /* Location-based currency (geo-pricing.js) — refresh WA/cart when it settles. */
   function bindCurrencyWa() {
-    document.querySelectorAll('.cur-select').forEach(function (sel) {
-      if (sel.dataset.waCurrencyBound) return;
-      sel.dataset.waCurrencyBound = '1';
-      sel.addEventListener('change', function () { bindWa(); paintCart(); });
+    if (document.documentElement.dataset.waCurrencyBound === '1') return;
+    document.documentElement.dataset.waCurrencyBound = '1';
+    document.addEventListener('el:currency', function () {
+      bindWa();
+      paintCart();
     });
   }
   function bindLms() {
@@ -1470,9 +1471,9 @@
     }
   }
 
-  /* Controls are static markup, so a URL that sets plan or mode would leave the
-     tab bar and the segmented control contradicting the page. Sync them once,
-     before gtec-ui.js reads aria-selected to set up roving tabindex. */
+  /* Controls are static markup, so a URL that sets plan would leave the
+     tab bar contradicting the page. Sync them once, before gtec-ui.js
+     reads aria-selected to set up roving tabindex. */
   function syncControls() {
     syncModuleTabVisibility();
     document.querySelectorAll('#tier-tabs .tab').forEach(function (t) {
@@ -1486,9 +1487,6 @@
       t.setAttribute('aria-selected', String(on));
       var panel = $(t.dataset.panel);
       if (panel) panel.hidden = !on;
-    });
-    document.querySelectorAll('#seg-mode button').forEach(function (b) {
-      b.setAttribute('aria-checked', String(b.dataset.mode === S.mode));
     });
   }
 

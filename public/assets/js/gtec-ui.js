@@ -1,7 +1,8 @@
 /* ==========================================================================
    G-TEC eLessons — shared site behaviour
    Lifted VERBATIM from indexnew.html so any new page behaves identically:
-   mobile drawer + measured --nav-h, the INR/AED currency switcher, the
+   mobile drawer + measured --nav-h, location-based currency painting
+   (INR / AED / USD via geo-pricing.js — no manual switcher), the
    scroll-reveal (.rv -> .in) and the accessible tab pattern.
 
    ONE deliberate change, marked [SCOPED] below: the original selected every
@@ -100,52 +101,28 @@ document.querySelectorAll('[role="tablist"]').forEach(gtecInitTablist);
 
 /* ══════════════ currency ══════════════ */
 
-/* ── country / currency switcher ───────────────────────────────────────────
-   Prices come from the two lists in the fee schedule (PAN INDIA in INR,
-   GCC in AED). Nothing is converted at runtime — each price element carries
-   both authored figures, so the two lists stay independent. */
-(function(){
-  var GULF_TZ = ['Asia/Dubai','Asia/Bahrain','Asia/Riyadh','Asia/Qatar',
-                 'Asia/Kuwait','Asia/Muscat','Asia/Aden'];
-  var pickers = document.querySelectorAll('.cur-select');
-
-  function render(cur){
-    document.querySelectorAll('.price').forEach(function(el){
-      var v = el.dataset[cur];
-      if (v) el.textContent = v;
+/* ── location-based currency (automatic only) ──────────────────────────────
+   Lives in geo-pricing.js. Detects country via IP (timezone fallback), maps
+   to INR / AED / USD, and paints every .price from its authored datasets.
+   There is no manual currency picker. */
+(function () {
+  function boot() {
+    if (window.ELessonsGeoPricing && typeof window.ELessonsGeoPricing.detectAndApply === 'function') {
+      window.ELessonsGeoPricing.detectAndApply();
+      return;
+    }
+    /* Soft fallback if geo-pricing.js failed to load — keep India as last resort
+       so the page still paints something readable. */
+    document.querySelectorAll('.price').forEach(function (el) {
+      if (el.dataset.inr) el.textContent = el.dataset.inr;
     });
-    document.querySelectorAll('.price-note').forEach(function(n){
-      n.textContent = cur === 'aed'
-        ? 'Gulf pricing, charged in AED at checkout.'
-        : 'India pricing, charged in Indian rupees at checkout.';
-    });
-    document.documentElement.setAttribute('data-currency', cur);
+    document.documentElement.setAttribute('data-currency', 'inr');
   }
-
-  function sync(value){
-    var cur = value.split('|')[0];
-    pickers.forEach(function(sel){
-      var i, exact = -1, firstOfCur = -1;
-      for (i = 0; i < sel.options.length; i++){
-        if (sel.options[i].value === value) exact = i;
-        if (firstOfCur < 0 && sel.options[i].value.split('|')[0] === cur) firstOfCur = i;
-      }
-      // the nav picker lists currencies, the pricing picker lists countries, so
-      // fall back to the first option of the right currency when there is no exact match
-      sel.selectedIndex = exact > -1 ? exact : firstOfCur;
-    });
-    render(cur);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
-
-  pickers.forEach(function(sel){
-    sel.addEventListener('change', function(){ sync(sel.value); });
-  });
-
-  var start = 'inr|IN';
-  try {
-    if (GULF_TZ.indexOf(Intl.DateTimeFormat().resolvedOptions().timeZone) > -1) start = 'aed|AE';
-  } catch (e) {}
-  sync(start);
 })();
 
 
@@ -238,64 +215,17 @@ document.querySelectorAll('[role="tablist"]').forEach(gtecInitTablist);
   });
 })();
 
-/* ══════ lesson preview player (ported from indexnew.html) ══════ */
-/* The frame is covered by .player-shield so the pointer never reaches it and
-   the provider's own overlays never surface. Playback is hard-stopped twice:
-   the player's own end bound and a polling guard. */
+/* ══════ lesson preview player — eLessons Drive demos (YouTube fallback) ══════ */
 (function () {
   var root = document.getElementById('lesson-player');
   if (!root) return;
 
-  var VID = root.dataset.vid;
-  var CAP = parseFloat(root.dataset.cap) || 90;
   var q = function (s) { return root.querySelector(s); };
-  var mount = q('#lesson-frame'), cover = q('.player-cover'), bar = q('.player-bar'),
-      fill = q('.pfill'), tlabel = q('.ptime'), scrub = q('.pscrub'),
-      shield = q('.player-shield'), bPlay = q('#p-toggle'), bMute = q('#p-mute'),
-      iPlay = q('#i-play'), iPause = q('#i-pause'), iSound = q('#i-sound'), iMuted = q('#i-muted');
+  var cover = q('.player-cover'), bar = q('.player-bar'), shield = q('.player-shield');
+  var started = false, failed = false, driveFrame = null, yt = null;
 
-  var yt = null, timer = null, started = false, failed = false;
-
-  function fmt(s) {
-    s = Math.max(0, Math.floor(s || 0));
-    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
-  }
-  function paint(t) {
-    if (!fill || !tlabel || !scrub) return;
-    var p = Math.max(0, Math.min(1, t / CAP));
-    fill.style.width = (p * 100) + '%';
-    tlabel.textContent = fmt(t) + ' / ' + fmt(CAP);
-    scrub.setAttribute('aria-valuenow', Math.round(t));
-    scrub.setAttribute('aria-valuetext', fmt(t) + ' of ' + fmt(CAP));
-    scrub.setAttribute('aria-valuemax', Math.round(CAP));
-  }
-  function icons(playing) {
-    if (!iPlay || !iPause || !bPlay) return;
-    iPlay.style.display = playing ? 'none' : '';
-    iPause.style.display = playing ? '' : 'none';
-    bPlay.setAttribute('aria-label', playing ? 'Pause' : 'Play');
-  }
-  paint(0);
-
-  function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
-  function endNow() {
-    stopTimer();
-    try { yt && yt.pauseVideo(); } catch (e) {}
-    paint(CAP);
-    root.dataset.state = 'ended';
-    if (typeof window.elTrack === 'function') {
-      try { window.elTrack('preview_complete', window.__elPreviewCtx || {}); } catch (e) {}
-    }
-  }
-  function watch() {
-    stopTimer();
-    timer = setInterval(function () {
-      if (!yt || !yt.getCurrentTime) return;
-      var t = yt.getCurrentTime();
-      if (t >= CAP - 0.12) { endNow(); return; }
-      paint(t);
-    }, 200);
-  }
+  function driveId() { return root.dataset.drive || ''; }
+  function ytId() { return root.dataset.vid || ''; }
 
   function fallback(msg) {
     if (failed || root.dataset.state === 'playing') return;
@@ -305,172 +235,119 @@ document.querySelectorAll('[role="tablist"]').forEach(gtecInitTablist);
     if (n) n.textContent = msg || 'Preview could not load here. Browse the classes below.';
   }
 
-  /* [ADDED] Missing ID shows the note instead of a broken embed. */
-  if (!VID) {
-    fallback('Preview video is not available yet.');
-    /* still expose reset + controls below so a later ID can recover */
-  }
-
-  function loadAPI(done) {
-    if (window.YT && window.YT.Player) return done();
-    var prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = function () { if (prev) prev(); done(); };
-    if (!document.getElementById('vp-api')) {
-      var s = document.createElement('script');
-      s.id = 'vp-api';
-      s.src = 'https://www.youtube.com/iframe_api';
-      s.onerror = function () { fallback('Preview could not load here. Browse the classes below.'); };
-      document.head.appendChild(s);
-    }
-    setTimeout(function () {
-      if (!(window.YT && window.YT.Player)) {
-        fallback('Preview could not load here. Browse the classes below.');
-      }
-    }, 7000);
-  }
-
-  function ensureMount() {
-    mount = q('#lesson-frame');
-    if (mount && mount.tagName !== 'IFRAME') return mount;
+  function clearMount() {
     var stage = q('.player-stage');
     if (!stage) return null;
-    if (mount) mount.parentNode.removeChild(mount);
+    if (driveFrame && driveFrame.parentNode) driveFrame.parentNode.removeChild(driveFrame);
+    driveFrame = null;
+    try { if (yt && yt.destroy) yt.destroy(); } catch (e) {}
+    yt = null;
+    var old = q('#lesson-frame');
+    if (old) old.parentNode.removeChild(old);
     var div = document.createElement('div');
     div.id = 'lesson-frame';
     var shieldEl = q('.player-shield');
     if (shieldEl) stage.insertBefore(div, shieldEl);
-    else stage.insertBefore(div, stage.firstChild);
-    mount = div;
-    return mount;
+    else stage.appendChild(div);
+    return div;
   }
 
-  function build() {
-    if (!ensureMount()) return;
-    yt = new YT.Player(mount, {
-      videoId: VID,
-      host: 'https://www.youtube-nocookie.com',
-      playerVars: {
-        autoplay: 1, controls: 0, rel: 0, modestbranding: 1, iv_load_policy: 3,
-        disablekb: 1, fs: 0, playsinline: 1, cc_load_policy: 0,
-        end: Math.round(CAP), origin: window.location.origin
-      },
-      events: {
-        onReady: function (e) {
-          root.dataset.state = 'playing';
-          if (bar) bar.hidden = false;
-          icons(true);
-          e.target.playVideo();
-          watch();
-        },
-        onStateChange: function (e) {
-          if (e.data === YT.PlayerState.PLAYING) { root.dataset.state = 'playing'; icons(true); watch(); }
-          else if (e.data === YT.PlayerState.PAUSED) { root.dataset.state = 'paused'; icons(false); stopTimer(); }
-          else if (e.data === YT.PlayerState.ENDED) { endNow(); }
-        },
-        onError: function () {
-          stopTimer();
-          fallback('This preview is unavailable right now. Browse the classes below.');
-        }
-      }
-    });
+  function startDrive(id) {
+    var stage = q('.player-stage');
+    if (!stage) return;
+    clearMount();
+    var frame = document.createElement('iframe');
+    frame.id = 'lesson-frame';
+    frame.title = 'eLessons demo class';
+    frame.allow = 'autoplay; encrypted-media; picture-in-picture';
+    frame.allowFullscreen = true;
+    frame.src = 'https://drive.google.com/file/d/' + encodeURIComponent(id) + '/preview';
+    var shieldEl = q('.player-shield');
+    if (shieldEl) {
+      shieldEl.style.pointerEvents = 'none';
+      shieldEl.style.opacity = '0';
+      stage.insertBefore(frame, shieldEl);
+    } else {
+      stage.appendChild(frame);
+    }
+    driveFrame = frame;
+    if (bar) bar.hidden = true;
+    if (cover) cover.style.display = 'none';
+    root.dataset.state = 'playing';
   }
 
   function start() {
-    VID = root.dataset.vid;
-    CAP = parseFloat(root.dataset.cap) || 90;
-    if (!VID) { fallback('Preview video is not available yet.'); return; }
-    if (started) return;
+    if (started && (driveFrame || yt)) return;
+    var d = driveId(), v = ytId();
+    if (!d && !v) { fallback('Preview video is not available yet.'); return; }
     started = true;
     failed = false;
     root.dataset.state = 'loading';
     if (typeof window.elTrack === 'function') {
       try { window.elTrack('preview_play', window.__elPreviewCtx || {}); } catch (e) {}
     }
-    loadAPI(build);
-  }
-
-  function toggle() {
-    if (!started) return start();
-    if (!yt) return;
-    if (root.dataset.state === 'playing') yt.pauseVideo(); else yt.playVideo();
+    if (d) { startDrive(d); return; }
+    var mount = clearMount();
+    if (shield) { shield.style.pointerEvents = ''; shield.style.opacity = ''; }
+    function build() {
+      yt = new YT.Player(mount, {
+        videoId: v,
+        host: 'https://www.youtube-nocookie.com',
+        playerVars: { autoplay: 1, controls: 1, rel: 0, modestbranding: 1, playsinline: 1, origin: window.location.origin },
+        events: {
+          onReady: function () { root.dataset.state = 'playing'; if (bar) bar.hidden = true; if (cover) cover.style.display = 'none'; },
+          onError: function () { fallback('This preview is unavailable right now.'); }
+        }
+      });
+    }
+    if (window.YT && window.YT.Player) return build();
+    var prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () { if (prev) prev(); build(); };
+    if (!document.getElementById('vp-api')) {
+      var s = document.createElement('script');
+      s.id = 'vp-api';
+      s.src = 'https://www.youtube.com/iframe_api';
+      s.onerror = function () { fallback(); };
+      document.head.appendChild(s);
+    }
   }
 
   if (cover) cover.addEventListener('click', start);
-  if (shield) shield.addEventListener('click', toggle);
-  if (bPlay) bPlay.addEventListener('click', toggle);
-
-  if (bMute) bMute.addEventListener('click', function () {
-    if (!yt) return;
-    var m = yt.isMuted();
-    m ? yt.unMute() : yt.mute();
-    if (iSound) iSound.style.display = m ? '' : 'none';
-    if (iMuted) iMuted.style.display = m ? 'none' : '';
-    bMute.setAttribute('aria-label', m ? 'Mute' : 'Unmute');
-  });
-
-  function seekFromX(clientX) {
-    if (!yt || !yt.seekTo || !scrub) return;
-    var r = scrub.getBoundingClientRect();
-    var p = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
-    yt.seekTo(p * CAP, true);
-    paint(p * CAP);
-    if (root.dataset.state === 'ended') { root.dataset.state = 'playing'; yt.playVideo(); }
-  }
-  if (scrub) {
-    scrub.addEventListener('click', function (e) { seekFromX(e.clientX); });
-    scrub.addEventListener('keydown', function (e) {
-      if (!yt || !yt.getCurrentTime) return;
-      var t = yt.getCurrentTime(), step = e.shiftKey ? 10 : 5, n = null;
-      if (e.key === 'ArrowRight') n = Math.min(CAP, t + step);
-      if (e.key === 'ArrowLeft') n = Math.max(0, t - step);
-      if (e.key === 'Home') n = 0;
-      if (e.key === 'End') n = CAP - 1;
-      if (n === null) return;
-      e.preventDefault();
-      yt.seekTo(n, true); paint(n);
-    });
-  }
-
+  if (shield) shield.addEventListener('click', start);
+  var playBtn = q('.play');
+  if (playBtn) playBtn.addEventListener('click', function (e) { e.stopPropagation(); start(); });
   var replay = q('#p-replay');
   if (replay) replay.addEventListener('click', function () {
-    if (!yt) return start();
-    root.dataset.state = 'playing';
-    yt.seekTo(0, true); yt.playVideo(); watch();
+    started = false;
+    if (cover) cover.style.display = '';
+    root.dataset.state = 'idle';
+    start();
   });
 
-  /* [ADDED] Re-point the player at another video without a full page reload. */
-  window.gtecPlayerReset = function (vid, cap, title) {
+  window.gtecPlayerReset = function (id, cap, title) {
     try {
-      stopTimer();
-      try { if (yt && yt.destroy) yt.destroy(); } catch (e) {}
-      yt = null;
       started = false;
       failed = false;
       root.dataset.state = 'idle';
-      root.dataset.vid = vid || '';
+      /* Drive file ids are long; YouTube ids are 11 chars */
+      if (id && String(id).length > 15) {
+        root.dataset.drive = id;
+        root.dataset.vid = '';
+      } else {
+        root.dataset.vid = id || '';
+        root.dataset.drive = root.dataset.drive || '';
+        if (!id) root.dataset.drive = '';
+      }
       root.dataset.cap = String(cap || 90);
-      VID = root.dataset.vid;
-      CAP = parseFloat(root.dataset.cap) || 90;
-      ensureMount();
-      paint(0);
+      clearMount();
+      if (shield) { shield.style.pointerEvents = ''; shield.style.opacity = ''; }
+      if (cover) cover.style.display = '';
       if (bar) bar.hidden = true;
-      icons(false);
       var t = q('.player-title');
       if (t && title) t.textContent = title;
       var note = q('.player-note');
-      if (note) note.textContent = 'A real teacher at a real board \u2014 the same way every chapter is taught.';
-      if (!VID) fallback('Preview video is not available yet.');
+      if (note) note.textContent = 'A real eLessons teacher at the board \u2014 the same way every chapter is taught.';
+      if (!driveId() && !ytId()) fallback('Preview video is not available yet.');
     } catch (e) {}
   };
-
-  /* stop the clock if the section scrolls away */
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) {
-      es.forEach(function (en) {
-        if (!en.isIntersecting && yt && root.dataset.state === 'playing') {
-          try { yt.pauseVideo(); } catch (e) {}
-        }
-      });
-    }, { threshold: 0.15 }).observe(root);
-  }
 })();

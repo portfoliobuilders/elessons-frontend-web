@@ -29,8 +29,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/gtec.css?v=43">
-<link rel="stylesheet" href="/assets/css/detail.css?v=43">
+<link rel="stylesheet" href="/assets/css/gtec.css?v=46">
+<link rel="stylesheet" href="/assets/css/detail.css?v=46">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://elessons.net/course-detail.html#webpage","url":"https://elessons.net/course-detail.html","name":"Course Details | CBSE Online Classes Grades 8–12 | G-TEC eLessons","description":"Full syllabus, subject list, and annual fee for this CBSE online course from G-TEC eLessons — live classes, recorded lessons, and printable notes.","isPartOf":{"@id":"https://elessons.net/#website"},"about":{"@id":"https://elessons.net/#organization"},"inLanguage":"en-IN"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://elessons.net/"},{"@type":"ListItem","position":2,"name":"Courses","item":"https://elessons.net/course-detail.html"}]}]}
+</script>
 </head>
 <body>
 
@@ -62,10 +65,6 @@
       <a class="navlink" href="#faq">FAQ</a>
     </nav>
     <div class="navtools">
-      <select class="cur-select cur-nav" aria-label="Currency">
-        <option value="inr|IN" selected>&#8377; INR</option>
-        <option value="aed|AE">AED</option>
-      </select>
       <a href="https://lms.elessons.net" class="navlink hide-md-nav" data-lms="1">LMS Login</a>
       <button type="button" class="cart-btn" id="cart-open" aria-label="Open cart" aria-haspopup="dialog" aria-controls="cart-drawer">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 12.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6L23 6H6"/></svg>
@@ -105,14 +104,14 @@
         </div>
 
         <div class="dhero-player mt3" id="hero-art">
-          <div class="player" id="lesson-player" data-vid="" data-cap="" data-state="idle">
+          <div class="player" id="lesson-player" data-drive="1rRTXrlm2e3n0-Tnllyn0p0WYAc-Ejhqo" data-vid="" data-cap="90" data-state="idle">
             <div class="player-stage">
               <div id="lesson-frame"></div>
               <div class="player-shield"></div>
 
               <div class="player-cover">
                 <p class="eyebrow">Sample lesson</p>
-                <p class="player-title">Watch the first 90 seconds</p>
+                <p class="player-title">Watch a free eLessons demo class</p>
                 <button class="play play-lg" type="button" aria-label="Play the sample lesson, 90 second preview"></button>
                 <p class="player-note">A real teacher at a real board &mdash; the same way every chapter is taught.</p>
               </div>
@@ -148,11 +147,8 @@
 
       <!-- BUY PANEL -->
       <aside class="buy" id="buy-panel" aria-label="Purchase this course">
-        <div class="seg" id="seg-mode" role="radiogroup" aria-label="Learning mode">
-          <button type="button" role="radio" data-mode="live" aria-checked="true">
-            <span class="dot-live" aria-hidden="true"></span>Live + Recorded
-          </button>
-          <button type="button" role="radio" data-mode="recorded" aria-checked="false">Recorded</button>
+        <div class="modes" style="margin:0 0 .85rem" aria-label="Included with every purchase">
+          <span class="mode mode-live"><span class="dot-live" aria-hidden="true"></span>Live + Recorded included</span>
         </div>
 
         <p class="buy-was" id="buy-was-wrap">Separately <s class="price" id="buy-was">&#8377;20,000</s></p>
@@ -243,10 +239,10 @@
           follows the CBSE / NCERT sequence exactly, so what you watch on a Tuesday is what the school
           covers that week.</p>
         <p>Each chapter comes with a written notes file you can download and print, and the exercises are
-          worked in full rather than left as an answer key. <strong>Recorded</strong> gives you the whole
-          library on day one to watch at your own pace. <strong>Live + Recorded</strong> adds weekly
-          scheduled sessions where you can ask questions in real time &mdash; and every live session is
-          recorded and added to your library afterwards.</p>
+          worked in full rather than left as an answer key. Every purchase includes <strong>live
+          classes and recorded lessons</strong> &mdash; attend the weekly sessions and ask questions in
+          real time, and rewatch every session from the library whenever you need to. You do not choose
+          between them; both come with the course for the full academic year.</p>
         <div class="notice mt3">
           <strong>Terms:</strong> access runs for the full academic year from the date of purchase. Fees
           are non-refundable once the LMS account is activated. Live session timetables are published at
@@ -338,7 +334,7 @@
   <div class="wrap" style="padding-block:clamp(2.75rem,5vw,4rem)">
     <div class="grid cols3 g4">
       <div>
-        <img class="brand-footer" src="assets/img/brand-footer.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191" loading="lazy">
+        <img class="brand-footer" src="images/brand/elessons-logo-white.webp" alt="G-TEC eLessons.net — Hybrid School" width="760" height="191" loading="lazy">
         <p class="mt2" style="font-size:.9rem;max-width:32ch">CBSE / NCERT video lessons and notes for grades 8 to 12.</p>
         <p class="mono mt2" style="font-size:.7rem;color:var(--gold)">iOS &amp; Android apps &mdash; coming soon</p>
       </div>
@@ -400,27 +396,13 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script type="application/ld+json" id="ld-course">
-{"@context":"https://schema.org","@type":"Course",
- "name":"Grade 9 — Annual Package",
- "description":"CBSE / NCERT Grade 9 video lessons and notes in Maths, Science and English.",
- "provider":{"@type":"EducationalOrganization","name":"G-TEC eLessons.net","url":"https://elessons.net/"},
- "offers":{"@type":"Offer","price":"12000","priceCurrency":"INR","availability":"https://schema.org/InStock","category":"Annual package"},
- "hasCourseInstance":{"@type":"CourseInstance","courseMode":["online"],"courseWorkload":"P1Y"}}
-</script>
-<script type="application/ld+json" id="ld-faq">{}</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
- {"@type":"ListItem","position":1,"name":"Home","item":"https://elessons.net/"},
- {"@type":"ListItem","position":2,"name":"Classes","item":"https://elessons.net/#courses"},
- {"@type":"ListItem","position":3,"name":"Grade 9 — Annual Package"}]}
-</script>
 
-<!-- ORDER MATTERS: data -> page render -> shared bindings -->
-<script src="/assets/js/registers-generated.js?v=46"></script>
-    <script src="/assets/js/course-data.js?v=46"></script>
-    <script src="/assets/js/detail.js?v=46"></script>
-<script src="/assets/js/gtec-ui.js?v=36"></script>
+<!-- ORDER MATTERS: data -> page render -> geo pricing -> shared bindings -->
+<script src="/assets/js/registers-generated.js?v=49"></script>
+<script src="/assets/js/course-data.js?v=49"></script>
+<script src="/assets/js/detail.js?v=49"></script>
+<script src="/assets/js/geo-pricing.js?v=49"></script>
+<script src="/assets/js/gtec-ui.js?v=49"></script>
 <script>
   var ax = document.getElementById('announce-x');
   if (ax) ax.onclick = function () { document.getElementById('announce').remove(); };
