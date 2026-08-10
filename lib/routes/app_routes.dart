@@ -26,7 +26,6 @@ class AppRoutes {
   // ── Discover & purchase (13–19) ──
   static const String store = '/store';
   static const String courseDetail = '/course/detail';
-  static const String byModule = '/course/by-module';
   
   // ── Subject Details ──
   static const String subjectDetail = '/subject/detail';

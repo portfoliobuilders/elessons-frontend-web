@@ -18,7 +18,6 @@ import '../screens/onboarding/onboarding_class_screen.dart';
 import '../screens/home/home_shell.dart';
 import '../screens/home/home_first_time_screen.dart';
 import '../screens/store/course_detail_screen.dart';
-import '../screens/course/by_module_screen.dart';
 
 // Subject & Lessons
 import '../screens/learning/subject_dashboard_screen.dart';
@@ -132,8 +131,6 @@ class AppRouter {
       // Discover & purchase
       case AppRoutes.courseDetail:
         return const CourseDetailScreen();
-      case AppRoutes.byModule:
-        return const ByModuleScreen();
 
       // Subject & Lessons
       case AppRoutes.subjectDetail:

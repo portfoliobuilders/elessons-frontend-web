@@ -48,7 +48,7 @@ class EmptyCartScreen extends StatelessWidget {
               icon: Icons.shopping_cart_outlined,
               title: 'Your cart is empty',
               message:
-                  "Add a subject, module, or the full-year program and it'll show up here.",
+                  "Add a subject or the full-year program and it'll show up here.",
               actionLabel: 'Browse the Store',
               onAction: () => Navigator.pushNamedAndRemoveUntil(
                   context, AppRoutes.store, (_) => false),

@@ -108,23 +108,6 @@
 .tier-inc svg{flex:none;margin-top:.2rem;color:var(--navy-600)}
 .tier-foot{margin-top:auto;display:grid;gap:.5rem}
 
-/* module picker rows */
-.mod-sub{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:.6rem}
-.mod-sub>summary{cursor:pointer;list-style:none;padding:.9rem 1.1rem;font-weight:700;font-size:.94rem;
-  display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.mod-sub>summary::-webkit-details-marker{display:none}
-.mod-sub[open]{border-color:var(--navy-700)}
-.mod-row{display:flex;align-items:center;gap:1rem;justify-content:space-between;
-  padding:.6rem 1.1rem;border-top:1px solid var(--line)}
-.mod-row p{font-size:.86rem;margin:0}
-.mod-row small{color:var(--slate-500);font-size:.72rem}
-.mod-add{font:inherit;font-size:.76rem;font-weight:700;border:1.5px solid var(--line);background:#fff;
-  color:var(--navy-700);border-radius:999px;padding:.34rem .85rem;cursor:pointer;flex:none;
-  transition:background-color .18s ease,border-color .18s ease,color .18s ease}
-.mod-add:hover{border-color:var(--navy-700)}
-.mod-add[aria-pressed="true"]{background:var(--navy-700);border-color:var(--navy-700);color:#fff}
-.mod-add:focus-visible{outline:3px solid var(--navy-600);outline-offset:2px}
-
 /* ══════════════ VIDEO REGISTER ══════════════ */
 .reg-head{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between}
 .reg-search{font:inherit;font-size:.9rem;color:var(--ink);background:#fff;border:1.5px solid var(--line);
@@ -260,14 +243,14 @@ footer{position:relative;z-index:1}
 }
 
 @media (prefers-reduced-motion:reduce){
-  .wa-float,.toast,.seg button,.mod-add{transition:none}
+  .wa-float,.toast,.seg button{transition:none}
 }
 
 /* ══════════════ PRINT — this is what makes the class-list PDF ══════════════ */
 @media print{
   @page{size:A4 portrait;margin:15mm 13mm}
   .nav,.announce,.stickybar,.wa-float,.toast,.buy,.seg,.tierbar,#tiers,#faq,#related,
-  .reg-head,.streambar,footer,.btn,.crumbs,.cart-drawer,.cart-scrim,.cart-btn,.mod-rail,
+  .reg-head,.streambar,footer,.btn,.crumbs,.cart-drawer,.cart-scrim,.cart-btn,
   .faq-cta{display:none !important}
   body{background:#fff;color:#000;padding:0}
   .dhero{background:#fff !important;color:#000}
@@ -433,46 +416,6 @@ footer{position:relative;z-index:1}
 .cart-line__remove:hover{text-decoration:underline}
 .cart-drawer__foot{padding:1.1rem 1.25rem 1.4rem;border-top:1px solid var(--line);background:var(--mist)}
 body.cart-open{overflow:hidden}
-
-/* ══════════════ MODULE PICKER LAYOUT ══════════════ */
-.mod-layout{display:grid;gap:1.25rem;align-items:start}
-@media (min-width:1000px){
-  .mod-layout{grid-template-columns:minmax(0,1.45fr) minmax(280px,.75fr)}
-  .mod-rail{position:sticky;top:calc(var(--nav-h,68px) + 1rem)}
-}
-.mod-rail{border:1px solid var(--card-line);border-radius:20px;background:#fff;padding:1.25rem 1.2rem;
-  box-shadow:0 1px 2px rgba(10,49,112,.05),0 10px 26px -18px var(--card-shadow)}
-.mod-rail-list{list-style:none;margin:.85rem 0 0;padding:0;max-height:220px;overflow:auto;
-  border-top:1px solid var(--line)}
-.mod-rail-list li{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;
-  padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.82rem}
-.mod-rail-list button{font:inherit;font-size:.7rem;font-weight:700;color:var(--red-cta);
-  background:none;border:0;cursor:pointer;flex:none;padding:.1rem 0}
-.mod-rail-list button:hover{text-decoration:underline}
-.mod-breakeven{margin-top:.9rem;background:var(--mist);border:1px solid var(--line);border-radius:14px;
-  padding:.85rem 1rem;font-size:.82rem;color:var(--navy-700);line-height:1.45}
-.mod-breakeven p{margin:0 0 .7rem}
-.mod-breakeven .btn{margin-top:.35rem}
-.mod-sub{border-left:4px solid var(--stream-colour,var(--navy-600))}
-.mod-sub>summary{gap:.75rem}
-.mod-sub__ico{width:28px;height:28px;border-radius:9px;flex:none;display:inline-flex;align-items:center;
-  justify-content:center;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.58rem;font-weight:700;
-  letter-spacing:.04em;color:#fff;background:var(--stream-colour,var(--navy-600))}
-.mod-sub__actions{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-left:auto}
-.mod-add-all{font:inherit;font-size:.7rem;font-weight:700;border:1.5px solid var(--line);background:#fff;
-  color:var(--navy-700);border-radius:999px;padding:.3rem .75rem;cursor:pointer}
-.mod-add-all:hover{border-color:var(--navy-700)}
-.mod-add-all:focus-visible{outline:3px solid var(--navy-600);outline-offset:2px}
-.mod-row{align-items:flex-start}
-.mod-row .mod-row-price{display:block;margin-top:.2rem;font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.66rem;font-weight:600;color:var(--slate-500)}
-.mod-add{border-radius:10px;padding:.45rem .75rem;white-space:nowrap;font-size:.72rem}
-.mod-add[aria-pressed="true"]{background:var(--sci);border-color:var(--sci)}
-/* mobile: selection summary sits above the sticky CTA as a bottom sheet */
-@media (max-width:999px){
-  .mod-rail{position:sticky;bottom:calc(78px + .5rem);z-index:40;
-    box-shadow:0 -12px 36px -18px rgba(0,19,60,.35)}
-}
 
 /* ══════════════ RELATED / ALSO AVAILABLE CARDS ══════════════ */
 .rel-card{display:flex;flex-direction:column;gap:.7rem;border:1px solid var(--card-line);

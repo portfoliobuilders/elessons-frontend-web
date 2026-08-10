@@ -20,12 +20,12 @@ import '../../widgets/feedback/loading_indicator.dart';
 
 enum _Plan { recorded, live }
 
-enum _Catalogue { full, subject, module }
+enum _Catalogue { full, subject }
 
 /// 14 · Course Detail — Recorded vs Live plan, bound to live catalog products.
 ///
 /// Args: {gradeId?, subjectId?, productId?}. Resolves the grade's products
-/// (FULL_CLASS / SUBJECT / MODULE, RECORDED / LIVE_AND_RECORDED) and wires every
+/// (FULL_CLASS / SUBJECT, RECORDED / LIVE_AND_RECORDED) and wires every
 /// add-to-cart to a real product id.
 class CourseDetailScreen extends StatefulWidget {
   const CourseDetailScreen({super.key});
@@ -62,7 +62,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       await catalog.loadGrade(_gradeId!);
     }
     if (!mounted) return;
-    // Ensure the focus subject (for the By Module view) is loaded.
+    // Ensure the focus subject (for the By Subject view) is loaded.
     final gid = _gradeId;
     final grade = gid == null ? null : catalog.gradeById(gid);
     final focus = _subjectId ??
@@ -323,12 +323,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                           _CatalogueTabs(
                             selected: _cat,
                             onChanged: (_Catalogue c) {
-                              if (c == _Catalogue.module) {
-                                Navigator.pushNamed(
-                                    context, AppRoutes.byModule);
-                              } else {
-                                setState(() => _cat = c);
-                              }
+                              setState(() => _cat = c);
                             },
                           ),
                           const SizedBox(height: 18),
@@ -389,8 +384,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           rows: rows,
           onAdd: _add,
         );
-      case _Catalogue.module:
-        return const SizedBox.shrink();
     }
   }
 }
@@ -737,12 +730,11 @@ class _CatalogueTabs extends StatelessWidget {
     const List<String> labels = <String>[
       'Full Class',
       'By Subject',
-      'By Module'
     ];
     final int index = _Catalogue.values.indexOf(selected);
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final double segWidth = (constraints.maxWidth - 8) / 3;
+        final double segWidth = (constraints.maxWidth - 8) / 2;
         return Container(
           height: 50,
           padding: const EdgeInsets.all(4),
@@ -775,7 +767,7 @@ class _CatalogueTabs extends StatelessWidget {
                 ),
               ),
               Row(
-                children: List<Widget>.generate(3, (int i) {
+                children: List<Widget>.generate(2, (int i) {
                   return Expanded(
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,

@@ -155,8 +155,7 @@ Sign these off or **set them to 0**, which restores your current single-price
 behaviour and leaves the toggle as a description of what's included. It's one
 table at the top of `course-data.js`. Nothing else needs touching.
 
-Per-subject live is uplift ÷ 2 and per-module live is +₹300; both are
-interpolations from the same invented number.
+Per-subject live is uplift ÷ 2; both figures are interpolations from the same invented number.
 
 ---
 

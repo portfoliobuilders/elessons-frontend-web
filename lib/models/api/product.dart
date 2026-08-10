@@ -2,7 +2,7 @@ import '../../core/config/app_config.dart';
 import '../../core/utils/json.dart';
 import '../../core/utils/money.dart';
 
-/// A purchasable product (3-tier: FULL_CLASS / SUBJECT / MODULE) with prices.
+/// A purchasable product (FULL_CLASS / SUBJECT) with prices.
 class Product {
   const Product({
     required this.id,
@@ -18,7 +18,7 @@ class Product {
   });
 
   final String id;
-  final String type; // FULL_CLASS | SUBJECT | MODULE
+  final String type; // FULL_CLASS | SUBJECT
   final String format; // RECORDED | LIVE_AND_RECORDED
   final String title;
   final bool isActive;
