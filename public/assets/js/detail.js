@@ -538,7 +538,7 @@
     plan:    ['full', 'subject', 'module'].indexOf(qp.get('plan')) > -1 ? qp.get('plan') : 'full',
     subject: null,
     stream:  null,
-    mode:    qp.get('mode') === 'recorded' ? 'recorded' : 'live',
+    mode:    'live', /* Live + Recorded only — no recorded-only SKU */
     modules: {}
   };
   /* Grades 11–12: stream packages. Legacy ?subject= links map to a sensible stream. */
@@ -735,26 +735,14 @@
     } catch (e) { /* schema is decorative; never let it break the page */ }
   }
 
-  /* ══════════════ MODE SEGMENTED CONTROL ══════════════ */
+  /* ══════════════ MODE (fixed: Live + Recorded) ══════════════ */
   function bindMode() {
-    document.querySelectorAll('#seg-mode button').forEach(function (b) {
-      b.addEventListener('click', function () {
-        if (S.mode === b.dataset.mode) return;
-        S.mode = b.dataset.mode;
-        document.querySelectorAll('#seg-mode button').forEach(function (o) {
-          o.setAttribute('aria-checked', String(o.dataset.mode === S.mode));
-        });
-        paintPrice(); paintTiers(); paintRelated();
-        track('mode_change', { mode: S.mode, grade: S.grade, plan: S.plan });
-      });
-    });
+    /* No mode switcher — every purchase includes live classes and recordings. */
   }
 
   /* ══════════════ PURCHASE TIERS ══════════════ */
   function tierCard(opts) {
-    var modeHtml = opts.live
-      ? '<span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span>'
-      : '<span class="mode">Recorded</span>';
+    var modeHtml = '<span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span>';
     return '<article class="tier' + (opts.on ? ' tier-on' : '') + '">' +
       '<p class="mono card-kicker" style="color:' + opts.colour + '">' + esc(opts.kicker) + '</p>' +
       '<h3 class="h3">' + esc(opts.title) + '</h3>' +
@@ -1243,9 +1231,7 @@
         : (save && save.inr > 0
             ? (priceAttrs(modP)[cur()] + '/module separately \u00b7 Save ' + priceAttrs(save)[cur()])
             : 'Full academic year');
-      var modeHtml = S.mode === 'live'
-        ? '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>'
-        : '<div class="modes"><span class="mode">Recorded</span></div>';
+      var modeHtml = '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>';
       var isPopular = isSub ? (sub === popularSubject)
                     : isPkg ? (pkg === popularStream)
                     : (g === popularGrade);
@@ -1485,9 +1471,9 @@
     }
   }
 
-  /* Controls are static markup, so a URL that sets plan or mode would leave the
-     tab bar and the segmented control contradicting the page. Sync them once,
-     before gtec-ui.js reads aria-selected to set up roving tabindex. */
+  /* Controls are static markup, so a URL that sets plan would leave the
+     tab bar contradicting the page. Sync them once, before gtec-ui.js
+     reads aria-selected to set up roving tabindex. */
   function syncControls() {
     syncModuleTabVisibility();
     document.querySelectorAll('#tier-tabs .tab').forEach(function (t) {
@@ -1501,9 +1487,6 @@
       t.setAttribute('aria-selected', String(on));
       var panel = $(t.dataset.panel);
       if (panel) panel.hidden = !on;
-    });
-    document.querySelectorAll('#seg-mode button').forEach(function (b) {
-      b.setAttribute('aria-checked', String(b.dataset.mode === S.mode));
     });
   }
 

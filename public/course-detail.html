@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-IN">
 <head>
 <meta charset="utf-8">
@@ -147,11 +147,8 @@
 
       <!-- BUY PANEL -->
       <aside class="buy" id="buy-panel" aria-label="Purchase this course">
-        <div class="seg" id="seg-mode" role="radiogroup" aria-label="Learning mode">
-          <button type="button" role="radio" data-mode="live" aria-checked="true">
-            <span class="dot-live" aria-hidden="true"></span>Live + Recorded
-          </button>
-          <button type="button" role="radio" data-mode="recorded" aria-checked="false">Recorded</button>
+        <div class="modes" style="margin:0 0 .85rem" aria-label="Included with every purchase">
+          <span class="mode mode-live"><span class="dot-live" aria-hidden="true"></span>Live + Recorded included</span>
         </div>
 
         <p class="buy-was" id="buy-was-wrap">Separately <s class="price" id="buy-was">&#8377;20,000</s></p>
@@ -242,10 +239,10 @@
           follows the CBSE / NCERT sequence exactly, so what you watch on a Tuesday is what the school
           covers that week.</p>
         <p>Each chapter comes with a written notes file you can download and print, and the exercises are
-          worked in full rather than left as an answer key. <strong>Recorded</strong> gives you the whole
-          library on day one to watch at your own pace. <strong>Live + Recorded</strong> adds weekly
-          scheduled sessions where you can ask questions in real time &mdash; and every live session is
-          recorded and added to your library afterwards.</p>
+          worked in full rather than left as an answer key. Every purchase includes <strong>live
+          classes and recorded lessons</strong> &mdash; attend the weekly sessions and ask questions in
+          real time, and rewatch every session from the library whenever you need to. You do not choose
+          between them; both come with the course for the full academic year.</p>
         <div class="notice mt3">
           <strong>Terms:</strong> access runs for the full academic year from the date of purchase. Fees
           are non-refundable once the LMS account is activated. Live session timetables are published at
@@ -400,20 +397,12 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 
-<<<<<<< HEAD
 <!-- ORDER MATTERS: data -> page render -> geo pricing -> shared bindings -->
-<script src="/assets/js/registers-generated.js?v=47"></script>
-<script src="/assets/js/course-data.js?v=48"></script>
-<script src="/assets/js/detail.js?v=48"></script>
-<script src="/assets/js/geo-pricing.js?v=48"></script>
-<script src="/assets/js/gtec-ui.js?v=48"></script>
-=======
-<!-- ORDER MATTERS: data -> page render -> shared bindings -->
-<script src="/assets/js/registers-generated.js?v=46"></script>
-    <script src="/assets/js/course-data.js?v=46"></script>
-    <script src="/assets/js/detail.js?v=46"></script>
-<script src="/assets/js/gtec-ui.js?v=36"></script>
->>>>>>> db27bd2 (Refresh syllabus registers from available course PDFs.)
+<script src="/assets/js/registers-generated.js?v=49"></script>
+<script src="/assets/js/course-data.js?v=49"></script>
+<script src="/assets/js/detail.js?v=49"></script>
+<script src="/assets/js/geo-pricing.js?v=49"></script>
+<script src="/assets/js/gtec-ui.js?v=49"></script>
 <script>
   var ax = document.getElementById('announce-x');
   if (ax) ax.onclick = function () { document.getElementById('announce').remove(); };
