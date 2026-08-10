@@ -1266,7 +1266,7 @@ class _PricingSection extends StatelessWidget {
               const SizedBox(height: 6),
 
               const Text(
-                'Buy the full year, a single subject, or just the chapters you need.',
+                'Buy the full year, or a single subject.',
                 style: TextStyle(
                   color: Color(0xFF64748B),
                   fontSize: 14.5,
@@ -1277,21 +1277,11 @@ class _PricingSection extends StatelessWidget {
 
               const SizedBox(height: 40),
 
-              // 3 Pricing Cards Row
+              // Pricing Cards Row
               context.isDesktop
                   ? const Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: _PricingCardStandard(
-                            title: 'Per module',
-                            price: '₹699',
-                            unit: '/ chapter',
-                            description:
-                                'Single-chapter videos, notes & practice. Great for revision.',
-                          ),
-                        ),
-                        SizedBox(width: 20),
                         Expanded(
                           child: _PricingCardFeatured(),
                         ),
@@ -1309,14 +1299,6 @@ class _PricingSection extends StatelessWidget {
                     )
                   : const Column(
                       children: [
-                        _PricingCardStandard(
-                          title: 'Per module',
-                          price: '₹699',
-                          unit: '/ chapter',
-                          description:
-                              'Single-chapter videos, notes & practice. Great for revision.',
-                        ),
-                        SizedBox(height: 20),
                         _PricingCardFeatured(),
                         SizedBox(height: 20),
                         _PricingCardStandard(

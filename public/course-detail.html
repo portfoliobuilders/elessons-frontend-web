@@ -188,13 +188,12 @@
 <section class="sec" id="tiers">
   <div class="wrap">
     <p class="eyebrow" style="color:var(--red-cta)">Purchase options</p>
-    <h2 class="dsp h2 mt2">Buy the whole year, one subject, or just the chapters you need.</h2>
+    <h2 class="dsp h2 mt2">Buy the whole year, or just one subject.</h2>
     <span class="gold-rule" aria-hidden="true"></span>
 
     <div class="tierbar mt3" id="tier-tabs" role="tablist" aria-label="Purchase options">
       <button class="tab" role="tab" data-tier="full"    data-panel="tier-full-p"    aria-selected="true">Full package</button>
       <button class="tab" role="tab" data-tier="subject" data-panel="tier-subject-p" aria-selected="false">By subject</button>
-      <button class="tab" role="tab" data-tier="module"  data-panel="tier-module-p"  aria-selected="false">By module</button>
     </div>
 
     <div id="tier-full-p" class="mt3">
@@ -202,26 +201,6 @@
     </div>
     <div id="tier-subject-p" class="mt3" hidden>
       <div class="grid cols3 g3" id="tier-subject"></div>
-    </div>
-    <div id="tier-module-p" class="mt3" hidden>
-      <p class="lead maxw-sm" id="module-price-note">Each module is priced on its own.</p>
-      <label class="hide-sm" for="module-search" style="position:absolute;left:-9999px">Search modules</label>
-      <input type="search" class="reg-search mt3" id="module-search" placeholder="Search a chapter&hellip;" autocomplete="off">
-      <div class="mod-layout mt3">
-        <div id="tier-module-list"></div>
-        <aside class="mod-rail" id="mod-rail" aria-label="Module selection summary">
-          <p class="mono card-kicker" style="color:var(--navy-600)">Your selection</p>
-          <p class="h3" id="mod-rail-count" style="margin-top:.35rem">0 modules selected</p>
-          <p class="price" id="mod-rail-total" style="font-weight:800;font-size:1.35rem;color:var(--navy-900);letter-spacing:-.02em;margin-top:.25rem">&#8377;0</p>
-          <ul class="mod-rail-list" id="mod-rail-list" hidden></ul>
-          <p class="note-sm mt2" id="mod-rail-hint">Pick chapters below to build your own pack.</p>
-          <div id="mod-rail-breakeven" class="mod-breakeven" hidden></div>
-          <div id="mod-rail-actions">
-            <button type="button" class="btn btn-red btn-sm btn-block mt3" id="mod-rail-add" disabled>Add to cart</button>
-            <button type="button" class="btn btn-ghost-dark btn-sm btn-block mt2" id="mod-rail-clear" hidden>Clear all</button>
-          </div>
-        </aside>
-      </div>
     </div>
   </div>
 </section>
@@ -376,7 +355,7 @@
   <div class="cart-drawer__body" id="cart-items">
     <div class="cart-empty" id="cart-empty">
       <p class="h3">Your cart is empty</p>
-      <p class="note-sm mt2">Add a full package, a subject, or individual modules to get started.</p>
+      <p class="note-sm mt2">Add a full package or a subject to get started.</p>
       <a href="#tiers" class="btn btn-navy btn-sm mt3" id="cart-browse">Browse options</a>
     </div>
   </div>

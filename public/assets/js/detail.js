@@ -107,7 +107,7 @@
 
 
   /* ══════════════ CART (localStorage) ══════════════
-     Brochure → store: parents can bundle packages, subjects and modules
+     Brochure → store: parents can bundle packages and subjects
      without losing context. Checkout opens checkout.html (WhatsApp handoff until
      card payment is wired) — the cart itself is real and survives reloads. */
   var CART_KEY = 'elessons_cart_v1';
@@ -165,7 +165,6 @@
     saveCart(cart);
     track('remove_from_cart', { item_id: id });
     paintCart();
-    /* Keep module picker buttons in sync if we removed a module line. */
     paintTiers();
   }
   function clearCart() {
@@ -250,156 +249,13 @@
       $('bar-meta').textContent =
         (S.mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' \u00b7 Grade ' + S.grade;
       $('bar-buy').textContent = 'Add to cart';
-      var dead = S.plan === 'module' && moduleCount() === 0;
-      $('bar-buy').setAttribute('aria-disabled', String(dead));
-      $('bar-buy').style.opacity = dead ? '.45' : '';
-      $('bar-buy').style.pointerEvents = dead ? 'none' : '';
+      $('bar-buy').removeAttribute('aria-disabled');
+      $('bar-buy').style.opacity = '';
+      $('bar-buy').style.pointerEvents = '';
     }
 
-    /* Module rail summary */
-    paintModRail();
     repaint();
     scheduleWaFloat();
-  }
-
-  function paintModRail() {
-    var n = moduleCount();
-    var countEl = $('mod-rail-count');
-    var totalEl = $('mod-rail-total');
-    var hint = $('mod-rail-hint');
-    var addBtn = $('mod-rail-add');
-    var clearBtn = $('mod-rail-clear');
-    var list = $('mod-rail-list');
-    var be = $('mod-rail-breakeven');
-    var actions = $('mod-rail-actions');
-    if (!countEl) return;
-    countEl.textContent = n + ' module' + (n === 1 ? '' : 's') + ' selected';
-    var mp = planPrice(S.grade, 'module', S.mode);
-    var spend = mulMoney(mp, n);
-    setPrice(totalEl, spend);
-
-    if (list) {
-      var ids = Object.keys(S.modules);
-      if (!ids.length) {
-        list.hidden = true;
-        list.innerHTML = '';
-      } else {
-        list.hidden = false;
-        list.innerHTML = ids.map(function (mid) {
-          var parts = mid.split(':');
-          var stream = parts[0];
-          var ci = Number(parts[1]);
-          var ch = (streamChapters(S.grade, stream, S.stream) || [])[ci];
-          var label = ch ? ch.c : mid;
-          var meta = STREAM_META[stream];
-          return '<li><span>' + esc(label) +
-            '<br><small>' + esc(meta ? meta.label : stream) + '</small></span>' +
-            '<button type="button" data-mod-remove="' + esc(mid) + '">Remove</button></li>';
-        }).join('');
-        list.querySelectorAll('[data-mod-remove]').forEach(function (b) {
-          b.addEventListener('click', function () {
-            delete S.modules[b.dataset.modRemove];
-            paintModRail();
-            paintPrice();
-            paintTiers();
-          });
-        });
-      }
-    }
-
-    if (hint) {
-      hint.textContent = n
-        ? 'Ready to add this selection to your cart.'
-        : 'Pick chapters below to build your own pack.';
-      hint.hidden = false;
-    }
-    if (clearBtn) clearBtn.hidden = n === 0;
-
-    /* Break-even nudge: never block purchase — shopper can decline. */
-    var subj = selectedModuleSubject();
-    var offer = betterThanModules(S.grade, n, subj, S.stream);
-    if (beDeclinedFor !== n) beDeclinedFor = -1;
-    if (be) {
-      if (offer && n && beDeclinedFor !== n) {
-        be.hidden = false;
-        if (hint) hint.hidden = true;
-        var offerPrice = offer.price;
-        /* Recorded base prices for the comparison copy (module MRP is flat). */
-        var modSpend = mulMoney(PRICING[S.grade].modulePrice, n);
-        var save = {
-          inr: modSpend.inr - offerPrice.inr,
-          aed: modSpend.aed - offerPrice.aed,
-          usd: (modSpend.usd || 0) - (offerPrice.usd || 0)
-        };
-        var allCount = offer.type === 'full'
-          ? (hasRegister(S.grade, S.stream) ? chapterTotal(S.grade, S.stream) : null)
-          : subjectModuleCount(S.grade, offer.subject);
-        var copy = n + ' modules = ' + fmtMoney(modSpend.inr, 'inr') + '. ';
-        if (offer.type === 'full') {
-          copy += 'The Annual Package costs ' + fmtMoney(offerPrice.inr, 'inr') + '.';
-        } else {
-          copy += 'All ' + allCount + ' ' + offer.label + ' modules cost ' +
-                  fmtMoney(offerPrice.inr, 'inr') + '.';
-        }
-        if (save.inr > 0) copy += ' Switch and save ' + fmtMoney(save.inr, 'inr') + '.';
-        var ctaLabel = offer.type === 'full'
-          ? ('Get the Annual Package for ' + fmtMoney(offerPrice.inr, 'inr'))
-          : ('Get all of ' + offer.label + ' for ' + fmtMoney(offerPrice.inr, 'inr'));
-        be.innerHTML = '<p>' + esc(copy) + '</p>' +
-          '<button type="button" class="btn btn-red btn-sm btn-block" id="mod-be-switch">' + esc(ctaLabel) + '</button>' +
-          '<button type="button" class="btn btn-ghost-dark btn-sm btn-block" id="mod-be-keep">Keep my ' + n + ' modules</button>';
-        if (actions) actions.hidden = true;
-        var sw = $('mod-be-switch');
-        var keep = $('mod-be-keep');
-        if (sw) sw.addEventListener('click', function () {
-          var from = n;
-          S.modules = {};
-          beDeclinedFor = -1;
-          S.plan = offer.type;
-          if (offer.type === 'subject') S.subject = offer.subject;
-          paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated(); syncControls();
-          track('breakeven_switch', { from: from, to: offer.type, grade: S.grade });
-          $('buy-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-        if (keep) keep.addEventListener('click', function () {
-          beDeclinedFor = n;
-          be.hidden = true;
-          if (actions) actions.hidden = false;
-          if (hint) hint.hidden = false;
-          if (addBtn) addBtn.disabled = n === 0;
-        });
-      } else {
-        be.hidden = true;
-        be.innerHTML = '';
-        if (actions) actions.hidden = false;
-      }
-    }
-
-    if (addBtn) {
-      addBtn.disabled = n === 0;
-      addBtn.textContent = 'Add to cart';
-    }
-  }
-
-  function selectedModuleSubject() {
-    var parents = {};
-    Object.keys(S.modules).forEach(function (mid) {
-      var stream = mid.split(':')[0];
-      var p = STREAM_META[stream] && STREAM_META[stream].parent;
-      if (p) parents[p] = true;
-    });
-    var keys = Object.keys(parents);
-    return keys.length === 1 ? keys[0] : null;
-  }
-  function subjectModuleCount(grade, subject) {
-    if (isStreamGrade(grade) && subject) {
-      return streamChapters(grade, subject, S.stream).filter(function (ch) {
-        return !isRegisterHeaderChapter(ch) && publishedLessons(ch).length > 0;
-      }).length;
-    }
-    return streamsForSubject(subject).reduce(function (n, k) {
-      return n + streamChapters(grade, k, S.stream).length;
-    }, 0);
   }
 
   function currentCartId() {
@@ -407,38 +263,10 @@
       if (isStreamGrade(S.grade) && S.stream) return 'g' + S.grade + '-' + S.stream + '-' + S.mode;
       return 'g' + S.grade + '-full-' + S.mode;
     }
-    if (S.plan === 'subject') return 'g' + S.grade + '-' + S.subject + '-' + S.mode;
-    return null; /* modules are added individually */
+    return 'g' + S.grade + '-' + S.subject + '-' + S.mode;
   }
 
   function addCurrentPlanToCart() {
-    if (S.plan === 'module') {
-      var ids = Object.keys(S.modules);
-      if (!ids.length) { toast('Select at least one module first'); return; }
-      var mp = planPrice(S.grade, 'module', S.mode);
-      var added = 0;
-      ids.forEach(function (mid) {
-        var parts = mid.split(':');
-        var stream = parts[0];
-        var ci = Number(parts[1]);
-        var chs = streamChapters(S.grade, stream, S.stream);
-        var ch = chs[ci];
-        if (!ch) return;
-        var id = 'g' + S.grade + '-mod-' + mid + '-' + S.mode;
-        if (cartHas(id)) return;
-        addCartItem(makeCartItem({
-          id: id, type: 'module', grade: S.grade, mode: S.mode,
-          title: (typeof elHumanizeTitle === 'function') ? elHumanizeTitle(ch.c) : ch.c,
-          subtitle: 'Grade ' + S.grade + ' · ' + (STREAM_META[stream] ? STREAM_META[stream].label : stream) +
-                    ' · ' + (S.mode === 'live' ? 'Live + Recorded' : 'Recorded'),
-          price: mp
-        }), { open: false });
-        added++;
-      });
-      if (added) { openCart(); toast(added + ' module' + (added === 1 ? '' : 's') + ' added to cart'); }
-      else { toast('Those modules are already in your cart'); openCart(); }
-      return;
-    }
     var p = currentPrice();
     var id = currentCartId();
     addCartItem(makeCartItem({
@@ -492,18 +320,6 @@
            '?text=' + encodeURIComponent(msg));
       window.open(href, '_blank', 'noopener');
     });
-    var railAdd = $('mod-rail-add');
-    if (railAdd) railAdd.addEventListener('click', function () {
-      S.plan = 'module';
-      addCurrentPlanToCart();
-    });
-    var railClear = $('mod-rail-clear');
-    if (railClear) railClear.addEventListener('click', function () {
-      S.modules = {};
-      paintModRail();
-      paintPrice();
-      paintTiers();
-    });
   }
 
   /* Writes all authored figures, then shows the active one. */
@@ -535,11 +351,10 @@
   var qp = new URLSearchParams(location.search);
   var S = {
     grade:   PRICING[qp.get('grade')] ? Number(qp.get('grade')) : 9,
-    plan:    ['full', 'subject', 'module'].indexOf(qp.get('plan')) > -1 ? qp.get('plan') : 'full',
+    plan:    ['full', 'subject'].indexOf(qp.get('plan')) > -1 ? qp.get('plan') : 'full',
     subject: null,
     stream:  null,
-    mode:    'live', /* Live + Recorded only — no recorded-only SKU */
-    modules: {}
+    mode:    'live' /* Live + Recorded only — no recorded-only SKU */
   };
   /* Grades 11–12: stream packages. Legacy ?subject= links map to a sensible stream. */
   if (isStreamGrade(S.grade)) {
@@ -565,9 +380,6 @@
     if (reqPlan === 'subject' && streamSubs.indexOf(reqSub) > -1) {
       S.plan = 'subject';
       S.subject = reqSub;
-    } else if (reqPlan === 'module') {
-      S.plan = 'module';
-      S.subject = streamSubs.indexOf(reqSub) > -1 ? reqSub : null;
     } else {
       S.plan = 'full';
       S.subject = null;
@@ -578,18 +390,13 @@
   }
 
   /* ---------- current price ---------- */
-  function moduleCount() { return Object.keys(S.modules).length; }
   function currentPrice() {
-    if (S.plan === 'module') {
-      return mulMoney(planPrice(S.grade, 'module', S.mode), moduleCount());
-    }
     return planPrice(S.grade, S.plan, S.mode, S.subject, S.stream);
   }
   function currentTitle() {
     if (S.plan === 'subject' && S.subject && SUBJECT_META[S.subject]) {
       return 'Grade ' + S.grade + ' \u2014 ' + SUBJECT_META[S.subject].name;
     }
-    if (S.plan === 'module') return 'Grade ' + S.grade + ' \u2014 Build your own';
     if (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream]) {
       return 'Grade ' + S.grade + ' \u2014 ' + PACKAGE_META[S.stream].name;
     }
@@ -630,8 +437,6 @@
 
     $('course-lede').textContent = S.plan === 'subject' && SUBJECT_META[S.subject]
       ? SUBJECT_META[S.subject].blurb
-      : S.plan === 'module'
-      ? 'Pick only the chapters you need. Every module is priced on its own and lands in your library the moment you buy it.'
       : (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream])
         ? PACKAGE_META[S.stream].blurb
         : 'Maths, Science and English together for grade ' + S.grade +
@@ -674,14 +479,11 @@
       saveEl.hidden = true;
     }
 
-    var n = moduleCount();
     $('buy-unit').textContent =
-      S.plan === 'module'
-        ? (n ? n + ' module' + (n > 1 ? 's' : '') + ' selected' : 'No modules selected yet')
-        : S.plan === 'subject' ? 'This subject \u00b7 full academic year'
-                               : (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream]
-                                  ? (PACKAGE_META[S.stream].name + ' stream \u00b7 English Grammar free')
-                                  : 'All subjects \u00b7 English Grammar free');
+      S.plan === 'subject' ? 'This subject \u00b7 full academic year'
+                           : (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream]
+                              ? (PACKAGE_META[S.stream].name + ' stream \u00b7 English Grammar free')
+                              : 'All subjects \u00b7 English Grammar free');
 
     var up = upgradeOffer(S.grade, S.plan, S.mode, S.subject, S.stream);
     var upEl = $('buy-upgrade');
@@ -705,15 +507,13 @@
       $('bar-meta').textContent =
         (S.mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' \u00b7 Grade ' + S.grade;
       $('bar-buy').textContent = 'Add to cart';
-      var dead = S.plan === 'module' && n === 0;
       [$('buy-now'), $('bar-buy')].forEach(function (b) {
         if (!b) return;
-        b.setAttribute('aria-disabled', String(dead));
-        b.style.opacity = dead ? '.45' : '';
-        b.style.pointerEvents = dead ? 'none' : '';
+        b.removeAttribute('aria-disabled');
+        b.style.opacity = '';
+        b.style.pointerEvents = '';
       });
     }
-    paintModRail();
 
     document.querySelectorAll('[data-wa-course]').forEach(function (a) {
       a.dataset.wa = waContext();
@@ -802,93 +602,6 @@
       });
     }
 
-    var modNoteShow = $('module-price-note');
-    if (modNoteShow && modNoteShow.parentElement) modNoteShow.parentElement.hidden = false;
-    var modGridShow = $('module-grid');
-    if (modGridShow) modGridShow.hidden = false;
-
-    /* By subject — stream grades list subjects from the open package PDF. */
-    var subjectKeys = subjectsForGrade(g, S.stream);
-    if (!subjectKeys.length) {
-      $('tier-subject').innerHTML =
-        '<div class="reg-empty"><p class="h3">Subject list for this package is being published</p>' +
-        '<p style="margin-top:.4rem;font-size:.9rem">Message us on WhatsApp and we will share the subject options.</p></div>';
-    } else {
-      $('tier-subject').innerHTML = subjectKeys.map(function (sub) {
-        var m = SUBJECT_META[sub], p = planPrice(g, 'subject', S.mode, sub, S.stream);
-        var count = planLessonCount(g, 'subject', sub, S.stream);
-        return tierCard({
-          on: S.plan === 'subject' && S.subject === sub, colour: m.colour, live: isLive,
-          kicker: 'Grade ' + g + ' \u00b7 single subject', title: m.name, price: priceAttrs(p),
-          note: 'This subject \u00b7 full academic year',
-          inc: [m.tag, hasRegister(g, S.stream) ? count + ' video lessons' : 'Every chapter of this subject',
-                'PDF notes for every chapter',
-                isLive ? 'Live doubt-clearing included' : 'Recorded lessons, replay anytime'],
-          cta: 'Add to cart', choose: 'subject:' + sub
-        });
-      }).join('');
-    }
-
-    /* By module
-       TODO commercial: flat per-module pricing is unfair across chapter sizes
-       (Coordinate Geometry = 3 lessons vs Polynomials = 18, both at the same fee).
-       Propose banded pricing — small (1–5 lessons), standard (6–12), large (13+) —
-       so lessons-per-rupee is not silently unfair. The break-even nudge is a
-       workaround until that decision is made. */
-    var mp = planPrice(g, 'module', S.mode);
-    var mpa = priceAttrs(mp);
-    var baseMp = PRICING[g].modulePrice;
-    var baseMpa = priceAttrs(baseMp);
-    $('module-price-note').innerHTML =
-      'Each module is <span class="price" data-inr="' + mpa.inr +
-      '" data-aed="' + mpa.aed + '" data-usd="' + mpa.usd + '">' + mpa.inr + '</span>. Use Add all to grab a whole subject in one click.';
-
-    var streams = isStreamGrade(g)
-      ? streamsForPlan(g, 'full', null, S.stream)
-      : registerStreams(g, S.stream);
-    var mq = (moduleQuery || '').trim().toLowerCase();
-    if (!streams.length) {
-      $('tier-module-list').innerHTML =
-        '<div class="reg-empty"><p class="h3">Module list for Grade ' + g + ' is being published</p>' +
-        '<p style="margin-top:.4rem;font-size:.9rem">Message us on WhatsApp and we will share the chapter list.</p></div>';
-    } else {
-      $('tier-module-list').innerHTML = streams.map(function (k) {
-        var meta = STREAM_META[k];
-        if (!meta) return '';
-        var chs = streamChapters(g, k, S.stream).filter(function (ch) {
-          return !isRegisterHeaderChapter(ch) && publishedLessons(ch).length > 0;
-        });
-        if (!chs.length) return '';
-        var rows = chs.map(function (ch) {
-          if (mq && !fuzzyMatch(ch.c, mq)) return '';
-          var ci = streamChapters(g, k, S.stream).indexOf(ch);
-          var id = k + ':' + ci, on = !!S.modules[id];
-          var lessons = publishedLessons(ch).length;
-          return '<div class="mod-row">' +
-            '<p>' + esc((typeof elHumanizeTitle === 'function') ? elHumanizeTitle(ch.c) : ch.c) + '<br><small>' +
-              '<span class="price" data-inr="' + baseMpa.inr + '" data-aed="' + baseMpa.aed + '" data-usd="' + baseMpa.usd + '">' + baseMpa.inr + '</span>' +
-              ' \u00b7 ' + lessons + ' lesson' + (lessons === 1 ? '' : 's') + '</small></p>' +
-            '<button type="button" class="mod-add" data-module="' + id + '" aria-pressed="' + on + '">' +
-              (on ? 'Selected' : 'Select') + '</button></div>';
-        }).filter(Boolean);
-        if (mq && !rows.length) return '';
-        var subjTotal = mulMoney(baseMp, chs.length);
-        var subjA = priceAttrs(subjTotal);
-        return '<details class="mod-sub" style="--stream-colour:' + meta.colour + '"' + (k === streams[0] ? ' open' : '') + '>' +
-          '<summary>' +
-            '<span class="mod-sub__ico" aria-hidden="true">' + esc(meta.code) + '</span>' +
-            '<span>' + esc(meta.label) + '</span>' +
-            '<span class="mod-sub__actions">' +
-              '<span class="chip">' + chs.length + ' modules</span>' +
-              '<button type="button" class="mod-add-all" data-add-all="' + k + '">Add all ' + chs.length +
-                ' \u00b7 <span class="price" data-inr="' + subjA.inr + '" data-aed="' + subjA.aed + '" data-usd="' + subjA.usd + '">' + subjA.inr + '</span></button>' +
-            '</span>' +
-          '</summary>' +
-          rows.join('') + '</details>';
-      }).join('') ||
-        '<div class="reg-empty"><p class="h3">No modules match \u201c' + esc(moduleQuery) + '\u201d</p></div>';
-    }
-
     document.querySelectorAll('[data-choose]').forEach(function (b) {
       b.addEventListener('click', function () {
         var v = b.dataset.choose.split(':');
@@ -916,45 +629,11 @@
       });
     });
 
-    document.querySelectorAll('[data-module]').forEach(function (b) {
-      b.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var id = b.dataset.module;
-        if (S.modules[id]) delete S.modules[id];
-        else S.modules[id] = true;
-        if (S.plan !== 'module') { S.plan = 'module'; paintHero(); syncControls(); }
-        paintModRail();
-        paintPrice();
-        paintTiers();
-      });
-    });
-
-    document.querySelectorAll('[data-add-all]').forEach(function (b) {
-      b.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var k = b.dataset.addAll;
-        var chs = streamChapters(S.grade, k, S.stream);
-        chs.forEach(function (ch, ci) {
-          if (isRegisterHeaderChapter(ch) || !publishedLessons(ch).length) return;
-          S.modules[k + ':' + ci] = true;
-        });
-        if (S.plan !== 'module') { S.plan = 'module'; paintHero(); syncControls(); }
-        paintModRail();
-        paintPrice();
-        paintTiers();
-      });
-    });
-
-    paintModRail();
     repaint();
   }
 
   /* ══════════════ VIDEO REGISTER ══════════════ */
   var stream = null, query = '';
-  var moduleQuery = '';
-  var beDeclinedFor = -1;
 
   function planStreams() { return streamsForPlan(S.grade, S.plan, S.subject, S.stream); }
 
@@ -1223,13 +902,12 @@
       var planId = 'g' + g + '-' + (isSub ? sub : (pkg || 'full')) + '-' + S.mode;
       var mrp = (isSub || isPkg) ? null : fullMrp(g);
       var save = mrp ? { inr: mrp.inr - p.inr, aed: mrp.aed - p.aed } : null;
-      var modP = planPrice(g, 'module', 'recorded');
       var micro = isSub
         ? 'Full academic year \u00b7 this subject'
         : isPkg
           ? 'Annual package \u00b7 English Grammar free'
         : (save && save.inr > 0
-            ? (priceAttrs(modP)[cur()] + '/module separately \u00b7 Save ' + priceAttrs(save)[cur()])
+            ? ('Save ' + priceAttrs(save)[cur()] + ' vs buying subjects separately')
             : 'Full academic year');
       var modeHtml = '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>';
       var isPopular = isSub ? (sub === popularSubject)
@@ -1442,40 +1120,10 @@
     });
   }
 
-  function bindModuleSearch() {
-    var box = $('module-search');
-    if (!box) return;
-    var t;
-    box.addEventListener('input', function (e) {
-      clearTimeout(t);
-      var v = e.target.value;
-      t = setTimeout(function () {
-        moduleQuery = v;
-        paintTiers();
-      }, 160);
-    });
-  }
-
-  /* Hide By module when this grade has no register; fall back to By subject. */
-  function syncModuleTabVisibility() {
-    var tab = document.querySelector('#tier-tabs [data-tier="module"]');
-    var has = registerStreams(S.grade, S.stream).length > 0;
-    if (tab) {
-      tab.hidden = !has;
-      tab.style.display = has ? '' : 'none';
-    }
-    var search = $('module-search');
-    if (search) search.hidden = !has;
-    if (!has && S.plan === 'module') {
-      S.plan = 'subject';
-    }
-  }
-
   /* Controls are static markup, so a URL that sets plan would leave the
      tab bar contradicting the page. Sync them once, before gtec-ui.js
      reads aria-selected to set up roving tabindex. */
   function syncControls() {
-    syncModuleTabVisibility();
     document.querySelectorAll('#tier-tabs .tab').forEach(function (t) {
       if (t.hidden) {
         t.setAttribute('aria-selected', 'false');
@@ -1491,7 +1139,6 @@
   }
 
   /* ---------- go ---------- */
-  syncModuleTabVisibility();
   paintHero();
   paintStreamTabs();
   paintRegister();
@@ -1502,7 +1149,7 @@
   syncControls();
   bindMode(); bindTierTabs(); bindRegister(); bindLms(); bindBuy(); bindCartUi(); bindWa();
   bindCurrencyWa();
-  bindStickyPanel(); bindModuleSearch();
+  bindStickyPanel();
   paintCart();
   scheduleWaFloat();
   window.addEventListener('resize', scheduleWaFloat);
