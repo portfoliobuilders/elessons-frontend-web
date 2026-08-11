@@ -31,3 +31,7 @@ node_modules/
 
 # Local deploy artifacts
 elessons-godaddy-upload.zip
+
+# Local deploy artifacts
+dist/
+elessons-godaddy-public-html.zip
