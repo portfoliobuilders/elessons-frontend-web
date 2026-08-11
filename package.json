@@ -5,6 +5,7 @@
   "description": "G-TEC eLessons.net marketing site — home + course detail (gtec design system)",
   "scripts": {
     "build": "node scripts/prepare-vercel.mjs",
-    "dev": "npx --yes serve public -l 3000"
+    "dev": "npx --yes serve public -l 3000",
+    "package:godaddy": "bash scripts/package-godaddy.sh"
   }
 }
