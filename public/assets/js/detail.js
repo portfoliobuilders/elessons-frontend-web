@@ -334,9 +334,9 @@
   /* Re-paints after location-based currency detection (no manual switcher). */
   function repaint() {
     if (window.ELessonsGeoPricing && typeof window.ELessonsGeoPricing.render === 'function') {
-      var cur = document.documentElement.getAttribute('data-currency') || 'inr';
+      var activeCur = document.documentElement.getAttribute('data-currency') || 'inr';
       var cc = document.documentElement.getAttribute('data-geo-country') || '';
-      window.ELessonsGeoPricing.render(cur, cc);
+      window.ELessonsGeoPricing.render(activeCur, cc);
       return;
     }
     document.querySelectorAll('.price').forEach(function (el) {
@@ -1171,9 +1171,9 @@
   paintHero();
   paintStreamTabs();
   paintRegister();
-  paintTiers();
-  paintFaq();
-  paintRelated();
+  try { paintTiers(); } catch (err) { console.error('paintTiers', err); }
+  try { paintFaq(); } catch (err) { console.error('paintFaq', err); }
+  try { paintRelated(); } catch (err) { console.error('paintRelated', err); }
   paintPrice();
   syncControls();
   bindMode(); bindTierTabs(); bindRegister(); bindLms(); bindBuy(); bindCartUi(); bindWa();
