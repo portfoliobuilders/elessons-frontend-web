@@ -1858,13 +1858,14 @@ footer{position:relative;z-index:2;padding-bottom:calc(1rem + env(safe-area-inse
     </div>
 
     <div class="card" style="border-radius:22px;align-self:start">
-      <div class="grid g2">
-        <div class="field"><label for="f-n">Name</label><input id="f-n" type="text" autocomplete="name"></div>
-        <div class="field"><label for="f-e">Email</label><input id="f-e" type="email" autocomplete="email"></div>
-        <div class="field"><label for="f-m">Mobile number</label><input id="f-m" type="tel" autocomplete="tel"></div>
-        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg"></textarea></div>
-        <button type="button" class="btn btn-navy" style="justify-self:start">Send message</button>
-      </div>
+      <form class="contact-form grid g2" id="contact-form" action="mailto:contact@elessons.net" method="post" enctype="text/plain">
+        <div class="field"><label for="f-n">Name</label><input id="f-n" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-e">Email</label><input id="f-e" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="f-m">Mobile number</label><input id="f-m" name="mobile" type="tel" autocomplete="tel"></div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message"></textarea></div>
+        <button type="submit" class="btn btn-navy" style="justify-self:start">Send message</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
+      </form>
     </div>
   </div>
 </section>

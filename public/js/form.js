@@ -2,7 +2,7 @@
  * Static contact form → mailto fallback (no backend required)
  */
 (function () {
-  var form = document.querySelector("#contact form, form.contact-form");
+  var form = document.querySelector("#contact-form, #contact form, form.contact-form");
   if (!form) return;
 
   var status = document.getElementById("form-status");

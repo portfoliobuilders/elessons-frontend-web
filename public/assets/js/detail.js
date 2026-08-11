@@ -515,16 +515,19 @@
     el.dataset.usd = a.usd;
     el.textContent = a[cur()];
   }
-  /* Re-paints after location-based currency detection (no manual switcher). */
+  /* Re-paints after location-based currency detection (no manual switcher).
+     NEVER name a local `cur` here — var-hoisting shadows function cur() and
+     crashes paintTiers before Add to cart / WhatsApp handlers bind. */
   function repaint() {
     if (window.ELessonsGeoPricing && typeof window.ELessonsGeoPricing.render === 'function') {
-      var cur = document.documentElement.getAttribute('data-currency') || 'inr';
+      var code = document.documentElement.getAttribute('data-currency') || 'inr';
       var cc = document.documentElement.getAttribute('data-geo-country') || '';
-      window.ELessonsGeoPricing.render(cur, cc);
+      window.ELessonsGeoPricing.render(code, cc);
       return;
     }
+    var active = cur();
     document.querySelectorAll('.price').forEach(function (el) {
-      var v = el.dataset[cur()];
+      var v = el.dataset[active];
       if (v) el.textContent = v;
     });
   }
@@ -1507,20 +1510,31 @@
     });
   }
 
-  /* ---------- go ---------- */
-  syncModuleTabVisibility();
-  paintHero();
-  paintStreamTabs();
-  paintRegister();
-  paintTiers();
-  paintFaq();
-  paintRelated();
-  paintPrice();
-  syncControls();
-  bindMode(); bindTierTabs(); bindRegister(); bindLms(); bindBuy(); bindCartUi(); bindWa();
-  bindCurrencyWa();
-  bindStickyPanel(); bindModuleSearch();
-  paintCart();
+  /* ---------- go ----------
+     Isolate each step so one paint failure cannot leave cart / WhatsApp unbound. */
+  function runStep(name, fn) {
+    try { fn(); }
+    catch (err) {
+      try { console.error('[elessons detail]', name, err); } catch (e) { /* ignore */ }
+      try { track('detail_init_error', { step: name, message: String(err && err.message || err) }); }
+      catch (e2) { /* ignore */ }
+    }
+  }
+  runStep('syncModuleTabVisibility', syncModuleTabVisibility);
+  runStep('paintHero', paintHero);
+  runStep('paintStreamTabs', paintStreamTabs);
+  runStep('paintRegister', paintRegister);
+  runStep('paintTiers', paintTiers);
+  runStep('paintFaq', paintFaq);
+  runStep('paintRelated', paintRelated);
+  runStep('paintPrice', paintPrice);
+  runStep('syncControls', syncControls);
+  runStep('binds', function () {
+    bindMode(); bindTierTabs(); bindRegister(); bindLms(); bindBuy(); bindCartUi(); bindWa();
+    bindCurrencyWa();
+    bindStickyPanel(); bindModuleSearch();
+    paintCart();
+  });
   scheduleWaFloat();
   window.addEventListener('resize', scheduleWaFloat);
   window.addEventListener('scroll', scheduleWaFloat, { passive: true });
