@@ -9,9 +9,9 @@ const ELESSONS = {
   /* India admissions line (homepage schema + nav). Gulf enquiry uses whatsappAed. */
   whatsapp: '919745553944',
   whatsappInr: '919745553944',
-  whatsappAed: '971568056001',   /* same Gulf number as homepage config.js */
+  whatsappAed: '971503980768',   /* same Gulf number as homepage config.js */
   phoneDisplay: '+91 97455 53944',
-  phoneDisplayAed: '+971 568056001',
+  phoneDisplayAed: '+971 503980768',
   lmsUrl: 'https://lms.elessons.net',        // TODO confirm the real LMS origin
   classListPdf: '/video-list.html',
   checkoutUrl: '/checkout.html',

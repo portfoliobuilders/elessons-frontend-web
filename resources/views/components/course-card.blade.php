@@ -10,7 +10,7 @@
 ])
 
 @php
-    $wa = '971568056001';
+    $wa = '971503980768';
     $msg = rawurlencode("Hi G-TEC eLessons, I want to buy the Grade {$grade} {$stream} annual package (AED 1200).");
     $buyHref = $href ?: "https://wa.me/{$wa}?text={$msg}";
     $label = "Buy Grade {$grade} {$stream} package on WhatsApp";

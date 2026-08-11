@@ -36,7 +36,7 @@
   <div class="mobile-enroll" role="region" aria-label="Quick enrol">
     <a href="#courses" class="btn btn--navy btn--sm">View packages</a>
     <a
-      href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)."
+      href="https://wa.me/971503980768?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)."
       class="btn btn--primary btn--sm"
       target="_blank"
       rel="noopener noreferrer"
@@ -46,7 +46,7 @@
 
   <a
     class="wa-float"
-    href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses."
+    href="https://wa.me/971503980768?text=Hi%20G-TEC%20eLessons%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses."
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Chat on WhatsApp"

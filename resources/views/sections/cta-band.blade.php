@@ -7,7 +7,7 @@
     <div class="cta-band__actions">
       <a href="#courses" class="btn btn--primary">Buy the annual package</a>
       <a
-        href="https://wa.me/971568056001?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)."
+        href="https://wa.me/971503980768?text=Hi%20G-TEC%20eLessons%2C%20I%20want%20to%20enrol%20for%20the%20annual%20package%20(AED%201200)."
         class="btn btn--ghost"
         rel="noopener noreferrer"
         target="_blank"
