@@ -27,7 +27,7 @@ def read(rel: str) -> str:
 
 def buy(grade: str, stream: str) -> str:
     msg = f"Hi G-TEC eLessons, I want to buy the Grade {grade} {stream} annual package (AED 1200)."
-    return "https://wa.me/971568056001?text=" + urllib.parse.quote(msg)
+    return "https://wa.me/971503980768?text=" + urllib.parse.quote(msg)
 
 def main() -> None:
     # sync css/js first

@@ -17,13 +17,13 @@ h = h.replace(
 );
 
 const waIn = 'https://wa.me/919745553944?text=' + encodeURIComponent("Hi GTEC Team, I'm interested in eLessons. Can you share more details?");
-const waAe = 'https://wa.me/971568056001?text=' + encodeURIComponent("Hi GTEC Team, I'm interested in eLessons (UAE). Can you share more details?");
+const waAe = 'https://wa.me/971503980768?text=' + encodeURIComponent("Hi GTEC Team, I'm interested in eLessons (UAE). Can you share more details?");
 
 // Primary CTAs → India WhatsApp; keep Gulf number as dedicated Gulf WhatsApp in footer
-h = h.replaceAll('https://wa.me/971568056001', waIn);
+h = h.replaceAll('https://wa.me/971503980768', waIn);
 // Restore footer Gulf link specifically (last wa link that shows +971)
 h = h.replace(
-  new RegExp(`(<a href=")${waIn.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}(">\\+971 568056001</a>)`),
+  new RegExp(`(<a href=")${waIn.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}(">\\+971 503980768</a>)`),
   `$1${waAe}$2`
 );
 

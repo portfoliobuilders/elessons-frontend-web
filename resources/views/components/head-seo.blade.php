@@ -41,9 +41,9 @@
       "name": "G-TEC eLessons",
       "url": "{{ $siteUrl }}/",
       "email": "contact@elessons.net",
-      "telephone": "+971568056001",
+      "telephone": "+971503980768",
       "logo": "{{ $siteUrl }}/images/brand/elessons-logo-color.png",
-      "sameAs": ["https://wa.me/971568056001"]
+      "sameAs": ["https://wa.me/971503980768"]
     },
     {
       "@type": "WebSite",

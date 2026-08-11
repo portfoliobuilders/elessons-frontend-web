@@ -13,7 +13,7 @@
       <div class="contact-card">
         <p class="contact-card__label">Middle East office</p>
         <p>Staffin Consultancy FZE, Sharjah Research Technology<br>&amp; Innovation Park, Sharjah, UAE</p>
-        <a href="https://wa.me/971568056001" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp +971 568056001">+971 568056001</a>
+        <a href="https://wa.me/971503980768" rel="noopener noreferrer" target="_blank" aria-label="WhatsApp +971 503980768">+971 503980768</a>
       </div>
     </div>
 
