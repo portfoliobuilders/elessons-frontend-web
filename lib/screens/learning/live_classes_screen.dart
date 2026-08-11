@@ -75,7 +75,7 @@ class _LiveClassesScreenState extends State<LiveClassesScreen> {
 
   void _join(LiveClass c) {
     if (!c.hasLiveAccess) {
-      _snack('This live class needs the Live + Recorded plan.');
+      _snack('This live class needs the Recorded + Mentorship support plan.');
       return;
     }
     Navigator.pushNamed(context, AppRoutes.liveRoom, arguments: {
