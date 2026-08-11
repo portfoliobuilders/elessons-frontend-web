@@ -115,7 +115,7 @@ def subject_card(grade: int, stream_key: str, sub_key: str) -> str:
           <h3 class="h3" style="margin-top:.25rem">{sub['name']}</h3>
           <p class="mono subj-tagline" style="color:{sub['colour']}">{sub['tag']}</p>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">{sub['blurb']}</p>
         <div style="margin-top:auto">
           <p style="font-weight:800;font-size:1.05rem;color:var(--navy-900);letter-spacing:-.02em">Included in {stream['label']}</p>
@@ -142,7 +142,7 @@ def bundle_card(grade: int, stream_key: str) -> str:
           <span class="course-num">{grade}</span>
           <span class="mono" style="color:var(--gold);font-size:.66rem;margin-top:.45rem">All subjects<br>{stream['label']}</span>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">{blurb}</p>
         <div style="margin-top:auto">
           <p class="price bundle-price" data-inr="&#8377;18,000" data-aed="AED 1,200">&#8377;18,000</p>
