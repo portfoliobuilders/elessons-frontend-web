@@ -602,6 +602,31 @@
       });
     }
 
+    /* By subject — stream grades list subjects from the open package PDF. */
+    var subjectKeys = subjectsForGrade(g, S.stream);
+    var tierSubject = $('tier-subject');
+    if (tierSubject) {
+      if (!subjectKeys.length) {
+        tierSubject.innerHTML =
+          '<div class="reg-empty"><p class="h3">Subject list for this package is being published</p>' +
+          '<p style="margin-top:.4rem;font-size:.9rem">Message us on WhatsApp and we will share the subject options.</p></div>';
+      } else {
+        tierSubject.innerHTML = subjectKeys.map(function (sub) {
+          var m = SUBJECT_META[sub], p = planPrice(g, 'subject', S.mode, sub, S.stream);
+          var count = planLessonCount(g, 'subject', sub, S.stream);
+          return tierCard({
+            on: S.plan === 'subject' && S.subject === sub, colour: m.colour, live: isLive,
+            kicker: 'Grade ' + g + ' \u00b7 single subject', title: m.name, price: priceAttrs(p),
+            note: 'This subject \u00b7 full academic year',
+            inc: [m.tag, hasRegister(g, S.stream) ? count + ' video lessons' : 'Every chapter of this subject',
+                  'PDF notes for every chapter',
+                  isLive ? 'Weekly mentor sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
+            cta: 'Add to cart', choose: 'subject:' + sub
+          });
+        }).join('');
+      }
+    }
+
     document.querySelectorAll('[data-choose]').forEach(function (b) {
       b.addEventListener('click', function () {
         var v = b.dataset.choose.split(':');
@@ -817,6 +842,10 @@
         var v = m.target.dataset.tier;
         if (!v || v === S.plan) return;
         S.plan = v;
+        if (v === 'subject') {
+          var keys = subjectsForGrade(S.grade, S.stream);
+          if (!S.subject || keys.indexOf(S.subject) === -1) S.subject = keys[0] || null;
+        }
         paintHero(); paintPrice(); paintTiers(); paintStreamTabs(); paintRegister(); paintRelated();
         track('tier_tab', { tab: v });
       });
