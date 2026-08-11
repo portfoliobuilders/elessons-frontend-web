@@ -270,13 +270,13 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
   background:radial-gradient(46% 34% at 50% 26%,rgba(255,255,255,.22),transparent 70%)}
 .board-portrait img{position:relative;width:100%;height:100%;object-fit:cover;object-position:center top;
   filter:drop-shadow(0 16px 26px rgba(0,0,0,.32))}
-.board-card{position:absolute;left:0;bottom:8%;display:flex;align-items:center;gap:.85rem;max-width:17.5rem;
+.board-card{position:absolute;left:0;bottom:8%;display:flex;align-items:center;gap:.85rem;max-width:20.5rem;
   background:#fff;color:var(--navy-900);border-radius:18px;padding:.8rem 1.1rem;
   box-shadow:0 24px 46px -18px rgba(0,0,0,.62)}
 .board-card-ico{width:38px;height:38px;border-radius:11px;flex:none;background:var(--red);color:#fff;
   display:flex;align-items:center;justify-content:center}
 .board-card-k{display:block;font-size:.52rem;color:var(--slate-500)}
-.board-card-h{display:block;font-weight:800;font-size:1.02rem;line-height:1.2;margin-top:.12rem}
+.board-card-h{display:block;font-weight:800;font-size:.9rem;line-height:1.25;margin-top:.12rem}
 .board-card-s{display:block;font-size:.72rem;color:var(--slate);margin-top:.1rem}
 @media (max-width:900px){.board-stage{padding-left:0}.board-card{left:auto;right:0;bottom:4%}}
 @media (max-width:480px){.board-card{position:static;margin-top:1.1rem;max-width:none}}
