@@ -313,7 +313,7 @@
         value: tot[currency], currency: currency.toUpperCase(),
         items: cart.items.map(function (it) { return it.id; })
       });
-      /* Card checkout page is not live yet — hand off to WhatsApp with a clear cart summary. */
+      /* Card checkout page is not ready yet — hand off to WhatsApp with a clear cart summary. */
       var href = (typeof elWhatsAppHref === 'function')
         ? elWhatsAppHref(msg, currency)
         : ('https://wa.me/' + (ELESSONS.whatsappInr || ELESSONS.whatsapp || '919745553944') +
@@ -537,7 +537,7 @@
 
   /* ══════════════ MODE (fixed: Recorded + Mentorship support) ══════════════ */
   function bindMode() {
-    /* No mode switcher — every purchase includes live classes and recordings. */
+    /* No mode switcher — every purchase includes recorded lessons and mentorship support. */
   }
 
   /* ══════════════ PURCHASE TIERS ══════════════ */
@@ -581,7 +581,7 @@
                 nLessons != null ? nLessons + ' video lessons' : 'Every chapter of this stream',
                 'Complimentary English Grammar',
                 'Downloadable PDF notes', 'Full academic year of LMS access',
-                isLive ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
+                isLive ? 'Weekly mentor sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
           cta: 'Add to cart', choose: 'stream:' + pkg
         });
       }).join('');
@@ -597,7 +597,7 @@
                              : 'Every chapter of the CBSE / NCERT syllabus',
               'English Grammar complimentary with the annual package',
               'Downloadable PDF notes for every chapter', 'Full academic year of LMS access',
-              isLive ? 'Weekly live sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
+              isLive ? 'Weekly mentor sessions, each one recorded' : 'Watch at your own pace, unlimited replays'],
         cta: 'Add to cart', choose: 'full'
       });
     }

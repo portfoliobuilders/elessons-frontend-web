@@ -131,7 +131,7 @@ const SUBJECT_ORDER = ['maths', 'science', 'english'];
    Note the Gulf/USD lists deliberately charge the same for English as for
    Maths; that is their pricing, not a rounding artefact.
 
-   Homepage cards sell live + recorded together at one authored price.
+   Homepage cards sell recorded + mentorship together at one authored price.
    Keep uplift at 0 so the enroll page matches the homepage (e.g. Grade 12
    package stays ₹18,000, not ₹23,000).                                      */
 const LIVE_UPLIFT = {
@@ -545,7 +545,7 @@ function buildPlans() {
 const PLANS = buildPlans();
 
 const FAQS = [
-  { q: 'What is the difference between Recorded and Recorded + Mentorship support?', a: 'Recorded gives you the full year of chalkboard video lessons plus notes, available the day you enrol, watched at your own pace. Recorded + Mentorship support adds weekly scheduled sessions with a mentor where you can ask questions in real time — and every live session is recorded and added to your library.' },
+  { q: 'What is the difference between Recorded and Recorded + Mentorship support?', a: 'Recorded gives you the full year of chalkboard video lessons plus notes, available the day you enrol, watched at your own pace. Recorded + Mentorship support adds weekly scheduled sessions with a mentor where you can ask questions in real time — and every mentor session is recorded and added to your library.' },
   { q: 'How long do I keep access?', a: 'Access runs for the full academic year from the date of purchase. Lessons stay unlocked for that entire period, so you can revise a chapter as many times as you need before an exam.' },
   { q: 'Can I buy just one subject?', a: 'Yes — choose By Subject for a single subject. Grades 11 and 12 also offer full stream packages (PCMB, PCMC or Commerce) when you want every subject in the stream.' },
   { q: 'What do grades 11 and 12 include?', a: 'Each grade offers three annual stream packages: PCMB (Physics, Chemistry, Maths, Biology), PCMC (Physics, Chemistry, Maths, Computer Science), and Commerce (Accountancy, Maths). English Grammar is complimentary with every package.' },
