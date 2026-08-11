@@ -9,7 +9,7 @@ That must NOT go into public_html.
 On GoDaddy, only the *website files* belong in public_html:
   index.html, course-detail.html, assets/, css/, js/, images/, .htaccess, …
 
-What went wrong on the live site:
+What went wrong on the production site:
   - Homepage loaded (an index.html was at the root)
   - course-detail.html and other pages 404’d (they were stuck inside a nested
     /public/ folder: https://elessons.net/public/course-detail.html)
