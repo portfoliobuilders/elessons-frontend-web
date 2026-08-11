@@ -47,6 +47,9 @@ WHAT WORKS AFTER THIS UPLOAD
 ✓ Cart / WhatsApp enquire flow on course pages
 ✓ Full package + By subject purchase options
   (By module removed on purpose)
+✓ Recorded + Mentorship support naming (latest)
+✓ UAE WhatsApp / phone: +971 503980768
+✓ Syllabus feature pills + notes / mentorship copy
 
 QUICK TESTS
 -----------
