@@ -74,7 +74,7 @@ STREAM_CARDS = r'''
           <h3 class="h3" style="margin-top:.25rem">PCMB</h3>
           <p class="mono subj-tagline" style="color:#397417">Physics · Chemistry · Maths · Biology</p>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">The full science stream for grade 11, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
           <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
@@ -89,7 +89,7 @@ STREAM_CARDS = r'''
           <h3 class="h3" style="margin-top:.25rem">PCMC</h3>
           <p class="mono subj-tagline" style="color:#0E7490">Physics · Chemistry · Maths · CS</p>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">Physics, chemistry, maths and computer science for grade 11, with free English Grammar included.</p>
         <div style="margin-top:auto">
           <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
@@ -104,7 +104,7 @@ STREAM_CARDS = r'''
           <h3 class="h3" style="margin-top:.25rem">Commerce</h3>
           <p class="mono subj-tagline" style="color:#92400E">Accountancy · Maths</p>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">Accountancy and maths for grade 11 commerce, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
           <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
@@ -119,7 +119,7 @@ STREAM_CARDS = r'''
           <h3 class="h3" style="margin-top:.25rem">PCMB</h3>
           <p class="mono subj-tagline" style="color:#397417">Physics · Chemistry · Maths · Biology</p>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">The full science stream for grade 12, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
           <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
@@ -134,7 +134,7 @@ STREAM_CARDS = r'''
           <h3 class="h3" style="margin-top:.25rem">PCMC</h3>
           <p class="mono subj-tagline" style="color:#0E7490">Physics · Chemistry · Maths · CS</p>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">Physics, chemistry, maths and computer science for grade 12, with free English Grammar included.</p>
         <div style="margin-top:auto">
           <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>
@@ -149,7 +149,7 @@ STREAM_CARDS = r'''
           <h3 class="h3" style="margin-top:.25rem">Commerce</h3>
           <p class="mono subj-tagline" style="color:#92400E">Accountancy · Maths</p>
         </div>
-        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded lessons</span></div>
+        <div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live classes</span><span class="mode">Recorded</span><span class="mode">Class Notes</span><span class="mode">Mentorship support</span></div>
         <p class="card-blurb">Accountancy and maths for grade 12 commerce, with free English Grammar included as complimentary.</p>
         <div style="margin-top:auto">
           <p class="price" data-inr="&#8377;18,000" data-aed="AED 1,200" style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">&#8377;18,000</p>

@@ -323,7 +323,7 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .subj-tagline{font-size:.58rem;margin-top:.3rem}
 .course > .flex.g2,
 .course-img > div:has(> .h3){flex:0 0 auto;min-height:4.75rem}
-.course > .modes{flex:0 0 auto;min-height:2.15rem}
+.course > .modes{flex:0 0 auto;min-height:4.4rem}
 .card-blurb{color:var(--slate);font-size:.86rem;line-height:1.45;flex:1 1 auto;
   min-height:calc(1.45em * 3);max-height:calc(1.45em * 3);
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
