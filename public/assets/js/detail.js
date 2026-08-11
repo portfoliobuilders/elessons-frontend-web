@@ -354,7 +354,7 @@
     plan:    ['full', 'subject'].indexOf(qp.get('plan')) > -1 ? qp.get('plan') : 'full',
     subject: null,
     stream:  null,
-    mode:    'live' /* Live + Recorded only — no recorded-only SKU */
+    mode:    'live' /* Recorded + Mentorship support only — no recorded-only SKU */
   };
   /* Grades 11–12: stream packages. Legacy ?subject= links map to a sensible stream. */
   if (isStreamGrade(S.grade)) {
@@ -535,7 +535,7 @@
     } catch (e) { /* schema is decorative; never let it break the page */ }
   }
 
-  /* ══════════════ MODE (fixed: Live + Recorded) ══════════════ */
+  /* ══════════════ MODE (fixed: Recorded + Mentorship support) ══════════════ */
   function bindMode() {
     /* No mode switcher — every purchase includes live classes and recordings. */
   }
