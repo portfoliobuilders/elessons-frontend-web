@@ -1,0 +1,70 @@
+G-TEC eLessons.net — GoDaddy upload (read this first)
+======================================================
+
+WHY THE SITE BROKE
+------------------
+The earlier zip was the full source code (Flutter app, android/, lib/, etc.).
+That must NOT go into public_html.
+
+On GoDaddy, only the *website files* belong in public_html:
+  index.html, course-detail.html, assets/, css/, js/, images/, .htaccess, …
+
+What went wrong on the live site:
+  - Homepage loaded (an index.html was at the root)
+  - course-detail.html and other pages 404’d (they were stuck inside a nested
+    /public/ folder: https://elessons.net/public/course-detail.html)
+  - Demo played the wrong YouTube clip (old homepage file)
+
+WHAT TO UPLOAD
+--------------
+Use the zip named:
+
+  elessons-godaddy-public-html.zip
+
+1. In cPanel File Manager, open:  /home/.../public_html
+2. DELETE or move aside the wrong folders/files from the source-code upload:
+     android/  lib/  test/  web/  resources/  scripts/  assets/ (Flutter)
+     pubspec.yaml  package.json  .git/  README.md  analyze_*.txt
+     AND the nested public/ folder (if present)
+   Keep nothing from the old source upload if you are unsure — empty
+   public_html, then upload this zip’s contents.
+3. Upload elessons-godaddy-public-html.zip into public_html.
+4. Extract it INSIDE public_html (not into a subfolder).
+5. After extract, public_html must look like this (files at the TOP level):
+
+     public_html/
+       .htaccess
+       index.html
+       course-detail.html
+       about.html
+       assets/
+       css/
+       js/
+       images/
+       pdfs/
+       …
+
+   NOT like this:
+
+     public_html/public/index.html
+     public_html/lib/...
+     public_html/android/...
+
+6. Confirm .htaccess is present (enable “Show Hidden Files” in File Manager).
+7. Hard-refresh the site (Ctrl+F5) or wait 1–2 minutes for cache.
+
+QUICK CHECKS
+------------
+  https://elessons.net/                         → homepage
+  https://elessons.net/course-detail.html?grade=10&plan=subject&subject=maths
+                                                → course page (not 404)
+  https://elessons.net/#demo                    → demo uses eLessons Drive clip
+                                                  (not a random YouTube lecture)
+  Nav: Home / Classes / Demo / Syllabus / FAQ   → scroll on homepage
+  “Enroll Now” on a class card                  → opens course-detail.html
+
+DO NOT upload
+-------------
+  - The Flutter/app source tree
+  - vercel.json as the only config (GoDaddy uses .htaccess)
+  - A zip that contains a nested “public” folder you then forget to unpack
