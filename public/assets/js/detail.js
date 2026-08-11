@@ -218,7 +218,7 @@
         row.className = 'cart-line';
         row.innerHTML =
           '<div><p class="cart-line__title">' + esc(it.title) + '</p>' +
-          '<p class="cart-line__meta">' + esc(it.subtitle || ((it.mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' · Grade ' + it.grade)) + '</p></div>' +
+          '<p class="cart-line__meta">' + esc(it.subtitle || ((it.mode === 'live' ? 'Recorded + Mentorship support' : 'Recorded') + ' · Grade ' + it.grade)) + '</p></div>' +
           '<p class="cart-line__price price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" data-usd="' + a.usd + '">' + a[cur()] + '</p>' +
           '<button type="button" class="cart-line__remove" data-cart-remove="' + esc(it.id) + '">Remove</button>';
         box.appendChild(row);
@@ -247,7 +247,7 @@
       bar.dataset.mode = 'product';
       setPrice($('bar-price'), currentPrice());
       $('bar-meta').textContent =
-        (S.mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' \u00b7 Grade ' + S.grade;
+        (S.mode === 'live' ? 'Recorded + Mentorship support' : 'Recorded') + ' \u00b7 Grade ' + S.grade;
       $('bar-buy').textContent = 'Add to cart';
       $('bar-buy').removeAttribute('aria-disabled');
       $('bar-buy').style.opacity = '';
@@ -272,7 +272,7 @@
     addCartItem(makeCartItem({
       id: id, type: S.plan, grade: S.grade, subject: S.plan === 'subject' ? S.subject : null,
       mode: S.mode, title: currentTitle(),
-      subtitle: (S.mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' · Full academic year',
+      subtitle: (S.mode === 'live' ? 'Recorded + Mentorship support' : 'Recorded') + ' · Full academic year',
       price: p
     }));
   }
@@ -505,7 +505,7 @@
     var bar = $('stickybar');
     if (!bar || bar.dataset.mode !== 'cart') {
       $('bar-meta').textContent =
-        (S.mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' \u00b7 Grade ' + S.grade;
+        (S.mode === 'live' ? 'Recorded + Mentorship support' : 'Recorded') + ' \u00b7 Grade ' + S.grade;
       $('bar-buy').textContent = 'Add to cart';
       [$('buy-now'), $('bar-buy')].forEach(function (b) {
         if (!b) return;
@@ -542,7 +542,7 @@
 
   /* ══════════════ PURCHASE TIERS ══════════════ */
   function tierCard(opts) {
-    var modeHtml = '<span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span>';
+    var modeHtml = '<span class="mode mode-live"><span class="dot-live"></span>Recorded + Mentorship support</span>';
     return '<article class="tier' + (opts.on ? ' tier-on' : '') + '">' +
       '<p class="mono card-kicker" style="color:' + opts.colour + '">' + esc(opts.kicker) + '</p>' +
       '<h3 class="h3">' + esc(opts.title) + '</h3>' +
@@ -909,7 +909,7 @@
         : (save && save.inr > 0
             ? ('Save ' + priceAttrs(save)[cur()] + ' vs buying subjects separately')
             : 'Full academic year');
-      var modeHtml = '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Live + Recorded</span></div>';
+      var modeHtml = '<div class="modes"><span class="mode mode-live"><span class="dot-live"></span>Recorded + Mentorship support</span></div>';
       var isPopular = isSub ? (sub === popularSubject)
                     : isPkg ? (pkg === popularStream)
                     : (g === popularGrade);
@@ -954,7 +954,7 @@
         addCartItem(makeCartItem({
           id: b.dataset.relAdd, type: plan, grade: g, subject: sub, mode: mode,
           title: title,
-          subtitle: (mode === 'live' ? 'Live + Recorded' : 'Recorded') + ' \u00b7 Full academic year',
+          subtitle: (mode === 'live' ? 'Recorded + Mentorship support' : 'Recorded') + ' \u00b7 Full academic year',
           price: price
         }));
         track('plan_click', { plan_id: b.dataset.relAdd, mode: mode, action: 'add_to_cart' });

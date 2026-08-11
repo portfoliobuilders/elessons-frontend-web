@@ -307,7 +307,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                               Expanded(
                                 child: _PlanCard(
                                   icon: Icons.podcasts_rounded,
-                                  title: 'Live + Recorded',
+                                  title: 'Recorded + Mentorship support',
                                   blurb:
                                       'Weekly live mentor classes + all recordings.',
                                   price: livePrice?.displayPrice ?? '—',
@@ -351,7 +351,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           ),
           if (!loading && !error)
             _StickyCta(
-              label: _plan == _Plan.recorded ? 'Recorded' : 'Live + Recorded',
+              label: _plan == _Plan.recorded ? 'Recorded' : 'Recorded + Mentorship support',
               price: selPrice?.displayPrice ?? '—',
               strike: selPrice?.displayCompareAt,
               onAdd: () => _add(selectedFull),
