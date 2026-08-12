@@ -426,7 +426,7 @@
     if (stage) {
       var cover = stage.querySelector('.player-cover');
       var banner = S.plan === 'subject' && SUBJECT_META[S.subject]
-        ? SUBJECT_META[S.subject].banner
+        ? (typeof subjectBanner === 'function' ? subjectBanner(S.subject, S.grade) : SUBJECT_META[S.subject].banner)
         : (isStreamGrade(S.grade) && S.stream && PACKAGE_META[S.stream]
             ? PACKAGE_META[S.stream].banner
             : 'sb-bundle');
@@ -934,7 +934,9 @@
             : planPrice(g, 'full', S.mode);
       var a = priceAttrs(p);
       var meta = isSub ? SUBJECT_META[sub] : (isPkg ? PACKAGE_META[pkg] : null);
-      var banner = isSub ? meta.banner : (isPkg ? meta.banner : 'sb-bundle');
+      var banner = isSub
+        ? (typeof subjectBanner === 'function' ? subjectBanner(sub, g) : meta.banner)
+        : (isPkg ? meta.banner : 'sb-bundle');
       var colour = isSub ? meta.colour : (isPkg ? meta.colour : (GRADE_TINT[g] || '#073790'));
       var label  = isSub ? meta.name + ' \u2014 ' + meta.tag
                  : isPkg ? meta.name + ' \u2014 ' + meta.tag
