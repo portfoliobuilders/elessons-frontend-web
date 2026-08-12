@@ -93,6 +93,51 @@ function humanize(s) {
     [/\bTypesofClauses\b/gi, 'Types of Clauses'],
     [/\bTypesofNouns\b/gi, 'Types of Nouns'],
     [/\b&Rings\b/g, '& Rings'],
+    // Extra glued phrases from new syllabus PDFs
+    [/\bPairof\b/gi, 'Pair of'],
+    [/\bMeaningofthe\b/gi, 'Meaning of the'],
+    [/\bCoefficientsofa\b/gi, 'Coefficients of a'],
+    [/\bMethodsof\b/gi, 'Methods of'],
+    [/\bSolvinga\b/gi, 'Solving a'],
+    [/\bIntroductionto\b/gi, 'Introduction to'],
+    [/\bApplicationsof\b/gi, 'Applications of'],
+    [/\bRelatedto\b/gi, 'Related to'],
+    [/\bAreasand\b/gi, 'Areas and'],
+    [/\bNumbersandtheir\b/gi, 'Numbers and their'],
+    [/\bZerosand\b/gi, 'Zeros and'],
+    [/\bAlgorithmfor\b/gi, 'Algorithm for'],
+    [/\bMethodof\b/gi, 'Method of'],
+    [/\bNatureof\b/gi, 'Nature of'],
+    [/\bTheoremandits\b/gi, 'Theorem and its'],
+    [/\bAreaof\b/gi, 'Area of'],
+    [/\bCriteriafor\b/gi, 'Criteria for'],
+    [/\bSimilarityof\b/gi, 'Similarity of'],
+    [/\bRatiosof\b/gi, 'Ratios of'],
+    [/\bRememberthe\b/gi, 'Remember the'],
+    [/\bSectorand\b/gi, 'Sector and'],
+    [/\bSegmentofa\b/gi, 'Segment of a'],
+    [/\bCombinationof\b/gi, 'Combination of'],
+    [/\bVolumeof\b/gi, 'Volume of'],
+    [/\bConversionof\b/gi, 'Conversion of'],
+    [/\bModeof\b/gi, 'Mode of'],
+    [/\bMeanof\b/gi, 'Mean of'],
+    [/\bRepresentationof\b/gi, 'Representation of'],
+    [/\bReflectionand\b/gi, 'Reflection and'],
+    [/\bHumanEyeand\b/gi, 'Human Eye and'],
+    [/\bEffectsof\b/gi, 'Effects of'],
+    [/\bSourcesof\b/gi, 'Sources of'],
+    [/\bCharacteristicsofa\b/gi, 'Characteristics of a'],
+    [/\bAcidsand\b/gi, 'Acids and'],
+    [/\bBasesand\b/gi, 'Bases and'],
+    [/\bMetalsand\b/gi, 'Metals and'],
+    [/\bCarbonand\b/gi, 'Carbon and'],
+    [/\bClassificationof\b/gi, 'Classification of'],
+    [/\bControland\b/gi, 'Control and'],
+    [/\bHowdo\b/gi, 'How do'],
+    [/\bHeredityand\b/gi, 'Heredity and'],
+    [/\bManagementof\b/gi, 'Management of'],
+    [/\bArithmeticpart\b/gi, 'Arithmetic part'],
+    [/\bTheoremof\b/gi, 'Theorem of'],
   ];
   for (const [re, rep] of pairs) t = t.replace(re, rep);
   t = t.replace(/\bOF\b/g, 'of');
@@ -250,13 +295,26 @@ function walkHumanizeRegister(reg) {
       out[k] = walkHumanizeRegister(chapters);
       continue;
     }
-    out[k] = chapters.map((ch) => ({
-      c: humanize(ch.c),
-      v: (ch.v || []).map((v) => {
-        if (typeof v === 'string') return humanize(v);
-        return { ...v, t: humanize(v.t) };
-      }),
-    }));
+    out[k] = chapters
+      .map((ch) => ({
+        c: humanize(ch.c),
+        v: (ch.v || []).map((v) => {
+          if (typeof v === 'string') return humanize(v);
+          return { ...v, t: humanize(v.t) };
+        }),
+      }))
+      .filter((ch) => {
+        const c = (ch.c || '').replace(/\s+/g, '').toLowerCase();
+        if (!c || c === 'chaptername' || c === 'chapternames' || c === 'subject') return false;
+        if (/^\*?englishgrammaris/i.test(c)) return false;
+        if (/complimentaryalongwith/i.test(c)) return false;
+        const vids = (ch.v || []).filter((v) => {
+          const s = (typeof v === 'string' ? v : v.t || '').replace(/\s+/g, '').toLowerCase();
+          return s && s !== 'videoname' && s !== 'videonames';
+        });
+        ch.v = vids;
+        return vids.length > 0;
+      });
   }
   return out;
 }
@@ -285,13 +343,20 @@ vm.runInNewContext(src.replace(/const /g, 'var '), sandbox);
 // Rebuild grade 8
 const r8 = sandbox.REGISTER_8;
 r8.maths = rebuildMaths(r8.maths);
-r8.physics = fixScienceStream(r8.physics);
-r8.chemistry = fixScienceStream(r8.chemistry);
-r8.biology = fixScienceStream(r8.biology);
+r8.physics = fixScienceStream(r8.physics).filter((ch) => !/^chapter\s*name$/i.test(ch.c));
+r8.chemistry = fixScienceStream(r8.chemistry).filter((ch) => !/^chapter\s*name$/i.test(ch.c));
+r8.biology = fixScienceStream(r8.biology).filter((ch) => !/^chapter\s*name$/i.test(ch.c));
 r8.english = r8.english.map((ch) => ({
   c: humanize(ch.c),
   v: (ch.v || []).map((v) => humanize(typeof v === 'string' ? v : v.t || '')),
-})).filter((ch) => !/^chapter names$/i.test(ch.c));
+})).filter((ch) => {
+  const c = (ch.c || '').replace(/\s+/g, '').toLowerCase();
+  return !/^chapter\s*names?$/i.test(ch.c)
+    && c !== 'chaptername'
+    && !/^\*?englishgrammaris/i.test(c)
+    && !/complimentaryalongwith/i.test(c)
+    && (ch.v || []).length > 0;
+});
 
 // Humanize other generated registers
 const names = Object.keys(sandbox).filter((k) => k.startsWith('REGISTER_') && k !== 'REGISTER_8');

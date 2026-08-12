@@ -12,25 +12,31 @@ from pypdf import PdfReader
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "_pdf_extract"
 PDF_DIR = ROOT / "public" / "assets" / "pdfs"
-DL = Path(r"C:\Users\ASUS\Downloads")
+# Latest syllabus PDFs from Google Drive folder "Class Course Contents"
+NEW = ROOT / "_new_syllabus_pdfs"
 
 SOURCES = {
-    "grade8_pcmb": DL / "1716007295-6648317fb9fde.pdf",
-    "grade10_pcmb": DL / "1716008042-6648346a2a058.pdf",
-    "grade11_pcmc": DL / "Grade_11_PCMC.pdf",
-    "grade12_pcmb": DL / "1716008366-664835ae8b171.pdf",
-    "grade12_pcmc": DL / "Grade_12_PCMC.pdf",
-    "grade11_commerce": DL / "1716008402-664835d2299b5.pdf",
-    "grade12_commerce": DL / "1716008448-66483600b8b2a.pdf",
+    "grade8_pcmb": NEW / "Grade 8.pdf",
+    "grade9_pcmb": NEW / "Grade 9.pdf",
+    "grade10_pcmb": NEW / "Grade 10.pdf",
+    "grade11_pcmb": NEW / "Grade 11 - PCMB.pdf",
+    "grade11_pcmc": NEW / "Grade 11 - PCMC.pdf",
+    "grade11_commerce": NEW / "Grade 11 - Commerce.pdf",
+    "grade12_pcmb": NEW / "Grade 12 - PCMB.pdf",
+    # Grade 12 PCMC not in the Drive folder — keep prior PDF for Computer Science
+    "grade12_pcmc": PDF_DIR / "grade-12-pcmc.pdf",
+    "grade12_commerce": NEW / "Grade 12 - Commerce.pdf",
 }
 
 COPY_AS = {
     "grade8_pcmb": "grade-8-pcmb.pdf",
+    "grade9_pcmb": "grade-9-pcmb.pdf",
     "grade10_pcmb": "grade-10-pcmb.pdf",
+    "grade11_pcmb": "grade-11-pcmb.pdf",
     "grade11_pcmc": "grade-11-pcmc.pdf",
+    "grade11_commerce": "grade-11-commerce.pdf",
     "grade12_pcmb": "grade-12-pcmb.pdf",
     "grade12_pcmc": "grade-12-pcmc.pdf",
-    "grade11_commerce": "grade-11-commerce.pdf",
     "grade12_commerce": "grade-12-commerce.pdf",
 }
 
@@ -199,12 +205,23 @@ def parse_pdf(path: Path):
             ):
                 continue
         if re.match(
-            r"^(Subject|Chapter Name|CHAPTER NAME|Video Name|VIDEO NAME)\b",
+            r"^(Subject|Chapter\s*Name|CHAPTER\s*NAME|Video\s*Name|VIDEO\s*NAME|"
+            r"ChapterNames?|VideoNames?|CHAPTERNAME|VIDEONAME)\b",
             full,
             re.I,
         ):
             continue
-        if "ENGLISH GRAMMAR IS" in probe:
+        if re.match(
+            r"^(CHAPTERNAME|VIDEONAME|CHAPTER\s*NAMES?|VIDEO\s*NAMES?)\b",
+            dense,
+            re.I,
+        ):
+            continue
+        if "ENGLISH GRAMMAR IS" in probe or "GRAMMARISBEING" in probe.replace(" ", ""):
+            continue
+        if re.match(r"^\*\s*English\s*Grammar", full, re.I):
+            continue
+        if "COMPLIMENTARY" in probe and "ANNUAL" in probe and "TABLE" not in probe:
             continue
 
         m = re.match(
@@ -235,6 +252,17 @@ def parse_pdf(path: Path):
                 current = "english"
                 chapter_buf = []
                 continue
+        # New PDF variant: "ENGLISH GRAMMAR (COMPLIMENTARY) TABLE OF VIDEO CLASSES"
+        if (
+            "ENGLISH" in probe
+            and "GRAMMAR" in probe
+            and "TABLE" in probe
+            and "VIDEO" in probe
+        ):
+            flush_subject()
+            current = "english"
+            chapter_buf = []
+            continue
 
         if not current:
             continue
@@ -252,6 +280,14 @@ def parse_pdf(path: Path):
         if left and right:
             # If left looks like a subject header fragment, skip
             if "CBSE" in left.upper() and "GRADE" in left.upper():
+                continue
+            # Column headers that slip past earlier filters
+            left_c = re.sub(r"\s+", "", left).upper()
+            right_c = re.sub(r"\s+", "", right).upper()
+            if left_c in {"CHAPTERNAME", "CHAPTERNAMES", "SUBJECT"} or right_c in {
+                "VIDEONAME",
+                "VIDEONAMES",
+            }:
                 continue
             name = " ".join(chapter_buf + [left]).strip()
             flush_chapter()
@@ -317,27 +353,24 @@ def main():
             print(f"  {k}: {len(chs)} chapters / {got[k]} videos")
         parsed[key] = {"subjects": subj, "expected": exp}
         dest = PDF_DIR / COPY_AS[key]
-        shutil.copy2(path, dest)
-        print("  copied ->", dest.name)
+        if path.resolve() != dest.resolve():
+            shutil.copy2(path, dest)
+            print("  copied ->", dest.name)
+        else:
+            print("  kept    ->", dest.name)
 
     # Build grade registers
-    # Grade 8 / 10: flat PCMB+English
     reg8 = parsed["grade8_pcmb"]["subjects"]
+    reg9 = parsed["grade9_pcmb"]["subjects"]
     reg10 = parsed["grade10_pcmb"]["subjects"]
 
-    # Grade 11 PCMC from PDF; PCMB = PCMC maths/physics/chemistry + empty biology
+    g11_pcmb = parsed["grade11_pcmb"]["subjects"]
     g11_pcmc = parsed["grade11_pcmc"]["subjects"]
-    g11_pcmb = {
-        k: g11_pcmc[k]
-        for k in ("maths", "physics", "chemistry", "english")
-        if k in g11_pcmc
-    }
-    # Biology not in provided Grade 11 PDFs
     g11_commerce = parsed["grade11_commerce"]["subjects"]
 
-    # Grade 12: PCMB PDF + CS from PCMC if any; Commerce separate
+    # Grade 12: PCMB PDF + CS from prior PCMC PDF; Commerce separate
     g12_pcmb = parsed["grade12_pcmb"]["subjects"]
-    g12_pcmc_src = parsed["grade12_pcmc"]["subjects"]
+    g12_pcmc_src = parsed.get("grade12_pcmc", {}).get("subjects", {})
     g12_pcmc = {
         k: g12_pcmb[k]
         for k in ("maths", "physics", "chemistry", "english")
@@ -345,15 +378,13 @@ def main():
     }
     if g12_pcmc_src.get("computer"):
         g12_pcmc["computer"] = g12_pcmc_src["computer"]
-    elif "computer" in g12_pcmc_src:
-        g12_pcmc["computer"] = g12_pcmc_src["computer"]
-    # Prefer CS from PCMC PDF even if empty list
     if "computer" not in g12_pcmc:
         g12_pcmc["computer"] = g12_pcmc_src.get("computer", [])
     g12_commerce = parsed["grade12_commerce"]["subjects"]
 
     payload = {
         "8": reg8,
+        "9": reg9,
         "10": reg10,
         "11": {"pcmb": g11_pcmb, "pcmc": g11_pcmc, "commerce": g11_commerce},
         "12": {"pcmb": g12_pcmb, "pcmc": g12_pcmc, "commerce": g12_commerce},
@@ -365,6 +396,7 @@ def main():
     js_chunks = [
         "/* AUTO-GENERATED by scripts/parse-syllabus-pdfs.py — do not hand-edit */",
         emit_register_js("REGISTER_8", reg8),
+        emit_register_js("REGISTER_9", reg9),
         emit_register_js("REGISTER_10", reg10),
         emit_register_js("REGISTER_11_PCMC", g11_pcmc),
         emit_register_js("REGISTER_11_PCMB", g11_pcmb),
