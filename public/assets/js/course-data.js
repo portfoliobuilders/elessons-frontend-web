@@ -106,10 +106,10 @@ const SUBJECT_META = {
   physics:     { name: 'Physics',          code: 'PHY', banner: 'sb-science', colour: '#2C5E14',
                  tag: 'Matter. Motion. Force.',
                  blurb: 'Mechanics, waves, electricity and modern physics — built at the board, equation by equation.' },
-  chemistry:   { name: 'Chemistry',        code: 'CHE', banner: 'sb-science', colour: '#397417',
+  chemistry:   { name: 'Chemistry',        code: 'CHE', banner: 'sb-chemistry-11', colour: '#397417',
                  tag: 'Atoms to equations.',
                  blurb: 'Physical, organic and inorganic chemistry with the NCERT exercise sequence.' },
-  biology:     { name: 'Biology',          code: 'BIO', banner: 'sb-science', colour: '#4A8C22',
+  biology:     { name: 'Biology',          code: 'BIO', banner: 'sb-biology-11', colour: '#4A8C22',
                  tag: 'Life, explained.',
                  blurb: 'Cell biology, genetics, physiology and ecology — diagram-led and exam-ready.' },
   computer:    { name: 'Computer Science', code: 'CSC', banner: 'sb-science', colour: '#0E7490',
@@ -120,6 +120,21 @@ const SUBJECT_META = {
                  blurb: 'Partnership, companies and financial statements — worked ledger by ledger.' }
 };
 const SUBJECT_ORDER = ['maths', 'science', 'english'];
+
+/* Grade-specific subject-card art when available; falls back to SUBJECT_META.banner. */
+const SUBJECT_BANNER_BY_GRADE = {
+  maths:      { 8: 'sb-maths-8', 9: 'sb-maths-9', 10: 'sb-maths-10', 11: 'sb-maths-11', 12: 'sb-maths-12' },
+  science:    { 8: 'sb-science-8', 9: 'sb-science-9', 10: 'sb-science-10' },
+  chemistry:  { 11: 'sb-chemistry-11', 12: 'sb-chemistry-12' },
+  biology:    { 11: 'sb-biology-11', 12: 'sb-biology-12' },
+  english:    { 8: 'sb-english', 9: 'sb-english', 10: 'sb-english', 11: 'sb-english', 12: 'sb-english' }
+};
+function subjectBanner(subject, grade) {
+  var g = String(grade == null ? '' : grade);
+  var byGrade = SUBJECT_BANNER_BY_GRADE[subject];
+  if (byGrade && byGrade[g]) return byGrade[g];
+  return (SUBJECT_META[subject] && SUBJECT_META[subject].banner) || 'sb-bundle';
+}
 
 /* ---------- PRICING ----------
    TRANSCRIBED FROM indexnew.html, not estimated. Every grade balances across
