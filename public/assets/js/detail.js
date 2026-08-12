@@ -20,6 +20,17 @@
     });
   }
   function cur() { return document.documentElement.getAttribute('data-currency') || 'inr'; }
+  function moneySymbol(currency) {
+    var c = currency || cur();
+    if (c === 'aed') return 'AED ';
+    if (c === 'omr') return 'OMR ';
+    if (c === 'bhd') return 'BHD ';
+    if (c === 'qar') return 'QAR ';
+    if (c === 'sar') return 'SAR ';
+    if (c === 'kwd') return 'KWD ';
+    if (c === 'usd') return '$';
+    return '\u20B9';
+  }
 
   /* Fuzzy search: substring first, then tolerant token / typo matching so
      "phsyics", "ex 1.1", or spaced OCR titles still hit the right lessons. */
@@ -123,8 +134,8 @@
   function cartCount(cart) { return (cart || loadCart()).items.length; }
   function cartTotal(cart) {
     return (cart || loadCart()).items.reduce(function (t, it) {
-      return addMoney(t, it.price || { inr: 0, aed: 0 });
-    }, { inr: 0, aed: 0 });
+      return addMoney(t, it.price || (typeof moneyZero === 'function' ? moneyZero() : { inr: 0, aed: 0, usd: 0 }));
+    }, (typeof moneyZero === 'function' ? moneyZero() : { inr: 0, aed: 0, usd: 0 }));
   }
   function cartHas(id) {
     return loadCart().items.some(function (it) { return it.id === id; });
@@ -138,7 +149,7 @@
       mode: partial.mode,
       title: partial.title,
       subtitle: partial.subtitle || '',
-      price: { inr: partial.price.inr, aed: partial.price.aed, usd: partial.price.usd || 0 }
+      price: (typeof copyMoney === 'function' ? copyMoney(partial.price) : { inr: partial.price.inr, aed: partial.price.aed, usd: partial.price.usd || 0 })
     };
   }
   function addCartItem(item, opts) {
@@ -219,7 +230,7 @@
         row.innerHTML =
           '<div><p class="cart-line__title">' + esc(it.title) + '</p>' +
           '<p class="cart-line__meta">' + esc(it.subtitle || ((it.mode === 'live' ? 'Recorded + Mentorship support' : 'Recorded') + ' · Grade ' + it.grade)) + '</p></div>' +
-          '<p class="cart-line__price price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" data-usd="' + a.usd + '">' + a[cur()] + '</p>' +
+          '<p class="cart-line__price price" ' + (typeof priceDataAttrs === 'function' ? priceDataAttrs(a) : ('data-inr="' + a.inr + '" data-aed="' + a.aed + '" data-usd="' + a.usd + '"')) + '>' + (a[cur()] || a.inr) + '</p>' +
           '<button type="button" class="cart-line__remove" data-cart-remove="' + esc(it.id) + '">Remove</button>';
         box.appendChild(row);
       });
@@ -298,7 +309,7 @@
       if (!cart.items.length) { toast('Your cart is empty'); return; }
       var tot = cartTotal(cart);
       var currency = cur();
-      var symbol = currency === 'aed' ? 'AED ' : currency === 'usd' ? '$' : '\u20B9';
+      var symbol = moneySymbol(currency);
       var locale = currency === 'inr' ? 'en-IN' : 'en-US';
       var lines = cart.items.map(function (it) {
         var p = (it.price && it.price[currency] != null) ? it.price[currency] : 0;
@@ -326,10 +337,9 @@
   function setPrice(el, money) {
     if (!el) return;
     var a = priceAttrs(money);
-    el.dataset.inr = a.inr;
-    el.dataset.aed = a.aed;
-    el.dataset.usd = a.usd;
-    el.textContent = a[cur()];
+    var keys = (typeof CURRENCY_KEYS !== 'undefined') ? CURRENCY_KEYS : ['inr', 'aed', 'usd'];
+    keys.forEach(function (k) { if (a[k] != null) el.dataset[k] = a[k]; });
+    el.textContent = a[cur()] || a.inr;
   }
   /* Re-paints after location-based currency detection (no manual switcher). */
   function repaint() {
@@ -466,7 +476,10 @@
     var wasWrap = $('buy-was-wrap'), saveEl = $('buy-save');
     if (S.plan === 'full' && !isStreamGrade(S.grade)) {
       var mrp = fullMrp(S.grade, S.stream);
-      var save = { inr: mrp.inr - p.inr, aed: mrp.aed - p.aed };
+      var save = (typeof moneyZero === 'function' ? moneyZero() : { inr: 0, aed: 0, usd: 0 });
+      (typeof CURRENCY_KEYS !== 'undefined' ? CURRENCY_KEYS : ['inr','aed','usd']).forEach(function (k) {
+        save[k] = (mrp[k] || 0) - (p[k] || 0);
+      });
       wasWrap.hidden = false;
       setPrice($('buy-was'), mrp);
       if (save.inr > 0) {
@@ -530,7 +543,10 @@
       var j = JSON.parse(el.textContent);
       j.name = currentTitle();
       j.offers.price = String(p[cur()] || p.inr);
-      j.offers.priceCurrency = cur() === 'aed' ? 'AED' : cur() === 'usd' ? 'USD' : 'INR';
+      j.offers.priceCurrency = ({
+        inr: 'INR', aed: 'AED', omr: 'OMR', bhd: 'BHD',
+        qar: 'QAR', sar: 'SAR', kwd: 'KWD', usd: 'USD'
+      })[cur()] || 'USD';
       el.textContent = JSON.stringify(j, null, 1);
     } catch (e) { /* schema is decorative; never let it break the page */ }
   }
@@ -547,7 +563,7 @@
       '<p class="mono card-kicker" style="color:' + opts.colour + '">' + esc(opts.kicker) + '</p>' +
       '<h3 class="h3">' + esc(opts.title) + '</h3>' +
       '<div class="modes">' + modeHtml + '</div>' +
-      '<p class="price tier-price" data-inr="' + opts.price.inr + '" data-aed="' + opts.price.aed + '" data-usd="' + opts.price.usd + '">' + opts.price.inr + '</p>' +
+      '<p class="price tier-price" ' + (typeof priceDataAttrs === 'function' ? priceDataAttrs(opts.price) : ('data-inr="' + opts.price.inr + '" data-aed="' + opts.price.aed + '" data-usd="' + opts.price.usd + '"')) + '>' + opts.price.inr + '</p>' +
       '<p style="color:var(--slate-500);font-size:.75rem">' + esc(opts.note) + '</p>' +
       '<ul class="tier-inc">' + opts.inc.map(function (i) {
         return '<li>' + ICON_TICK + '<span>' + esc(i) + '</span></li>';
@@ -932,7 +948,13 @@
         : ('course-detail.html?grade=' + g + '&plan=' + (isSub ? 'subject&subject=' + sub : 'full') + '&mode=' + S.mode);
       var planId = 'g' + g + '-' + (isSub ? sub : (pkg || 'full')) + '-' + S.mode;
       var mrp = (isSub || isPkg) ? null : fullMrp(g);
-      var save = mrp ? { inr: mrp.inr - p.inr, aed: mrp.aed - p.aed } : null;
+      var save = null;
+      if (mrp) {
+        save = (typeof moneyZero === 'function' ? moneyZero() : { inr: 0, aed: 0, usd: 0 });
+        (typeof CURRENCY_KEYS !== 'undefined' ? CURRENCY_KEYS : ['inr','aed','usd']).forEach(function (k) {
+          save[k] = (mrp[k] || 0) - (p[k] || 0);
+        });
+      }
       var micro = isSub
         ? 'Full academic year \u00b7 this subject'
         : isPkg
@@ -953,7 +975,7 @@
             ' \u00b7 ' + (isSub ? 'single subject' : isPkg ? 'stream package' : 'all subjects') + '</p>' +
           '<h3 class="h3" style="margin-top:.25rem">' + esc(isSub ? meta.name : isPkg ? meta.name : 'Annual Package') + '</h3></div>' +
           modeHtml +
-          '<div><p class="price" data-inr="' + a.inr + '" data-aed="' + a.aed + '" data-usd="' + a.usd + '" ' +
+          '<div><p class="price" ' + (typeof priceDataAttrs === 'function' ? priceDataAttrs(a) : ('data-inr="' + a.inr + '" data-aed="' + a.aed + '" data-usd="' + a.usd + '"')) + ' ' +
           'style="font-weight:800;font-size:1.25rem;color:var(--navy-900);letter-spacing:-.02em">' + a.inr + '</p>' +
           '<p class="note-sm">' + esc(micro) + '</p>' +
           '</div>' +

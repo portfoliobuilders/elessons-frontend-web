@@ -21,7 +21,7 @@ const ELESSONS = {
   showDurations: false,
   defaultCurrency: 'inr',
   /* Rest-of-world fallback when IP country is not India or GCC. */
-  supportedCurrencies: ['inr', 'aed', 'usd']
+  supportedCurrencies: ['inr', 'aed', 'omr', 'bhd', 'qar', 'sar', 'kwd', 'usd']
 };
 
 /** Source PDF (or printable HTML list) for a grade / stream package.
@@ -53,8 +53,10 @@ function classListPdfFor(grade, pkg) {
 function elWhatsAppNumber(currency) {
   var c = currency || (typeof document !== 'undefined' &&
     document.documentElement.getAttribute('data-currency')) || ELESSONS.defaultCurrency;
-  return c === 'aed' ? (ELESSONS.whatsappAed || ELESSONS.whatsapp)
-                     : (ELESSONS.whatsappInr || ELESSONS.whatsapp);
+  /* India stays on the India line; every Gulf local currency uses the Gulf line. */
+  var gulf = { aed: 1, omr: 1, bhd: 1, qar: 1, sar: 1, kwd: 1 };
+  return gulf[c] ? (ELESSONS.whatsappAed || ELESSONS.whatsapp)
+                 : (ELESSONS.whatsappInr || ELESSONS.whatsapp);
 }
 
 function elWhatsAppHref(message, currency) {
@@ -144,42 +146,45 @@ function subjectBanner(subject, grade) {
    INR, AED and USD are INDEPENDENT authored lists — nothing is converted at
    runtime. USD is the rest-of-world fallback (≈ AED at the peg, rounded).
    Note the Gulf/USD lists deliberately charge the same for English as for
-   Maths; that is their pricing, not a rounding artefact.
+   Maths (fee sheet); that is their pricing, not a rounding artefact.
 
    Homepage cards sell recorded + mentorship together at one authored price.
    Keep uplift at 0 so the enroll page matches the homepage (e.g. Grade 12
    package stays ₹18,000, not ₹23,000).                                      */
 const LIVE_UPLIFT = {
-  8:  { inr: 0, aed: 0, usd: 0 },
-  9:  { inr: 0, aed: 0, usd: 0 },
-  10: { inr: 0, aed: 0, usd: 0 },
-  11: { inr: 0, aed: 0, usd: 0 },
-  12: { inr: 0, aed: 0, usd: 0 }
+  8:  { inr: 0, aed: 0, omr: 0, bhd: 0, qar: 0, sar: 0, kwd: 0, usd: 0 },
+  9:  { inr: 0, aed: 0, omr: 0, bhd: 0, qar: 0, sar: 0, kwd: 0, usd: 0 },
+  10: { inr: 0, aed: 0, omr: 0, bhd: 0, qar: 0, sar: 0, kwd: 0, usd: 0 },
+  11: { inr: 0, aed: 0, omr: 0, bhd: 0, qar: 0, sar: 0, kwd: 0, usd: 0 },
+  12: { inr: 0, aed: 0, omr: 0, bhd: 0, qar: 0, sar: 0, kwd: 0, usd: 0 }
 };
 
 const PRICING = {
-  8:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
-        bundle: { inr: 12000, aed: 800,  usd: 218 } },
-  9:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
-        bundle: { inr: 12000, aed: 800,  usd: 218 } },
-  10: { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
-        bundle: { inr: 15000, aed: 1000, usd: 272 } },
-  /* Grades 11–12 sell stream packages (PCMB / PCMC / Commerce), with optional
-     single-subject buys from the same syllabus PDFs. */
+  /* Authored from G-TEC_ELessons_Fees_All_Currencies.xlsx. Independent
+     country lists — never FX-converted at runtime.
+     Keys: inr, aed (UAE), omr, bhd, qar, sar, kwd, usd. */
+  8:  { subjects: { maths: { inr: 8000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 }, science: { inr: 8000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 }, english: { inr: 4000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 } },
+        bundle: { inr: 12000, aed: 800, omr: 85, bhd: 80, qar: 800, sar: 850, kwd: 70, usd: 220 } },
+  9:  { subjects: { maths: { inr: 8000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 }, science: { inr: 8000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 }, english: { inr: 4000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 } },
+        bundle: { inr: 12000, aed: 800, omr: 85, bhd: 80, qar: 800, sar: 850, kwd: 70, usd: 220 } },
+  10: { subjects: { maths: { inr: 8000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 }, science: { inr: 8000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 }, english: { inr: 4000, aed: 400, omr: 40, bhd: 40, qar: 400, sar: 400, kwd: 35, usd: 110 } },
+        bundle: { inr: 15000, aed: 1000, omr: 105, bhd: 100, qar: 1000, sar: 1050, kwd: 90, usd: 275 } },
+  /* Grades 11–12: Science column → every science-stream subject fee;
+     Accountancy uses the same single-subject rate. */
   11: { subjects: {
-          maths: { inr: 8000, aed: 400, usd: 109 }, physics: { inr: 8000, aed: 400, usd: 109 },
-          chemistry: { inr: 8000, aed: 400, usd: 109 }, biology: { inr: 8000, aed: 400, usd: 109 },
-          computer: { inr: 8000, aed: 400, usd: 109 }, accountancy: { inr: 8000, aed: 400, usd: 109 }
+          maths: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }, physics: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 },
+          chemistry: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }, biology: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 },
+          computer: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }, accountancy: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }
         },
-        streams: { pcmb: { inr: 18000, aed: 1200, usd: 327 }, pcmc: { inr: 18000, aed: 1200, usd: 327 }, commerce: { inr: 18000, aed: 1200, usd: 327 } },
-        bundle: { inr: 18000, aed: 1200, usd: 327 } },
+        streams: { pcmb: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 }, pcmc: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 }, commerce: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 } },
+        bundle: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 } },
   12: { subjects: {
-          maths: { inr: 8000, aed: 400, usd: 109 }, physics: { inr: 8000, aed: 400, usd: 109 },
-          chemistry: { inr: 8000, aed: 400, usd: 109 }, biology: { inr: 8000, aed: 400, usd: 109 },
-          computer: { inr: 8000, aed: 400, usd: 109 }, accountancy: { inr: 8000, aed: 400, usd: 109 }
+          maths: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }, physics: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 },
+          chemistry: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }, biology: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 },
+          computer: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }, accountancy: { inr: 10000, aed: 500, omr: 50, bhd: 50, qar: 500, sar: 500, kwd: 40, usd: 135 }
         },
-        streams: { pcmb: { inr: 18000, aed: 1200, usd: 327 }, pcmc: { inr: 18000, aed: 1200, usd: 327 }, commerce: { inr: 18000, aed: 1200, usd: 327 } },
-        bundle: { inr: 18000, aed: 1200, usd: 327 } }
+        streams: { pcmb: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 }, pcmc: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 }, commerce: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 } },
+        bundle: { inr: 18000, aed: 1200, omr: 125, bhd: 125, qar: 1200, sar: 1250, kwd: 100, usd: 325 } }
 };
 
 /* Senior secondary stream packages. English Grammar is complimentary on every annual package. */
@@ -453,30 +458,44 @@ function planChapterCount(grade, plan, subject, pkg) {
   }, 0);
 }
 
-/* Returns { inr, aed, usd } so a price element can carry every authored
+/* Currency keys authored on every price object. */
+const CURRENCY_KEYS = ['inr', 'aed', 'omr', 'bhd', 'qar', 'sar', 'kwd', 'usd'];
+function moneyZero() {
+  return { inr: 0, aed: 0, omr: 0, bhd: 0, qar: 0, sar: 0, kwd: 0, usd: 0 };
+}
+function copyMoney(base) {
+  var out = moneyZero();
+  if (!base) return out;
+  CURRENCY_KEYS.forEach(function (k) { out[k] = base[k] || 0; });
+  return out;
+}
+function addUplift(base, up, half) {
+  var out = moneyZero();
+  CURRENCY_KEYS.forEach(function (k) {
+    var u = (up && up[k]) || 0;
+    out[k] = (base[k] || 0) + (half ? Math.round(u / 2) : u);
+  });
+  return out;
+}
+
+/* Returns a full money object so a price element can carry every authored
    figure, which is what location-based pricing reads. Never converts. */
 function planPrice(grade, planType, mode, subjectKey, pkg) {
   var p = PRICING[grade];
-  if (!p) return { inr: 0, aed: 0, usd: 0 };
+  if (!p) return moneyZero();
   var base;
   if (isStreamGrade(grade) && (planType === 'full' || planType === 'stream')) {
     base = (pkg && p.streams && p.streams[pkg]) || p.bundle;
   } else if (planType === 'full') {
     base = p.bundle;
   } else {
-    base = (p.subjects && p.subjects[subjectKey]) || { inr: 0, aed: 0, usd: 0 };
+    base = (p.subjects && p.subjects[subjectKey]) || moneyZero();
   }
-  if (mode !== 'live') return { inr: base.inr, aed: base.aed, usd: base.usd || 0 };
-
-  var up = LIVE_UPLIFT[grade] || { inr: 0, aed: 0, usd: 0 };
-  if (planType === 'full' || planType === 'stream') {
-    return { inr: base.inr + up.inr, aed: base.aed + up.aed, usd: (base.usd || 0) + (up.usd || 0) };
-  }
-  return {
-    inr: base.inr + Math.round(up.inr / 2),
-    aed: base.aed + Math.round(up.aed / 2),
-    usd: (base.usd || 0) + Math.round((up.usd || 0) / 2)
-  };
+  base = copyMoney(base);
+  if (mode !== 'live') return base;
+  var up = LIVE_UPLIFT[grade] || moneyZero();
+  if (planType === 'full' || planType === 'stream') return addUplift(base, up, false);
+  return addUplift(base, up, true);
 }
 
 // What the Annual Package adds over the plan being viewed. Returns null when
@@ -485,7 +504,8 @@ function upgradeOffer(grade, plan, mode, subject, pkg) {
   if (plan !== 'subject') return null;
   var now  = planPrice(grade, 'subject', mode, subject, pkg);
   var full = planPrice(grade, 'full', mode, null, pkg);
-  var diff = { inr: full.inr - now.inr, aed: full.aed - now.aed, usd: (full.usd || 0) - (now.usd || 0) };
+  var diff = moneyZero();
+  CURRENCY_KEYS.forEach(function (k) { diff[k] = (full[k] || 0) - (now[k] || 0); });
   if (diff.inr <= 0) return null;
   var extra = hasRegister(grade, pkg)
     ? planLessonCount(grade, 'full', null, pkg) - planLessonCount(grade, 'subject', subject, pkg) : null;
@@ -495,28 +515,40 @@ function fullMrp(grade, pkg) {
   return subjectsForGrade(grade, pkg).reduce(function (t, s) {
     var v = PRICING[grade].subjects[s];
     if (!v) return t;
-    return { inr: t.inr + v.inr, aed: t.aed + v.aed, usd: t.usd + (v.usd || 0) };
-  }, { inr: 0, aed: 0, usd: 0 });
+    return addMoney(t, v);
+  }, moneyZero());
 }
 function addMoney(a, b) {
-  return { inr: a.inr + b.inr, aed: a.aed + b.aed, usd: (a.usd || 0) + (b.usd || 0) };
+  var out = moneyZero();
+  CURRENCY_KEYS.forEach(function (k) {
+    out[k] = ((a && a[k]) || 0) + ((b && b[k]) || 0);
+  });
+  return out;
 }
 
-/* Formatting: rupee glyph + Indian grouping, "AED "/"$" with US grouping. */
+/* Formatting: local currency codes / glyphs. Never converts. */
 function fmtMoney(v, cur) {
   var n = Math.round(v);
   if (cur === 'aed') return 'AED ' + n.toLocaleString('en-US');
+  if (cur === 'omr') return 'OMR ' + n.toLocaleString('en-US');
+  if (cur === 'bhd') return 'BHD ' + n.toLocaleString('en-US');
+  if (cur === 'qar') return 'QAR ' + n.toLocaleString('en-US');
+  if (cur === 'sar') return 'SAR ' + n.toLocaleString('en-US');
+  if (cur === 'kwd') return 'KWD ' + n.toLocaleString('en-US');
   if (cur === 'usd') return '$' + n.toLocaleString('en-US');
-  return '\u20B9' + n.toLocaleString('en-IN');
+  return '₹' + n.toLocaleString('en-IN');
 }
 function priceAttrs(m) {
-  return {
-    inr: fmtMoney(m.inr, 'inr'),
-    aed: fmtMoney(m.aed, 'aed'),
-    usd: fmtMoney(m.usd || 0, 'usd')
-  };
+  var out = {};
+  CURRENCY_KEYS.forEach(function (k) { out[k] = fmtMoney((m && m[k]) || 0, k); });
+  return out;
 }
-
+/** data-inr="…" data-aed="…" … for embedding in HTML templates. */
+function priceDataAttrs(a) {
+  return CURRENCY_KEYS.map(function (k) {
+    return 'data-' + k + '="' + a[k] + '"';
+  }).join(' ');
+}
 
 /* ---------- PLAN CATALOG ---------- */
 function buildPlans() {

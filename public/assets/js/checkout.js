@@ -33,12 +33,25 @@
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
   }
   function moneyLabel(price, currency) {
+    if (typeof fmtMoney === 'function') {
+      return fmtMoney((price && price[currency]) || 0, currency);
+    }
     var n = (price && price[currency]) || 0;
     if (currency === 'aed') return 'AED ' + n.toLocaleString('en-AE');
+    if (currency === 'omr') return 'OMR ' + n.toLocaleString('en-US');
+    if (currency === 'bhd') return 'BHD ' + n.toLocaleString('en-US');
+    if (currency === 'qar') return 'QAR ' + n.toLocaleString('en-US');
+    if (currency === 'sar') return 'SAR ' + n.toLocaleString('en-US');
+    if (currency === 'kwd') return 'KWD ' + n.toLocaleString('en-US');
     if (currency === 'usd') return '$' + n.toLocaleString('en-US');
     return '₹' + n.toLocaleString('en-IN');
   }
   function cartTotal(cart) {
+    if (typeof moneyZero === 'function' && typeof addMoney === 'function') {
+      return cart.items.reduce(function (t, it) {
+        return addMoney(t, it.price || moneyZero());
+      }, moneyZero());
+    }
     return cart.items.reduce(function (t, it) {
       return {
         inr: t.inr + ((it.price && it.price.inr) || 0),
@@ -70,9 +83,17 @@
   }
 
   function noteFor(currency) {
-    if (currency === 'aed') return 'Gulf pricing — your counsellor will confirm AED payment.';
-    if (currency === 'usd') return 'International pricing — your counsellor will confirm USD payment.';
-    return 'India pricing — your counsellor will confirm INR payment.';
+    var notes = {
+      inr: 'India pricing — your counsellor will confirm INR payment.',
+      aed: 'UAE pricing — your counsellor will confirm AED payment.',
+      omr: 'Oman pricing — your counsellor will confirm OMR payment.',
+      bhd: 'Bahrain pricing — your counsellor will confirm BHD payment.',
+      qar: 'Qatar pricing — your counsellor will confirm QAR payment.',
+      sar: 'Saudi pricing — your counsellor will confirm SAR payment.',
+      kwd: 'Kuwait pricing — your counsellor will confirm KWD payment.',
+      usd: 'International pricing — your counsellor will confirm USD payment.'
+    };
+    return notes[currency] || notes.usd;
   }
 
   function paint() {
@@ -99,9 +120,10 @@
         (it.subtitle ? '<p class="note-sm">' + esc(it.subtitle) + '</p>' : '') +
         '</div>' +
         '<div class="co-item-side">' +
-        '<span class="price" data-inr="' + esc(moneyLabel(it.price, 'inr')) +
-        '" data-aed="' + esc(moneyLabel(it.price, 'aed')) +
-        '" data-usd="' + esc(moneyLabel(it.price, 'usd')) + '">' +
+        '<span class="price" ' +
+        ((typeof CURRENCY_KEYS !== 'undefined' ? CURRENCY_KEYS : ['inr','aed','usd']).map(function (k) {
+          return 'data-' + k + '="' + esc(moneyLabel(it.price, k)) + '"';
+        }).join(' ')) + '>' +
         esc(moneyLabel(it.price, currency)) + '</span>' +
         '<button type="button" class="co-remove" data-remove="' + esc(it.id) +
         '" aria-label="Remove ' + esc(it.title) + '">Remove</button>' +
@@ -110,9 +132,9 @@
 
     var tot = cartTotal(cart);
     if (totalEl) {
-      totalEl.dataset.inr = moneyLabel(tot, 'inr');
-      totalEl.dataset.aed = moneyLabel(tot, 'aed');
-      totalEl.dataset.usd = moneyLabel(tot, 'usd');
+      (typeof CURRENCY_KEYS !== 'undefined' ? CURRENCY_KEYS : ['inr','aed','usd']).forEach(function (k) {
+        totalEl.dataset[k] = moneyLabel(tot, k);
+      });
       totalEl.classList.add('price');
       totalEl.textContent = moneyLabel(tot, currency);
     }

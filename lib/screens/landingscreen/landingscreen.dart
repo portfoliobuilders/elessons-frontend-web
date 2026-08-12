@@ -1289,7 +1289,7 @@ class _PricingSection extends StatelessWidget {
                         Expanded(
                           child: _PricingCardStandard(
                             title: 'Per subject',
-                            price: '₹3,499',
+                            price: '₹4,000',
                             unit: '/ subject',
                             description:
                                 'A complete subject end-to-end with notes, PYQs & tests.',
@@ -1303,7 +1303,7 @@ class _PricingSection extends StatelessWidget {
                         SizedBox(height: 20),
                         _PricingCardStandard(
                           title: 'Per subject',
-                          price: '₹3,499',
+                          price: '₹4,000',
                           unit: '/ subject',
                           description:
                               'A complete subject end-to-end with notes, PYQs & tests.',
@@ -1448,7 +1448,7 @@ class _PricingCardFeatured extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                '₹11,999',
+                '₹12,000',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 28,
@@ -1457,7 +1457,7 @@ class _PricingCardFeatured extends StatelessWidget {
               ),
               SizedBox(width: 8),
               Text(
-                '₹17,999',
+                '₹20,000',
                 style: TextStyle(
                   color: Color(0xFF64748B),
                   fontSize: 14,
