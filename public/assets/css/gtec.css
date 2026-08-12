@@ -330,6 +330,15 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .sb-chemistry-12{background-image:url("../img/sb-chemistry-12.webp")}
 .sb-biology-11{background-image:url("../img/sb-biology-11.webp")}
 .sb-biology-12{background-image:url("../img/sb-biology-12.webp")}
+.sb-physics{background-image:url("../img/sb-physics.webp")}
+.sb-physics-11{background-image:url("../img/sb-physics-11.webp")}
+.sb-physics-12{background-image:url("../img/sb-physics-12.webp")}
+.sb-computer{background-image:url("../img/sb-computer.webp")}
+.sb-computer-11{background-image:url("../img/sb-computer-11.webp")}
+.sb-computer-12{background-image:url("../img/sb-computer-12.webp")}
+.sb-accountancy{background-image:url("../img/sb-accountancy.webp")}
+.sb-accountancy-11{background-image:url("../img/sb-accountancy-11.webp")}
+.sb-accountancy-12{background-image:url("../img/sb-accountancy-12.webp")}
 .course-bundle .sub-banner{border-bottom:1px solid rgba(255,255,255,.14)}
 .card-kicker{font-size:.55rem}
 .subj-tagline{font-size:.58rem;margin-top:.3rem}
