@@ -25,15 +25,15 @@ const ELESSONS = {
 };
 
 /** Source PDF (or printable HTML list) for a grade / stream package.
- *  PDFs live in /assets/pdfs/ (mirrored under /pdfs/). Grade 9 has no PDF yet —
- *  Download PDF opens the printable HTML list. Grade 11 PCMB reuses the PCMC
- *  PDF until a dedicated Biology-inclusive source is supplied. */
+ *  PDFs live in /assets/pdfs/ (mirrored under /pdfs/). Refreshed from the
+ *  shared "Class Course Contents" Drive folder. Grade 12 PCMC keeps the prior
+ *  PDF until a dedicated replacement is supplied. */
 const CLASS_LIST_PDF = {
   8:  '/assets/pdfs/grade-8-pcmb.pdf',
-  9:  '/video-list.html?grade=9',
+  9:  '/assets/pdfs/grade-9-pcmb.pdf',
   10: '/assets/pdfs/grade-10-pcmb.pdf',
   11: {
-    pcmb: '/assets/pdfs/grade-11-pcmc.pdf',
+    pcmb: '/assets/pdfs/grade-11-pcmb.pdf',
     pcmc: '/assets/pdfs/grade-11-pcmc.pdf',
     commerce: '/assets/pdfs/grade-11-commerce.pdf'
   },
@@ -64,22 +64,68 @@ function elWhatsAppHref(message, currency) {
     '?text=' + encodeURIComponent(message || '');
 }
 
-/* eLessons demo clips from the shared Drive folder (not third-party YouTube).
-   player uses driveId with HTML5 / Drive preview — see gtec-ui.js. */
+/* eLessons demo clips from the shared "Demo Class" Drive folder
+   (https://drive.google.com/drive/folders/1kSGWBP6WtzD14E32TyLCGlaJNi2QKz2l).
+   Player uses driveId with Drive preview — see gtec-ui.js. */
 const PREVIEWS = {
-  _default: { driveId: '1rRTXrlm2e3n0-Tnllyn0p0WYAc-Ejhqo', cap: 90, title: 'Watch a free demo class' },
-  maths:      { driveId: '11F9JZjmJvTH4G81s_7R_5FPv9MtpucWd', cap: 90, title: 'Watch a maths lesson' },
-  physics:    { driveId: '1He7btriFnWAg6csY0fsyfbC-txdE2ql4', cap: 90, title: 'Watch a physics lesson' },
-  chemistry:  { driveId: '1w80LusfqXn7I3rhkseImc0CHzjIbuHWZ', cap: 90, title: 'Watch a chemistry lesson' },
-  biology:    { driveId: '1T3jAz35H-bcuPYGL4hdMbkBCotHX0t5R', cap: 90, title: 'Watch a biology lesson' },
-  science:    { driveId: '1He7btriFnWAg6csY0fsyfbC-txdE2ql4', cap: 90, title: 'Watch a science lesson' },
-  english:    { driveId: '1rRTXrlm2e3n0-Tnllyn0p0WYAc-Ejhqo', cap: 90, title: 'Watch a sample lesson' }
+  _default: { driveId: '1UZZmz6PiVmjPM8Jej-yva4966pUGJLxJ', cap: 90, title: 'Watch a free demo class' },
+  maths:      { driveId: '1y1UYALCwjlm4CZVdMyz5NrzyEl0k9B34', cap: 90, title: 'Watch a maths lesson' },
+  physics:    { driveId: '1_8yApnoVokv-c2krTmW6d5YWikmwHsv5', cap: 90, title: 'Watch a physics lesson' },
+  chemistry:  { driveId: '1wvVhFF-4Z_nv_aTQSXx7NhQYMhlgMGu-', cap: 90, title: 'Watch a chemistry lesson' },
+  biology:    { driveId: '1fWWiwEFAWpkdILdaxAC3FuQxyN120Wne', cap: 90, title: 'Watch a biology lesson' },
+  science:    { driveId: '1LHYo-R-IXV7C4NK04wHmw9u4iC98KeSP', cap: 90, title: 'Watch a science lesson' },
+  english:    { driveId: '1UZZmz6PiVmjPM8Jej-yva4966pUGJLxJ', cap: 90, title: 'Watch an English lesson' },
+  accountancy:{ driveId: '13RC6w23GgduvMKxjQNdXGURa9p_CJu6k', cap: 90, title: 'Watch an accountancy lesson' },
+  computer:   { driveId: '1_8yApnoVokv-c2krTmW6d5YWikmwHsv5', cap: 90, title: 'Watch a free demo class' }
+};
+
+/* Grade-specific demos when the Drive folder has a dedicated clip. */
+const PREVIEWS_BY_GRADE = {
+  maths: {
+    8:  { driveId: '1obLQILxMyPbXLJm5j4CSJExbrWxXGELi', title: 'Watch a Class 8 maths demo' },
+    9:  { driveId: '1KbpfM-zSKeQEFuvWzv2VJs3OvDTxcdCB', title: 'Watch a Class 9 maths demo' },
+    10: { driveId: '1y1UYALCwjlm4CZVdMyz5NrzyEl0k9B34', title: 'Watch a Class 10 maths demo' },
+    11: { driveId: '1Pd8k00z3zTTBGtH38E7oJ2nR_xLUwHcc', title: 'Watch a Class 11 maths demo' },
+    12: { driveId: '1we0P3puk0VyORrT5yilpt8_BBq7aq1KD', title: 'Watch a Class 12 maths demo' }
+  },
+  science: {
+    8:  { driveId: '1LHYo-R-IXV7C4NK04wHmw9u4iC98KeSP', title: 'Watch a Class 8 science demo' },
+    9:  { driveId: '1W99fYbMl7TxCRXvBr-SugeymZPQJiRm9', title: 'Watch a Class 9 science demo' },
+    10: { driveId: '1wvVhFF-4Z_nv_aTQSXx7NhQYMhlgMGu-', title: 'Watch a Class 10 science demo' }
+  },
+  physics: {
+    8:  { driveId: '1LHYo-R-IXV7C4NK04wHmw9u4iC98KeSP', title: 'Watch a Class 8 physics demo' },
+    11: { driveId: '1_8yApnoVokv-c2krTmW6d5YWikmwHsv5', title: 'Watch a Class 11 physics demo' },
+    12: { driveId: '1vYGRGlhuumCvwitl_inO1TnmMfzUeBFj', title: 'Watch a Class 12 physics demo' }
+  },
+  chemistry: {
+    10: { driveId: '1wvVhFF-4Z_nv_aTQSXx7NhQYMhlgMGu-', title: 'Watch a Class 10 chemistry demo' },
+    11: { driveId: '1PINcxJN0xBCKZNnwKxUmk224tJrm5gJy', title: 'Watch a Class 11 chemistry demo' },
+    12: { driveId: '1OnAq1EahzfpdlmMMTu5hvgrTl6ccfcEH', title: 'Watch a Class 12 chemistry demo' }
+  },
+  biology: {
+    9:  { driveId: '1W99fYbMl7TxCRXvBr-SugeymZPQJiRm9', title: 'Watch a Class 9 biology demo' },
+    11: { driveId: '1fWWiwEFAWpkdILdaxAC3FuQxyN120Wne', title: 'Watch a Class 11 biology demo' },
+    12: { driveId: '1TXqEYAo-LmIY1IpeeKWQDXD0P4XkoShk', title: 'Watch a Class 12 biology demo' }
+  },
+  english: {
+    8:  { driveId: '1UZZmz6PiVmjPM8Jej-yva4966pUGJLxJ', title: 'Watch an English demo class' },
+    9:  { driveId: '1UZZmz6PiVmjPM8Jej-yva4966pUGJLxJ', title: 'Watch an English demo class' },
+    10: { driveId: '1UZZmz6PiVmjPM8Jej-yva4966pUGJLxJ', title: 'Watch an English demo class' },
+    11: { driveId: '1UZZmz6PiVmjPM8Jej-yva4966pUGJLxJ', title: 'Watch an English demo class' },
+    12: { driveId: '1UZZmz6PiVmjPM8Jej-yva4966pUGJLxJ', title: 'Watch an English demo class' }
+  },
+  accountancy: {
+    12: { driveId: '13RC6w23GgduvMKxjQNdXGURa9p_CJu6k', title: 'Watch a Class 12 accountancy demo' }
+  }
 };
 
 function previewFor(grade, plan, subject) {
   var key = plan === 'subject' ? subject : null;
-  var p = (key && PREVIEWS[key] && (PREVIEWS[key].driveId || PREVIEWS[key].vid))
-    ? PREVIEWS[key] : PREVIEWS._default;
+  var g = String(grade == null ? '' : grade);
+  var byGrade = key && PREVIEWS_BY_GRADE[key] && PREVIEWS_BY_GRADE[key][g];
+  var p = byGrade || ((key && PREVIEWS[key] && (PREVIEWS[key].driveId || PREVIEWS[key].vid))
+    ? PREVIEWS[key] : PREVIEWS._default);
   return {
     driveId: p.driveId || PREVIEWS._default.driveId || null,
     vid: p.vid || null,
@@ -105,7 +151,7 @@ const SUBJECT_META = {
              tag: 'Read. Write. Communicate.',
              blurb: 'Grammar, vocabulary, writing and literature — the four strands the paper tests.' },
   /* Grades 11–12 sell these as individual subjects inside a stream package. */
-  physics:     { name: 'Physics',          code: 'PHY', banner: 'sb-science', colour: '#2C5E14',
+  physics:     { name: 'Physics',          code: 'PHY', banner: 'sb-physics', colour: '#2C5E14',
                  tag: 'Matter. Motion. Force.',
                  blurb: 'Mechanics, waves, electricity and modern physics — built at the board, equation by equation.' },
   chemistry:   { name: 'Chemistry',        code: 'CHE', banner: 'sb-chemistry-11', colour: '#397417',
@@ -114,10 +160,10 @@ const SUBJECT_META = {
   biology:     { name: 'Biology',          code: 'BIO', banner: 'sb-biology-11', colour: '#4A8C22',
                  tag: 'Life, explained.',
                  blurb: 'Cell biology, genetics, physiology and ecology — diagram-led and exam-ready.' },
-  computer:    { name: 'Computer Science', code: 'CSC', banner: 'sb-science', colour: '#0E7490',
+  computer:    { name: 'Computer Science', code: 'CSC', banner: 'sb-computer', colour: '#0E7490',
                  tag: 'Code. Logic. Systems.',
                  blurb: 'Programming, data structures and computer systems for the CBSE paper.' },
-  accountancy: { name: 'Accountancy',      code: 'ACC', banner: 'sb-english', colour: '#92400E',
+  accountancy: { name: 'Accountancy',      code: 'ACC', banner: 'sb-accountancy', colour: '#92400E',
                  tag: 'Books that balance.',
                  blurb: 'Partnership, companies and financial statements — worked ledger by ledger.' }
 };
@@ -125,11 +171,14 @@ const SUBJECT_ORDER = ['maths', 'science', 'english'];
 
 /* Grade-specific subject-card art when available; falls back to SUBJECT_META.banner. */
 const SUBJECT_BANNER_BY_GRADE = {
-  maths:      { 8: 'sb-maths-8', 9: 'sb-maths-9', 10: 'sb-maths-10', 11: 'sb-maths-11', 12: 'sb-maths-12' },
-  science:    { 8: 'sb-science-8', 9: 'sb-science-9', 10: 'sb-science-10' },
-  chemistry:  { 11: 'sb-chemistry-11', 12: 'sb-chemistry-12' },
-  biology:    { 11: 'sb-biology-11', 12: 'sb-biology-12' },
-  english:    { 8: 'sb-english', 9: 'sb-english', 10: 'sb-english', 11: 'sb-english', 12: 'sb-english' }
+  maths:       { 8: 'sb-maths-8', 9: 'sb-maths-9', 10: 'sb-maths-10', 11: 'sb-maths-11', 12: 'sb-maths-12' },
+  science:     { 8: 'sb-science-8', 9: 'sb-science-9', 10: 'sb-science-10' },
+  physics:     { 11: 'sb-physics-11', 12: 'sb-physics-12' },
+  chemistry:   { 11: 'sb-chemistry-11', 12: 'sb-chemistry-12' },
+  biology:     { 11: 'sb-biology-11', 12: 'sb-biology-12' },
+  computer:    { 11: 'sb-computer-11', 12: 'sb-computer-12' },
+  accountancy: { 11: 'sb-accountancy-11', 12: 'sb-accountancy-12' },
+  english:     { 8: 'sb-english', 9: 'sb-english', 10: 'sb-english', 11: 'sb-english', 12: 'sb-english' }
 };
 function subjectBanner(subject, grade) {
   var g = String(grade == null ? '' : grade);
@@ -312,7 +361,7 @@ const STREAM_META = {
    (pcmb / pcmc / commerce). Generated lists live in registers-generated.js. */
 const REGISTERS = {
   8:  (typeof REGISTER_8  !== 'undefined') ? REGISTER_8  : null,
-  9:  REGISTER_9,
+  9:  (typeof REGISTER_9_GEN !== 'undefined') ? REGISTER_9_GEN : REGISTER_9,
   10: (typeof REGISTER_10 !== 'undefined') ? REGISTER_10 : null,
   11: {
     pcmb:     (typeof REGISTER_11_PCMB     !== 'undefined') ? REGISTER_11_PCMB     : null,
