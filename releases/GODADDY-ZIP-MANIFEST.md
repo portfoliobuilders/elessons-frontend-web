@@ -5,9 +5,9 @@ Built from `public/` which is byte-identical to the live Vercel site:
 - Live: https://elessons-frontend-web.vercel.app/
 - Canonical: https://elessons.net/
 
-## Artifact
+## Download
 
-**File:** `elessons-godaddy-public-html.zip` (agent artifact / `dist/` after `npm run package:godaddy`)
+**File in this repo:** [`releases/elessons-godaddy-public-html.zip`](./elessons-godaddy-public-html.zip)
 
 | Check | Value |
 |-------|--------|
