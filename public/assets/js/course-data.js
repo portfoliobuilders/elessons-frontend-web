@@ -129,7 +129,7 @@ const SUBJECT_ORDER = ['maths', 'science', 'english'];
    INR, AED and USD are INDEPENDENT authored lists — nothing is converted at
    runtime. USD is the rest-of-world fallback (≈ AED at the peg, rounded).
    Note the Gulf/USD lists deliberately charge the same for English as for
-   Maths; that is their pricing, not a rounding artefact.
+   Maths (fee sheet); that is their pricing, not a rounding artefact.
 
    Homepage cards sell recorded + mentorship together at one authored price.
    Keep uplift at 0 so the enroll page matches the homepage (e.g. Grade 12
@@ -143,28 +143,33 @@ const LIVE_UPLIFT = {
 };
 
 const PRICING = {
-  8:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
-        bundle: { inr: 12000, aed: 800,  usd: 218 } },
-  9:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
-        bundle: { inr: 12000, aed: 800,  usd: 218 } },
-  10: { subjects: { maths: { inr: 8000,  aed: 400, usd: 109 }, science: { inr: 8000,  aed: 400, usd: 109 }, english: { inr: 4000, aed: 400, usd: 109 } },
-        bundle: { inr: 15000, aed: 1000, usd: 272 } },
+  /* Authored from G-TEC_ELessons_Fees_All_Currencies.xlsx
+     (India / UAE / USD sheets). GCC country sheets exist but the site
+     currently maps all Gulf IPs to the AED tier (UAE column). */
+  8:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 110 }, science: { inr: 8000,  aed: 400, usd: 110 }, english: { inr: 4000, aed: 400, usd: 110 } },
+        bundle: { inr: 12000, aed: 800,  usd: 220 } },
+  9:  { subjects: { maths: { inr: 8000,  aed: 400, usd: 110 }, science: { inr: 8000,  aed: 400, usd: 110 }, english: { inr: 4000, aed: 400, usd: 110 } },
+        bundle: { inr: 12000, aed: 800,  usd: 220 } },
+  10: { subjects: { maths: { inr: 8000,  aed: 400, usd: 110 }, science: { inr: 8000,  aed: 400, usd: 110 }, english: { inr: 4000, aed: 400, usd: 110 } },
+        bundle: { inr: 15000, aed: 1000, usd: 275 } },
   /* Grades 11–12 sell stream packages (PCMB / PCMC / Commerce), with optional
-     single-subject buys from the same syllabus PDFs. */
+     single-subject buys from the same syllabus PDFs.
+     Spreadsheet "Science" column maps to every science-stream subject fee;
+     Accountancy uses the same single-subject rate. English Grammar stays complimentary on packages. */
   11: { subjects: {
-          maths: { inr: 8000, aed: 400, usd: 109 }, physics: { inr: 8000, aed: 400, usd: 109 },
-          chemistry: { inr: 8000, aed: 400, usd: 109 }, biology: { inr: 8000, aed: 400, usd: 109 },
-          computer: { inr: 8000, aed: 400, usd: 109 }, accountancy: { inr: 8000, aed: 400, usd: 109 }
+          maths: { inr: 10000, aed: 500, usd: 135 }, physics: { inr: 10000, aed: 500, usd: 135 },
+          chemistry: { inr: 10000, aed: 500, usd: 135 }, biology: { inr: 10000, aed: 500, usd: 135 },
+          computer: { inr: 10000, aed: 500, usd: 135 }, accountancy: { inr: 10000, aed: 500, usd: 135 }
         },
-        streams: { pcmb: { inr: 18000, aed: 1200, usd: 327 }, pcmc: { inr: 18000, aed: 1200, usd: 327 }, commerce: { inr: 18000, aed: 1200, usd: 327 } },
-        bundle: { inr: 18000, aed: 1200, usd: 327 } },
+        streams: { pcmb: { inr: 18000, aed: 1200, usd: 325 }, pcmc: { inr: 18000, aed: 1200, usd: 325 }, commerce: { inr: 18000, aed: 1200, usd: 325 } },
+        bundle: { inr: 18000, aed: 1200, usd: 325 } },
   12: { subjects: {
-          maths: { inr: 8000, aed: 400, usd: 109 }, physics: { inr: 8000, aed: 400, usd: 109 },
-          chemistry: { inr: 8000, aed: 400, usd: 109 }, biology: { inr: 8000, aed: 400, usd: 109 },
-          computer: { inr: 8000, aed: 400, usd: 109 }, accountancy: { inr: 8000, aed: 400, usd: 109 }
+          maths: { inr: 10000, aed: 500, usd: 135 }, physics: { inr: 10000, aed: 500, usd: 135 },
+          chemistry: { inr: 10000, aed: 500, usd: 135 }, biology: { inr: 10000, aed: 500, usd: 135 },
+          computer: { inr: 10000, aed: 500, usd: 135 }, accountancy: { inr: 10000, aed: 500, usd: 135 }
         },
-        streams: { pcmb: { inr: 18000, aed: 1200, usd: 327 }, pcmc: { inr: 18000, aed: 1200, usd: 327 }, commerce: { inr: 18000, aed: 1200, usd: 327 } },
-        bundle: { inr: 18000, aed: 1200, usd: 327 } }
+        streams: { pcmb: { inr: 18000, aed: 1200, usd: 325 }, pcmc: { inr: 18000, aed: 1200, usd: 325 }, commerce: { inr: 18000, aed: 1200, usd: 325 } },
+        bundle: { inr: 18000, aed: 1200, usd: 325 } }
 };
 
 /* Senior secondary stream packages. English Grammar is complimentary on every annual package. */
