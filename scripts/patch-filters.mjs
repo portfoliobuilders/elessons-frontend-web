@@ -70,20 +70,24 @@ const newJs = `(function(){
     syncChipVisibility();
     document.querySelectorAll('#course-grid > .course').forEach(function(c){
       var ok = hasTag(c, gradeKey);
-      if (ok && subjectKey) ok = hasTag(c, subjectKey) || c.classList.contains('course-bundle');
+      if (ok && subjectKey) ok = hasTag(c, subjectKey);
       if (ok && streamKey) ok = hasTag(c, streamKey);
       c.style.display = ok ? '' : 'none';
     });
     document.querySelectorAll('#course-grid > .course-stream-row').forEach(function(row){
       var rowShow = hasTag(row, gradeKey);
       if (rowShow && streamKey) rowShow = hasTag(row, streamKey);
+      if (rowShow && subjectKey) rowShow = hasTag(row, subjectKey);
       row.style.display = rowShow ? '' : 'none';
       if (!rowShow) return;
+      var anyVisible = false;
       row.querySelectorAll('.course').forEach(function(c){
-        if (!subjectKey) { c.style.display = ''; return; }
-        var show = hasTag(c, subjectKey) || c.classList.contains('course-bundle');
+        if (!subjectKey) { c.style.display = ''; anyVisible = true; return; }
+        var show = hasTag(c, subjectKey);
         c.style.display = show ? '' : 'none';
+        if (show) anyVisible = true;
       });
+      if (!anyVisible) row.style.display = 'none';
     });
   }
 

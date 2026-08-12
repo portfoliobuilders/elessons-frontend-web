@@ -315,7 +315,14 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .sub-banner{display:block;margin:-1.6rem -1.5rem 0;aspect-ratio:3/2;
   background-size:cover;background-position:center;background-repeat:no-repeat}
 .sb-maths{background-image:url("../img/sb-maths.webp")}
+.sb-maths-8{background-image:url("../img/sb-maths-8.webp")}
+.sb-maths-9{background-image:url("../img/sb-maths-9.webp")}
+.sb-maths-10{background-image:url("../img/sb-maths-10.webp")}
+.sb-maths-11{background-image:url("../img/sb-maths-11.webp")}
+.sb-maths-12{background-image:url("../img/sb-maths-12.webp")}
 .sb-science{background-image:url("../img/sb-science.webp")}
+.sb-chemistry-11{background-image:url("../img/sb-chemistry-11.webp")}
+.sb-chemistry-12{background-image:url("../img/sb-chemistry-12.webp")}
 .sb-english{background-image:url("../img/sb-english.webp")}
 .sb-bundle{background-image:url("../img/sb-bundle.webp")}
 .course-bundle .sub-banner{border-bottom:1px solid rgba(255,255,255,.14)}
@@ -328,12 +335,12 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
   min-height:calc(1.45em * 3);max-height:calc(1.45em * 3);
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .course-foot,
-.course > div:last-of-type{margin-top:auto;display:flex;flex-direction:column;flex:0 0 auto;min-height:7.1rem;gap:.1rem}
+.course > div:last-of-type{margin-top:auto;display:flex;flex-direction:column;flex:0 0 auto;min-height:7.1rem;gap:.1rem;position:relative;z-index:2}
 .course-foot .btn,
 .course > div:last-of-type .btn{margin-top:auto;padding-top:.35rem;width:100%}
 .course-bundle{background:linear-gradient(165deg,var(--navy-900),var(--navy-800));border-color:transparent;color:#fff}
 .course-bundle .course-num{color:#fff}
-.course-bundle .course-ghost{color:#fff;opacity:.07;z-index:1}
+.course-bundle .course-ghost{color:#fff;opacity:.07;z-index:0}
 .course-bundle .card-blurb{color:rgba(255,255,255,.78)}
 .course-bundle .mode{border-color:rgba(255,255,255,.32);color:rgba(255,255,255,.85)}
 .course-bundle .mode-live{border-color:rgba(255,255,255,.5);color:#fff}
