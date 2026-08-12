@@ -318,6 +318,18 @@ input[type="text"]:focus,input[type="email"]:focus,input[type="tel"]:focus,texta
 .sb-science{background-image:url("../img/sb-science.webp")}
 .sb-english{background-image:url("../img/sb-english.webp")}
 .sb-bundle{background-image:url("../img/sb-bundle.webp")}
+.sb-maths-8{background-image:url("../img/sb-maths-8.webp")}
+.sb-maths-9{background-image:url("../img/sb-maths-9.webp")}
+.sb-maths-10{background-image:url("../img/sb-maths-10.webp")}
+.sb-maths-11{background-image:url("../img/sb-maths-11.webp")}
+.sb-maths-12{background-image:url("../img/sb-maths-12.webp")}
+.sb-science-8{background-image:url("../img/sb-science-8.webp")}
+.sb-science-9{background-image:url("../img/sb-science-9.webp")}
+.sb-science-10{background-image:url("../img/sb-science-10.webp")}
+.sb-chemistry-11{background-image:url("../img/sb-chemistry-11.webp")}
+.sb-chemistry-12{background-image:url("../img/sb-chemistry-12.webp")}
+.sb-biology-11{background-image:url("../img/sb-biology-11.webp")}
+.sb-biology-12{background-image:url("../img/sb-biology-12.webp")}
 .course-bundle .sub-banner{border-bottom:1px solid rgba(255,255,255,.14)}
 .card-kicker{font-size:.55rem}
 .subj-tagline{font-size:.58rem;margin-top:.3rem}
